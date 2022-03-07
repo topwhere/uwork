@@ -1,0 +1,27 @@
+	<div class="sub-menu" style="width: 200px;">
+		<div class="sub-menu-content" style="width: 200px;">
+			<ul>
+			{foreach name=":get_menus(1)" item="a"}
+				{notempty name="$a.src"}
+				<li class="sub-menu-title {if condition='strpos($a.src,$params.controller) nheq false'} active{/if}"><a href="/{$a.src}"><i class="iconfont {$a.icon}"></i><span class="text">{$a.title}</span></a></li>
+				{else/}
+				<li class="sub-menu-title"><a href="javascript:;"><i class="iconfont {$a.icon}"></i><span class="text">{$a.title}</span></a></li>
+				{/notempty}
+				{notempty name="$a.list"}
+					{foreach name="$a.list" item="b"}
+						{notempty name="$b.src"}
+						<li class="sub-menu-li {if condition='strpos($b.src,$params.controller) nheq false'} active{/if}"><a href="/{$b.src}"><span class="text">{$b.title}</span></a></li>
+						{else/}
+						<li class="sub-menu-li"><a href="javascript:;"><span class="text">{$b.title}</span></a></li>
+						{/notempty}
+					{/foreach}
+				{/notempty}
+			{/foreach}
+			</ul>
+		</div>
+		<div class="menu-bar">
+			<div class="menu-bar-content">
+				<div class="line"></div>
+			</div>
+		</div>
+	</div>

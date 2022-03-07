@@ -1,0 +1,145 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="card-content">
+<div class="layui-row layui-col-space10">
+	<div class="layui-col-md8">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="table-title">待处理的需求</div>
+					<div style="padding: 15px;">
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="table-title">待处理的任务</div>
+					<div style="padding: 15px;">
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="table-title">待处理的项目</div>
+					<div style="padding: 15px;">
+						<table id="project" lay-filter="project" class="layui-hide" style="margin-top:0"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="project" style=" "><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="id" data-key="1-0-0" class=""><div class="layui-table-cell laytable-cell-1-0-0" align="center"><span>序号</span></div></th><th data-field="name" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1"><span>项目名称</span></div></th><th data-field="process" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2" align="center"><span>当前环节</span></div></th><th data-field="check_name" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3" align="center"><span>当前处理人</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr></tbody></table></div></div><style>.laytable-cell-1-0-0{ width: 80px; }.laytable-cell-1-0-1{  }.laytable-cell-1-0-2{ width: 160px; }.laytable-cell-1-0-3{ width: 100px; }</style></div>
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="table-title">知识列表</div>
+					<div style="padding: 15px;">
+						<table id="knowledge" lay-filter="knowledge" class="layui-hide" style="margin-top:0"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-2" lay-id="knowledge" style=" "><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="id" data-key="2-0-0" class=""><div class="layui-table-cell laytable-cell-2-0-0" align="center"><span>序号</span></div></th><th data-field="name" data-key="2-0-1" class=""><div class="layui-table-cell laytable-cell-2-0-1"><span>知识主题</span></div></th><th data-field="share" data-key="2-0-2" class=""><div class="layui-table-cell laytable-cell-2-0-2" align="center"><span>查看权限</span></div></th><th data-field="knowledge_type" data-key="2-0-3" class=""><div class="layui-table-cell laytable-cell-2-0-3" align="center"><span>知识类型</span></div></th><th data-field="cname" data-key="2-0-4" class=""><div class="layui-table-cell laytable-cell-2-0-4" align="center"><span>所属类别</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0" class=""><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1059</div></td><td data-field="name" data-key="2-0-1" data-content="子公司无偿划转股权的涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1059">子公司无偿划转股权的涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="1"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1058</div></td><td data-field="name" data-key="2-0-1" data-content="复核：关于总院房屋租赁费的会计核算科目建议的回函（顾问函字【2022】第046号）" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1058">复核：关于总院房屋租赁费的会计核算科目建议的回函（顾问函字【2022】第046号）</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="2"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1057</div></td><td data-field="name" data-key="2-0-1" data-content="人员社保涉税风险问题" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1057">人员社保涉税风险问题</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="3"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1056</div></td><td data-field="name" data-key="2-0-1" data-content="三代手续费收入" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1056">三代手续费收入</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="4"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1055</div></td><td data-field="name" data-key="2-0-1" data-content="凯达尔项目涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1055">凯达尔项目涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="5"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1054</div></td><td data-field="name" data-key="2-0-1" data-content="练江流域整治项目公司涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1054">练江流域整治项目公司涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="6"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1053</div></td><td data-field="name" data-key="2-0-1" data-content="接受捐赠的涉税处理" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1053">接受捐赠的涉税处理</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="7"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1052</div></td><td data-field="name" data-key="2-0-1" data-content="粤电力以股权投资入股省风电涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1052">粤电力以股权投资入股省风电涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="8"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1051</div></td><td data-field="name" data-key="2-0-1" data-content="股权收购事项的确认" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1051">股权收购事项的确认</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="9"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1050</div></td><td data-field="name" data-key="2-0-1" data-content="纳税评估" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1050">纳税评估</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr></tbody></table></div></div><div class="layui-table-page"><div id="layui-table-page2"><div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1"><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon"></i></a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="105">105</a><a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon"></i></a><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span><span class="layui-laypage-count">共 1049 条</span><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option><option value="60">60 条/页</option><option value="70">70 条/页</option><option value="80">80 条/页</option><option value="90">90 条/页</option></select></span></div></div></div><style>.laytable-cell-2-0-0{ width: 80px; }.laytable-cell-2-0-1{  }.laytable-cell-2-0-2{ width: 90px; }.laytable-cell-2-0-3{ width: 90px; }.laytable-cell-2-0-4{ width: 160px; }</style></div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-md4">
+		<div class="layui-card dashboard-num">
+			<table>
+				<tbody><tr>
+					<td><div class="num-title">产品</div><div class="num-num">3867</div></td>
+					<td><div class="num-title">项目</div><div class="num-num">6036</div></td>
+					<td><div class="num-title">需求</div><div class="num-num">968</div></td>
+					<td><div class="num-title">任务</div><div class="num-num">910</div></td>
+				</tr>
+			</tbody></table>
+		</div>
+		
+		<div class="layui-card dashboard-total">
+			<div class="table-title">我的工作情况</div>
+			<div class="layui-card-header">
+				<h3>影响力</h3>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">参与项目</div>
+						<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">已完成</div>
+						<div class="layui-card-value">0</div>
+					</div>
+						<div class="layui-col-md3">
+						<div class="layui-card-tips">正在进行</div>
+					<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">完成率</div>
+						<div class="layui-card-value">100%</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-card-header">
+				<h3>效率</h3>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">任务总数</div>
+						<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">已完成</div>
+						<div class="layui-card-value">0</div>
+					</div>
+						<div class="layui-col-md3">
+						<div class="layui-card-tips">未完成</div>
+					<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">完成率</div>
+						<div class="layui-card-value">100%</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-card-header">
+				<h3>勤奋</h3>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">工作记录</div>
+						<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">总工时</div>
+						<div class="layui-card-value">0</div>
+					</div>
+						<div class="layui-col-md3">
+						<div class="layui-card-tips">外勤工时</div>
+					<div class="layui-card-value">0</div>
+					</div>
+					<div class="layui-col-md3">
+						<div class="layui-card-tips">案头工时</div>
+						<div class="layui-card-value">0</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="layui-card">
+			<div class="table-title">最活跃员工<span style="color:#999; font-size:14px; font-weight:400; margin-left:5px">最近30天前十的活跃度</span></div>
+			<div class="layui-card-body"></div>
+		</div>
+		<div class="layui-card">
+			<div class="table-title">员工动态</div>
+			<div class="layui-card-body dashboard-logs">
+				<ul class="layui-timeline" id="logs"><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>6小时前</span>，蒋碧晖新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，郑洁秀登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮确认了一份合同协议</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮新增了合同协议【尤尼泰广东（总）企税汇缴字【2022】第1125号】的协议信息</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，黄丹妮登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，蒋碧晖新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，陈素茵登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，关立斯确认了一张发票的到账信息</div>										</div>									  </li></ul>
+				<div class="panel-more"><a href="javascript:;">查看更多动态</a></div>
+			</div>
+		</div>
+</div>
+</div>
+{/block}
+<!-- 脚本 -->
+{block name="script"}
+<script>
+function init(layui){
+	console.log('加载完毕...');
+}
+</script>
+{include file="../../base/view/common/layui" base='base' extend="['gougucms']" callback="init" /}
+{/block}
+<!-- /脚本 -->

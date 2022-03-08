@@ -31,16 +31,7 @@ class Rule extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
-			$id = isset($param['id']) ? $param['id'] : 0;
-            $pid = isset($param['pid']) ? $param['pid'] : 0;
-            if($id>0){
-                $detail = Db::name('AdminRule')->where('id',$id)->find();
-                View::assign('detail', $detail);
-            }
-            View::assign('id', $id);
-            View::assign('pid', $pid);
-			return view();
+        if (request()->isPost()) {
 			$param['src'] = preg_replace('# #','',$param['src']);
             if ($param['id'] > 0) {
                 try {
@@ -87,17 +78,21 @@ class Rule extends BaseController
     //删除
     public function delete()
     {
-        $id = get_params("id");
-        $count = Db::name('AdminRule')->where(["pid" => $id])->count();
-        if ($count > 0) {
-            return to_assign(1, "该节点下还有子节点，无法删除");
-        }
-        if (Db::name('AdminRule')->delete($id) !== false) {
-            clear_cache('adminRules');
-            add_log('delete', $id, []);
-            return to_assign(0, "删除节点成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$count = Db::name('AdminRule')->where(["pid" => $id])->count();
+			if ($count > 0) {
+				return to_assign(1, "该节点下还有子菜单，无法删除");
+			}
+			if (Db::name('AdminRule')->delete($id) !== false) {
+				clear_cache('adminRules');
+				add_log('delete', $id, []);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

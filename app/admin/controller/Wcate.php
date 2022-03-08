@@ -30,11 +30,11 @@ class Wcate extends BaseController
     //工作类别添加
     public function add()
     {
-		if (request()->isPut() || request()->isPost()) {
+		if (request()->isPost()) {
             $param = get_params();
             if (!empty($param['id']) && $param['id'] > 0) {
                 try {
-                    validate(ExpenseCateCheck::class)->scene('edit')->check($param);
+                    validate(workCateCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
@@ -47,7 +47,7 @@ class Wcate extends BaseController
                 return to_assign();
             } else {
                 try {
-                    validate(ExpenseCateCheck::class)->scene('add')->check($param);
+                    validate(workCateCheck::class)->scene('add')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
@@ -65,19 +65,23 @@ class Wcate extends BaseController
     //工作类别设置
     public function check()
     {
-		$param = get_params();
-        $res = Db::name('WorkCate')->strict(false)->field('id,status')->update($param);
-		if ($res) {
-			if($param['status'] == 0){
-				add_log('disable', $param['id'], $param);
+		if (request()->isPost()) {
+			$param = get_params();
+			$res = Db::name('WorkCate')->strict(false)->field('id,status')->update($param);
+			if ($res) {
+				if($param['status'] == 0){
+					add_log('disable', $param['id'], $param);
+				}
+				else if($param['status'] == 1){
+					add_log('recovery', $param['id'], $param);
+				}
+				return to_assign();
 			}
-			else if($param['status'] == 1){
-				add_log('recovery', $param['id'], $param);
+			else{
+				return to_assign(0, '操作失败');
 			}
-			return to_assign();
-		}
-		else{
-			return to_assign(0, '操作失败');
+		}else{
+			return to_assign(0, '错误的请求');
 		}
     }
 

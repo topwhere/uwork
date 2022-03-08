@@ -37,7 +37,7 @@ class Position extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             if (!empty($param['id']) && $param['id'] > 0) {
                 try {
                     validate(PositionCheck::class)->scene('edit')->check($param);
@@ -160,18 +160,22 @@ class Position extends BaseController
     //删除
     public function delete()
     {
-        $id = get_params("id");
-        if ($id == 1) {
-            return to_assign(0, "超级岗位，不能删除");
-        }
-        $data['status'] = '-1';
-        $data['id'] = $id;
-        $data['update_time'] = time();
-        if (Db::name('Position')->update($data) !== false) {
-            add_log('delete', $id);
-            return to_assign(0, "删除岗位成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			if ($id == 1) {
+				return to_assign(0, "超级岗位，不能删除");
+			}
+			$data['status'] = '-1';
+			$data['id'] = $id;
+			$data['update_time'] = time();
+			if (Db::name('Position')->update($data) !== false) {
+				add_log('delete', $id);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

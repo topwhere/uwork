@@ -1,12 +1,14 @@
 layui.define(['layer'], function(exports){
     var layer = layui.layer;
 	    var obj = {
-		callback:null,
-        open: function (content='',width='88%',callback) {
-			if(callback && typeof callback === 'function'){
-				this.callback = callback;
+		loading:false,
+        open: function (url='',width='88%') {
+			let that=this;
+			if(that.loading==true){
+				return false;
 			}
-			this.getJSON(content,{},function(res){
+			that.loading=true;
+			that.get(url,{},function(res){
 				layer.open({
 					type: 1,
 					title: '',
@@ -16,95 +18,81 @@ layui.define(['layer'], function(exports){
 					content: res,
 					area: [width, '100%'],
 					success:function(obj,index){
+						that.loading=false;
 						pageInit();
-						$('body').addClass('right-open');
-						if($('#rightPopup'+index).length<1){
-							var btn='<div id="rightPopup'+index+'" class="right-popup-close" title="关闭">关闭</div>';
-							obj.append(btn);
-							$('#rightPopup'+index).click(function(){
-								var op_width = $('.layui-anim-rl').outerWidth();
-								$('.layui-anim-rl').animate({left:'+='+op_width+'px'}, 200, 'linear', function () {
-									$('.layui-anim-rl').remove()
-									$('.layui-layer-shade').remove()
-								})
-								$('body').removeClass('right-open');
+						$('body').addClass('right-open');						
+						let btn='<div id="rightPopup'+index+'" class="right-popup-close" title="关闭">关闭</div>';
+						obj.append(btn);
+						$('#rightPopup'+index).click(function(){
+							let op_width = $('.layui-anim-rl').outerWidth();
+							$('.layui-anim-rl').animate({left:'+='+op_width+'px'}, 200, 'linear', function () {
+								$('.layui-anim-rl').remove()
+								$('.layui-layer-shade').remove()
 							})
-						}
+							$('body').removeClass('right-open');
+						})
 					}
 				})
 			})            
         },
-		success:function(){
-			$('.right-popup-close').click();
-			var d = this;
-			setTimeout(function() {
-				d.timer = null;
-				d.callback && d.callback();
-			}, 300)
-		},
 		close: function(){
 			$('.right-popup-close').click();
 		},
-		getJSON: function (url,data,callback){
+		get: function (url,data,callback){
 			$.ajax({
 				url:url,
-				type:"get",
+				type:"GET",
 				timeout:10000,
 				data:data,
-				success:function(data){
-					callback(data);
+				success:function(res){
+					callback(res);
 				}
 				,error:function(xhr,textstatus,thrown){
 					console.log('错误');
 				}
 			});
 		},
-		postJSON: function(url,data,callback){
+		post: function(url,data,callback){
 			$.ajax({
 				url:url,
-				type:"post",
+				type:"POST",
 				data:data,
 				timeout:10000,
-				success:function(msg){
-					callback(msg);
+				success:function(res){
+					callback(res);
 				},
 				error:function(xhr,textstatus,thrown){
 					console.log('错误');
 				}
 			});
 		},
-		putJSON: function(url,data,callback){
+		put: function(url,data,callback){
 			$.ajax({
 				url:url,
-				type:"put",
+				type:"PUT",
 				data:data,
 				timeout:10000,
-				success:function(msg){
-					callback(msg);
+				success:function(res){
+					callback(res);
 				},
 				error:function(xhr,textstatus,thrown){
 					console.log('错误');
 				}
 			});
 		},
-		deleteJSON: function(url,data,callback){
+		delete: function(url,data,callback){
 			$.ajax({
 				url:url,
-				type:"delete",
+				type:"DELETE",
 				data:data,
-				success:function(msg){
-					callback(msg);
+				success:function(res){
+					callback(res);
 				},
 				error:function(xhr,textstatus,thrown){
-
+					console.log('错误');
 				}
 			});
 		}
     };
-	
-    $(window).resize(function () {
-		
-    })
-
     exports('gougu',obj);
 });  

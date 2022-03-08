@@ -99,18 +99,13 @@
 					icon: 3,
 					title: '提示'
 				}, function(index) {
-					$.ajax({
-						url: '/admin/note/delete',
-						data: {
-							id: data.id
-						},
-						success: function(res) {
-							layer.msg(res.msg);
-							if (res.code == 1) {
-								obj.del();
-							}
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
 						}
-					})
+					}
+					gougu.delete("/admin/note/delete",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}

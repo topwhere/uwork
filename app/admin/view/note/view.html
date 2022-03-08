@@ -6,7 +6,7 @@
 			<td>{$note.title}</td>
 			<td class="layui-td-gray">公告分类</td>
 			<td>
-				{volist name=":set_recursion(note_cate())" id="v"}
+				{volist name=":set_recursion(admin_note_cate())" id="v"}
 					{eq name="$note.cate_id" value="$v.id" }{$v.title}{/eq}
 				{/volist}
 			</td>

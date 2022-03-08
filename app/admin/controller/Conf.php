@@ -37,7 +37,7 @@ class Conf extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             try {
                 validate(ConfCheck::class)->check($param);
             } catch (ValidateException $e) {
@@ -73,23 +73,27 @@ class Conf extends BaseController
     //删除配置项
     public function delete()
     {
-        $id = get_params("id");
-        $data['status'] = '-1';
-        $data['id'] = $id;
-        $data['update_time'] = time();
-        if (Db::name('Config')->update($data) !== false) {
-            add_log('delete', $id, $data);
-            return to_assign(0, "删除成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$data['status'] = '-1';
+			$data['id'] = $id;
+			$data['update_time'] = time();
+			if (Db::name('Config')->update($data) !== false) {
+				add_log('delete', $id, $data);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 
     //编辑配置信息
     public function edit()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {			
             $data['content'] = serialize($param);
             $data['update_time'] = time();
             $data['id'] = $param['id'];

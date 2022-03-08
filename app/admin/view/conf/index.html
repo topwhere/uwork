@@ -62,43 +62,36 @@
 			]
 		});
 		
+		//表头工具栏事件
+		$('.add-conf').on('click', function(){
+			gougu.open('/admin/conf/add','900px');
+		});
 		//监听行工具事件
 		table.on('tool(test)', function(obj){
 			var data = obj.data;
 			if(obj.event === 'add'){
 				gougu.open('/admin/conf/add?id='+data.id,'900px');
-				return;
+				
 			}
 			if(obj.event === 'edit'){
 				gougu.open('/admin/conf/edit?id='+data.id,'900px');
-				return;
 			}
 			if (obj.event === 'del') {
 				layer.confirm('确定要删除吗?', {
 					icon: 3,
 					title: '提示'
-				}, function (index) {
-					$.ajax({
-						url: "/admin/conf/delete",
-						type: 'post',
-						data: {
-							id: obj.data.id
-						},
-						success: function (res) {
-							layer.msg(res.msg);
-							if (res.code == 0) {
-								obj.del();
-							}
+				}, function (index) {				
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
 						}
-					})
+					}
+					gougu.delete("/admin/conf/delete",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}
-		});
-		
-		//表头工具栏事件
-		$('.add-conf').on('click', function(){
-			gougu.open('/admin/conf/add','900px');
+			return;
 		});
 	}
 </script>

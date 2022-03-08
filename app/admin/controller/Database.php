@@ -60,7 +60,7 @@ class Database extends BaseController
                 $this->db->setFile()->backup($table, 0);
             }
             add_log('add');
-            return to_assign(0, '备份成功！');
+            return to_assign(0, '备份成功');
         } else {
             return to_assign(1, '请选择要备份的表');
         }
@@ -76,7 +76,7 @@ class Database extends BaseController
         $tables = explode(',', $tables);
         if ($this->db->optimize($tables)) {
             add_log('edit');
-            return to_assign(0, '数据表优化成功！');
+            return to_assign(0, '数据表优化成功');
         } else {
             return to_assign(1, '数据表优化出错请重试');
         }

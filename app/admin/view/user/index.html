@@ -63,8 +63,7 @@
 <script>
 	var tableIns = null;
 	function init(layui) {
-		var TAB = parent.layui.tab,
-			tree = layui.tree,
+		var tree = layui.tree,
 			table = layui.table,
 			gougu = layui.gougu,
 			form = layui.form;
@@ -256,19 +255,13 @@
 				icon: 3,
 				title: '提示'
 			}, function (index) {
-				$.ajax({
-					url: "/admin/user/set",
-					data: {
-						ids: uidArray.join(','),
-						type:type
-					},
-					success: function (e) {
-						layer.msg(e.msg);
-						if(e.code==0){
-							tableIns.reload();
-						}							
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						tableIns.reload();
 					}
-				})
+				}
+				gougu.post("/admin/user/set",{ ids: uidArray.join(','), type: type },callback);
 				layer.close(index);
 			});
 		});
@@ -317,18 +310,13 @@
 			icon: 3,
 			title: '提示'
 		}, function (index) {
-			$.ajax({
-				url: "/admin/user/reset_psw",
-				data: {
-					id: id
-				},
-				success: function (e) {
-					layer.msg(e.msg);
-					if(e.code==0){
-						tableIns.reload();
-					}							
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tableIns.reload();
 				}
-			})
+			}
+			gougu.post("/admin/user/reset",data.field,callback);
 			layer.close(index);
 		});
 	}

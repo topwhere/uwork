@@ -66,17 +66,13 @@
 			}
 			if (obj.event === 'del') {
 				layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {
-					$.ajax({
-						url: '/admin/department/delete',
-						type: 'post',
-						data: { id: obj.data.id },
-						success: function (e) {
-							layer.msg(e.msg);
-							if (e.code == 0) {
-								obj.del();
-							}
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
 						}
-					})
+					}
+					gougu.delete("/admin/department/delete",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}

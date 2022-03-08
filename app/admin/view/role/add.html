@@ -80,29 +80,18 @@
 		form.render();
 		//监听提交
 		form.on('submit(webform)', function (data) {
-			if(data.field.id==0){
-				data.field._method == 'POST';
-			}
-			else{
-				data.field._method == 'PUT';
-			}
-			$.ajax({
-				url: "/admin/role/add",
-				data: data.field,
-				type: 'post',
-				success: function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						tableIns.reload();
-						setTimeout(function(){
-							gougu.close();
-						},1000);
-					}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tableIns.reload();
+					setTimeout(function(){
+						gougu.close();
+					},500);
 				}
-			});
+			}
+			gougu.post("/admin/role/add",data.field,callback);
 			return false;
-		});
-		
+		});		
 		
 		//监听多选框点击事件  通过 lay-filter="menu"来监听
 		form.on('checkbox(menu)', function (data) {

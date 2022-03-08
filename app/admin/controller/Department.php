@@ -36,7 +36,7 @@ class Department extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             if ($param['id'] > 0) {
                 try {
                     validate(DepartmentCheck::class)->scene('edit')->check($param);
@@ -84,20 +84,24 @@ class Department extends BaseController
     //删除
     public function delete()
     {
-        $id = get_params("id");
-        $count = Db::name('Department')->where([['pid', '=', $id], ['status', '>=', 0]])->count();
-        if ($count > 0) {
-            return to_assign(1, "该部门下还有子部门，无法删除");
-        }
-        $users = Db::name('Admin')->where([['did', '=', $id], ['status', '>=', 0]])->count();
-        if ($users > 0) {
-            return to_assign(1, "该部门下还有员工，无法删除");
-        }
-        if (Db::name('Department')->delete($id) !== false) {
-            add_log('delete', $id);
-            return to_assign(0, "删除部门成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$count = Db::name('Department')->where([['pid', '=', $id], ['status', '>=', 0]])->count();
+			if ($count > 0) {
+				return to_assign(1, "该部门下还有子部门，无法删除");
+			}
+			$users = Db::name('Admin')->where([['did', '=', $id], ['status', '>=', 0]])->count();
+			if ($users > 0) {
+				return to_assign(1, "该部门下还有员工，无法删除");
+			}
+			if (Db::name('Department')->delete($id) !== false) {
+				add_log('delete', $id);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

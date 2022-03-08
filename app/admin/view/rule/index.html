@@ -58,7 +58,7 @@
 		});
 		//表头工具栏事件
 		$('.add-menu').on('click',function(){
-			gougu.open("/admin/rule/add",'900px');
+			gougu.open('/admin/rule/add','900px');
 			return;
 		});
 
@@ -66,28 +66,23 @@
 		treeGrid.on('tool(' + tableId + ')', function (obj) {
 			if (obj.event === 'add') {
 				gougu.open('/admin/rule/add?pid='+obj.data.id,'900px');
-				return;
 			}
 			if (obj.event === 'edit') {
 				gougu.open('/admin/rule/add?id='+obj.data.id,'900px');
-				return;
 			}
 			if (obj.event === 'del') {
 				layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {
-					$.ajax({
-						url: "/admin/rule/delete",
-						type: 'post',
-						data: { id: obj.data.id },
-						success: function (e) {
+					let callback = function (e) {
 							layer.msg(e.msg);
 							if (e.code == 0) {
 								obj.del();
 							}
 						}
-					})
+					gougu.delete("/admin/rule/delete",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}
+			return;
 		});
 	}
 </script>

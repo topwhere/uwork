@@ -12,7 +12,7 @@ use think\Validate;
 class KnowledgeCateCheck extends Validate
 {
     protected $rule = [
-        'title' => 'require|unique:article_cate',
+        'title' => 'require|unique:knowledge_cate',
         'id' => 'require',
     ];
 

@@ -41,35 +41,44 @@ function admin_group_info($id)
     return $rules;
 }
 
-//读取公告分类子分类ids
-function admin_note_cate_son($id = 0, $is_self = 1)
-{
-    $note = Db::name('NoteCate')->order('create_time asc')->select();
-    $note_list = get_data_node($note, $id);
-    $note_array = array_column($note_list, 'id');
-    if ($is_self == 1) {
-        //包括自己在内
-        $note_array[] = $id;
-    }
-    return $note_array;
-}
-
-//读取知识分类子分类ids
-function admin_article_cate_son($id = 0, $is_self = 1)
-{
-    $article = Db::name('ArticleCate')->order('id desc')->select()->toArray();
-    $article_list = get_data_node($article, $id);
-    $article_array = array_column($article_list, 'id');
-    if ($is_self == 1) {
-        //包括自己在内
-        $article_array[] = $id;
-    }
-    return $article_array;
-}
-
 //读取公告分类列表
-function note_cate()
+function admin_note_cate()
 {
     $cate = Db::name('NoteCate')->order('id desc')->select()->toArray();
     return $cate;
 }
+
+//读取公告分类子分类ids
+function admin_note_cate_son($id = 0, $is_self = 1)
+{
+    $cate = admin_note_cate();
+    $cate_list = get_data_node($cate, $id);
+    $cate_array = array_column($cate_list, 'id');
+    if ($is_self == 1) {
+        //包括自己在内
+        $cate_array[] = $id;
+    }
+    return $cate_array;
+}
+
+//读取知识分类分类
+function admin_knowledge_cate()
+{
+    $cate = Db::name('KnowledgeCate')->order('id desc')->select()->toArray();
+    return $cate;
+}
+
+//读取知识分类子分类ids
+function admin_knowledge_cate_son($id = 0, $is_self = 1)
+{
+    $cate = admin_knowledge_cate();
+    $cate_list = get_data_node($cate, $id);
+    $cate_array = array_column($cate_list, 'id');
+    if ($is_self == 1) {
+        //包括自己在内
+        $cate_array[] = $id;
+    }
+    return $cate_array;
+}
+
+

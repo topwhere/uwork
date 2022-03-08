@@ -18,10 +18,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for oa_admin
+-- Table structure for dev_admin
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_admin`;
-CREATE TABLE `oa_admin`  (
+DROP TABLE IF EXISTS `dev_admin`;
+CREATE TABLE `dev_admin`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL DEFAULT '' COMMENT '登录用户名',
   `pwd` varchar(100) NOT NULL DEFAULT '' COMMENT '登录密码',
@@ -48,10 +48,10 @@ CREATE TABLE `oa_admin`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工表';
 
 -- ----------------------------
--- Table structure for oa_admin_group
+-- Table structure for dev_admin_group
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_admin_group`;
-CREATE TABLE `oa_admin_group`  (
+DROP TABLE IF EXISTS `dev_admin_group`;
+CREATE TABLE `dev_admin_group`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
   `status` int(1) NOT NULL DEFAULT 1,
@@ -66,14 +66,14 @@ CREATE TABLE `oa_admin_group`  (
 -- ----------------------------
 -- Records of cms_admin_group
 -- ----------------------------
-INSERT INTO `oa_admin_group` VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100',  '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
-INSERT INTO `oa_admin_group` VALUES (2, '人事总监权限', 1, '2,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,4,78,79,80,81,82,83,84,85,86,87,5,88,89,90,91,6,92,93,94,95,96,7,97,99,100', '人力资源部门领导的最高管理权限', 0, 0);
+INSERT INTO `dev_admin_group` VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100',  '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
+INSERT INTO `dev_admin_group` VALUES (2, '人事总监权限', 1, '2,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,4,78,79,80,81,82,83,84,85,86,87,5,88,89,90,91,6,92,93,94,95,96,7,97,99,100', '人力资源部门领导的最高管理权限', 0, 0);
 
 -- ----------------------------
--- Table structure for oa_admin_log
+-- Table structure for dev_admin_log
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_admin_log`;
-CREATE TABLE `oa_admin_log`  (
+DROP TABLE IF EXISTS `dev_admin_log`;
+CREATE TABLE `dev_admin_log`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
@@ -95,10 +95,10 @@ CREATE TABLE `oa_admin_log`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工操作日志表';
 
 -- ----------------------------
--- Table structure for oa_admin_rule
+-- Table structure for dev_admin_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_admin_rule`;
-CREATE TABLE `oa_admin_rule`  (
+DROP TABLE IF EXISTS `dev_admin_rule`;
+CREATE TABLE `dev_admin_rule`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父id',
   `src` varchar(255) NOT NULL DEFAULT '' COMMENT 'url链接',
@@ -117,123 +117,123 @@ CREATE TABLE `oa_admin_rule`  (
 -- ----------------------------
 -- Records of oa_admin_rule
 -- ----------------------------
-INSERT INTO `oa_admin_rule` VALUES (1, 0, 'admin/index/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (3, 0, 'project/index/index', '项目', '项目管理', 'icon-xiangmuguanli', 1, 3, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (4, 0, 'stories/index/index', '需求', '需求管理', 'icon-fenleiliebiao', 1, 4, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (5, 0, 'task/index/index', '任务', '任务管理', 'icon-renwuguanli', 1, 5, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (6, 0, 'test/index/index', '测试', '测试管理', 'icon-jiaoxuejihua', 1, 6, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (7, 0, 'knowledge/index/index', '知识库', '知识库', 'icon-shujiguanli', 1, 7, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (8, 0, 'book/index/index', '文档', '接口文档', 'icon-hetongshezhi', 1, 8, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (9, 0, 'analysis/index/index', '统计', '统计分析', 'icon-xiaoshoubaobiao', 1, 9, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/index/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (3, 0, 'project/index/index', '项目', '项目管理', 'icon-xiangmuguanli', 1, 3, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (4, 0, 'stories/index/index', '需求', '需求管理', 'icon-fenleiliebiao', 1, 4, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (5, 0, 'task/index/index', '任务', '任务管理', 'icon-renwuguanli', 1, 5, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (6, 0, 'test/index/index', '测试', '测试管理', 'icon-jiaoxuejihua', 1, 6, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (7, 0, 'knowledge/index/index', '知识库', '知识库', 'icon-shujiguanli', 1, 7, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (8, 0, 'book/index/index', '文档', '接口文档', 'icon-hetongshezhi', 1, 8, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (9, 0, 'analysis/index/index', '统计', '统计分析', 'icon-xiaoshoubaobiao', 1, 9, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (10, 1, '', '系统设置', '系统设置', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (10, 1, '', '系统设置', '系统设置', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (11, 10, 'admin/conf/index', '系统配置', '系统配置', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (12, 11, 'admin/conf/add', '新建/编辑', '配置项', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (13, 11, 'admin/conf/delete', '删除', '配置项', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (14, 11, 'admin/conf/edit', '编辑', '配置详情', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (11, 10, 'admin/conf/index', '系统配置', '系统配置', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (12, 11, 'admin/conf/add', '新建/编辑', '配置项', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (13, 11, 'admin/conf/delete', '删除', '配置项', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (14, 11, 'admin/conf/edit', '编辑', '配置详情', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (15, 10, 'admin/rule/index', '菜单节点', '菜单节点', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (16, 15, 'admin/rule/add', '新建/编辑', '菜单节点', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (17, 15, 'admin/rule/delete', '删除', '菜单节点', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (15, 10, 'admin/rule/index', '菜单节点', '菜单节点', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (16, 15, 'admin/rule/add', '新建/编辑', '菜单节点', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (17, 15, 'admin/rule/delete', '删除', '菜单节点', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (18, 10, 'admin/role/index', '权限角色', '权限角色', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (19, 18, 'admin/role/add', '新建/编辑', '权限角色', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (20, 18, 'admin/role/delete', '删除', '权限角色', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (18, 10, 'admin/role/index', '权限角色', '权限角色', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (19, 18, 'admin/role/add', '新建/编辑', '权限角色', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (20, 18, 'admin/role/delete', '删除', '权限角色', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (21, 10, 'admin/log/index', '操作日志', '操作日志', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (21, 10, 'admin/log/index', '操作日志', '操作日志', '', 1, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (22, 10, 'admin/database/database', '数据安全', '备份数据', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (23, 22, 'admin/database/backup', '备份数据表', '备份数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (24, 22, 'admin/database/optimize', '优化数据表', '优化数据表', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (25, 22, 'admin/database/repair', '修复数据表', '修复数据表', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (22, 10, 'admin/database/database', '数据安全', '备份数据', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (23, 22, 'admin/database/backup', '备份数据表', '备份数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (24, 22, 'admin/database/optimize', '优化数据表', '优化数据表', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (25, 22, 'admin/database/repair', '修复数据表', '修复数据表', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (26, 10, 'admin/database/backuplist', '还原数据', '还原数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (27, 26, 'admin/database/import', '还原数据表', '还原数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (27, 26, 'admin/database/downfile', '下载备份数据', '下载备份数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (27, 26, 'admin/database/del', '删除备份数据', '删除备份数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (26, 10, 'admin/database/backuplist', '还原数据', '还原数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (27, 26, 'admin/database/import', '还原数据表', '还原数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (28, 26, 'admin/database/downfile', '下载备份数据', '下载备份数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (29, 26, 'admin/database/del', '删除备份数据', '删除备份数据', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (28, 1, '', '基础数据', '基础数据', 'icon-jichushezhi', 1, 2, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (30, 1, '', '基础数据', '基础数据', 'icon-jichushezhi', 1, 2, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (29, 28, 'admin/ncate/index', '公告类型', '公告类型', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (30, 29, 'admin/ncate/add', '新建/编辑', '公告类型', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (31, 29, 'admin/ncate/delete', '删除', '公告类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (31, 30, 'admin/ncate/index', '公告类型', '公告类型', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (32, 31, 'admin/ncate/add', '新建/编辑', '公告类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (33, 31, 'admin/ncate/delete', '删除', '公告类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (32, 28, 'admin/wcate/index', '工作类型', '工作类型', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (33, 32, 'admin/wcate/add', '新建/编辑', '报销类型', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (34, 32, 'admin/wcate/check', '设置', '报销类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (34, 30, 'admin/wcate/index', '工作类型', '工作类型', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (35, 34, 'admin/wcate/add', '新建/编辑', '报销类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (36, 34, 'admin/wcate/check', '设置', '报销类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (35, 28, 'admin/kcate/index', '知识类型', '知识类型', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (36, 35, 'admin/kcate/add', '新建/编辑', '知识类型', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (37, 35, 'admin/kcate/delete', '删除', '知识类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (37, 30, 'admin/kcate/index', '知识类型', '知识类型', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (38, 37, 'admin/kcate/add', '新建/编辑', '知识类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (39, 37, 'admin/kcate/delete', '删除', '知识类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (38, 1, '', '企业管理', '企业管理', 'icon-qiyeguanli', 1, 3, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (40, 1, '', '企业管理', '企业管理', 'icon-qiyeguanli', 1, 3, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (39, 38, 'admin/department/index', '部门架构', '部门', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (40, 39, 'admin/department/add', '新建/编辑', '部门', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (41, 39, 'admin/department/delete', '删除', '部门', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (41, 40, 'admin/department/index', '部门架构', '部门', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (42, 41, 'admin/department/add', '新建/编辑', '部门', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (43, 41, 'admin/department/delete', '删除', '部门', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (42, 38, 'admin/position/index', '岗位职称', '岗位职称', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (43, 42, 'admin/position/add', '新建/编辑', '岗位职称', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (44, 42, 'admin/position/delete', '删除', '岗位职称', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (45, 42, 'admin/position/view', '查看', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (44, 40, 'admin/position/index', '岗位职称', '岗位职称', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (45, 44, 'admin/position/add', '新建/编辑', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (46, 44, 'admin/position/delete', '删除', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (47, 44, 'admin/position/view', '查看', '岗位职称', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (46, 38, 'admin/user/index', '企业员工', '员工', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (47, 46, 'admin/user/add', '新建/编辑', '员工', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (48, 46, 'admin/user/view', '查看', '员工信息', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (49, 46, 'admin/user/set', '设置', '员工状态', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (50, 46, 'admin/user/reset', '重设密码', '员工密码', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (48, 40, 'admin/user/index', '企业员工', '员工', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (49, 48, 'admin/user/add', '新建/编辑', '员工', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (50, 48, 'admin/user/view', '查看', '员工信息', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (51, 48, 'admin/user/set', '设置', '员工状态', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (52, 48, 'admin/user/reset', '重设密码', '员工密码', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (51, 38, 'admin/note/index', '企业公告', '公告', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (52, 51, 'admin/note/add', '新建/编辑', '公告', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (53, 51, 'admin/note/delete', '删除', '公告', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (54, 51, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (53, 40, 'admin/note/index', '企业公告', '公告', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (54, 53, 'admin/note/add', '新建/编辑', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (55, 53, 'admin/note/delete', '删除', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (56, 53, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (55, 2, 'product/index/list', '列表', '产品', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (56, 55, 'product/index/add', '新建/编辑', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (57, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (58, 55, 'product/user/set', '设置', '产品状态', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (59, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (57, 2, 'product/index/list', '列表', '产品', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (58, 57, 'product/index/add', '新建/编辑', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (59, 57, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (60, 57, 'product/user/set', '设置', '产品状态', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (61, 57, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (60, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (61, 60, 'project/index/add', '新建/编辑', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (62, 60, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (63, 60, 'project/user/set', '设置', '项目状态', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (64, 60, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (62, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (63, 62, 'project/index/add', '新建/编辑', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (64, 62, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (65, 62, 'project/user/set', '设置', '项目状态', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (66, 62, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (65, 4, 'stories/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (66, 65, 'stories/index/add', '新建/编辑', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (67, 65, 'stories/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (68, 65, 'stories/user/set', '设置', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (69, 65, 'stories/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (67, 4, 'stories/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (68, 67, 'stories/index/add', '新建/编辑', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (69, 67, 'stories/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (70, 67, 'stories/user/set', '设置', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (71, 67, 'stories/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (70, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (71, 70, 'task/index/add', '新建/编辑', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (72, 70, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (73, 70, 'task/user/set', '设置', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (74, 70, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (72, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (73, 72, 'task/index/add', '新建/编辑', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (74, 72, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (75, 72, 'task/user/set', '设置', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (76, 72, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (75, 6, 'test/index/list', '列表', '测试', '', 1, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (76, 75, 'test/index/add', '新建/编辑', '测试', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (77, 75, 'test/index/delete', '删除', '测试', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (78, 75, 'test/user/set', '设置', '测试', '', 2, 1, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (79, 75, 'test/index/view', '查看', '测试', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (77, 6, 'test/index/list', '列表', '测试', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (78, 77, 'test/index/add', '新建/编辑', '测试', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (79, 77, 'test/index/delete', '删除', '测试', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 77, 'test/user/set', '设置', '测试', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 77, 'test/index/view', '查看', '测试', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `oa_admin_rule` VALUES (80, 7, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (81, 7, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (82, 81, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (83, 81, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (84, 81, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (85, 81, 'knowledge/index/doc_tree', '知识库文档列表', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (86, 81, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `oa_admin_rule` VALUES (87, 81, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (82, 7, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (83, 7, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (84, 83, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (85, 83, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (86, 83, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (87, 83, 'knowledge/index/doc_tree', '知识库文档列表', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (88, 83, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (89, 83, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
 -- ----------------------------
--- Table structure for oa_config
+-- Table structure for dev_config
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_config`;
-CREATE TABLE `oa_config`  (
+DROP TABLE IF EXISTS `dev_config`;
+CREATE TABLE `dev_config`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '配置名称',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '配置标识',
@@ -247,16 +247,16 @@ CREATE TABLE `oa_config`  (
 -- ----------------------------
 -- Records of oa_config
 -- ----------------------------
-INSERT INTO `oa_config` VALUES (1, '网站配置', 'web', 'a:13:{s:2:\"id\";s:1:\"1\";s:11:\"admin_title\";s:9:\"勾股DEV\";s:5:\"title\";s:9:\"勾股DEV\";s:4:\"logo\";s:52:\"/storage/202111/fc507cc8332d5ef49d9425185e4a9697.jpg\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://dev.gougucms.com\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:8:\"keywords\";s:9:\"勾股DEV\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:4:\"desc\";s:479:\"勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。 \";s:4:\"code\";s:0:\"\";s:9:\"copyright\";s:32:\"© 2021 gougucms.com MIT license\";s:7:\"version\";s:6:\"1.0.22\";}', 1, 1612514630, 1638010154);
-INSERT INTO `oa_config` VALUES (2, '邮箱配置', 'email', 'a:8:{s:2:\"id\";s:1:\"2\";s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:485:\"<p>勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>\";}', 1, 1612521657, 1637075205);
-INSERT INTO `oa_config` VALUES (3, 'Api Token配置', 'token', 'a:5:{s:2:\"id\";s:1:\"3\";s:3:\"iss\";s:15:\"oa.gougucms.com\";s:3:\"aud\";s:7:\"gouguoa\";s:7:\"secrect\";s:7:\"GOUGUOA\";s:7:\"exptime\";s:4:\"3600\";}', 1, 1627313142, 1638010233);
-INSERT INTO `oa_config` VALUES (4, '其他配置', 'other', 'a:3:{s:2:\"id\";s:1:\"5\";s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:13:\"v1.2021.07.28\";}', 1, 1613725791, 1635953640);
+INSERT INTO `dev_config` VALUES (1, '网站配置', 'web', 'a:13:{s:2:\"id\";s:1:\"1\";s:11:\"admin_title\";s:9:\"勾股DEV\";s:5:\"title\";s:9:\"勾股DEV\";s:4:\"logo\";s:52:\"/storage/202111/fc507cc8332d5ef49d9425185e4a9697.jpg\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://dev.gougucms.com\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:8:\"keywords\";s:9:\"勾股DEV\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:4:\"desc\";s:479:\"勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。 \";s:4:\"code\";s:0:\"\";s:9:\"copyright\";s:32:\"© 2021 gougucms.com MIT license\";s:7:\"version\";s:6:\"1.0.22\";}', 1, 1612514630, 1638010154);
+INSERT INTO `dev_config` VALUES (2, '邮箱配置', 'email', 'a:8:{s:2:\"id\";s:1:\"2\";s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:478:\"勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。\";}', 1, 1612521657, 1637075205);
+INSERT INTO `dev_config` VALUES (3, 'Api Token配置', 'token', 'a:5:{s:2:\"id\";s:1:\"3\";s:3:\"iss\";s:15:\"oa.gougucms.com\";s:3:\"aud\";s:7:\"gouguoa\";s:7:\"secrect\";s:7:\"GOUGUOA\";s:7:\"exptime\";s:4:\"3600\";}', 1, 1627313142, 1638010233);
+INSERT INTO `dev_config` VALUES (4, '其他配置', 'other', 'a:3:{s:2:\"id\";s:1:\"5\";s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:13:\"v1.2021.07.28\";}', 1, 1613725791, 1635953640);
 
 -- ----------------------------
--- Table structure for oa_department
+-- Table structure for dev_department
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_department`;
-CREATE TABLE `oa_department`  (
+DROP TABLE IF EXISTS `dev_department`;
+CREATE TABLE `dev_department`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '部门名称',
   `pid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级部门id',
@@ -272,23 +272,23 @@ CREATE TABLE `oa_department`  (
 -- ----------------------------
 -- Records of oa_department
 -- ----------------------------
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (1, '董事会', 0, 0, '13688888888');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (2, '人事部', 1, 0, '13688888889');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (3, '财务部', 1, 0, '13688888898');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (4, '市场部', 1, 0, '13688888978');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (5, '销售部', 1, 0, '13688889868');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (6, '技术部', 1, 0, '13688898858');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (7, '产品部', 6, 0, '13688888886');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (8, '设计部', 6, 0, '13688888876');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (9, '研发部', 6, 0, '13688888666');
-INSERT INTO `oa_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (10, '测试部', 6, 0, '13688888666');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (1, '董事会', 0, 0, '13688888888');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (2, '人事部', 1, 0, '13688888889');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (3, '财务部', 1, 0, '13688888898');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (4, '市场部', 1, 0, '13688888978');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (5, '销售部', 1, 0, '13688889868');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (6, '技术部', 1, 0, '13688898858');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (7, '产品部', 6, 0, '13688888886');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (8, '设计部', 6, 0, '13688888876');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (9, '研发部', 6, 0, '13688888666');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (10, '测试部', 6, 0, '13688888666');
 
 
 -- ----------------------------
--- Table structure for oa_work_cate
+-- Table structure for dev_work_cate
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_work_cate`;
-CREATE TABLE `oa_work_cate`  (
+DROP TABLE IF EXISTS `dev_work_cate`;
+CREATE TABLE `dev_work_cate`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '工作类型名称',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
@@ -300,21 +300,21 @@ CREATE TABLE `oa_work_cate`  (
 -- ----------------------------
 -- Records of oa_expense_cate
 -- ----------------------------
-INSERT INTO `oa_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
-INSERT INTO `oa_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (3, 'UI设计', 1, 1638088518, 0);
-INSERT INTO `oa_work_cate` VALUES (4, '技术开发', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (5, '测试', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (6, '撰写文档', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (7, '需求调研', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (8, '需求沟通', 1, 1637987199, 0);
-INSERT INTO `oa_work_cate` VALUES (9, '会议', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
+INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (3, 'UI设计', 1, 1638088518, 0);
+INSERT INTO `dev_work_cate` VALUES (4, '技术开发', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (5, '测试', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (6, '撰写文档', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (7, '需求调研', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (8, '需求沟通', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (9, '会议', 1, 1637987199, 0);
 
 -- ----------------------------
--- Table structure for oa_file
+-- Table structure for dev_file
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_file`;
-CREATE TABLE `oa_file`  (
+DROP TABLE IF EXISTS `dev_file`;
+CREATE TABLE `dev_file`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `module` varchar(15) NOT NULL DEFAULT '' COMMENT '所属模块',
   `sha1` varchar(60) NOT NULL COMMENT 'sha1',
@@ -338,10 +338,10 @@ CREATE TABLE `oa_file`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '文件表';
 
 -- ----------------------------
--- Table structure for oa_message
+-- Table structure for dev_message
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_message`;
-CREATE TABLE `oa_message`  (
+DROP TABLE IF EXISTS `dev_message`;
+CREATE TABLE `dev_message`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '消息主题',
   `template` tinyint(2) NOT NULL DEFAULT 0 COMMENT '消息模板，用于前端拼接消息',
@@ -367,10 +367,10 @@ CREATE TABLE `oa_message`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '消息表';
 
 -- ----------------------------
--- Table structure for oa_message_file_interfix
+-- Table structure for dev_message_file_interfix
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_message_file_interfix`;
-CREATE TABLE `oa_message_file_interfix`  (
+DROP TABLE IF EXISTS `dev_message_file_interfix`;
+CREATE TABLE `dev_message_file_interfix`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mid` int(11) UNSIGNED NOT NULL COMMENT '消息id',
   `file_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '相关联附件id',
@@ -380,14 +380,15 @@ CREATE TABLE `oa_message_file_interfix`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '消息关联的附件表';
 
 -- ----------------------------
--- Table structure for oa_note
+-- Table structure for dev_note
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_note`;
-CREATE TABLE `oa_note`  (
+DROP TABLE IF EXISTS `dev_note`;
+CREATE TABLE `dev_note`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `cate_id` int(11) NOT NULL DEFAULT 0 COMMENT '关联分类ID',
   `title` varchar(225) NULL DEFAULT NULL COMMENT '标题',
-  `content` text NOT NULL COMMENT '公告内容',
+  `content` text NOT NULL COMMENT '内容',
+  `md_content` text NOT NULL COMMENT 'markdown内容',
   `src` varchar(100) NULL DEFAULT NULL COMMENT '关联链接',
   `status` int(1) NOT NULL DEFAULT 1 COMMENT '1可用-1禁用',
   `sort` int(11) NOT NULL DEFAULT 0,
@@ -401,13 +402,13 @@ CREATE TABLE `oa_note`  (
 -- ----------------------------
 -- Records of oa_note
 -- ----------------------------
-INSERT INTO `oa_note` VALUES (1, 1, '欢迎使用勾股OA办公系统', '<p>欢迎使用勾股OA办公系统，勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>', 'https://oa.gougucms.com', 1, 2, 1635696000, 1924876800, 1637984962, 1637984975);
+INSERT INTO `dev_note` VALUES (1, 1, '欢迎使用勾股OA办公系统', '<p>欢迎使用勾股OA办公系统，勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>', 'https://oa.gougucms.com', 1, 2, 1635696000, 1924876800, 1637984962, 1637984975);
 
 -- ----------------------------
--- Table structure for oa_note_cate
+-- Table structure for dev_note_cate
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_note_cate`;
-CREATE TABLE `oa_note_cate`  (
+DROP TABLE IF EXISTS `dev_note_cate`;
+CREATE TABLE `dev_note_cate`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父类ID',
   `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
@@ -420,14 +421,14 @@ CREATE TABLE `oa_note_cate`  (
 -- ----------------------------
 -- Records of oa_note_cate
 -- ----------------------------
-INSERT INTO `oa_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299);
-INSERT INTO `oa_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310);
+INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299);
+INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310);
 
 -- ----------------------------
--- Table structure for oa_position
+-- Table structure for dev_position
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_position`;
-CREATE TABLE `oa_position`  (
+DROP TABLE IF EXISTS `dev_position`;
+CREATE TABLE `dev_position`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '岗位名称',
   `work_price` int(10) NOT NULL DEFAULT 0 COMMENT '工时单价',
@@ -441,14 +442,14 @@ CREATE TABLE `oa_position`  (
 -- ----------------------------
 -- Records of oa_position
 -- ----------------------------
-INSERT INTO `oa_position` VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
-INSERT INTO `oa_position` VALUES (2, '人事总监', 1000, '人事部的最大领导', 1, 0, 0);
+INSERT INTO `dev_position` VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
+INSERT INTO `dev_position` VALUES (2, '人事总监', 1000, '人事部的最大领导', 1, 0, 0);
 
 -- ----------------------------
--- Table structure for oa_position_group
+-- Table structure for dev_position_group
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_position_group`;
-CREATE TABLE `oa_position_group`  (
+DROP TABLE IF EXISTS `dev_position_group`;
+CREATE TABLE `dev_position_group`  (
   `pid` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '岗位id',
   `group_id` int(11) NULL DEFAULT NULL COMMENT '权限id',
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
@@ -459,14 +460,14 @@ CREATE TABLE `oa_position_group`  (
 -- ----------------------------
 -- Records of oa_position_group
 -- ----------------------------
-INSERT INTO `oa_position_group` VALUES (1, 1, 1635755739, 0);
-INSERT INTO `oa_position_group` VALUES (2, 2, 1638007427, 0);
+INSERT INTO `dev_position_group` VALUES (1, 1, 1635755739, 0);
+INSERT INTO `dev_position_group` VALUES (2, 2, 1638007427, 0);
 
 -- ----------------------------
--- Table structure for oa_schedule
+-- Table structure for dev_schedule
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_schedule`;
-CREATE TABLE `oa_schedule`  (
+DROP TABLE IF EXISTS `dev_schedule`;
+CREATE TABLE `dev_schedule`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '工作记录主题',
   `wid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联工作内容类型ID',
@@ -487,10 +488,10 @@ CREATE TABLE `oa_schedule`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作记录';
 
 -- ----------------------------
--- Table structure for oa_work
+-- Table structure for dev_work
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_work`;
-CREATE TABLE `oa_work`  (
+DROP TABLE IF EXISTS `dev_work`;
+CREATE TABLE `dev_work`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `type` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '类型：1 日报 2周报 3月报',
   `type_user` text NULL COMMENT '接受人员ID',
@@ -505,10 +506,10 @@ CREATE TABLE `oa_work`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '汇报工作表';
 
 -- ----------------------------
--- Table structure for oa_work_file_interfix
+-- Table structure for dev_work_file_interfix
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_work_file_interfix`;
-CREATE TABLE `oa_work_file_interfix`  (
+DROP TABLE IF EXISTS `dev_work_file_interfix`;
+CREATE TABLE `dev_work_file_interfix`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `wid` int(11) UNSIGNED NOT NULL COMMENT '汇报工作id',
   `file_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '相关联附件id',
@@ -518,10 +519,10 @@ CREATE TABLE `oa_work_file_interfix`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '汇报工作关联的附件表';
 
 -- ----------------------------
--- Table structure for oa_work_record
+-- Table structure for dev_work_record
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_work_record`;
-CREATE TABLE `oa_work_record`  (
+DROP TABLE IF EXISTS `dev_work_record`;
+CREATE TABLE `dev_work_record`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `wid` int(11) UNSIGNED NOT NULL COMMENT '汇报工作id',
   `from_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送人id',
@@ -533,10 +534,10 @@ CREATE TABLE `oa_work_record`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '汇报工作发送记录表';
 
 -- ----------------------------
--- Table structure for oa_knowledge_cate
+-- Table structure for dev_knowledge_cate
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_knowledge_cate`;
-CREATE TABLE `oa_knowledge_cate`  (
+DROP TABLE IF EXISTS `dev_knowledge_cate`;
+CREATE TABLE `dev_knowledge_cate`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父类ID',
   `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
@@ -550,16 +551,17 @@ CREATE TABLE `oa_knowledge_cate`  (
 -- ----------------------------
 -- Records of oa_knowledge_cate
 -- ----------------------------
-INSERT INTO `oa_knowledge_cate` VALUES (1, 0, 0, '办公技巧', '', 1637984651, 0);
-INSERT INTO `oa_knowledge_cate` VALUES (2, 0, 0, '行业技能', '', 1637984739, 0);
+INSERT INTO `dev_knowledge_cate` VALUES (1, 0, 0, '办公技巧', '', 1637984651, 0);
+INSERT INTO `dev_knowledge_cate` VALUES (2, 0, 0, '行业技能', '', 1637984739, 0);
 
 -- ----------------------------
--- Table structure for oa_knowledge
+-- Table structure for dev_knowledge
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_knowledge`;
-CREATE TABLE `oa_book`  (
+DROP TABLE IF EXISTS `dev_knowledge`;
+CREATE TABLE `dev_knowledge`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `admin_id` int(11) NOT NULL DEFAULT 0 COMMENT '作者',
+  `cate_id` int(11) NOT NULL DEFAULT 0 COMMENT '分类id',
   `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
@@ -572,10 +574,10 @@ CREATE TABLE `oa_book`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
 
 -- ----------------------------
--- Table structure for oa_doc
+-- Table structure for dev_knowledge_doc
 -- ----------------------------
-DROP TABLE IF EXISTS `oa_doc`;
-CREATE TABLE `oa_doc`  (
+DROP TABLE IF EXISTS `dev_knowledge_doc`;
+CREATE TABLE `dev_knowledge_doc`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父章节',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',

@@ -18,11 +18,11 @@
 	<script>
 		function init(layui){
 			var table=layui.table,
+			gougu=layui.gougu,
 			layer=layui.layer;
 			
 			var tableIns = table.render({
 			elem: '#test'
-			,toolbar: '#toolbarDemo'
 			,title:'工作类别列表'
 			,url: "/admin/wcate/index"
 			,page: true //开启分页
@@ -63,41 +63,25 @@
 				}
 				if(obj.event === 'disable'){
 					layer.confirm('确定要禁用该类别吗?', {icon: 3, title:'提示'}, function(index){
-						$.ajax({
-							url: "/admin/wcate/check",
-							type: 'post',
-							data: {
-								id: obj.data.id,
-								status: 0,
-								title: obj.data.title,
-							},
-							success: function(e) {
-								layer.msg(e.msg);
-								if (e.code == 0) {
-									tableIns.reload();
-								}
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								tableIns.reload();
 							}
-						}) 
+						}
+						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 0 },callback);
 						layer.close(index);
 					});
 				}
 				if(obj.event === 'open'){
 					layer.confirm('确定要启用该类别吗?', {icon: 3, title:'提示'}, function(index){
-						$.ajax({
-							url: "/admin/wcate/check",
-							type: 'post',
-							data: {
-								id: obj.data.id,
-								status: 1,
-								title: obj.data.title,
-							},
-							success: function(e) {
-								layer.msg(e.msg);
-								if (e.code == 0) {
-									tableIns.reload();
-								}
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								tableIns.reload();
 							}
-						}) 
+						}
+						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 1 },callback);
 						layer.close(index);
 					});
 				}
@@ -119,21 +103,14 @@
 						// 获取文本框输入的值
 						var value = layero.find(".layui-layer-input").val();
 						if (value) {
-							$.ajax({
-								url: "/admin/wcate/add",
-								type: 'post',
-								data: {
-									id: id,
-									title: value,
-								},
-								success: function(e) {
-									layer.msg(e.msg);
+							let callback = function (e) {
+								layer.msg(e.msg);
+								if (e.code == 0) {
 									tableIns.reload();
-									setTimeout(function(){
-										layer.closeAll();
-									}, 1000);
 								}
-							})
+								layer.close(index);
+							}
+							gougu.post("/admin/wcate/add",{id: id, title: value,},callback);
 						} else {
 							layer.msg('请填写类别标题');
 						}
@@ -142,6 +119,6 @@
 			}
 		}
 	</script>
-	{include file="../../base/view/common/layui" base='base' extend="[]" callback="init" /}
+	{include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

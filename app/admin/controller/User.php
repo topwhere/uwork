@@ -60,7 +60,7 @@ class User extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             $param['entry_time'] = strtotime($param['entry_time']);
             $param['nickname'] = $param['name'];
             $pinyin = new Pinyin();
@@ -202,94 +202,61 @@ class User extends BaseController
     //禁用,恢复
     public function set()
     {
-        $type = get_params("type");
-        $ids = get_params("ids");
-        $idArray = explode(',', $ids);
-        $list = [];
-        foreach ($idArray as $key => $val) {
-            if ($val == 1) {
-                continue;
-            }
-            $list[] = [
-                'status' => $type,
-                'id' => $val,
-                'update_time' => time(),
-            ];
-        }
-        foreach ($list as $key => $v) {
-            if (Db::name('Admin')->update($v) !== false) {
-                if ($type == 0) {
-                    add_log('disable', $v['id']);
-                } else if ($type == 1) {
-                    add_log('recovery', $v['id']);
-                }
-            }
-        }
-        return to_assign(0, '操作成功');
+		if (request()->isPost()) {
+			$type = get_params("type");
+			$ids = get_params("ids");
+			$idArray = explode(',', $ids);
+			$list = [];
+			foreach ($idArray as $key => $val) {
+				if ($val == 1) {
+					continue;
+				}
+				$list[] = [
+					'status' => $type,
+					'id' => $val,
+					'update_time' => time(),
+				];
+			}
+			foreach ($list as $key => $v) {
+				if (Db::name('Admin')->update($v) !== false) {
+					if ($type == 0) {
+						add_log('disable', $v['id']);
+					} else if ($type == 1) {
+						add_log('recovery', $v['id']);
+					}
+				}
+			}
+			return to_assign(0, '操作成功');
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 
     //重置密码
-    public function reset_psw()
+    public function reset()
     {
-        $id = get_params("id");
-		if($id == 1){
-			return to_assign(1, '该账号是超级管理员，不允许重置');
+		if (request()->isPost()) {
+			$id = get_params("id");
+			if($id == 1){
+				return to_assign(1, '该账号是超级管理员，不允许重置');
+			}
+			$new_pwd = set_salt(6);
+			$salt = set_salt(20);
+			$data = [
+				'reg_pwd' => $new_pwd,
+				'salt' => $salt,
+				'pwd' => set_password($new_pwd, $salt),
+				'id' => $id,
+				'update_time' => time(),
+			];
+			if (Db::name('Admin')->update($data) !== false) {
+				add_log('reset', $id);
+				return to_assign(0, '操作成功');
+			} else {
+				return to_assign(1, '操作失败');
+			}
+		}else{
+			return to_assign(1, "错误的请求");
 		}
-        $new_pwd = set_salt(6);
-        $salt = set_salt(20);
-        $data = [
-            'reg_pwd' => $new_pwd,
-            'salt' => $salt,
-            'pwd' => set_password($new_pwd, $salt),
-            'id' => $id,
-            'update_time' => time(),
-        ];
-        if (Db::name('Admin')->update($data) !== false) {
-            add_log('reset', $id);
-            return to_assign(0, '操作成功');
-        } else {
-            return to_assign(1, '操作失败');
-        }
-    }
-
-    //管理员操作日志
-    public function log()
-    {
-        if (request()->isAjax()) {
-            $param = get_params();
-            $where = array();
-            if (!empty($param['keywords'])) {
-                $where[] = ['name|rule_menu|param_id', 'like', '%' . $param['keywords'] . '%'];
-            }
-            if (!empty($param['title_cate'])) {
-                $where['title'] = $param['title_cate'];
-            }
-            if (!empty($param['rule_menu'])) {
-                $where['rule_menu'] = $param['rule_menu'];
-            }
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $content = DB::name('AdminLog')
-                ->field("id,uid,name,action,title,content,rule_menu,ip,param_id,param,FROM_UNIXTIME(create_time,'%Y-%m-%d %H:%i:%s') create_time")
-                ->order('create_time desc')
-                ->where($where)
-                ->paginate($rows, false, ['query' => $param]);
-            $content->toArray();
-            foreach ($content as $k => $v) {
-                $data = $v;
-                $param_array = json_decode($v['param'], true);
-                $param_value = '';
-                foreach ($param_array as $key => $value) {
-                    if (is_array($value)) {
-                        $value = implode(',', $value);
-                    }
-                    $param_value .= $key . ':' . $value . '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                }
-                $data['param'] = $param_value;
-                $content->offsetSet($k, $data);
-            }
-            return table_assign(0, '', $content);
-        } else {
-            return view();
-        }
     }
 }

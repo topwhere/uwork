@@ -5,14 +5,14 @@
  * @link https://www.gougucms.com
  */
 
-namespace app\home\validate;
+namespace app\admin\validate;
 
 use think\Validate;
 
-class ExpenseCateCheck extends Validate
+class WorkCateCheck extends Validate
 {
     protected $rule = [
-        'title' => 'require|unique:expense_cate',
+        'title' => 'require|unique:work_cate',
         'id' => 'require',
     ];
 

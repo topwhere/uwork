@@ -16,11 +16,11 @@
 				<select name="cate_id" lay-verify="required" lay-reqText="请选择分类">
 					<option value="">请选择分类</option>
 					{notempty name="$note.cate_id"}
-						{volist name=":set_recursion(note_cate())" id="v"}
+						{volist name=":set_recursion(admin_note_cate())" id="v"}
 						<option value="{$v.id}" {eq name="$note.cate_id" value="$v.id" }selected{/eq}>{$v.title}</option>
 						{/volist}
 					{else/}
-						{volist name=":set_recursion(note_cate())" id="v"}
+						{volist name=":set_recursion(admin_note_cate())" id="v"}
 						<option value="{$v.id}">{$v.title}</option>
 						{/volist}
 					{/notempty}
@@ -65,7 +65,7 @@
 			<td class="layui-td-gray" style="vertical-align:top;">公告内容<span style="color: red">*</span></td>
 			<td colspan="3">
 			<div style="margin-top:-2px; margin-right:2px">
-				<textarea id="mdContent" style="display:none;">{notempty name="$note.content" }{$note.content|raw}{/notempty}</textarea>
+				<textarea id="mdContent" style="display:none;">{notempty name="$note.md_content" }{$note.md_content|raw}{/notempty}</textarea>
 				<div id="docContent"></div>
 			</div>
 			{include file="../../base/view/common/mdeditor" id="docContent" markdown="mdContent" height="500" watch="false" toolbar="[]" /}
@@ -96,20 +96,16 @@
 	});
     //监听提交
     form.on('submit(webform)', function (data) {
-		$.ajax({
-			url: "/admin/note/add",
-			type: 'post',
-			data: data.field,
-			success: function (e) {
-				layer.msg(e.msg);
-				if (e.code == 0) {
-					tableIns.reload();
-					setTimeout(function(){
-						gougu.close();
-					},1000);
-				}
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				tableIns.reload();
+				setTimeout(function(){
+					gougu.close();
+				},500);
 			}
-		})
+		}
+		gougu.post("/admin/note/add",data.field,callback);
 		return false;
     });
 }

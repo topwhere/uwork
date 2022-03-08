@@ -40,7 +40,7 @@ class Role extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             $ruleData = isset($param['rule']) ? $param['rule'] : 0;
             $param['rules'] = implode(',', $ruleData);
             if (!empty($param['id']) && $param['id'] > 0) {
@@ -89,15 +89,19 @@ class Role extends BaseController
     //删除
     public function delete()
     {
-        $id = get_params("id");
-        if ($id == 1) {
-            return to_assign(1, "该组是系统所有者，无法删除");
-        }
-        if (Db::name('AdminGroup')->delete($id) !== false) {
-            add_log('delete', $id, []);
-            return to_assign(0, "删除角色成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			if ($id == 1) {
+				return to_assign(1, "该组是系统所有者，无法删除");
+			}
+			if (Db::name('AdminGroup')->delete($id) !== false) {
+				add_log('delete', $id, []);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

@@ -32,7 +32,7 @@ class Ncate extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             if (!empty($param['id']) && $param['id'] > 0) {
                 try {
                     validate(NoteCateCheck::class)->scene('edit')->check($param);
@@ -84,20 +84,24 @@ class Ncate extends BaseController
     //公告类别删除
     public function delete()
     {
-        $id = get_params("id");
-        $cate_count = Db::name('NoteCate')->where(["pid" => $id])->count();
-        if ($cate_count > 0) {
-            return to_assign(1, "该分类下还有子分类，无法删除");
-        }
-        $content_count = Db::name('Article')->where(["article_cate_id" => $id])->count();
-        if ($content_count > 0) {
-            return to_assign(1, "该分类下还有文章，无法删除");
-        }
-        if (Db::name('NoteCate')->delete($id) !== false) {
-            add_log('delete', $id);
-            return to_assign(0, "删除分类成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$cate_count = Db::name('NoteCate')->where(["pid" => $id])->count();
+			if ($cate_count > 0) {
+				return to_assign(1, "该分类下还有子分类，无法删除");
+			}
+			$content_count = Db::name('Note')->where(["cate_id" => $id])->count();
+			if ($content_count > 0) {
+				return to_assign(1, "该分类下还有公告，无法删除");
+			}
+			if (Db::name('NoteCate')->delete($id) !== false) {
+				add_log('delete', $id);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

@@ -55,13 +55,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">邮件模板</td>
+			<td class="layui-td-gray2">邮件内容</td>
 			<td>
-			<div style="margin-top:-2px; margin-right:2px">
-				<textarea id="mdContent" style="display:none;">{notempty name="$config.template"}{$config.template|raw}{/notempty}</textarea>
-				<div id="docContent"></div>
-			</div>
-			{include file="../../base/view/common/mdeditor" id="docContent" markdown="mdContent" height="360" watch="false" toolbar="[]" /}
+				<textarea class="layui-textarea" name="template">{notempty name="$config.template"}{$config.template}{/notempty}</textarea>
 			</td>
 		</tr>
 	</table>
@@ -81,26 +77,16 @@
 		form.render();
 		//监听提交
 		form.on('submit(webform)', function (data) {
-			if(data.field.id==0){
-				data.field._method == 'POST';
-			}
-			else{
-				data.field._method == 'PUT';
-			}
-			$.ajax({
-				url: "/admin/conf/edit",
-				type: 'post',
-				data: data.field,
-				success: function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						tableIns.reload();
-						setTimeout(function(){
-							gougu.close();
-						},1000);
-					}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tableIns.reload();
+					setTimeout(function(){
+						gougu.close();
+					},500);
 				}
-			})
+			}
+			gougu.post("/admin/conf/edit",data.field,callback);
 			return false;
 		});
 

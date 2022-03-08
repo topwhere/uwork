@@ -48,7 +48,22 @@ class Note extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
+			//markdown数据处理
+			if (isset($param['table-align'])) {
+				unset($param['table-align']);
+			}
+			if (isset($param['docContent-html-code'])) {
+				$param['content'] = $param['docContent-html-code'];
+				$param['md_content'] = $param['docContent-markdown-doc'];
+				unset($param['docContent-html-code']);
+				unset($param['docContent-markdown-doc']);
+			}
+			if (isset($param['ueditorcontent'])) {
+				$param['content'] = $param['ueditorcontent'];
+				$param['md_content'] = '';
+			}
+			
             $param['start_time'] = isset($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
             $param['end_time'] = isset($param['end_time']) ? strtotime(urldecode($param['end_time'])) : 0;
             if (!empty($param['id']) && $param['id'] > 0) {
@@ -105,15 +120,19 @@ class Note extends BaseController
     //删除
     public function delete()
     {
-        $id = get_params("id");
-        $data['status'] = '-1';
-        $data['id'] = $id;
-        $data['update_time'] = time();
-        if (Db::name('Note')->update($data) !== false) {
-            add_log('delete', $id);
-            return to_assign(1, "删除成功");
-        } else {
-            return to_assign(0, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$data['status'] = '-1';
+			$data['id'] = $id;
+			$data['update_time'] = time();
+			if (Db::name('Note')->update($data) !== false) {
+				add_log('delete', $id);
+				return to_assign(1, "删除成功");
+			} else {
+				return to_assign(0, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

@@ -32,7 +32,7 @@ class Kcate extends BaseController
     public function add()
     {
         $param = get_params();
-        if (request()->isPut() || request()->isPost()) {
+        if (request()->isPost()) {
             if (!empty($param['id']) && $param['id'] > 0) {
                 try {
                     validate(KnowledgeCateCheck::class)->scene('edit')->check($param);
@@ -40,8 +40,8 @@ class Kcate extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
-                $note_array = admin_article_cate_son($param['id']);
-                if (in_array($param['pid'], $note_array)) {
+                $cate_array = admin_knowledge_cate_son($param['id']);
+                if (in_array($param['pid'], $cate_array)) {
                     return to_assign(1, '父级分类不能是该分类本身或其子分类');
                 } else {
                     $param['update_time'] = time();
@@ -84,20 +84,24 @@ class Kcate extends BaseController
     //删除知识分类
     public function delete()
     {
-        $id = get_params("id");
-        $cate_count = Db::name('KnowledgeCate')->where(["pid" => $id])->count();
-        if ($cate_count > 0) {
-            return to_assign(1, "该分类下还有子分类，无法删除");
-        }
-        $content_count = Db::name('Knowledge')->where(["article_cate_id" => $id])->count();
-        if ($content_count > 0) {
-            return to_assign(1, "该分类下还有文章，无法删除");
-        }
-        if (Db::name('KnowledgeCate')->delete($id) !== false) {
-            add_log('delete', $id);
-            return to_assign(0, "删除分类成功");
-        } else {
-            return to_assign(1, "删除失败");
-        }
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$cate_count = Db::name('KnowledgeCate')->where(["pid" => $id])->count();
+			if ($cate_count > 0) {
+				return to_assign(1, "该分类下还有子分类，无法删除");
+			}
+			$content_count = Db::name('Knowledge')->where(["cate_id" => $id])->count();
+			if ($content_count > 0) {
+				return to_assign(1, "该分类下还有文档，无法删除");
+			}
+			if (Db::name('KnowledgeCate')->delete($id) !== false) {
+				add_log('delete', $id);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(1, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 }

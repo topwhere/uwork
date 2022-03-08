@@ -102,35 +102,19 @@
 <!-- /主体 -->
 <script>
 	function pageInit() {
-		var form = layui.form,
-			layer = layui.layer;
+		let form = layui.form,
+			layer = layui.layer,
+			gougu = layui.gougu;
 		form.render();
 		//监听提交
 		form.on('submit(webform)', function (data) {
-			if(data.field.src!='' && data.field.module!=''){
-				if(data.field.src.indexOf(data.field.module.toLowerCase()+'/')!=0){
-					layer.msg('输入的菜单/节点URL与所属功能模块不匹配');
-					return false;
-				}
-			}
-			if(data.field.id==0){
-				data.field._method == 'POST';
-			}
-			else{
-				data.field._method == 'PUT';
-			}
-			$.ajax({
-				url: "/home/rule/add",
-				type: 'post',
-				data: data.field,
-				success: function (e) {
+			let callback = function (e) {
 					layer.msg(e.msg);
 					if (e.code == 0) {
-						//parent.rightpage.close();
 						location.reload();
 					}
 				}
-			})
+			gougu.post("/admin/rule/add",data.field,callback);
 			return false;
 		});
 	}

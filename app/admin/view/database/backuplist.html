@@ -40,7 +40,7 @@
 					<td align="center" data-id='{$voo.time}'>
 						<div class="layui-btn-group">
 						<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="import">数据还原</a>
-						<a class="layui-btn layui-btn-xs" href='/database/downfile?name={:date("Ymd",$voo.time)}{$voo.compress}{:date("His",$voo.time)}{$voo.compress}{$voo.part}.sql'>备份下载</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">备份删除</a>
+						<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?name={:date("Ymd",$voo.time)}{$voo.compress}{:date("His",$voo.time)}{$voo.compress}{$voo.part}.sql'>备份下载</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">备份删除</a>
 						</div>
 					</td>
 				</tr>
@@ -67,7 +67,7 @@
 					title: '提示'
 				}, function (index) {
 					$.ajax({
-						url: "/home/database/import?id="+id,
+						url: "/admin/database/import?id="+id,
 						success: function (res) {
 							layer.msg(res.msg);
 						}
@@ -83,7 +83,7 @@
 					title: '提示'
 				}, function (index) {
 					$.ajax({
-						url: "/home/database/del",
+						url: "/admin/database/del",
 						data: {'id':id},
 						success: function (res) {
 							layer.msg(res.msg);

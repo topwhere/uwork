@@ -67,17 +67,14 @@
 				return;
 			}
 			if (obj.event === 'del') {
-				layer.confirm('确定要删除该权限角色吗？', { icon: 3, title: '提示' }, function (index) {
-					$.ajax({
-						url: "/admin/role/delete",
-						data: { id: data.id },
-						success: function (e) {
-							layer.msg(e.msg);
-							if (e.code == 0) {
-								obj.del();
-							}
+				layer.confirm("确定要删除该权限角色吗？", { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
 						}
-					})
+					}
+					gougu.delete("/admin/role/delete",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}

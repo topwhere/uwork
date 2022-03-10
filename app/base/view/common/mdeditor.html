@@ -7,13 +7,8 @@
 		var editormdWatch=[watch];
 		var toolbarArray=[toolbar];
 		var editormdToolbar=[
-					"undo", "redo", "|", 
-					"bold", "del", "italic", "quote", "|", 
-					"h1", "h2", "h3", "h4", "h5", "h6", "|", 
-					"list-ul", "list-ol", "hr", "|",
-					"link", "reference-link", "image", "code", "code-block", "table","|",
-					"watch", "preview", "fullscreen", "clear","|",
-					"help"
+					"undo", "redo","bold", "del", "italic", "quote","h1", "h2", "h3", "h4", "h5",
+					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "code-block", "table","watch", "fullscreen"
 				];
 		if(toolbarArray && toolbarArray.length>0){
 			editormdToolbar=toolbarArray;
@@ -29,7 +24,7 @@
 				watch            : editormdWatch, 
 				imageUpload: true,
 				imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-				imageUploadURL: "/admin/api/md_upload",		
+				imageUploadURL: "/api/index/md_upload",		
 				saveHTMLToTextarea : true,//保存html到textarea
 				toolbarIcons : function() {
 					return editormdToolbar;
@@ -51,6 +46,6 @@
 					this.resize();
 				}
 			})
-		},400);
+		},200);
 
 	</script>

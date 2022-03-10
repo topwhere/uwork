@@ -1,0 +1,142 @@
+<div class="page-content">
+	<div class="p-4 border-b">
+	<h3 class="h3-title hover-edit">
+	{eq name="$product.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
+	{eq name="$product.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
+	<span id="name_{$product.id}" data-val="">{$product.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="name"></i>
+	</h3>
+	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$product.admin_name}</span><span class="font-gray">创建于{:time_trans($product.create_time)}<span  id="editTips">{gt name="$product.update_time" value="0"}，最近更新于 {:time_trans($product.update_time)}{/gt}</span></span></div>
+	</div>
+	<div class="layui-row border-b">
+		<div class="layui-col-md9 p-4 border-r">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">产品负责人</td>
+					<td class="hover-edit"><span id="director_uid_{$product.id}" data-val="{$product.director_uid}">{$product.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="director_uid"></i></td>
+					<td class="layui-td-gray">测试负责人</td>
+					<td class="hover-edit"><span id="test_uid_{$product.id}" data-val="{$product.test_uid}">{$product.test_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="test_uid"></i></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">产品评审人</td>
+					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$product.id}" data-val="{$product.check_admin_ids}">{$product.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="check_admin_ids"></i></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">访问控制</td>
+					<td colspan="3" class="hover-edit">
+						<span id="is_open_{$product.id}" data-val="{$product.is_open}">
+						{eq name="$product.is_open" value="1" }
+						私有 <span class="font-gray">(白名单员工可访问者)</span>
+						{/eq}
+						{eq name="$product.is_open" value="2" }公开 <span class="font-gray">(有产品视图权限员工均可访问)</span>{/eq}
+						</span>
+						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="is_open"></i>						
+					</td>			
+				</tr>
+				<tr id="is_open_son" class="is_open_son{$product.is_open}">
+					<td class="layui-td-gray">访问白名单</td>
+					<td colspan="3" class="hover-edit"><span id="view_admin_ids_{$product.id}" data-val="{$product.view_admin_ids}">{$product.view_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="view_admin_ids"></i></td>
+				</tr>
+			</table>
+			<div class="md-content hover-edit">
+				<h5 class="py-4">产品描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="content"></i></h5>
+				<div id="content_{$product.id}" data-val="{$product.md_content}">{$product.content|raw}</div>
+			</div>
+		</div>
+		<div class="layui-col-md3 p-4">
+			<h5 class="pb-4">关联信息</h5>
+			<div class="pb-4"><span class="font-gray">关联项目：</span>2</div>
+			<div class="pb-4"><span class="font-gray">关联需求：</span>101</div>
+			<div class="pb-4"><span class="font-gray">关联任务：</span>135</div>
+			<div class="pb-4"><span class="font-gray">关联BUG：</span>56</div>
+		</div>
+	</div>
+	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">
+		<ul class="layui-tab-title">
+			<li class="layui-this">员工评论(0)</li>
+			<li>操作日志(0)</li>
+		</ul>
+		<div class="layui-tab-content p-0">
+			<div class="layui-tab-item comment-list layui-show">
+				<div id="comment_9129378" class="comment-item py-3 border-b">
+					<div class="comment-avatar" title="码云演示账号">
+						<img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100">
+					</div>
+					<div class="comment-body">
+						<div class="comment-meta">
+							<strong class="comment-name">码云演示账号</strong><span class="ml-2 font-gray" title="2022/3/10下午2:23:22">36 分钟前</span>
+						</div>
+						<div class="comment-content py-2">
+							<p>测试哦</p>
+						</div>
+						<div class="comment-actions">
+							<a class="mr-4 text-muted">回复</a><a class="mr-4 text-muted">编辑</a><a class="mr-4 text-muted">删除</a>
+						</div>
+					</div>
+				</div>
+				<div id="comment_9130512" class="comment-item py-3 border-b">
+					<div class="comment-avatar" title="码云演示账号">
+						<img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100">
+					</div>
+					<div class="comment-body">
+						<div class="comment-meta">
+							<strong class="comment-name">码云演示账号</strong><span class="ml-2 font-gray" title="2022/3/10下午2:53:59">6 分钟前</span>
+						</div>
+						<div class="comment-content py-2">
+							<blockquote>
+							<p>898989</p>
+							</blockquote>
+							<p><span>@码云演示账号</span></p>
+						</div>
+						<div class="comment-actions">
+							<a class="mr-4">回复</a><a class="mr-4">编辑</a><a class="mr-4">删除</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-tab-item logs-list">
+				<div class="log-item py-3 border-b">
+					<i class="iconfont icon-wodedianping"></i>
+					<span class="log-name">码云演示账号</span>
+					<span class="log-content font-gray"> 将<b>任务状态</b>从 待办的 修改为<b>进行中</b><span class="font-gray" title="2022/3/10下午2:01:44">2 小时前</span></span>
+				</div>
+			
+			<div class="log-item py-3 border-b">
+				<i class="iconfont icon-kaoshijihua"></i>
+				<span class="ge-user-name">码云演示账号</span>
+				<span class="log-content font-gray">移除了<b>enhancement</b><b>标签</b><span class="font-gray" title="2022/3/10上午10:24:26">6 小时前</span></span>
+			</div>
+			
+			<div class="log-item py-3 border-b">
+				<i class="iconfont icon-zidingyishezhi"></i>
+				<span class="log-name">码云演示账号</span>
+				<span class="log-content font-gray"><span class="content link-dark"> 将<b>任务状态</b>从 进行中 修改为<b>待办的</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
+			</div>
+		</div>
+	</div>   
+</div>
+
+<script>
+	function pageInit() {
+		var form = layui.form,
+			layer = layui.layer,
+			edit = layui.productEdit,
+			gougu = layui.gougu;
+		
+		$('.hover-edit').hover(function(){
+			$(this).addClass('hover-on');
+		},function(){
+			$(this).removeClass('hover-on');
+		})
+		
+		$('.hover-edit').on('click','i',function(){
+			let id=$(this).data('id');
+			let name=$(this).data('name');
+			let show_txt=$('#'+name+'_'+id).html();
+			let real_txt=$('#'+name+'_'+id).data('val');
+			if(real_txt == ''){
+				real_txt = show_txt;
+			}
+			edit.show(id,name,show_txt,real_txt);
+		})
+	}
+</script>

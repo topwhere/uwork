@@ -12,7 +12,7 @@ use think\Model;
 
 class Knowledge extends Model
 {
-    // 获取文章详情
+    //详情
     public function detail($id)
     {
         $article = Db::name('Knowledge')->where(['id' => $id])->find();

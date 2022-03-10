@@ -2,41 +2,54 @@ layui.define(['layer'], function(exports){
     var layer = layui.layer;
 	    var obj = {
 		loading:false,
-        open: function (url='',width='88%') {
+        open: function (url='',width=0) {
 			let that=this;
 			if(that.loading==true){
 				return false;
 			}
 			that.loading=true;
-			that.get(url,{},function(res){
-				layer.open({
-					type: 1,
-					title: '',
-					offset: ['0', '100%'],
-					skin: 'layui-anim layui-anim-rl layui-layer-admin-right',
-					closeBtn: 0,
-					content: res,
-					area: [width, '100%'],
-					success:function(obj,index){
-						that.loading=false;
-						pageInit();
-						$('body').addClass('right-open');						
-						let btn='<div id="rightPopup'+index+'" class="right-popup-close" title="关闭">关闭</div>';
-						obj.append(btn);
-						$('#rightPopup'+index).click(function(){
-							let op_width = $('.layui-anim-rl').outerWidth();
-							$('.layui-anim-rl').animate({left:'+='+op_width+'px'}, 200, 'linear', function () {
-								$('.layui-anim-rl').remove()
-								$('.layui-layer-shade').remove()
-							})
-							$('body').removeClass('right-open');
-						})
+			if(width==0){
+				width = window.innerWidth>1280?'1220px':'1080px';
+			}
+			$.ajax({
+				url:url,
+				type:"GET",
+				timeout:10000,
+				success:function(res){
+					if(res['code'] && res['code']==1){
+						layer.msg(res.msg);
+						return false;
 					}
-				})
-			})            
+					var express='<section id="expressLayer" class="express-box" style="width:'+width+'"><article>'+res+'</article><div id="expressClose" class="express-close" title="关闭">关闭</div></section><div id="expressMask" class="express-mask"></div>';
+					
+					$('body').append(express).addClass('right-open');	
+					$('#expressMask').fadeIn(200);
+					$('#expressLayer').animate({'right': 0}, 200, 'linear', function () {
+						pageInit();
+					});
+					
+					$('#expressClose').click(function(){
+						$('#expressMask').fadeOut(100);
+						$('#expressLayer').animate({'right': '-100%'}, 200, 'linear', function () {
+							$('#expressLayer').remove();
+							$('#expressMask').remove();							
+						})
+					})
+					$(window).resize(function () {
+						width = window.innerWidth>1280?'1220':'1080';
+						$('#expressLayer').width(width);
+					})
+				}
+				,error:function(xhr,textstatus,thrown){
+					console.log('错误');
+				},
+				complete:function(){
+					that.loading=false;
+				}
+			});          
         },
 		close: function(){
-			$('.right-popup-close').click();
+			$('#expressClose').click();
 		},
 		get: function (url,data,callback){
 			$.ajax({

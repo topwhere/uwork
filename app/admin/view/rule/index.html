@@ -58,17 +58,17 @@
 		});
 		//表头工具栏事件
 		$('.add-menu').on('click',function(){
-			gougu.open('/admin/rule/add','900px');
+			gougu.open('/admin/rule/add');
 			return;
 		});
 
 		//操作按钮
 		treeGrid.on('tool(' + tableId + ')', function (obj) {
 			if (obj.event === 'add') {
-				gougu.open('/admin/rule/add?pid='+obj.data.id,'900px');
+				gougu.open('/admin/rule/add?pid='+obj.data.id);
 			}
 			if (obj.event === 'edit') {
-				gougu.open('/admin/rule/add?id='+obj.data.id,'900px');
+				gougu.open('/admin/rule/add?id='+obj.data.id);
 			}
 			if (obj.event === 'del') {
 				layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {

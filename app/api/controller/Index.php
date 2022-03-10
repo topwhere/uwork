@@ -91,7 +91,63 @@ class Index extends BaseController
             return to_assign(1, '上传失败，请重试');
         }
     }
-
+   //编辑器图片上传
+    public function md_upload()
+    {
+        $param = get_params();
+        if (request()->file('editormd-image-file')) {
+            $file = request()->file('editormd-image-file');
+        } else {
+            return to_assign(1, '没有选择上传文件');
+        }
+        // dump($file);die;
+        // 获取上传文件的hash散列值
+        $sha1 = $file->hash('sha1');
+        $md5 = $file->hash('md5');
+        $rule = [
+            'image' => 'jpg,png,jpeg,gif',
+            'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf',
+            'file' => 'zip,gz,7z,rar,tar',
+        ];
+        $fileExt = $rule['image'] . ',' . $rule['doc'] . ',' . $rule['file'];
+        //1M=1024*1024=1048576字节
+        $fileSize = 2 * 1024 * 1024;
+        if (isset($param['type']) && $param['type']) {
+            $fileExt = $rule[$param['type']];
+        }
+        if (isset($param['size']) && $param['size']) {
+            $fileSize = $param['size'];
+        }
+        $validate = \think\facade\Validate::rule([
+            'image' => 'require|fileSize:' . $fileSize . '|fileExt:' . $fileExt,
+        ]);
+        $file_check['image'] = $file;
+        if (!$validate->check($file_check)) {
+            return to_assign(1, $validate->getError());
+        }
+        // 日期前綴
+        $dataPath = date('Ym');
+        $use = 'thumb';
+        $filename = \think\facade\Filesystem::disk('public')->putFile($dataPath, $file, function () use ($md5) {
+            return $md5;
+        });
+        if ($filename) {
+            //写入到附件表
+            $data = [];
+            $path = get_config('filesystem.disks.public.url');
+            $data['filepath'] = $path . '/' . $filename;
+            $data['name'] = $file->getOriginalName();
+            $data['mimetype'] = $file->getOriginalMime();
+            $data['fileext'] = $file->extension();
+            $data['filesize'] = $file->getSize();
+            $data['filename'] = $filename;
+            $data['sha1'] = $sha1;
+            $data['md5'] = $md5;
+            return json(['success'=>1,'message'=>'上传成功','url'=>$data['filepath']]);
+        } else {
+            return json(['success'=>0,'message'=>'上传失败','url'=>'']);
+        }
+    }
     //清空缓存
     public function cache_clear()
     {

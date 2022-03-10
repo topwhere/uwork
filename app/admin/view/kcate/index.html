@@ -59,11 +59,11 @@
 			//操作按钮
 			treeGrid.on('tool(treeTable)', function (obj) {
 				if (obj.event === 'add') {
-					gougu.open('/admin/kcate/add?pid='+obj.data.id,'900px');
+					gougu.open('/admin/kcate/add?pid='+obj.data.id);
 					return;
 				}
 				if (obj.event === 'edit') {
-					gougu.open('/admin/kcate/add?id='+obj.data.id,'900px');
+					gougu.open('/admin/kcate/add?id='+obj.data.id);
 					return;
 				}
 				if (obj.event === 'del') {

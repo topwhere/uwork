@@ -50,18 +50,18 @@
 		
 		//表头工具栏事件
 		$('.main-page-content').on('click','.add-menu', function(){
-			gougu.open('/admin/department/add','900px');
+			gougu.open('/admin/department/add');
 			return;
 		});
 
 		//操作按钮
 		treeGrid.on('tool(treeTable)', function (obj) {
 			if (obj.event === 'add') {
-				gougu.open('/admin/department/add?pid='+obj.data.id,'900px');
+				gougu.open('/admin/department/add?pid='+obj.data.id);
 				return;
 			}
 			if (obj.event === 'edit') {
-				gougu.open('/admin/department/add?id='+obj.data.id,'900px');
+				gougu.open('/admin/department/add?id='+obj.data.id);
 				return;
 			}
 			if (obj.event === 'del') {

@@ -115,7 +115,7 @@ CREATE TABLE `dev_admin_rule`  (
 
 
 -- ----------------------------
--- Records of oa_admin_rule
+-- Records of dev_admin_rule
 -- ----------------------------
 INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/index/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
@@ -245,7 +245,7 @@ CREATE TABLE `dev_config`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COMMENT = '系统配置表';
 
 -- ----------------------------
--- Records of oa_config
+-- Records of dev_config
 -- ----------------------------
 INSERT INTO `dev_config` VALUES (1, '网站配置', 'web', 'a:13:{s:2:\"id\";s:1:\"1\";s:11:\"admin_title\";s:9:\"勾股DEV\";s:5:\"title\";s:9:\"勾股DEV\";s:4:\"logo\";s:52:\"/storage/202111/fc507cc8332d5ef49d9425185e4a9697.jpg\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://dev.gougucms.com\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:8:\"keywords\";s:9:\"勾股DEV\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:4:\"desc\";s:479:\"勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。 \";s:4:\"code\";s:0:\"\";s:9:\"copyright\";s:32:\"© 2021 gougucms.com MIT license\";s:7:\"version\";s:6:\"1.0.22\";}', 1, 1612514630, 1638010154);
 INSERT INTO `dev_config` VALUES (2, '邮箱配置', 'email', 'a:8:{s:2:\"id\";s:1:\"2\";s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:478:\"勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。\";}', 1, 1612521657, 1637075205);
@@ -270,7 +270,7 @@ CREATE TABLE `dev_department`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '部门组织';
 
 -- ----------------------------
--- Records of oa_department
+-- Records of dev_department
 -- ----------------------------
 INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (1, '董事会', 0, 0, '13688888888');
 INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (2, '人事部', 1, 0, '13688888889');
@@ -298,7 +298,7 @@ CREATE TABLE `dev_work_cate`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作类型';
 
 -- ----------------------------
--- Records of oa_expense_cate
+-- Records of dev_expense_cate
 -- ----------------------------
 INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
 INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
@@ -400,7 +400,7 @@ CREATE TABLE `dev_note`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告';
 
 -- ----------------------------
--- Records of oa_note
+-- Records of dev_note
 -- ----------------------------
 INSERT INTO `dev_note` VALUES (1, 1, '欢迎使用勾股OA办公系统', '<p>欢迎使用勾股OA办公系统，勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>', 'https://oa.gougucms.com', 1, 2, 1635696000, 1924876800, 1637984962, 1637984975);
 
@@ -419,7 +419,7 @@ CREATE TABLE `dev_note_cate`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告分类';
 
 -- ----------------------------
--- Records of oa_note_cate
+-- Records of dev_note_cate
 -- ----------------------------
 INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299);
 INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310);
@@ -440,7 +440,7 @@ CREATE TABLE `dev_position`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '岗位职称';
 
 -- ----------------------------
--- Records of oa_position
+-- Records of dev_position
 -- ----------------------------
 INSERT INTO `dev_position` VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
 INSERT INTO `dev_position` VALUES (2, '人事总监', 1000, '人事部的最大领导', 1, 0, 0);
@@ -458,7 +458,7 @@ CREATE TABLE `dev_position_group`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COMMENT = '权限分组和岗位的关联表';
 
 -- ----------------------------
--- Records of oa_position_group
+-- Records of dev_position_group
 -- ----------------------------
 INSERT INTO `dev_position_group` VALUES (1, 1, 1635755739, 0);
 INSERT INTO `dev_position_group` VALUES (2, 2, 1638007427, 0);
@@ -549,7 +549,7 @@ CREATE TABLE `dev_knowledge_cate`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识文章分类表';
 
 -- ----------------------------
--- Records of oa_knowledge_cate
+-- Records of dev_knowledge_cate
 -- ----------------------------
 INSERT INTO `dev_knowledge_cate` VALUES (1, 0, 0, '办公技巧', '', 1637984651, 0);
 INSERT INTO `dev_knowledge_cate` VALUES (2, 0, 0, '行业技能', '', 1637984739, 0);
@@ -596,3 +596,78 @@ CREATE TABLE `dev_knowledge_doc`  (
   `delete_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库文档表';
+
+
+-- ----------------------------
+-- Table structure for dev_product
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_product`;
+CREATE TABLE `dev_product`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '产品代号',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '产品名称',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '产品负责人',
+  `test_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '测试负责人',
+  `check_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '评审人，如:1,2,3',
+  `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,2否',
+  `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0关闭,1开启',
+  `content` text NULL COMMENT '产品描述',
+  `md_content` text NULL COMMENT 'markdown产品描述',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '产品表';
+
+
+-- ----------------------------
+-- Table structure for dev_project
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_project`;
+CREATE TABLE `dev_project`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '项目代号',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目负责人',
+  `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
+  `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
+  `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
+  `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,否',
+  `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1开启,2关闭',
+  `content` text NULL COMMENT '项目描述',
+  `md_content` text NULL COMMENT 'markdown项目描述',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '项目表';
+
+
+-- ----------------------------
+-- Table structure for dev_story
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_story`;
+CREATE TABLE `dev_story`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '需求主题',
+  `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
+  `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目负责人',
+  `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
+  `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
+  `note_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '抄送人员，如:1,2,3',
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '需求类别:1功能2接口3性能4安全5体验6改进7其他',
+  `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1S,2A,3B,4C,5D',
+  `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,否',
+  `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1开启,2关闭',
+  `content` text NULL COMMENT '需求描述',
+  `md_content` text NULL COMMENT 'markdown需求描述',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '需求表';

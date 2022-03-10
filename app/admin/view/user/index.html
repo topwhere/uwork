@@ -229,7 +229,7 @@
 			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
 			var data = checkStatus.data;
 			if (obj.event === 'add') {
-				gougu.open("/admin/user/add",'900px');
+				gougu.open("/admin/user/add");
 				return;
 			}
 			if(data.length==0){
@@ -271,11 +271,11 @@
 		table.on('tool(test)', function (obj) {
 			var data = obj.data;			
 			if (obj.event === 'view') {
-				gougu.open('/admin/user/view?id='+data.id,'900px');
+				gougu.open('/admin/user/view?id='+data.id);
 				return;
 			}
 			if(obj.event === 'edit'){
-				gougu.open('/admin/user/add?id='+data.id,'900px');
+				gougu.open('/admin/user/add?id='+data.id);
 			}
 			else if (obj.event === 'copy') {
 				copyToClip(data.reg_pwd);

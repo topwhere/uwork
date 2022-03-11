@@ -1,81 +1,59 @@
 <form class="layui-form page-content p-4">
-	{eq name="$id" value="0"}
 	<h3 class="h3-title">新增产品</h3>
-	{else/}
-	<h3 class="h3-title">编辑产品</h3>
-	{/eq}
 	<table class="layui-table layui-table-form">
 		<tr>
 			<td class="layui-td-gray2">产品名称<font>*</font></td>
 			<td>
-				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称" class="layui-input"
-			  {notempty name="$product.name" }value="{$product.name}" {/notempty}>
+				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称" class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">产品代号<span style="color: red">*</span></td>
-			<td><input type="text" name="code" lay-verify="required" lay-reqText="请输入产品代号" placeholder="请输入产品代号" class="layui-input"
-			  {notempty name="$product.code" }value="{$product.code}" {/notempty}>
+			<td><input type="text" name="code" lay-verify="required" lay-reqText="请输入产品代号" placeholder="请输入产品代号" class="layui-input" value="">
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray2">产品负责人<font>*</font></td>
 			<td>
-				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择产品负责人" {notempty name="$product.director_uid" }value="{$product.director_uid}" {/notempty}>
-				<input type="text" name="director_name" placeholder="请选择产品负责人" readonly class="layui-input" {notempty name="$product.director_name" }value="{$product.director_name}" {/notempty}>
+				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择产品负责人" value="">
+				<input type="text" name="director_name" placeholder="请选择产品负责人" readonly class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">测试负责人</td>
 			<td>
-				<input type="hidden" name="test_uid" readonly {notempty name="$product.test_uid" } value="{$product.test_uid}" {/notempty}>
-				<input type="text" name="test_name" readonly placeholder="请选择测试负责人" class="layui-input" {notempty name="$product.test_name" }value="{$product.test_name}" {/notempty}>
+				<input type="hidden" name="test_uid" readonly value="">
+				<input type="text" name="test_name" readonly placeholder="请选择测试负责人" class="layui-input" value="">
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray2">产品评审人<span style="color: red">*</span></td>
-			<td>
-				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required" lay-reqText="请选择评审人" {notempty name="$product.check_admin_ids" }value="{$product.check_admin_ids}" {/notempty}>
-				<input type="text" id="check_admin_names" name="check_admin_names" readonly class="layui-input" placeholder="请选择评审人"  {notempty name="$product.check_admin_names" }value="{$product.check_admin_names}" {/notempty}>
-			</td>
-			<td class="layui-td-gray">状态</td>
-			<td>
-				{if condition="$id eq 0"}
-				<input type="radio" name="status" value="1" title="开启" checked>
-				<input type="radio" name="status" value="0" title="关闭">
-				{else/}
-				<input type="radio" name="status" value="1" title="开启" {eq name="$product.status" value="1" }checked{/eq}>
-				<input type="radio" name="status" value="0" title="关闭" {eq name="$product.status" value="0" }checked{/eq}>
-				{/if}
+			<td colspan="3">
+				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required" lay-reqText="请选择评审人" value="">
+				<input type="text" id="check_admin_names" name="check_admin_names" readonly class="layui-input" placeholder="请选择评审人" value="">
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray2">访问控制<span style="color: red">*</span></td>
 			<td colspan="3">
-				{if condition="$id eq 0"}
 				<input type="radio" name="is_open" lay-filter="checkopen" value="1" title="私有(可在白名单设置访问者)">
-				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">
-				{else/}
-				<input type="radio" name="is_open" lay-filter="checkopen" value="1" title="私有(可在白名单设置访问者)" {eq name="$product.is_open" value="1" }checked{/eq}>
-				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)" {eq name="$product.is_open" value="2" }checked{/eq}>
-				{/if}
-				
+				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">				
 			</td>
 			
 		</tr>
-		<tr id="viewAdmin" {empty name="$product.view_admin_ids" }style="display:none" {/empty}>
+		<tr id="viewAdmin" style="display:none">
 			<td class="layui-td-gray">白名单<span style="color: red">*</span></td>
 			<td colspan="3">
-				<input type="hidden" name="view_admin_ids" class="layui-input" {notempty name="$product.view_admin_ids" }value="{$product.view_admin_ids}" {/notempty}>
-				<input type="text" id="view_admin_names" name="view_admin_names"  placeholder="请选择可访问的员工" readonly class="layui-input" {notempty name="$product.view_admin_names" }value="{$product.view_admin_names}" {/notempty}>
+				<input type="hidden" name="view_admin_ids" class="layui-input" value="">
+				<input type="text" id="view_admin_names" name="view_admin_names"  placeholder="请选择可访问的员工" readonly class="layui-input" value="">
 			</td>
 		</tr>
 	</table>
 	<div>
 		<div style="padding:10px 0">产品描述<span style="color: red">*</span></div>
 		<div>
-			<textarea id="mdContent" style="display:none;">{notempty name="$product.md_content" }{$product.md_content|raw}{/notempty}</textarea>
+			<textarea id="mdContent" style="display:none;"></textarea>
 			<div id="docContent"></div>
 		</div>
 	</div>
 	<div style="padding: 10px 0">
-		<input type="hidden" name="id" value="{$id}" />
+		<input type="hidden" name="id" value="0" />
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>

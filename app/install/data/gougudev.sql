@@ -618,7 +618,7 @@ CREATE TABLE `dev_product`  (
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '产品表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '产品表';
 
 
 -- ----------------------------
@@ -635,15 +635,13 @@ CREATE TABLE `dev_project`  (
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
   `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
-  `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,否',
-  `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1开启,2关闭',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0关闭,1开启,2暂停',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '项目表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
 
 
 -- ----------------------------

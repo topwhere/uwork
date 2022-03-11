@@ -234,6 +234,15 @@ function get_position()
     return $position;
 }
 
+//读取产品
+function get_product()
+{
+    $product = Db::name('Product')->where(['status' => 1])->select()->toArray();
+    return $product;
+}
+
+
+
 /**
  * 根据附件表的id返回url地址
  * @param  [type] $id [description]

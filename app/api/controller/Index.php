@@ -245,6 +245,13 @@ class Index extends BaseController
         $position = Db::name('Position')->field('id,title as name')->where([['status', '=', 1], ['id', '>', 1]])->select();
         return to_assign(0, '', $position);
     }
+	
+    //获取产品列表
+    public function get_product()
+    {
+        $product = Db::name('Product')->field('id,name')->where([['status', '=', 1]])->select();
+        return to_assign(0, '', $product);
+    }
 
     //首页公告
     public function get_note_list()

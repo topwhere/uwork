@@ -1,50 +1,40 @@
 <div class="page-content">
 	<div class="p-4 border-b">
 	<h3 class="h3-title hover-edit">
-	{eq name="$product.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
-	{eq name="$product.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
-	<span id="name_{$product.id}" data-val="">{$product.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="name"></i>
+	{eq name="$project.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
+	{eq name="$project.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
+	<span id="name_{$project.id}" data-val="">{$project.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="name"></i>
 	</h3>
-	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$product.admin_name}</span><span class="font-gray">创建于{:time_trans($product.create_time)}<span  id="editTips">{gt name="$product.update_time" value="0"}，最近更新于 {:time_trans($product.update_time)}{/gt}</span></span></div>
+	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$project.admin_name}</span><span class="font-gray">创建于{:time_trans($project.create_time)}<span  id="editTips">{gt name="$project.update_time" value="0"}，最近更新于 {:time_trans($project.update_time)}{/gt}</span></span></div>
 	</div>
 	<div class="layui-row border-b">
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray">产品负责人</td>
-					<td class="hover-edit"><span id="director_uid_{$product.id}" data-val="{$product.director_uid}">{$product.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="director_uid"></i></td>
-					<td class="layui-td-gray">测试负责人</td>
-					<td class="hover-edit"><span id="test_uid_{$product.id}" data-val="{$product.test_uid}">{$product.test_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="test_uid"></i></td>
+					<td class="layui-td-gray">项目负责人</td>
+					<td class="hover-edit"><span id="director_uid_{$project.id}" data-val="{$project.director_uid}">{$project.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="director_uid"></i></td>
+					<td class="layui-td-gray">项目代号</td>
+					<td class="hover-edit"><span id="code_{$project.id}" data-val="{$project.code}">{$project.code}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="code"></i></td>
 				</tr>
 				<tr>
-					<td class="layui-td-gray">产品评审人</td>
-					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$product.id}" data-val="{$product.check_admin_ids}">{$product.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="check_admin_ids"></i></td>
+					<td class="layui-td-gray">项目成员</td>
+					<td colspan="3" class="hover-edit"><span id="team_admin_ids_{$project.id}" data-val="{$project.team_admin_ids}">{$project.team_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="team_admin_ids"></i></td>
 				</tr>
 				<tr>
-					<td class="layui-td-gray">访问控制</td>
-					<td colspan="3" class="hover-edit">
-						<span id="is_open_{$product.id}" data-val="{$product.is_open}">
-						{eq name="$product.is_open" value="1" }
-						私有 <span class="font-gray">(白名单员工可访问者)</span>
-						{/eq}
-						{eq name="$product.is_open" value="2" }公开 <span class="font-gray">(有产品视图权限员工均可访问)</span>{/eq}
-						</span>
-						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="is_open"></i>						
-					</td>			
-				</tr>
-				<tr id="is_open_son" class="is_open_son{$product.is_open}">
-					<td class="layui-td-gray">访问白名单</td>
-					<td colspan="3" class="hover-edit"><span id="view_admin_ids_{$product.id}" data-val="{$product.view_admin_ids}">{$product.view_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="view_admin_ids"></i></td>
+					<td class="layui-td-gray">开始日期</td>
+					<td class="hover-edit"><span id="start_time_{$project.id}" data-val="">{$project.start_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="start_time"></i></td>
+					<td class="layui-td-gray2">计划完成日期</td>
+					<td  class="hover-edit"><span id="end_time_{$project.id}" data-val="">{$project.end_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="end_time"></i></td>
 				</tr>
 			</table>
 			<div class="md-content hover-edit">
-				<h5 class="py-4">产品描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$product.id}" data-name="md_content"></i></h5>
-				<div id="md_content_{$product.id}" data-val="{$product.md_content}">{$product.content|raw}</div>
+				<h5 class="py-4">项目描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="md_content"></i></h5>
+				<div id="md_content_{$project.id}" data-val="{$project.md_content}">{$project.content|raw}</div>
 			</div>
 		</div>
 		<div class="layui-col-md3 p-4">
 			<h5 class="pb-4">关联信息</h5>
-			<div class="pb-4"><span class="font-gray">关联项目：</span>2</div>
+			<div class="pb-4 hover-edit"><span class="font-gray">关联产品：</span><span id="product_id_{$project.id}" data-val="{$project.product_id}">{$project.product_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$project.id}" data-name="product_id"></i></div>
 			<div class="pb-4"><span class="font-gray">关联需求：</span>101</div>
 			<div class="pb-4"><span class="font-gray">关联任务：</span>135</div>
 			<div class="pb-4"><span class="font-gray">关联BUG：</span>56</div>
@@ -119,7 +109,8 @@
 	function pageInit() {
 		var form = layui.form,
 			layer = layui.layer,
-			edit = layui.productEdit,
+			edit = layui.projectEdit,
+			laydate = layui.laydate,
 			gougu = layui.gougu;
 		
 		$('.hover-edit').hover(function(){
@@ -135,7 +126,7 @@
 			let real_txt=$('#'+name+'_'+id).data('val');
 			if(real_txt == ''){
 				real_txt = show_txt;
-			}
+			}	
 			edit.show(id,name,show_txt,real_txt);
 		})
 	}

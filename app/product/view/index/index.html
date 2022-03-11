@@ -14,7 +14,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -71,7 +71,7 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		
 		tableIns = table.render({
 			elem: '#test',
-			title: '公告列表',
+			title: '产品列表',
 			cellMinWidth:200,
 			url: "/product/index/index", //数据接口
 			cols:  [[
@@ -90,7 +90,7 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 				,{align: 'center', title: '任务', colspan: 4}
 				,{align: 'center', title: 'BUG', colspan: 3}
 
-				,{fixed: 'right',title: '操作',align: 'center',width: 136,rowspan: 2,toolbar: '#barDemo',}
+				,{fixed: 'right',title: '操作',align: 'center',width: 100,rowspan: 2,toolbar: '#barDemo',}
 			], [
 				{field:'test_uid',align:'center', width:70,'title':'草稿'}
 				,{field:'test_uid',align:'center', width:70,'title':'激活'}
@@ -107,7 +107,7 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		});
 		
 		$('.add-new').on('click',function(){
-			gougu.open('/product/index/add','1000px');
+			gougu.open('/product/index/add');
 		});
 		
 		//监听行工具事件
@@ -115,10 +115,6 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 			var data = obj.data;
 			if (obj.event === 'view') {
 				gougu.open('/product/index/view?id='+data.id);
-				return;
-			}
-			if (obj.event === 'edit') {
-				gougu.open('/product/index/add?id='+data.id);
 				return;
 			}
 			if (obj.event === 'del') {

@@ -26,7 +26,7 @@ class Index extends BaseController
             $where[] = ['status', '>=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = ProductList::where($where)
-                ->field('*')
+                ->withoutField('content,md_content')
                 ->order('create_time asc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
@@ -106,7 +106,7 @@ class Index extends BaseController
         }
     }
 	
-	//添加
+	//查看
     public function view()
     {
 		$param = get_params();

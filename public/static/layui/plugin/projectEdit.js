@@ -1,6 +1,7 @@
 layui.define(['layer','gougu','employeepicker'], function(exports){
     var layer = layui.layer;
     var table = layui.table;
+    var laydate = layui.laydate;
     var gougu = layui.gougu;
     var employeepicker = layui.employeepicker;
 	var obj = {
@@ -58,7 +59,7 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 			layer.open({
 				title: '请选择',
 				type:1,
-				area: ['500px', '360px'],
+				area: ['500px', '500px'],
 				content: '<div style="padding:16px 16px 0"><div id="selectBox"></div></div>',
 				success: function() {
 					selectable = table.render({
@@ -69,7 +70,7 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 								title: '选择',
 								width: 100
 							}, {
-								field: 'title',
+								field: 'name',
 								title: '选项'
 							}]
 						],
@@ -82,7 +83,7 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 					var checkStatus = table.checkStatus(selectable.config.id);
 					var data = checkStatus.data;
 					if (data.length > 0) {
-						that.post(id,name,data[0].title,data[0].id);
+						that.post(id,name,data[0].name,data[0].id);
 					}
 					else{
 						layer.msg('请选择');
@@ -90,8 +91,20 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 				}
 			})
 		},
-		editor:function(id,name,real_txt){
+		date:function(id,name,real_txt){
+			let that=this;
 			console.log(real_txt);
+			laydate.render({
+				elem: '#'+name+'_'+id
+				,showBottom: false
+				,show: true //直接显示
+				,value:real_txt
+				,done: function(value, date){
+					that.post(id,name,value,value);
+				}
+			});
+		},
+		editor:function(id,name,real_txt){
 			let that=this;
 			layer.open({
 				closeBtn: 2,
@@ -114,21 +127,26 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 			if(that.loading==true){
 				return false;
 			}
-			if(name=='name'){
+			if(name=="name" || name=="code"){
 				that.text(id,name,real_txt);
 			}
-			if(name =="director_uid" || name =="test_uid"){
+			if(name=="start_time" || name=="end_time"){
+		
+				that.date(id,name,real_txt);
+			}
+			if(name =="director_uid"){
 				that.employee_one(id,name,show_txt,real_txt);
 			}
-			if(name =="check_admin_ids" || name =="view_admin_ids"){
+			if(name =="team_admin_ids"){
 				that.employee_more(id,name,show_txt,real_txt);
 			}
-			if(name=="is_open"){
-				let data = [
-					{'id':1,'title':'私有<span class="font-gray">(白名单员工可访问者)</span>'},
-					{'id':2,'title':'公开<span class="font-gray">(有产品视图权限员工均可访问)</span>'}
-				];
-				that.select_type(id,name,real_txt,data);
+			if(name=="product_id"){		
+				that.loading=true;
+				gougu.get("/api/index/get_product",{},function(res){
+					let data = res.data;
+					that.loading=false;
+					that.select_type(id,name,real_txt,data);
+				});				
 			}
 			if(name=="md_content"){
 				that.editor(id,name,real_txt);
@@ -150,8 +168,8 @@ layui.define(['layer','gougu','employeepicker'], function(exports){
 			if(name=='md_content'){
 				postData['content'] = show_val;
 			}
-			gougu.post("/product/index/add",postData,callback);
+			gougu.post("/project/index/add",postData,callback);
 		}
     };
-    exports('productEdit',obj);
+    exports('projectEdit',obj);
 });  

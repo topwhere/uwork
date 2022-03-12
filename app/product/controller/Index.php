@@ -95,11 +95,11 @@ class Index extends BaseController
         } else {
             $id = isset($param['id']) ? $param['id'] : 0;
             if ($id > 0) {
-                $product = (new ProductList())->detail($id);
-				if (empty($product)) {
+                $detail = (new ProductList())->detail($id);
+				if (empty($detail)) {
 					return to_assign(1,'产品不存在');
 				}
-                View::assign('product', $product);
+                View::assign('detail', $detail);
             }
             View::assign('id', $id);
             return view();
@@ -111,12 +111,12 @@ class Index extends BaseController
     {
 		$param = get_params();
 		$id = isset($param['id']) ? $param['id'] : 0;
-		$product = (new ProductList())->detail($id);
-        if (empty($product)) {
+		$detail = (new ProductList())->detail($id);
+        if (empty($detail)) {
 			return to_assign(1,'产品不存在');
         }
 		else{
-			View::assign('product', $product);
+			View::assign('detail', $detail);
 			View::assign('id', $id);
 			return view();
 		}

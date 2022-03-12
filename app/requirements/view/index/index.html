@@ -8,7 +8,7 @@
 {block name="body"}
 <div class="table-content">
 	<div class="layui-form-bar">
-		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 添加产品</button>
+		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建需求</button>
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
@@ -71,50 +71,46 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		
 		tableIns = table.render({
 			elem: '#test',
-			title: '产品列表',
+			title: '需求列表',
 			cellMinWidth:200,
-			url: "/product/index/index", //数据接口
+			url: "/requirements/index/index", //数据接口
 			cols:  [[
-				{field:'id', title: 'ID编号',width: 90, align:'center',fixed:'left',rowspan: 2}
-				,{field:'name',title: '产品名称',rowspan: 2}
-				,{field:'status',title: '产品状态',align:'center',width: 90,rowspan: 2,templet:function(d){
-					var html = '<span class="layui-badge">关闭</span>';
-					if(d.status == 1){
-						html = '<span class="layui-badge layui-bg-green">开启</span>';
-					}
+				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
+				,{field:'status_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
+					var html = '<span class="layui-badge layui-status-'+d.status+'">'+d.status_name+'</span>';			
 					return html;
 				}}
-				,{field:'director_name',title: '产品负责人', align:'center',width: 90,rowspan: 2}
-				,{field:'test_name',title: '测试负责人', align:'center',width: 90,rowspan: 2}
-				,{align: 'center', title: '需求', colspan: 4}
+				,{field:'title',title: '需求主题',rowspan: 2}
+				,{field:'flow_name',title: '需求状态',align:'center',width: 80,rowspan: 2,templet:function(d){
+					var html = '<span class="layui-badge layui-bg-'+d.flow_status+'">'+d.flow_name+'</span>';
+					return html;
+				}}
+				,{field:'director_name',title: '负责人', align:'center',width: 90,rowspan: 2}
+				,{field:'plan_time',title: '预计起止日期', align:'center',width: 180,rowspan: 2}				
 				,{align: 'center', title: '任务', colspan: 4}
 				,{align: 'center', title: 'BUG', colspan: 3}
 
 				,{fixed: 'right',title: '操作',align: 'center',width: 100,rowspan: 2,toolbar: '#barDemo',}
 			], [
-				{field:'test_uid',align:'center', width:70,'title':'草稿'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'变更'}
-				,{field:'test_uid',align:'center', width:80,'title':'完成率'}
-				,{field:'test_uid',align:'center', width:70,'title':'草稿'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'变更'}
-				,{field:'test_uid',align:'center', width:80,'title':'完成率'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'关闭'}
-				,{field:'test_uid',align:'center', width:80,'title':'修复率'}
+				{field:'product_id',align:'center', width:70,'title':'草稿'}
+				,{field:'product_id',align:'center', width:70,'title':'激活'}
+				,{field:'product_id',align:'center', width:70,'title':'变更'}
+				,{field:'product_id',align:'center', width:80,'title':'完成率'}
+				,{field:'product_id',align:'center', width:70,'title':'激活'}
+				,{field:'product_id',align:'center', width:70,'title':'关闭'}
+				,{field:'product_id',align:'center', width:80,'title':'修复率'}
 			]]
 		});
 		
 		$('.add-new').on('click',function(){
-			gougu.open('/product/index/add');
+			gougu.open('/requirements/index/add');
 		});
 		
 		//监听行工具事件
 		table.on('tool(test)', function(obj) {
 			var data = obj.data;
 			if (obj.event === 'view') {
-				gougu.open('/product/index/view?id='+data.id);
+				gougu.open('/requirements/index/view?id='+data.id);
 				return;
 			}
 			if (obj.event === 'del') {
@@ -128,7 +124,7 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 							obj.del();
 						}
 					}
-					gougu.post("/product/index/close",{ id: obj.data.id },callback);
+					gougu.post("/requirements/index/close",{ id: obj.data.id },callback);
 					layer.close(index);
 				});
 			}

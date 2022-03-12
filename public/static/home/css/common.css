@@ -125,6 +125,7 @@
  .layui-table td,.layui-table th{padding:9px 10px;}
  .layui-table-cell{padding:0 10px;}
  .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th {padding: 5px;}
+ .layui-table-body .layui-none{background-color:#fff;}
  .auth-single .auth-icon{font-size:24px; float:left;}
  .auth-single .layui-form-radio,.auth-single .layui-form-checkbox{margin-left:0;}
  .auth-single .layui-form-radio{margin-top:0;}
@@ -147,17 +148,33 @@
  .layui-td-gray4{color:#8c95a8; width:150px; text-align:right; background-color:#fafafa;}
  .layui-td-gray font,.layui-td-gray2 font,.layui-td-gray3 font{color:#FF6347; margin-left: 3px;}
  .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
- .span-color--1{color:#999999;}
- .span-color-0{color:#5FB878;}
- .span-color-1{color:#FF6347;}
- .span-color-2{color:#01AAED;}
- .span-color-3{color:#d89d00;}
- .span-color-4{color:#CC0033;}
- .span-color-5{color:#CCCC00;}
- .span-color-6{color:#FF33CC;}
- .span-color-7{color:#6699FF;}
- .span-color-8{color:#CC9933;}
+ .span-color-0{color:#648A8D !important;}
+ .span-color-1{color:#4AC8BE !important;}
+ .span-color-2{color:#409CDE !important;}
+ .span-color-3{color:#C0DB38 !important;}
+ .span-color-4{color:#4DCE58 !important;}
+ .span-color-5{color:#FEC939 !important;}
+ .span-color-6{color:#8838DA !important;}
+ .span-color-7{color:#FD6206 !important;}
+ .span-color-8{color:#F03347 !important;}
+ .span-color-9{color:#A38B82 !important;}
  
+ .layui-status-0{background-color:#648A8D !important;}
+ .layui-status-1{background-color:#009688 !important;}
+ .layui-status-2{background-color:#1E9FFF !important;}
+ .layui-status-3{background-color:#FFB800 !important;}
+ .layui-status-4{background-color:#FF5722 !important;}
+ 
+ .layui-bg-0{background-color:#648A8D !important;}
+ .layui-bg-1{background-color:#4AC8BE !important;}
+ .layui-bg-2{background-color:#409CDE !important;}
+ .layui-bg-3{background-color:#C0DB38 !important;}
+ .layui-bg-4{background-color:#4DCE58 !important;}
+ .layui-bg-5{background-color:#FEC939 !important;}
+ .layui-bg-6{background-color:#8838DA !important;}
+ .layui-bg-7{background-color:#FD6206 !important;}
+ .layui-bg-8{background-color:#F03347 !important;}
+ .layui-bg-9{background-color:#A38B82 !important;}
  /*框架布局*/
 .layui-layout-admin .layui-header{height:50px; padding-left:60px;background: #fff; box-shadow: inset 0 -1px 0 0 #e5ecf0; z-index:1686}
 .layui-layout-admin .layui-side{width:60px; top:0; z-index:1688;background-color: #222b45; color: #fff;} 
@@ -182,13 +199,13 @@
 .side-memu{align-items: stretch;display: flex; flex-flow: column nowrap; justify-content: space-between; min-width: 0;height:100%; overflow:hidden; position: relative;}
 .side-memu .item {align-items: center; cursor: pointer;display: flex; flex-direction: column; height: 66px; justify-content: center; position: relative; text-align: center;}
 .side-memu .item>*{ position: relative;}
-.side-memu a {color: #ddd; text-decoration: none;}
+.side-memu a {color: #D2E2FE; text-decoration: none;}
 .side-memu .item.logo {width: 56px; height: 50px; text-align:center;}
 .side-memu .item.logo .gg-logo { height: 36px; width: 36px;}
 .side-memu .item.logo .gg-logo img {height: 36px; width: 36px; border-radius:50%}
 .side-memu .item:hover{background-color:#333E5C}
 .side-memu .item.active { color: #fff; background-color:#4285F4}
-.side-memu .item .iconfont {font-size: 20px; margin: 0;}
+.side-memu .item .iconfont {font-size: 22px; margin: 0;}
 .side-memu .item .text {font-size:12px; padding-top:5px; line-height: 1.5;}
  
 /*内容区域*/

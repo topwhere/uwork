@@ -16,11 +16,11 @@ layui.define(['layer'], function(exports){
 				type:"GET",
 				timeout:10000,
 				success:function(res){
-					if(res['code'] && res['code']==1){
+					if(res['code'] && res['code']>0){
 						layer.msg(res.msg);
 						return false;
 					}
-					var express='<section id="expressLayer" class="express-box" style="width:'+width+'"><article>'+res+'</article><div id="expressClose" class="express-close" title="关闭">关闭</div></section><div id="expressMask" class="express-mask"></div>';
+					var express='<section id="expressLayer" class="express-box" style="width:'+width+'"><article id="articleLayer">'+res+'</article><div id="expressClose" class="express-close" title="关闭">关闭</div></section><div id="expressMask" class="express-mask"></div>';
 					
 					$('body').append(express).addClass('right-open');	
 					$('#expressMask').fadeIn(200);
@@ -48,6 +48,32 @@ layui.define(['layer'], function(exports){
 				}
 			});          
         },
+		load:function(url){
+			let that=this;
+			if(that.loading==true){
+				return false;
+			}
+			that.loading=true;
+			$.ajax({
+				url:url,
+				type:"GET",
+				timeout:10000,
+				success:function(res){
+					if(res['code'] && res['code']>0){
+						layer.msg(res.msg);
+						return false;
+					}
+					$('#articleLayer').html(res);
+					pageInit();
+				}
+				,error:function(xhr,textstatus,thrown){
+					console.log('错误');
+				},
+				complete:function(){
+					that.loading=false;
+				}
+			});
+		},
 		close: function(){
 			$('#expressClose').click();
 		},

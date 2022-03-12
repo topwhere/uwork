@@ -249,8 +249,20 @@ class Index extends BaseController
     //获取产品列表
     public function get_product()
     {
-        $product = Db::name('Product')->field('id,name')->where([['status', '=', 1]])->select();
+        $product = Db::name('Product')->field('id,name as title')->where([['status', '=', 1]])->select();
         return to_assign(0, '', $product);
+    }
+	
+    //获取项目列表
+    public function get_project($pid=0)
+    {
+		$where = [];
+		$where[] = ['status', '=', 1];
+		if($pid>0){
+			$where[] = ['product_id', '=', $pid];
+		}
+        $project = Db::name('Project')->field('id,name as title')->where($where)->select();
+        return to_assign(0, '', $project);
     }
 
     //首页公告

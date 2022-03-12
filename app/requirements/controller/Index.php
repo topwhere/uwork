@@ -7,11 +7,11 @@
 
 declare (strict_types = 1);
 
-namespace app\project\controller;
+namespace app\requirements\controller;
 
 use app\base\BaseController;
-use app\model\Project as ProjectList;
-use app\Project\validate\ProjectCheck;
+use app\model\Requirements as RequirementsList;
+use app\Requirements\validate\RequirementsCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;
@@ -25,13 +25,15 @@ class Index extends BaseController
             $where = array();
             $where[] = ['status', '>=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $list = ProjectList::where($where)
+            $list = RequirementsList::where($where)
                 ->withoutField('content,md_content')
                 ->order('create_time asc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
 					$item->plan_time = date('Y-m-d', $item->start_time) .'至'.date('Y-m-d', $item->end_time);
+					$item->status_name = RequirementsList::$Status[(int)$item->status];
+					$item->flow_name = RequirementsList::$FlowStatus[(int)$item->flow_status];
                 });
             return table_assign(0, '', $list);
         } else {
@@ -65,7 +67,7 @@ class Index extends BaseController
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
-				$project = (new ProjectList())->detail($param['id']);
+				$project = (new RequirementsList())->detail($param['id']);
 				if(isset($param['start_time'])){
 					if($param['start_time']>=$project['end_time']){
 						return to_assign(1,'开始时间不能大于计划结束时间');
@@ -77,40 +79,40 @@ class Index extends BaseController
 					}
 				}
                 try {
-                    validate(ProjectCheck::class)->scene('edit')->check($param);
+                    validate(RequirementsCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
                 $param['update_time'] = time();
-                $res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
+                $res = RequirementsList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
                     add_log('edit', $param['id'], $param);
                 }
                 return to_assign();
             } else {
                 try {
-                    validate(ProjectCheck::class)->scene('add')->check($param);
+                    validate(RequirementsCheck::class)->scene('add')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
                 $param['create_time'] = time();
                 $param['admin_id'] = $this->uid;
-                $sid = ProjectList::strict(false)->field(true)->insertGetId($param);
+                $sid = RequirementsList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     add_log('add', $sid, $param);
 					$users= Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
-					sendMessage($users,1,['title'=>$param['name'],'action_id'=>$sid]);
+					sendMessage($users,1,['title'=>$param['title'],'action_id'=>$sid]);
                 }
                 return to_assign();
             }
         } else {
             $id = isset($param['id']) ? $param['id'] : 0;
             if ($id > 0) {
-                $detail = (new ProjectList())->detail($id);
+                $detail = (new RequirementsList())->detail($id);
 				if (empty($detail)) {
-					return to_assign(1,'产品不存在');
+					return to_assign(1,'需求不存在');
 				}
                 View::assign('detail', $detail);
             }
@@ -124,9 +126,9 @@ class Index extends BaseController
     {
 		$param = get_params();
 		$id = isset($param['id']) ? $param['id'] : 0;
-		$detail = (new ProjectList())->detail($id);
+		$detail = (new RequirementsList())->detail($id);
         if (empty($detail)) {
-			return to_assign(1,'项目不存在');
+			return to_assign(1,'需求不存在');
         }
 		else{
 			View::assign('detail', $detail);

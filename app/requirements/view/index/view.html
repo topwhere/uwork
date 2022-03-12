@@ -1,9 +1,8 @@
 <div class="page-content">
 	<div class="p-4 border-b">
 	<h3 class="h3-title hover-edit">
-	{eq name="$detail.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
-	{eq name="$detail.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
-	<span id="name_{$detail.id}" data-val="">{$detail.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="name"></i>
+	<span class="layui-btn layui-btn-xs layui-status-{$detail.status}">{$detail.status_name}</span>
+	<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="title"></i>
 	</h3>
 	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$detail.admin_name}</span><span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span></div>
 	</div>
@@ -11,48 +10,39 @@
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray">产品负责人</td>
+					<td class="layui-td-gray">负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
-					<td class="layui-td-gray">测试负责人</td>
-					<td class="hover-edit"><span id="test_uid_{$detail.id}" data-val="{$detail.test_uid}">{$detail.test_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="test_uid"></i></td>
+					<td class="layui-td-gray">需求状态</td>
+					<td class="hover-edit"><span class="span-color-{$detail.flow_status}" id="flow_status_{$detail.id}" data-val="{$detail.flow_status}">{$detail.flow_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="flow_status"></i></td>
 				</tr>
 				<tr>
-					<td class="layui-td-gray">产品评审人</td>
-					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$detail.id}" data-val="{$detail.check_admin_ids}">{$detail.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="check_admin_ids"></i></td>
-				</tr>
-				<tr>
-					<td class="layui-td-gray">访问控制</td>
-					<td colspan="3" class="hover-edit">
-						<span id="is_open_{$detail.id}" data-val="{$detail.is_open}">
-						{eq name="$detail.is_open" value="1" }
-						私有 <span class="font-gray">(白名单员工可访问者)</span>
-						{/eq}
-						{eq name="$detail.is_open" value="2" }公开 <span class="font-gray">(有产品视图权限员工均可访问)</span>{/eq}
-						</span>
-						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="is_open"></i>						
-					</td>			
-				</tr>
-				<tr id="is_open_son" class="is_open_son{$detail.is_open}">
-					<td class="layui-td-gray">访问白名单</td>
-					<td colspan="3" class="hover-edit">
-					{empty name="$detail.view_admin_names"}
-					<span class="font-gray">未设置</span>
-					{/empty}
-					<span id="view_admin_ids_{$detail.id}" data-val="{$detail.view_admin_ids}">
-					{$detail.view_admin_names}
-					</span>
-					<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="view_admin_ids"></i></td>
+					<td class="layui-td-gray">开始日期</td>
+					<td class="hover-edit"><span id="start_time_{$detail.id}" data-val="">{$detail.start_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="start_time"></i></td>
+					<td class="layui-td-gray2">计划完成日期</td>
+					<td  class="hover-edit"><span id="end_time_{$detail.id}" data-val="">{$detail.end_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="end_time"></i></td>
 				</tr>
 			</table>
 			<div class="md-content hover-edit">
-				<h5 class="py-4">产品描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="md_content"></i></h5>
+				<h5 class="py-4">需求描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="md_content"></i></h5>
 				<div id="md_content_{$detail.id}" data-val="{$detail.md_content}">{$detail.content|raw}</div>
 			</div>
 		</div>
 		<div class="layui-col-md3 p-4">
 			<h5 class="pb-4">关联信息</h5>
-			<div class="pb-4"><span class="font-gray">关联项目：</span>2</div>
-			<div class="pb-4"><span class="font-gray">关联需求：</span>101</div>
+			<div class="pb-4 hover-edit">
+				<span class="font-gray">关联产品：</span>
+				<span id="product_id_{$detail.id}" data-val="{$detail.product_id}">
+				{gt name="$detail.product_id" value="0"}{$detail.product_name}{else/}<span class="font-gray">未设置</span>{/gt}
+				</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="product_id"></i>
+			</div>
+			<div class="pb-4 hover-edit">
+				<span class="font-gray">关联项目：</span>
+				<span id="project_id_{$detail.id}" data-val="{$detail.project_id}">
+					{gt name="$detail.project_id" value="0"}{$detail.project_name}{else/}<span class="font-gray">未设置</span>{/gt}
+				</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="project_id"></i>
+			</div>
 			<div class="pb-4"><span class="font-gray">关联任务：</span>135</div>
 			<div class="pb-4"><span class="font-gray">关联BUG：</span>56</div>
 		</div>
@@ -124,7 +114,7 @@
 
 <script>
 	function pageInit() {
-		var layer = layui.layer,
+		const layer = layui.layer,
 			edit = layui.gouguEdit,
 			gougu = layui.gougu;
 		
@@ -141,7 +131,7 @@
 			let real_txt=$('#'+name+'_'+id).data('val');
 			if(real_txt == ''){
 				real_txt = show_txt;
-			}
+			}	
 			editShow(id,name,show_txt,real_txt);
 		})
 		
@@ -150,7 +140,7 @@
 		let editPost = function(id,name,show_val,real_val){
 			let callback = function (e) {
 				layer.msg(e.msg);
-				gougu.load('/product/index/view/id/'+id);
+				gougu.load('/requirements/index/view/id/'+id);
 				setTimeout(function(){
 					layer.closeAll();
 					tableIns.reload();
@@ -162,32 +152,51 @@
 			if(name=='md_content'){
 				postData['content'] = show_val;
 			}
-			gougu.post("/product/index/add",postData,callback);
+			gougu.post("/requirements/index/add",postData,callback);
 		}
 		
 		function editShow (id,name,show_txt,real_txt) {
 			if(loading==true){
 				return false;
 			}
-			if(name=="name"){
+			if(name=="title"){
 				edit.text(id,name,real_txt,editPost);
 			}
-			if(name =="director_uid" || name =="test_uid"){
+			if(name=="start_time" || name=="end_time"){
+		
+				edit.date(id,name,real_txt,editPost);
+			}
+			if(name =="director_uid"){
 				edit.employee_one(id,name,show_txt,real_txt,editPost);
 			}
-			if(name =="check_admin_ids" || name =="view_admin_ids"){
+			if(name =="team_admin_ids"){
 				edit.employee_more(id,name,show_txt,real_txt,editPost);
 			}
-			if(name=="is_open"){
-				let data = [
-					{'id':1,'title':'私有<span class="font-gray">(白名单员工可访问者)</span>'},
-					{'id':2,'title':'公开<span class="font-gray">(有产品视图权限员工均可访问)</span>'}
-				];
-				edit.select_type(id,name,real_txt,data,editPost);
+			if(name=="product_id"){		
+				loading=true;
+				gougu.get("/api/index/get_product",{},function(res){
+					let data = res.data;
+					loading=false;
+					edit.dropdown(id,name,real_txt,data,editPost);
+				});				
+			}
+			if(name=="project_id"){
+				let product_id = $('#product_id_'+id).data('val');
+				if(product_id == 0){
+					layer.msg('请先关联产品');
+					return false;
+				}
+				loading=true;
+				gougu.get("/api/index/get_project",{},function(res){
+					let data = res.data;
+					loading=false;
+					edit.dropdown(id,name,real_txt,data,editPost);
+				});				
 			}
 			if(name=="md_content"){
-				edit.editor(id,name,real_txt);
+				edit.editor(id,name,real_txt,editPost);
 			}
         }
+		
 	}
 </script>

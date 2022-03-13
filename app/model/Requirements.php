@@ -9,13 +9,13 @@ class Requirements extends Model
 	const TWO = 2;//#409CDE
 	const THREE = 3;//#C0DB38
 	const FOUR = 4;//#4DCE58
-	const FINE = 5;//#FEC939
+	const FIVE = 5;//#FEC939
 	const SIX = 6;//#8838DA
 	const SEVEN = 7;//#FD6206
 	const EIGHT = 8;//#F03347
 	const NINE = 9;//#A38B82
 
-	public static $Status = [
+	public static $Priority = [
 		self::ZERO => '未设置',
 		self::ONE => '低',
 		self::TWO => '中',
@@ -28,7 +28,7 @@ class Requirements extends Model
 		self::TWO => '设计中',
 		self::THREE => '排期中',
 		self::FOUR => '研发中',
-		self::FINE => '测试中',
+		self::FIVE => '测试中',
 		self::SIX => '待发布',
 		self::SEVEN => '已发布',
 		self::EIGHT => '已完成',
@@ -44,7 +44,7 @@ class Requirements extends Model
 			$detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
 			$detail['plan_time'] = date('Y-m-d', $detail['start_time']) .' 至 '.date('Y-m-d', $detail['end_time']);
-			$detail['status_name'] = self::$Status[(int)$detail['status']];
+			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
         }
         return $detail;

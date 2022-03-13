@@ -95,15 +95,17 @@ layui.define(['employeepicker'], function(exports){
 			})
 		},
 		//下拉选择
-		dropdown:function(id,name,real_val,data,editPost){
+		dropdown:function(id,name,real_val,data,editPost,is_cancel){
 			let that=this;
-			data.push({id:0,title:'<span style="color:#FF5722">取消关联</span>'});
+			if(is_cancel){
+				data.push({id:0,title:'<span style="color:#FF5722">取消关联</span>'});
+			}
 			dropdown.render({
 				elem: '#'+name+'_'+id
 				,show:true
 				,data: data
 				,click: function(data, othis){
-					editPost(id,name,data.name,data.id);
+					editPost(id,name,data.title,data.id);
 				}
 			});
 		},

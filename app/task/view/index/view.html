@@ -10,20 +10,26 @@
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray">负责人</td>
-					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
-					<td class="layui-td-gray">需求状态</td>
+					<td class="layui-td-gray">任务状态</td>
 					<td class="hover-edit"><span class="span-color-{$detail.flow_status}" id="flow_status_{$detail.id}" data-val="{$detail.flow_status}">{$detail.flow_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="flow_status"></i></td>
+					<td class="layui-td-gray">任务类型</td>
+					<td class="hover-edit"><span id="type_{$detail.id}" data-val="{$detail.type}">{$detail.type_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="type"></i></td>
 				</tr>
 				<tr>
-					<td class="layui-td-gray">开始日期</td>
-					<td class="hover-edit"><span id="start_time_{$detail.id}" data-val="">{$detail.start_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="start_time"></i></td>
+					<td class="layui-td-gray">负责人</td>
+					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
+					<td class="layui-td-gray">协作人</td>
+					<td class="hover-edit"><span id="assist_admin_ids_{$detail.id}" data-val="{$detail.assist_admin_ids}">{$detail.assist_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="assist_admin_ids"></i></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">预估工时</td>
+					<td class="hover-edit"><span id="plan_hours_{$detail.id}" data-val="">{$detail.plan_hours}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="plan_hours"></i></td>
 					<td class="layui-td-gray2">计划完成日期</td>
 					<td  class="hover-edit"><span id="end_time_{$detail.id}" data-val="">{$detail.end_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="end_time"></i></td>
 				</tr>
 			</table>
 			<div class="md-content hover-edit">
-				<h5 class="py-4">需求描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="md_content"></i></h5>
+				<h5 class="py-4">任务描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="md_content"></i></h5>
 				<div id="md_content_{$detail.id}" data-val="{$detail.md_content}">{$detail.content|raw}</div>
 			</div>
 		</div>
@@ -43,8 +49,6 @@
 				</span>
 				<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="project_id"></i>
 			</div>
-			<div class="pb-4"><span class="font-gray">关联任务：</span>135</div>
-			<div class="pb-4"><span class="font-gray">关联BUG：</span>56</div>
 		</div>
 	</div>
 	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">
@@ -140,7 +144,7 @@
 		let editPost = function(id,name,show_val,real_val){
 			let callback = function (e) {
 				layer.msg(e.msg);
-				gougu.load('/requirements/index/view/id/'+id);
+				gougu.load('/task/index/view/id/'+id);
 				setTimeout(function(){
 					layer.closeAll();
 					tableIns.reload();
@@ -152,34 +156,45 @@
 			if(name=='md_content'){
 				postData['content'] = show_val;
 			}
-			gougu.post("/requirements/index/add",postData,callback);
+			gougu.post("/task/index/add",postData,callback);
 		}
 		
 		function editShow (id,name,show_txt,real_txt) {
 			if(loading==true){
 				return false;
 			}
-			if(name=="title"){
+			if(name=="title" || name=="plan_hours"){
 				edit.text(id,name,real_txt,editPost);
 			}
-			if(name=="start_time" || name=="end_time"){
-		
+			if(name=="end_time"){
 				edit.date(id,name,real_txt,editPost);
 			}
 			if(name =="director_uid"){
 				edit.employee_one(id,name,show_txt,real_txt,editPost);
 			}
+			if(name =="assist_admin_ids"){
+				edit.employee_more(id,name,show_txt,real_txt,editPost);
+			}
 			if(name=="flow_status"){	
 				let data = [
-					{'id':1,'title':'需求中'},
-					{'id':2,'title':'设计中'},
-					{'id':3,'title':'排期中'},
-					{'id':4,'title':'研发中'},
-					{'id':5,'title':'测试中'},
-					{'id':6,'title':'待发布'},
-					{'id':7,'title':'已发布'},
-					{'id':8,'title':'已完成'},
-					{'id':8,'title':'挂起'}
+					{'id':1,'title':'TODO'},
+					{'id':2,'title':'DOING'},
+					{'id':3,'title':'DONE'},
+					{'id':4,'title':'CLOSE'}
+				];
+				edit.dropdown(id,name,real_txt,data,editPost);			
+			}
+			if(name=="type"){	
+				let data = [
+					{'id':0,'title':'其他'},
+					{'id':1,'title':'UI设计'},
+					{'id':2,'title':'技术开发'},
+					{'id':3,'title':'产品原型'},
+					{'id':4,'title':'测试'},
+					{'id':5,'title':'编写文档'},
+					{'id':6,'title':'沟通'},
+					{'id':7,'title':'会议'},
+					{'id':8,'title':'调研'}
 				];
 				edit.dropdown(id,name,real_txt,data,editPost);			
 			}
@@ -207,7 +222,6 @@
 			if(name=="md_content"){
 				edit.editor(id,name,real_txt,editPost);
 			}
-        }
-		
+        }		
 	}
 </script>

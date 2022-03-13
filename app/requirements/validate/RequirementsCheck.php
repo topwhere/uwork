@@ -15,7 +15,7 @@ class RequirementsCheck extends Validate
     ];
 
     protected $scene = [
-        'add'       => ['name','code'],
+        'add'       => ['title'],
         'edit'      => ['id']
     ];
 }

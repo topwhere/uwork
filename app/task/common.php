@@ -10,24 +10,3 @@
 ======================
  */
 use think\facade\Db;
-
-//读取印章类型
-function oa_seal_cate()
-{
-    $list = Db::name('SealCate')->where(['status' => 1])->select()->toArray();
-    return $list;
-}
-
-//读取车辆类型
-function oa_car_cate()
-{
-    $list = Db::name('CarCate')->where(['status' => 1])->select()->toArray();
-    return $list;
-}
-
-//读取费用类型
-function oa_cost_cate()
-{
-    $list = Db::name('CostCate')->where(['status' => 1])->select()->toArray();
-    return $list;
-}

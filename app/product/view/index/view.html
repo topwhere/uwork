@@ -137,7 +137,7 @@
 		$('.hover-edit').on('click','i',function(){
 			let id=$(this).data('id');
 			let name=$(this).data('name');
-			let show_txt=$('#'+name+'_'+id).html().replace(/[\r\n\t]/g,"");
+			let show_txt=$('#'+name+'_'+id).text().replace(/[\r\n\t]/g,"");
 			let real_txt=$('#'+name+'_'+id).data('val');
 			if(real_txt == ''){
 				real_txt = show_txt;

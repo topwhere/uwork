@@ -110,7 +110,7 @@ class Index extends BaseController
             if ($id > 0) {
                 $detail = (new ProjectList())->detail($id);
 				if (empty($detail)) {
-					return to_assign(1,'产品不存在');
+					return to_assign(1,'项目不存在');
 				}
                 View::assign('detail', $detail);
             }

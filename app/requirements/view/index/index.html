@@ -76,8 +76,8 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 			url: "/requirements/index/index", //数据接口
 			cols:  [[
 				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
-				,{field:'status_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
-					var html = '<span class="layui-badge layui-status-'+d.status+'">'+d.status_name+'</span>';			
+				,{field:'priority_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
+					var html = '<span class="layui-badge layui-status-'+d.priority+'">'+d.priority_name+'</span>';			
 					return html;
 				}}
 				,{field:'title',title: '需求主题',rowspan: 2}

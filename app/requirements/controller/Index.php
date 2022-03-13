@@ -32,7 +32,7 @@ class Index extends BaseController
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
 					$item->plan_time = date('Y-m-d', $item->start_time) .'至'.date('Y-m-d', $item->end_time);
-					$item->status_name = RequirementsList::$Status[(int)$item->status];
+					$item->priority_name = RequirementsList::$Priority[(int)$item->priority];
 					$item->flow_name = RequirementsList::$FlowStatus[(int)$item->flow_status];
                 });
             return table_assign(0, '', $list);

@@ -1,22 +1,32 @@
 {extend name="../../base/view/common/base" /}
 <!-- 主体 -->
 {block name="body"}
-<div class="body-table">
-	<form class="layui-form layui-form-bar">
-		<div class="layui-input-inline">
-			<select name="article_cate_id">
-				<option value="">请选择知识文章分类</option>
+<div class="table-content">
+	<div class="layui-tab knowledge-tab" style="margin:0">
+		<ul class="layui-tab-title">
+			<li class="layui-this">个人知识库</li>
+			<li>共享知识库</li>
+		</ul>
+	</div>
+	<form class="layui-form layui-form-bar border-x border-b mb-3">
+		<div class="layui-input-inline" style="width:120px">
+			<select name="cate_id">
+				<option value="">请选择分类</option>
 				{volist name=":set_recursion(knowledge_cate())" id="v"}
 				<option value="{$v.id}">{$v.title}</option>
 				{/volist}
 			</select>
 		</div>
-		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="标题/分类/描述/内容" class="layui-input" autocomplete="off" />
+		<div class="layui-input-inline" style="width:240px;">
+			<input type="text" name="keywords" placeholder="标题/分类/描述" class="layui-input" autocomplete="off" />
 		</div>
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
+		<span style="float:right" class="layui-btn layui-btn-normal add-new">+ 新建知识库</span>
 	</form>
-	<table class="layui-hide" id="test" lay-filter="test"></table>
+	<div class="knowledge-list layui-row layui-col-space16" id="knowledgeContent">
+
+	</div>
+	<div id="pageBox" class="page-box py-4"></div>
 </div>
 
 <script type="text/html" id="barDemo">
@@ -28,89 +38,86 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
+	const eid = {$eid};
+	const kid = {$kid};
+	var getKnowledge = null;
+	var getData = {'page':1};
 	function init(layui) {
-		var TAB = parent.layui.tab,
-			table = layui.table,
-			rightpage = layui.rightpage,
-			form = layui.form;
-
-		var tableIns = table.render({
-			elem: '#test',
-			title: '文章列表',
-			toolbar: '#toolbarDemo',
-			url: "/article/index/index", //数据接口
-			page: true, //开启分页
-			limit: 20,
-			cols: [
-				[ //表头
-					{
-						field: 'id',
-						title: '编号',
-						align: 'center',
-						width: 80
-					}, {
-						field: 'sort',
-						title: '排序',
-						align: 'center',
-						width: 66
-					}, {
-						field: 'cate_title',
-						title: '分类',
-						align: 'center',
-						width: 120
-					}, {
-						field: 'title',
-						title: '文章标题'
-					},{
-						field: 'read',
-						title: '阅读量',
-						align: 'center',
-						width: 80
-					}, {
-						field: 'user',
-						title: '发布人',
-						align: 'center',
-						width: 80
-					}, {
-						field: 'department',
-						title: '部门',
-						align: 'center',
-						width: 100
-					}, {
-						field: 'right',
-						title: '操作',
-						toolbar: '#barDemo',
-						width: 60,
-						align: 'center'
+		var gougu = layui.gougu,
+			form = layui.form,
+			laypage = layui.laypage;
+			
+		if(eid>0 && kid == 0){
+			gougu.open('/knowledge/index/add/id/'+kid+'.html');
+		}
+		if(eid == 0 && kid > 0){
+			gougu.open('/knowledge/index/view/id/'+kid+'.html');
+		}		
+		getKnowledge = function(){
+			gougu.get("/knowledge/index/index",getData,function(res){
+				if(res.code == 0){
+					let card='';
+					for(let i=0; i<res.data.length;i++){
+						let item = res.data[i];
+						card+=`
+							<div class="layui-col-md4">
+								<div class="layui-card">
+									<div class="card-body">
+										<div class="meta-title text-overflow1"><a href="/knowledge/index/view/id/${item.id}.html" target="_blank">${item.title}</a></div>
+										<div class="meta-desc text-overflow3"><a href="/knowledge/index/view/id/${item.id}.html" target="_blank">${item.desc}</a></div>
+									</div>
+									<div class="card-actions">
+										<ul>
+											<li title="收藏数"><i class="layui-icon layui-icon-star-fill"></i>18</li>
+											<li title="查看数"><i class="layui-icon layui-icon-friends"></i>20</li>
+											<li title="编辑"><a class="action-edit" data-id="${item.id}" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
+											<li title="浏览详情"><a class="action-view" href="/knowledge/index/doc_detail/kid/${item.id}"><i class="layui-icon layui-icon-link"></i>查看</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							`;
 					}
-				]
-			]
+					$('#knowledgeContent').html(card);
+					if(getData.page==1 && res.data.length>9){
+						laypage.render({
+							elem: 'pageBox'
+							,limit:9
+							,count: 50 //数据总数，从服务端得到
+							,jump: function(obj, first){
+								console.log(obj.curr); //得到当前页		
+								getData.page=obj.curr;
+								getKnowledge();
+								//首次不执行
+								if(!first){
+								  //do something
+								}
+							}
+						});
+					}
+				}		
+			});
+		}
+		getKnowledge();
+
+		$('.add-new').on('click',function(){
+			gougu.open('/knowledge/index/add');
+		});
+		$('#knowledgeContent').on('click','.action-edit',function(){
+			let id=$(this).data('id');
+			gougu.open('/knowledge/index/view/id/'+id+'.html');
 		});
 		
-		//监听行工具事件
-		table.on('tool(test)', function(obj) {
-			var data = obj.data;
-			if(obj.event === 'view'){
-				rightpage.open('/article/index/view?id='+data.id,'900px');
-				return;
-			}
-		});
-
 		//监听搜索提交
 		form.on('submit(webform)', function(data) {
-			tableIns.reload({
-				where: {
-					keywords: data.field.keywords,
-					article_cate_id: data.field.article_cate_id
-				},
-				page: {
-					curr: 1
-				}
-			});
+			getData.page=1;
+			getData.keywords=data.field.keywords;
+			getData.cate_id=data.field.cate_id;
+			getKnowledge();
 			return false;
 		});
 	}
 </script>
-{include file="../../base/view/common/layui" base="base" extend="['rightpage']" callback="init" /}
+{include file="../../base/view/common/layui" base="base" extend="['gougu','treeGrid']" callback="init" /}
 {/block}
 <!-- /脚本 -->

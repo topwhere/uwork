@@ -4,7 +4,7 @@
 <div class="main-content">
 	{include file="../../base/view/common/submenu" /}
 	<div class="main-page-content">
-		<div class="layui-form-bar">
+		<div class="layui-form-bar border-b">
 			<button class="layui-btn layui-btn-normal layui-btn-sm add-menu">+ 添加菜单/节点</button>
 		</div>
 		<div>
@@ -28,10 +28,12 @@
 			, elem: '#' + tableId
 			, idField: 'id'
 			, url: "/admin/rule/index"
-			, cellMinWidth: 60
+			, cellMinWidth: 100
 			, treeId: 'id'//树形id字段名称
 			, treeUpId: 'pid'//树形父id字段名称
 			, treeShowName: 'title'//以树形式显示的字段
+			,heightRemove:[".dHead",24]//不计算的高度,表格设定的是固定高度，此项不生效
+			,height:'100%'
 			, cols: [[
 				{ field: 'id', width: 80, title: 'ID号', align: 'center'}
 				, { field: 'sort', width: 60, title: '排序',align: 'center'}

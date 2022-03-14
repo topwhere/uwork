@@ -1,10 +1,14 @@
 <div class="page-content">
 	<div class="p-4 border-b">
-	<h3 class="h3-title hover-edit">
-	<span class="layui-btn layui-btn-xs layui-status-{$detail.status}">{$detail.priority_name}</span>
-	<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="title"></i>
-	</h3>
-	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$detail.admin_name}</span><span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span></div>
+		<h3 class="h3-title hover-edit">
+			<span class="layui-btn layui-btn-xs layui-status-{$detail.status}">{$detail.priority_name}</span>
+			<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="title"></i>
+		</h3>
+		<div>
+			<span class="layui-badge layui-bg-gray">#I4X2ZV</span>
+			<span class="mx-2">{$detail.admin_name}</span>
+			<span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+		</div>
 	</div>
 	<div class="layui-row border-b">
 		<div class="layui-col-md9 p-4 border-r">

@@ -1,84 +1,230 @@
-{extend name="../../base/view/common/base" /}
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/ueditor/third-party/SyntaxHighlighter/prism.css?v=1"/>
-<script src="{__STATIC__}/ueditor/third-party/SyntaxHighlighter/prism.js?v=1"></script>
-<style>
-.detial-content{padding:6px 16px; color:#333; font-size: 16px!important; line-height: 1.68!important; max-width:1000px;}
-.detial-content p{padding: 6px 0;}
-.detial-content img{max-width:98%!important; border: 1px solid #e6e6e6; -webkit-box-shadow: 0 2px 6px rgba(26,26,26,.08); box-shadow: 0 2px 6px rgba(26,26,26,.08); border-radius: 3px;}
-.detial-content .gougu-video{width: 640px!important; height: 410px!important; margin:10px auto!important; border: 12px solid #F7F7F7; border-radius: 6px;}
-</style>
-{/block}
-<!-- 主体 -->
-{block name="body"}
-<div class="body-content">
-	<h3 class="h3-title">知识文章详情</h3>
-	<table class="layui-table layui-table-form">
-		<tr>
-			<td class="layui-td-gray">文章标题</td>
-			<td colspan="3">{$detail.title}</td>
-			<td class="layui-td-gray">文章分类</td>
-			<td>
-				{volist name=":set_recursion(article_cate())" id="v"}
-					{eq name="$detail.article_cate_id" value="$v.id" }{$v.title}{/eq}
-				{/volist}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">关键字</td>
-			<td colspan="3">{$detail.keyword_names}</td>
-			<td class="layui-td-gray">阅读量</td>
-			<td>{$detail.read}</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">发布时间</td>
-			<td>{$detail.create_time | date='Y-m-d H:i:s'}</td>
-			<td class="layui-td-gray">发布人</td>
-			<td>{$detail.user}</td>
-			<td class="layui-td-gray">部门</td>
-			<td>{$detail.department}</td>
-		</tr>
-		{notempty name="$detail.origin_url"}
-		<tr>
-			<td class="layui-td-gray">来源链接</td>
-			<td colspan="5">{$detail.origin_url}</td>
-		</tr>
-		{/notempty}
-		<tr>
-			<td class="layui-td-gray" style="vertical-align:top;">文章内容</td>
-			<td colspan="5"><div class="detial-content">{$detail.content|raw}</div></td>
-		</tr>
-	</table>
+<div class="page-content">
+	<div class="p-4 border-b">
+		<h3 class="h3-title">{$detail.title}</h3>
+		<div class="font-gray">介绍：{$detail.desc}</div>
+	</div>
+	<div class="p-4">
+		<div class="mb-2">
+			<table class="layui-table">
+				<tr>
+					<td class="layui-td-gray">文档数</td>
+					<td style="text-align:center;">{$detail.count}</td>
+					<td class="layui-td-gray">阅览数</td>
+					<td style="text-align:center;">{$detail.views}</td>
+					<td class="layui-td-gray">收藏数</td>
+					<td style="text-align:center;">{$detail.sort}</td>
+					<td class="layui-td-gray">是否公开</td>
+					<td style="text-align:center;">
+					  {eq name="$detail.is_share" value="1"}是{/eq}
+					  {eq name="$detail.is_share" value="2"}否{/eq}
+					</td>
+					<td class="layui-td-gray">所属分类</td>
+					<td style="text-align:center;">
+					  {$detail.cate_name}
+					</td>
+					<td style="text-align:right;">
+					  <input type="hidden" name="knowledge_id" value="{$detail.id}">
+						<button class="layui-btn layui-btn-sm edit-doc">编辑</button>
+						<button class="layui-btn layui-btn-normal layui-btn-sm add-doc" title="添加一级目录">+ 添加一级目录</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
+	</div>
 </div>
-{/block}
-<!-- /主体 -->
-
-<!-- 脚本 -->
-{block name="script"}
 <script>
-function init(layui) {
-    var $codepre = $("pre[class]");
-	if($codepre.length>0){
-		for(var i = 0;i<$codepre.length;i++){
-			var item = $codepre.eq(i);
-			var language = "";
-			item.attr("class").replace(/brush:([^;]+)/,function(a,b){
-				language = b;
-			});
-			if(language){
-				var codehtml = item.html();
-				var code = $("<code>");
-				code.attr("class","language-"+language+" line-numbers");
-				//codehtml= unhtml(codehtml);
-				code.html(codehtml);
-				item.html(code);
-				Prism.highlightElement(code[0]);
+	function pageInit(){
+		var tableId='treeTable',gougu = layui.gougu,table = layui.table,treeGrid = layui.treeGrid,layer=layui.layer;
+		treeGrid.render({
+			id:tableId
+			,elem: '#'+tableId
+			,idField:'id'
+			,url:'/api/index/get_doc_list'
+			,cellMinWidth: 100
+			,treeId:'id'//树形id字段名称
+			,treeUpId:'pid'//树形父id字段名称
+			,treeShowName:'title'//以树形式显示的字段
+			,heightRemove:[".dHead",120]//不计算的高度,表格设定的是固定高度，此项不生效
+			,height:'100%'
+			,isFilter:false
+			,iconOpen:false//是否显示图标【默认显示】
+			,isOpenDefault:true//节点默认是展开还是折叠【默认展开】
+			,loading:true
+			,isPage:false
+			,where:{kid:$('[name="knowledge_id"]').val()}
+			,cols: [[
+				{field:'id',width:80, title: 'ID号', align:'center'}
+				,{field: 'sort', title: '排序', edit: 'text', align:'center', style:'cursor: pointer;', width:80}
+				,{field:'pid', title: '父级ID', edit:'text',width:80, align:'center'}
+				,{field:'type', title: '类型',width:80,align:'center',templet: function(d){
+					var html='';
+					if(d.type==1){
+						html='<span class="layui-btn layui-btn-warm layui-btn-xs">文档</span>';
+					}
+					else if(d.type==2){
+						html='<span class="layui-btn layui-btn-xs">目录</span>';
+					}
+					if(d.type==3){
+						html='<span class="layui-btn layui-btn-normal layui-btn-xs">链接</span>';
+					}
+					return html;
+				}}
+				,{field:'title', edit:'text',title: '章节名称'}
+				,{field: 'read',title: '阅览数',align: 'center',width: 80}
+				,{width:166,title: '操作', align:'center',templet: function(d){
+						var html='<span class="layui-btn-group">';
+						html+='<a class="layui-btn layui-btn-normal layui-btn-xs" title="新建子节点" lay-event="add">新建子节点</a>';
+						html+='<a class="layui-btn layui-btn-xs" title="编辑" href="/knowledge/index/doc_add/id/'+d.id+'">编辑</a>';
+						html+='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+						html+='</span>';
+						return html;
+					}
+				}
+			]]
+		});
+		//单元格编辑
+		treeGrid.on('edit('+tableId+')', function(obj){
+			layer.confirm('确定要提交修改吗?', {icon: 3, title:'提示'}, function(index){
+				let editData={};
+				editData['id'] = obj.data.id;
+				editData[obj.field] = obj.value;				
+				
+				let callback = function(e){
+					layer.msg(e.msg);
+					if(e.code == 0){
+						treeGrid.reload(tableId);
+						setTimeout(function(){							
+							layer.closeAll();
+						},1000)						  
+					}
+				}
+				gougu.post('/knowledge/index/doc_add',editData,callback);				
+			})
+		});
+		
+		//删除
+		treeGrid.on('tool('+tableId+')',function (obj) {
+			if(obj.event === 'del'){
+				layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+					let callback = function(e){
+						layer.msg(e.msg);
+						if(e.code == 0){
+							obj.del();
+							setTimeout(function(){							
+								layer.closeAll();
+							},1000)						  
+						}
+					}
+					gougu.post('/knowledge/index/doc_delete',{id:obj.data.id},callback);
+				});
+			}else if(obj.event==="add"){
+				add(obj.data.id);
 			}
+		});
+			
+		$('.edit-doc').on('click',function(){
+			let kid = $('[name="knowledge_id"]').val();
+			gougu.load('/knowledge/index/add/id/'+kid+'.html');
+		})
+		//新增
+		$('.add-doc').on('click',function(){
+			add(0);
+		});
+			
+		//添加
+		var selectTable=null;
+		function add(pid) {
+			var type=[{'id':1,'title':'新建文档'},{'id':2,'title':'新建目录'},{'id':3,'title':'新建链接'}];
+			layer.open({
+				title:'选择节点类型',
+				type:1,
+				area:['360px','300px'],
+				content:'<div style="width:328px; padding:15px 15px 0"><div id="selectType"></div></div>',
+				success:function(){
+					selectTable=table.render({
+						elem: '#selectType',
+						cols: [[ //标题栏
+							{type:'radio',title: '选择'},
+							{field: 'title', title: '节点类型'}
+						]],
+						data: type
+					  });			
+				},
+				btn:['确定'],
+				btnAlign:'c',
+				yes: function(idx){
+					let checkStatus = table.checkStatus(selectTable.config.id);
+					let data = checkStatus.data;
+					if(data.length>0){
+						if(data[0].id==1 || data[0].id==2){
+							layer.prompt({title: '标题', formType: 3,value :''}, function(text, index){
+								if(text == ''){
+									layer.msg('输入标题');
+									return false;
+								}
+								let postData = {knowledge_id:$('[name="knowledge_id"]').val(),pid:pid,type:data[0].id,title:text}
+								let callback = function(e){
+									layer.msg(e.msg);
+									if(e.code == 0){
+										treeGrid.reload(tableId);
+										setTimeout(function(){							
+											layer.closeAll();
+										},1000)						  
+									}
+								}
+								gougu.post('/knowledge/index/doc_add',postData,callback);									
+							})
+						}else if(data[0].id==3){
+							var content='<div style="padding:0 15px;"><table class="layui-table">\
+								<tr>\
+									<td class="layui-td-gray">链接标题 <span style="color: red">*</span></td>\
+									<td><input name="title" id="docTitle" class="layui-input" value="" placeholder="请输入标题"></td>\
+								</tr>\
+								<tr>\
+									<td class="layui-td-gray">URL链接 <span style="color: red">*</span></td>\
+									<td><input name="link" id="docLink" class="layui-input" value="" placeholder="请输入链接"></td>\
+								</tr>\
+							</table></div>';
+							layer.open({
+								type:1,
+								title:'新建链接',
+								area:['480px','300px'],
+								content:content,
+								btn: ['确定提交'],
+								btnAlign:'c',
+								yes: function(idx){
+									let docTitle = $('#docTitle').val();
+									let docLink = $('#docLink').val();
+									if(docTitle==''){
+										layer.msg('请输入标题');
+										return;
+									}
+									if(docLink==''){
+										layer.msg('请输入链接');
+										return;
+									}
+									let postData = {knowledge_id:$('[name="knowledge_id"]').val(),pid:pid,type:data[0].id,title:docTitle,link:docLink}
+									let callback = function(e){
+										layer.msg(e.msg);
+										if(e.code == 0){
+											treeGrid.reload(tableId);
+											setTimeout(function(){							
+												layer.closeAll();
+											},1000)						  
+										}
+									}
+									gougu.post('/knowledge/index/doc_add',postData,callback);			
+								}
+							})	
+						}
+					}
+					else{
+						layer.msg('请选择节点类型');
+						return false;
+					}
+				}
+			})	
 		}
-	}
-}
-
+	}	
 </script>
-{include file="../../base/view/common/layui" base='base' extend="[]" callback="init" /}
-{/block}
-<!-- /脚本 -->

@@ -1,11 +1,16 @@
 <div class="page-content">
 	<div class="p-4 border-b">
-	<h3 class="h3-title hover-edit">
-	{eq name="$detail.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
-	{eq name="$detail.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
-	<span id="name_{$detail.id}" data-val="">{$detail.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="name"></i>
-	</h3>
-	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$detail.admin_name}</span><span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span></div>
+		<h3 class="h3-title hover-edit">
+			{eq name="$detail.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
+			{eq name="$detail.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
+			<span id="name_{$detail.id}" data-val="">{$detail.name}</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="name"></i>
+		</h3>
+		<div>
+			<span class="layui-badge layui-bg-gray">#I4X2ZV</span>
+			<span class="mx-2">{$detail.admin_name}</span>
+			<span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+		</div>
 	</div>
 	<div class="layui-row border-b">
 		<div class="layui-col-md9 p-4 border-r">

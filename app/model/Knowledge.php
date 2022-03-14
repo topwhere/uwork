@@ -6,31 +6,21 @@
  */
 
 namespace app\model;
-
-use think\facade\Db;
 use think\Model;
+use think\facade\Db;
 
 class Knowledge extends Model
 {
     //详情
     public function detail($id)
     {
-        $article = Db::name('Knowledge')->where(['id' => $id])->find();
-        if (empty($article)) {
-            return $this->error('文章知识不存在');
+		$detail = Db::name('Knowledge')->where(['id' => $id])->find();
+        if (!empty($detail)) {
+			$detail['user'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
+			$detail['cate_name'] = Db::name('KnowledgeCate')->where(['id' => $detail['cate_id']])->value('title');
+			$detail['count'] = Db::name('Doc')->where(['knowledge_id'=>$id,'status'=>1])->count();
+			$detail['views'] = Db::name('Doc')->where(['knowledge_id'=>$id,'status'=>1])->sum('read');
         }
-        $keywrod_array = Db::name('ArticleKeywords')
-            ->field('i.aid,i.keywords_id,k.title')
-            ->alias('i')
-            ->join('Keywords k', 'k.id = i.keywords_id', 'LEFT')
-            ->order('i.create_time asc')
-            ->where(array('i.aid' => $id, 'k.status' => 1))
-            ->select()->toArray();
-
-        $article['keyword_ids'] = implode(",", array_column($keywrod_array, 'keywords_id'));
-        $article['keyword_names'] = implode(',', array_column($keywrod_array, 'title'));
-        $article['user'] = Db::name('Admin')->where(['id' => $article['uid']])->value('name');
-        $article['department'] = Db::name('Department')->where(['id' => $article['did']])->value('title');
-        return $article;
+        return $detail;
     }
 }

@@ -253,6 +253,35 @@ class Index extends BaseController
         return to_assign(0, '', $product);
     }
 	
+    //文档列表
+    public function get_doc_list($kid = 0,$tree=0)
+    {
+		if($tree==2){
+			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
+					->field('id,pid as pId,title as name,type,knowledge_id,sort')
+					->order('sort asc,id asc')
+					->select()->toArray();
+			return to_assign(0, '', $list);
+		}
+		else{
+			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
+					->field('id,pid,title,type,knowledge_id,sort')
+					->order('sort asc,id asc')
+					->select()->toArray();
+			if($tree==1){
+				foreach($list as $k => &$v)
+				{
+					$v['title']=sub_str($v['title'],9);
+				}	
+				$tree = get_tree($list, 0, 4);
+				$data['trees'] = $tree;
+				return json($data);
+			}else{
+				return to_assign(0, '', $list);
+			}
+		}
+    }
+	
     //获取项目列表
     public function get_project($pid=0)
     {
@@ -264,6 +293,7 @@ class Index extends BaseController
         $project = Db::name('Project')->field('id,name as title')->where($where)->select();
         return to_assign(0, '', $project);
     }
+	
 
     //首页公告
     public function get_note_list()
@@ -272,24 +302,6 @@ class Index extends BaseController
             ->field('a.*,c.title as cate_title')
             ->alias('a')
             ->join('note_cate c', 'a.cate_id = c.id')
-            ->where(['a.status' => 1])
-            ->order('a.id desc')
-            ->limit(10)
-            ->select()->toArray();
-        foreach ($list as $key => $val) {
-            $list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
-        }
-        $res['data'] = $list;
-        return table_assign(0, '', $res);
-    }
-
-    //首页文章
-    public function get_article_list()
-    {
-        $list = Db::name('Article')
-            ->field('a.*,c.title as cate_title')
-            ->alias('a')
-            ->join('article_cate c', 'a.article_cate_id = c.id')
             ->where(['a.status' => 1])
             ->order('a.id desc')
             ->limit(10)

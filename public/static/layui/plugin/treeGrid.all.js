@@ -2343,7 +2343,7 @@ layui.config({
             ,options = that.config
             ,height = options.height, bodyHeight;
         if(height < 135) height = 135;
-        that.elem.css('height', window.innerHeight-150);
+        that.elem.css('height', height-80);
         //tbody区域高度
         // bodyHeight = parseFloat(height) - parseFloat(that.layHeader.height()) - 1;//原本代码
         var theader=options.isFilter?76:38;//没有行内过滤区域
@@ -2354,7 +2354,7 @@ layui.config({
         if(options.isPage){
             bodyHeight = bodyHeight - that.layPage.outerHeight() - 1;
         }
-        that.layMain.css('height', window.innerHeight-150);
+        that.layMain.css('height', bodyHeight-80);
     };
     //获取滚动条宽度
     Class.prototype.getScrollWidth = function(elem){

@@ -215,8 +215,8 @@ INSERT INTO `dev_admin_rule` VALUES (75, 6, 'knowledge/index/index', '共享知�
 INSERT INTO `dev_admin_rule` VALUES (76, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (77, 76, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (78, 76, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/doc_tree', '知识库文档列表', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (81, 76, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
@@ -406,6 +406,7 @@ CREATE TABLE `dev_note_cate`  (
   `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告分类';
 
@@ -536,14 +537,15 @@ CREATE TABLE `dev_knowledge_cate`  (
   `desc` varchar(1000) NULL DEFAULT '' COMMENT '描述',
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识文章分类表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
 
 -- ----------------------------
 -- Records of dev_knowledge_cate
 -- ----------------------------
-INSERT INTO `dev_knowledge_cate` VALUES (1, 0, 0, '办公技巧', '', 1637984651, 0);
-INSERT INTO `dev_knowledge_cate` VALUES (2, 0, 0, '行业技能', '', 1637984739, 0);
+INSERT INTO `dev_knowledge_cate` VALUES (1, 0, 0, '办公技巧', '', 1637984651, 0, 1);
+INSERT INTO `dev_knowledge_cate` VALUES (2, 0, 0, '行业技能', '', 1637984739, 0, 1);
 
 -- ----------------------------
 -- Table structure for dev_knowledge
@@ -553,14 +555,14 @@ CREATE TABLE `dev_knowledge`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `admin_id` int(11) NOT NULL DEFAULT 0 COMMENT '作者',
   `cate_id` int(11) NOT NULL DEFAULT 0 COMMENT '分类id',
-  `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
   `desc` varchar(1000) NULL DEFAULT '' COMMENT '描述',
+  `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
   `is_share` int(1) NOT NULL DEFAULT 1 COMMENT '是否公开:1是2否',
-  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态:1正常0垃圾箱-1删除',
+  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态:1正常0禁用-1删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
 
@@ -573,7 +575,7 @@ CREATE TABLE `dev_knowledge_doc`  (
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父章节',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `type` int(1) NOT NULL DEFAULT 1 COMMENT '类型:1文档2章节3跳转链接',
-  `book_id` int(11) NOT NULL DEFAULT 0 COMMENT '关联文档分类id',
+  `knowledge_id` int(11) NOT NULL DEFAULT 0 COMMENT '关联知识文件夹id',
   `desc` varchar(1000) NULL DEFAULT '' COMMENT '摘要',
   `admin_id` int(11) NOT NULL DEFAULT 0 COMMENT '作者',
   `link` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转地址',

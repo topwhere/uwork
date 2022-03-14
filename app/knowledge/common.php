@@ -10,9 +10,15 @@
 ======================
  */
 use think\facade\Db;
-//读取知识分类列表
-function article_cate()
+//读取知识库分类
+function knowledge_cate()
 {
-    $cate = Db::name('ArticleCate')->order('id desc')->select()->toArray();
+    $cate = Db::name('KnowledgeCate')->where(['status' => 1])->select()->toArray();
     return $cate;
+}
+
+function knowledge_doc($kid=0)
+{
+    $list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])->select()->toArray();
+    return $list;
 }

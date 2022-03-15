@@ -258,7 +258,7 @@ class Index extends BaseController
     {
 		if($tree==2){
 			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
-					->field('id,pid as pId,title as name,type,knowledge_id,sort')
+					->field('id,pid as pId,title as name,type,link,knowledge_id,sort')
 					->order('sort asc,id asc')
 					->select()->toArray();
 			return to_assign(0, '', $list);
@@ -409,73 +409,6 @@ class Index extends BaseController
         }
     }
 	
-	
-	//获取审核类型
-    public function get_flow_cate($type=0)
-    {
-		$flows = Db::name('FlowType')->where(['type'=>$type,'status'=>1])->select()->toArray();
-		return to_assign(0, '', $flows);
-	}
-	//获取审核步骤人员
-    public function get_flow_users($id=0)
-    {
-        $flow = Db::name('Flow')->where(['id' => $id])->find();
-        $flowData = unserialize($flow['flow_list']);
-		foreach ($flowData as $key => &$val) {
-            $val['user_id_info'] = Db::name('Admin')->field('id,name,thumb')->where('id','in',$val['flow_uids'])->select()->toArray();
-        }
-        return to_assign(0, '', $flowData);
-    }
-	
-	//获取审核流程节点
-    public function get_flow_nodes($id=0,$type=1)
-    {
-		$flows = Db::name('FlowStep')->where(['action_id'=>$id,'type'=>$type,'delete_time'=>0])->order('sort asc')->select()->toArray();
-		foreach ($flows as $key => &$val) {
-            $user_id_info = Db::name('Admin')->field('id,name,thumb')->where('id','in',$val['flow_uids'])->select()->toArray();						
-			foreach ($user_id_info as $k => &$v) {
-				$v['check_time'] = 0;
-				$v['content'] = '';
-				$v['status'] = 0;			
-				$checked = Db::name('FlowRecord')->where(['check_user_id' => $v['id'],'step_id' => $val['id']])->find();
-				if($checked){
-					$v['check_time'] = date('Y-m-d :H:i', $checked['check_time']);
-					$v['content'] = $checked['content'];
-					$v['status'] = $checked['status'];	
-				}
-			}
-			
-			$check_list = Db::name('FlowRecord')
-						->field('f.*,a.name,a.thumb')
-						->alias('f')
-						->join('Admin a', 'a.id = f.check_user_id', 'left')
-						->where(['f.step_id' => $val['id']])->select()->toArray();
-			foreach ($check_list as $kk => &$vv) {		
-				$vv['check_time_str'] = date('Y-m-d :H:i', $vv['check_time']);
-			}
-			
-			$val['user_id_info'] = $user_id_info;
-			$val['check_list'] = $check_list;
-        }
-        return to_assign(0, '', $flows);
-    }
-
-
-    //删除报销附件
-    public function del_expense_interfix()
-    {
-        $id = get_params("id");
-        $admin_id = Db::name('ExpenseInterfix')->where('id', $id)->value('admin_id');
-        if ($admin_id == $this->uid) {
-            if (Db::name('ExpenseInterfix')->where('id', $id)->delete() !== false) {
-                return to_assign(0, "删除成功");
-            } else {
-                return to_assign(1, "删除失败");
-            }
-        } else {
-            return to_assign(1, "您没权限删除该报销数据");
-        }
-    }
 	
     //删除消息附件
     public function del_message_interfix()

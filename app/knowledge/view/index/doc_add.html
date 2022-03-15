@@ -5,7 +5,7 @@
 .layui-tree-set .layui-tree-txt.on,.layui-tree-set .layui-tree-txt.on:hover{font-weight:800; color:#1E9FFF}
 .layui-tree-txt{display:inline-block; width:132px; overflow:hidden;}
 .layui-tree-iconClick{margin-right:3px;}
-.tree-left{width:268px; float:left; height:calc(100% - 24px); overflow-y: scroll; overflow-x: hidden; border:1px solid #e5ecf0; background-color:#fff; padding:12px 10px 10px 5px;}
+.tree-left{width:268px; float:left; height:calc(100% - 22px); overflow-y: scroll; overflow-x: hidden; border:1px solid #e5ecf0; background-color:#fff; padding:12px 10px 10px 5px;}
 .tree-left h3{font-size:16px; height:30px; padding-left:10px; font-weight:800}
 .editormd-code-toolbar select{display:inline;}
 .editormd{margin-bottom:0}
@@ -28,7 +28,7 @@
 					<td><input type="text" value="{$detail.title}" name="title" lay-verify="required" lay-reqText="请输入标题" autocomplete="off" placeholder="请输入标题" class="layui-input"></td>
 					<td class="layui-td-gray">上级目录<span style="color: red">*</span></td>
 					<td>
-					<select name="cate_id">
+					<select name="pid">
 						<option value="0">请选择顶级目录</option>
 						{volist name=":set_recursion(knowledge_doc($detail.knowledge_id))" id="v"}
 						<option value="{$v.id}" {eq name="$v.id" value="$detail.pid"} selected{/eq}>{$v.title}</option>

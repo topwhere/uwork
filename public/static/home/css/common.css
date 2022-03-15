@@ -232,7 +232,7 @@
 .card-content{padding:10px; background-color:#F5F8FA}
 
 .sub-menu{position:relative;}
-.line {right:0; border-right: 1px solid #e5ecf0; bottom: 0; height: 100%; position: absolute;top: 0; transition: border-color .2s ease 0s; width: 0;}
+.sub-menu .line {right:0; border-right: 1px solid #e5ecf0; bottom: 0; height: 100%; position: absolute;top: 0; transition: border-color .2s ease 0s; width: 0;}
 
 .table-title {font-size: 18px;font-weight: 800;padding: 16px 16px 0;}
 .h3-title{font-size:18px; height:39px; font-weight:800}

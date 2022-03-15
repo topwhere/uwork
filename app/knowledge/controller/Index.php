@@ -100,6 +100,7 @@ class Index extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
+				$param['admin_id'] = $this->uid;
                 $param['create_time'] = time();
                 $kid = KnowledgeList::strict(false)->field(true)->insertGetId($param);
                 if ($kid) {
@@ -167,7 +168,7 @@ class Index extends BaseController
 					return to_assign(1, '操作失败');
 				}
             } else {
-				$param['admin_id'] = 1;
+				$param['admin_id'] = $this->uid;
                 $param['create_time'] = time();
 				if (isset($param['content'])) {
 					$param['desc'] = getDescriptionFromContent($param['content'], 100);
@@ -227,7 +228,7 @@ class Index extends BaseController
 		if (request()->isAjax()) {
 			$info = Db::name('Doc')->where(['id'=>$id])->find();
 			Db::name('Doc')->where(['id'=>$id])->inc('read')->update();
-			add_user_log('view', $info['title'] . '文档详情', $id);
+			add_log('view', $id);
 			return to_assign(0, '', $info);
 		}
 		else{
@@ -238,8 +239,7 @@ class Index extends BaseController
 				->field('id,pid,title,type,knowledge_id,link,read,sort,create_time,update_time')
 				->order('sort asc,id asc')
 				->select()->toArray();
-			$menu = list_to_tree($list);
-			$detail = Db::name('Knowledge')->where(['id'=>$kid])->find();
+			$detail = (new KnowledgeList())->detail($kid);
 			$info=[];
 			if($id==0 && !empty($list)){
 				$id = $list[0]['id'];
@@ -248,7 +248,6 @@ class Index extends BaseController
 			Db::name('Doc')->where(['id'=>$id])->inc('read')->update();
 			View::assign([
 				'detail' => $detail,
-				'menu' => $menu,
 				'info' => $info,
 				'kid' => $kid,
 				'id' => $id

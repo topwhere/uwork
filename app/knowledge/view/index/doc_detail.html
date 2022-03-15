@@ -5,22 +5,10 @@
 <link rel="stylesheet" href="{__STATIC__}/viewer/viewer.min.css?v=1"/>
 <link rel="stylesheet" href="{__STATIC__}/ztree/css/metroStyle/metroStyle.css" >
 <style>
-
-.content-chapter{width:268px; float:left; height:calc(100% - 24px); overflow-y: scroll; overflow-x: hidden; border:1px solid #e5ecf0; background-color:#fff; padding:12px 10px 10px 5px;}
-.sidebar-links{padding:3px 0; margin:5px 0;line-height:1.68;font-size:14px;font-weight:400;display:inline-block;color:#2c3e50;transition:color .15s ease;width:100%;box-sizing:border-box}
-.sidebar-a{width:100%;color:#2c3e50;cursor:pointer;padding:5px 0;}
-.sidebar-link{border-left:4px solid transparent; padding:3px 0; display:inline-block; box-sizing:border-box}
-.sidebar-a .sidebar-link{padding-left:24px;font-size:16px; font-weight:800;}
-.sidebar-b .sidebar-link{padding-left:36px;font-size:15px; font-weight:400;}
-.sidebar-c .sidebar-link{padding-left:48px;font-size:14px; font-weight:400;}
-.sidebar-d .sidebar-link{padding-left:60px;font-size:13px; font-weight:400;}
-
-a.sidebar-link:hover,a.sidebar-link.active{color:#3eaf7c;}
-.sidebar-b .sidebar-link.active{border-left:4px solid #3eaf7c;}
-.sidebar-c .sidebar-link.active{border-left:4px solid transparent;}
-.sidebar-d .sidebar-link.active{border-left:4px solid transparent;}
-.content-text{margin-left:296px}
-
+.content-chapter{width:300px; position:fixed; top:50px; left:60px; bottom:0; overflow: hidden; border-right:1px solid #e5ecf0; background-color:#F5F8FA;}
+.content-text{margin-left:300px; padding:16px 32px; max-width:900px;}
+.menu-title span{font-size:12px; font-weight:400}
+.tree-menu{height:calc(100% - 145px); overflow-y: scroll; overflow-x: hidden;}
 
 .editormd-preview{font-size:16px; line-height:1.72; background-color:#fff;}
 .editormd-html-preview code, .editormd-preview-container code {padding:2px; border-radius:2px; font-size:14px; font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
@@ -31,17 +19,23 @@ a.sidebar-link:hover,a.sidebar-link.active{color:#3eaf7c;}
 {/block}
 <!-- 主体 -->
 {block name="body"}
-<div class="table-content">
+<div class="main-content">
 	{empty name="$info"}
 	<div style="padding:200px 0 0; width:100%; min-height:500px; text-align:center; font-size:30px; color:#999">暂无文档内容</div>
 	{else/}
 	<div class="content-chapter">
-		<ul id="treeDemo" class="ztree"></ul>
+		<div class="p-4">
+			<h5>{$detail['title']}</h5>
+			<p class="font-gray py-4">创建人：{$detail['user']}</p>
+			<h5 class="menu-title">目录<span class="font-gray">（{$detail['count']}）</span></h5>
+		</div>
+		<div class="tree-menu px-4">
+			<ul id="treeDemo" class="ztree"></ul>
+		</div>
 	</div>
-	<div class="content-text">
-		<h3>{$detail['title']}</h3>
-		<div class="article-content-title"><h1 id="infoTilte">{$info.title}</h1></div>
-		<div class="editormd-preview p-4">
+	<div class="content-text">		
+		<div class="pb-4"><h1 id="infoTilte">{$info.title}</h1></div>
+		<div class="editormd-preview">
 			<div class="markdown-body" id="infoContent">
 			{$info.content|raw}
 			</div>
@@ -62,106 +56,83 @@ var kid='{$kid}';
 var did='{$id}';
 var treeObj = null;
 var zNodes =[
-	{ id:1, pId:0, name:"勾股文档", open:true}
+	{ id:1, pId:0, name:"文档", open:true}
 ];
-
-var setting = {
-	data: {
-		simpleData: {
-			enable: true
-		}
-	},
-	callback: {
-		onClick: zTreeOnClick
-	}
-};
-function zTreeOnClick(event, treeId, treeNode) {
-	let type=treeNode.type;
-	let id=treeNode.id;
-	if(type==1){
-		detail(id);
-	}
-	if(type == 2){
-		treeObj.expandNode(treeNode, !treeNode.open, false, true);
-	}
-};
 
 function init(layui){
 	var layer = layui.layer;
+	var gougu = layui.gougu;
 	
 	var viewer = new Viewer(document.getElementById('infoContent'));
-	$.ajax({
-		url:"/api/index/get_doc_list",
-		type: 'get',
-		data: {kid:kid,tree:2},
-		success: function (e) {
-			if (e.code == 0) {
-				zNodes = e.data;
-				treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-				if(did>0){
-					var node = treeObj.getNodeByParam("id", did, null);
-					treeObj.selectNode(node);
-				}
-			} else {
-				layer.msg(e.msg);
-			}
-		}
-	})
-
-
-	$('#chapterItem').on('click','.sidebar-link',function(evt){
-		let dep=$(this).data('dep');
-		let type=$(this).data('type');
-		let id=$(this).data('id');
-		if(type!=3){
-			evt.preventDefault();
-			$('.sidebar-link').removeClass('active');
-
-			if(dep>2){
-				$(this).parent().parent().prev().addClass('active');
-			}
-			$(this).addClass('active');
-			if(type==1){
-				detail(id);
-			}
-		}
-	})
-
-	function detail(id){
-		viewer.destroy();
-		$.ajax({
-			url: "/knowledge/index/doc_detail/",
-			type: 'post',
-			data: {id:id},
-			success: function (e) {
-				if (e.code == 0) {
-					console.log(e.data);
-					history.pushState({},e.data.title,window.location.protocol+'//'+window.location.host+'/knowledge/index/doc_detail/kid/'+kid+'/id/'+id+'.html');
-					$('#infoTilte').html(e.data.title);
-					$('#infoContent').html(e.data.content);				
-					document.body.scrollTop=document.documentElement.scrollTop=0
-					var $codepre = $('#infoContent').find("code[class]");
-					if($codepre.length>0){
-						for(var i = 0;i<$codepre.length;i++){
-							var item = $codepre.eq(i).parent();
-							item.addClass("line-numbers").addClass('lang-javascript');
-						}
-						Prism.highlightAll();
-					}
-					viewer = new Viewer(document.getElementById('infoContent'));
-				} else {
-					layer.msg(e.msg);
-				}
-			}
-		})
-	}
-
 	var $codepre = $("code[class]");
 	if($codepre.length>0){
 		for(var i = 0;i<$codepre.length;i++){
 			var item = $codepre.eq(i).parent();
 			item.addClass("line-numbers");
 		}
+	}
+	
+	var setting = {
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			onClick: zTreeOnClick
+		}
+	};
+	function zTreeOnClick(event, treeId, treeNode) {
+		let type=treeNode.type;
+		let id=treeNode.id;
+		if(type==1){
+			detail(id);
+		}
+		if(type == 2){
+			treeObj.expandNode(treeNode, !treeNode.open, false, true);
+		}
+		if(type == 3){
+			window.open(treeNode.link);
+		}
+	};
+	
+	let treeback = function(e){
+		if (e.code == 0) {
+			zNodes = e.data;
+			treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			treeObj.expandAll(true);
+			if(did>0){
+				var node = treeObj.getNodeByParam("id", did, null);
+				treeObj.selectNode(node);
+			}
+		} else {
+			layer.msg(e.msg);
+		}
+	}
+	gougu.get("/api/index/get_doc_list",{kid:kid,tree:2},treeback);
+
+	function detail(id){
+		viewer.destroy();
+		let detailback = function(e){
+			if (e.code == 0) {
+				history.pushState({},e.data.title,window.location.protocol+'//'+window.location.host+'/knowledge/index/doc_detail/kid/'+kid+'/id/'+id+'.html');
+				$('#infoTilte').html(e.data.title);
+				$('#infoContent').html(e.data.content);				
+				document.body.scrollTop=document.documentElement.scrollTop=0
+				var $codepre = $('#infoContent').find("code[class]");
+				if($codepre.length>0){
+					for(var i = 0;i<$codepre.length;i++){
+						var item = $codepre.eq(i).parent();
+						item.addClass("line-numbers").addClass('lang-javascript');
+					}
+					Prism.highlightAll();
+				}
+				viewer = new Viewer(document.getElementById('infoContent'));
+			} else {
+				layer.msg(e.msg);
+			}
+		}
+		gougu.get("/knowledge/index/doc_detail",{id:id},detailback);
 	}
 }
 </script>

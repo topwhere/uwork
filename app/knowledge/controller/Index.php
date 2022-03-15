@@ -30,7 +30,7 @@ class Index extends BaseController
                 $where[] = ['a.cate_id', '=', $param['cate_id']];
             }
             $where[] = ['a.status', '>=', 0];
-            $where[] = ['a.is_share', '=', 1];
+            $where[] = ['a.admin_id', '=', $this->uid];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $content = KnowledgeList::where($where)
                 ->field('a.*,c.id as cate_id,a.id as id,c.title as cate_title,a.title as title,u.name as user')
@@ -51,26 +51,31 @@ class Index extends BaseController
 
     public function list()
     {
+        $param = get_params();
         if (request()->isAjax()) {
-            $param = get_params();
             $where = array();
             if (!empty($param['keywords'])) {
                 $where[] = ['a.id|a.title|a.keywords|a.desc|a.content|c.title', 'like', '%' . $param['keywords'] . '%'];
             }
-            if (!empty($param['article_cate_id'])) {
-                $where[] = ['a.article_cate_id', '=', $param['article_cate_id']];
+            if (!empty($param['cate_id'])) {
+                $where[] = ['a.cate_id', '=', $param['cate_id']];
             }
-            $where[] = ['a.status', '>=', 0];
-            $where[] = ['a.uid', '=', $this->uid];
+            $where[] = ['a.status', '>', 0];
+            $where[] = ['a.is_share', '=', 1];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $content = KnowledgeList::where($where)
-                ->field('a.*,c.id as cate_id,a.id as id,c.title as cate_title,a.title as title')
+                ->field('a.*,c.id as cate_id,a.id as id,c.title as cate_title,a.title as title,u.name as user')
                 ->alias('a')
-                ->join('article_cate c', 'a.article_cate_id = c.id')
+                ->join('KnowledgeCate c', 'a.cate_id = c.id')
+                ->join('admin u', 'a.admin_id = u.id','LEFT')
                 ->order('a.create_time desc')
                 ->paginate($rows, false, ['query' => $param]);
             return table_assign(0, '', $content);
-        } else {
+        } else {			
+			$eid = isset($param['eid']) ? $param['eid'] : 0;
+			$kid = isset($param['kid']) ? $param['kid'] : 0;
+			View::assign('eid', $eid);
+			View::assign('kid', $kid);
             return view();
         }
     }

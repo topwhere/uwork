@@ -12,7 +12,7 @@ use think\Validate;
 class KnowledgeCheck extends Validate
 {
     protected $rule = [
-        'title' => 'require|unique:knowledge',
+        'title' => 'require',
         'desc' => 'require',
         'id' => 'require',
         'cate_id' => 'require',
@@ -20,7 +20,6 @@ class KnowledgeCheck extends Validate
 
     protected $message = [
         'title.require' => '标题不能为空',
-        'title.unique' => '同样的标题已经存在',
         'cate_id.require' => '所属分类为必选',
         'id.require' => '缺少更新条件',
         'desc.require' => '描述不能为空',

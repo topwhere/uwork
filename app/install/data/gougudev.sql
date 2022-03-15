@@ -218,7 +218,8 @@ INSERT INTO `dev_admin_rule` VALUES (78, 76, 'knowledge/index/delete', '删除',
 INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (81, 76, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (83, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_config

@@ -127,7 +127,7 @@ class Note extends BaseController
 			$data['update_time'] = time();
 			if (Db::name('Note')->update($data) !== false) {
 				add_log('delete', $id);
-				return to_assign(1, "删除成功");
+				return to_assign(0, "删除成功");
 			} else {
 				return to_assign(0, "删除失败");
 			}

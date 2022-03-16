@@ -688,3 +688,23 @@ CREATE TABLE `dev_task`  (
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '任务表';
+
+
+-- ----------------------------
+-- Table structure for dev_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_comment`;
+CREATE TABLE `dev_comment`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module` tinyint(1) NOT NULL DEFAULT 0 COMMENT '所属模块，1产品,2项目,3需求,4任务',
+  `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
+  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容id',
+  `padmin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容用户id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
+  `content` text NULL COMMENT '评论内容',
+  `md_content` text NULL COMMENT 'markdown评论内容',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '评论表';

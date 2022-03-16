@@ -4,10 +4,11 @@
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
+<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
 {/block}
 {block name="body"}
 <div class="table-content">
-	<div class="layui-form-bar">
+	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建任务</button>
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -62,68 +63,69 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 }
 
 
-	var tableIns = null;
-	function init(layui){
-		var table = layui.table
-		  ,form = layui.form
-		  ,gougu = layui.gougu;
-		
-		
-		tableIns = table.render({
-			elem: '#test',
-			title: '任务列表',
-			cellMinWidth:200,
-			url: "/task/index/index", //数据接口
-			cols:  [[
-				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
-				,{field:'priority_name',title: '优先级',align:'center',width: 72,templet:function(d){
-					var html = '<span class="layui-badge layui-status-'+d.priority+'">'+d.priority_name+'</span>';			
-					return html;
-				}}
-				,{field:'type_name',title: '任务类型',width: 100,align:'center'}
-				,{field:'title',title: '任务主题'}
-				,{field:'flow_name',title: '任务状态',align:'center',width: 80,templet:function(d){
-					var html = '<span class="layui-badge layui-bg-'+d.flow_status+'">'+d.flow_name+'</span>';
-					return html;
-				}}
-				,{field:'director_name',title: '负责人', align:'center',width: 90}
-				,{field:'director_name',title: '协作人',width: 200}
-				,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
-				,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
+var tableIns = null;
+function init(layui){
+	var table = layui.table
+	  ,form = layui.form
+	  ,gougu = layui.gougu;
+	
+	
+	tableIns = table.render({
+		elem: '#test',
+		title: '任务列表',
+		cellMinWidth:200,
+		url: "/task/index/index", //数据接口
+		cols:  [[
+			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
+			,{field:'priority_name',title: '优先级',align:'center',width: 72,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+				return html;
+			}}
+			,{field:'type_name',title: '任务类型',width: 100,align:'center'}
+			,{field:'title',title: '任务主题'}
+			,{field:'flow_name',title: '任务状态',align:'center',width: 80,templet:function(d){
+				var html = '<span class="layui-badge bg-flow-'+d.flow_status+'">'+d.flow_name+'</span>';
+				return html;
+			}}
+			,{field:'director_name',title: '负责人', align:'center',width: 90}
+			,{field:'director_name',title: '协作人',width: 200}
+			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
+			,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
 
-				,{fixed: 'right',title: '操作',align: 'center',width: 100,toolbar: '#barDemo',}
-			]]
-		});
-		
-		$('.add-new').on('click',function(){
-			gougu.open('/task/index/add');
-		});
-		
-		//监听行工具事件
-		table.on('tool(test)', function(obj) {
-			var data = obj.data;
-			if (obj.event === 'view') {
-				gougu.open('/task/index/view?id='+data.id);
-				return;
-			}
-			if (obj.event === 'del') {
-				layer.confirm('确定关闭该任务吗？', {
-					icon: 3,
-					title: '提示'
-				}, function(index) {
-					let callback = function (e) {
-						layer.msg(e.msg);
-						if (e.code == 0) {
-							obj.del();
-						}
+			,{fixed: 'right',title: '操作',align: 'center',width: 100,toolbar: '#barDemo',}
+		]]
+	});
+	
+	//新增
+	$('.add-new').on('click',function(){
+		gougu.open('/task/index/add');
+	});
+	
+	//监听行工具事件
+	table.on('tool(test)', function(obj) {
+		var data = obj.data;
+		if (obj.event === 'view') {
+			gougu.open('/task/index/view?id='+data.id);
+			return;
+		}
+		if (obj.event === 'del') {
+			layer.confirm('确定关闭该任务吗？', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						obj.del();
 					}
-					gougu.post("/task/index/close",{ id: obj.data.id },callback);
-					layer.close(index);
-				});
-			}
-		});
-	}		
+				}
+				gougu.post("/task/index/close",{ id: obj.data.id },callback);
+				layer.close(index);
+			});
+		}
+	});
+}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -165,22 +165,29 @@
  
  .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
  
- .span-color-0{color:#648A8D !important;}
- .span-color-1{color:#4AC8BE !important;}
- .span-color-2{color:#409CDE !important;}
- .span-color-3{color:#C0DB38 !important;}
- .span-color-4{color:#4DCE58 !important;}
- .span-color-5{color:#FEC939 !important;}
- .span-color-6{color:#8838DA !important;}
- .span-color-7{color:#FD6206 !important;}
- .span-color-8{color:#F03347 !important;}
- .span-color-9{color:#A38B82 !important;}
+ .bg-priority-0{background-color:#648A8D !important;}
+ .bg-priority-1{background-color:#009688 !important;}
+ .bg-priority-2{background-color:#1E9FFF !important;}
+ .bg-priority-3{background-color:#FFB800 !important;}
+ .bg-priority-4{background-color:#FF5722 !important;}
  
- .layui-status-0{background-color:#648A8D !important;}
- .layui-status-1{background-color:#009688 !important;}
- .layui-status-2{background-color:#1E9FFF !important;}
- .layui-status-3{background-color:#FFB800 !important;}
- .layui-status-4{background-color:#FF5722 !important;}
+ .color-priority-0{color:#648A8D !important;}
+ .color-priority-1{color:#009688 !important;}
+ .color-priority-2{color:#1E9FFF !important;}
+ .color-priority-3{color:#FFB800 !important;}
+ .color-priority-4{color:#FF5722 !important;} 
+ 
+ .bg-flow-0{background-color:#648A8D !important;}
+ .bg-flow-1{background-color:#4AC8BE !important;}
+ .bg-flow-2{background-color:#409CDE !important;}
+ .bg-flow-3{background-color:#C0DB38 !important;}
+ .bg-flow-4{background-color:#FF5722 !important;}
+ 
+ .color-flow-0{color:#648A8D !important;}
+ .color-flow-1{color:#4AC8BE !important;}
+ .color-flow-2{color:#409CDE !important;}
+ .color-flow-3{color:#C0DB38 !important;}
+ .color-flow-4{color:#FF5722 !important;}
  
  .layui-bg-0{background-color:#648A8D !important;}
  .layui-bg-1{background-color:#4AC8BE !important;}
@@ -192,6 +199,17 @@
  .layui-bg-7{background-color:#FD6206 !important;}
  .layui-bg-8{background-color:#F03347 !important;}
  .layui-bg-9{background-color:#A38B82 !important;}
+ 
+ .span-color-0{color:#648A8D !important;}
+ .span-color-1{color:#4AC8BE !important;}
+ .span-color-2{color:#409CDE !important;}
+ .span-color-3{color:#C0DB38 !important;}
+ .span-color-4{color:#4DCE58 !important;}
+ .span-color-5{color:#FEC939 !important;}
+ .span-color-6{color:#8838DA !important;}
+ .span-color-7{color:#FD6206 !important;}
+ .span-color-8{color:#F03347 !important;}
+ .span-color-9{color:#A38B82 !important;}
  
  /*框架布局*/
 .layui-layout-admin .layui-header{height:50px; padding-left:60px;background: #fff; box-shadow: inset 0 -1px 0 0 #e5ecf0; z-index:1686}
@@ -258,6 +276,16 @@
 .table-content .layui-form-bar{padding:12px; background-color:#fff;}
 .table-content .layui-table-page{background-color:#fff;border-bottom:1px solid #eee;}
 
+
+.md-content-content{font-size:14px; line-height:1.6;}
+.md-content-content code, .md-content-content code {padding:2px; border-radius:2px; font-size:14px; font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+.md-content-content h1,.md-content-content h2,.md-content-content h3,.md-content-content h4,.md-content-content h5{padding:12px 0}
+.md-content-content p{padding:6px 0}
+.md-content-content ul,.md-content-content ol{padding-left: 2em;}
+.md-content-content ul li {list-style: initial;}
+.md-content-content ol li {list-style: decimal;}
+.md-content-content pre{border: 1px solid #f6f6f6; font-size:14px; background: #f6f6f6; padding: 10px; border-radius:3px;}
+.md-content-content pre code{padding:0}
 /*dashboard*/
 .dashboard-num table {width: 100%;}
 .dashboard-num td {text-align: center;padding: 16px 0;width: 25%;border-left: 1px solid #eee}
@@ -277,12 +305,14 @@
 .md-content{min-height:300px;}
 
 /*评论*/
+.comment-input .comment-image{width:50px; height:50px; border-radius:50%}
 .comment-item .comment-avatar{width:50px; float:left}
 .comment-item .comment-image{width:36px; height:36px; border-radius:50%}
 .comment-item .comment-body{margin-left:50px;}
 .comment-item .comment-content blockquote{border-left:3px solid #eee; padding:4px 8px;}
 .comment-item .comment-actions a{color:#8c95a8; cursor:pointer;}
 .comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
 
 .log-item i{font-weight:800; color:#182b50}
 .log-content b{margin:0 4px; color:#182b50}

@@ -1,0 +1,86 @@
+layui.define(['gougu'], function(exports){
+    const layer = layui.layer,gougu = layui.gougu;
+	const obj = {
+		del:function(id,topic_id,module){
+			let that=this;
+			layer.confirm('确定删除该评论吗？', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						that.load(topic_id,module);
+					}
+				}
+				gougu.delete("/api/comment/delete",{ id: id },callback);
+				layer.close(index);
+			});
+		},
+		load:function(topic_id,module){
+			let callback = function(res){
+				if(res.code==0 && res.data.length>0){
+					let itemComment = '';					
+					$.each(res.data, function (index, item) {
+						let pAdmin='',ops='';
+						if(item.padmin_id>0){
+							pAdmin = '<p class="pt-2"><span>@'+item.pname+'</span></p>';
+						}
+						if(item.admin_id == params.uid){
+							ops='<a class="mr-4" data-event="edit" data-id="'+item.id+'">编辑</a><a class="mr-4" data-event="del" data-id="'+item.id+'">删除</a>';
+						}
+						itemComment+= `
+							<div id="comment_${item.id}" class="comment-item py-3 border-t" data-mdcontent="${item.md_content}">
+							<div class="comment-avatar" title="${item.name}">
+								<img class="comment-image" src="${item.thumb}">
+							</div>
+							<div class="comment-body">
+								<div class="comment-meta">
+									<strong class="comment-name">${item.name}</strong><span class="ml-2 font-gray" title="${item.create_time}">${item.times}${item.update_time}</span>
+								</div>
+								<div class="comment-content py-2">
+									${item.content}${pAdmin}									
+								</div>
+								<div class="comment-actions">
+									<a class="mr-4" data-event="replay" data-id="${item.id}" data-uid="${item.admin_id}">回复</a>${ops}
+								</div>
+							</div>
+						</div>
+						`;
+					});
+					$("#comment_"+module+"_"+topic_id).html(itemComment);
+					layer.closeAll();
+				}
+			}
+			gougu.post("/api/comment/get_list",{tid:topic_id,m:module,},callback);
+		},
+		add:function(id,topic_id,pid,padmin_id,module,content,md_content){
+			let that=this;
+			let callback = function(res){
+				that.load(topic_id,module);
+			}
+			let postData={id:id,topic_id:topic_id,pid:pid,padmin_id:padmin_id,module:module,content:content,md_content:md_content};
+			gougu.post("/api/comment/add",postData,callback);			
+		},
+		//编辑器
+		editor:function(id,topic_id,pid,padmin_id,module,txt){
+			let that=this;
+			layer.open({
+				closeBtn: 2,
+				title: false,
+				type:1,
+				area: ['960px', '360px'],
+				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
+				success: function() {
+					buildEditor('editorBox',268,txt);
+				},
+				btnAlign: 'c',
+				btn:['确定'],
+				yes: function() {
+					that.add(id,topic_id,pid,padmin_id,module,markdownEditor.getHTML(),markdownEditor.getMarkdown());
+				}
+			})			
+		}
+    };
+    exports('gouguComment',obj);
+});  

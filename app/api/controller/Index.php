@@ -8,7 +8,7 @@ declare (strict_types = 1);
 namespace app\api\controller;
 
 use app\api\BaseController;
-use app\home\model\AdminLog;
+use app\model\AdminLog;
 use app\user\validate\AdminCheck;
 use think\exception\ValidateException;
 use think\facade\Db;

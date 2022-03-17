@@ -708,3 +708,19 @@ CREATE TABLE `dev_comment`  (
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '评论表';
+
+-- ----------------------------
+-- Table structure for dev_log
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_log`;
+CREATE TABLE `dev_log`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
+  `field` varchar(100) NOT NULL DEFAULT '' COMMENT '字段',
+  `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作人',
+  `old_content` text NULL COMMENT '修改前的内容',
+  `new_content` text NULL COMMENT '修改后的内容',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '操作记录表';

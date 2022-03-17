@@ -293,6 +293,18 @@ class Index extends BaseController
         $project = Db::name('Project')->field('id,name as title')->where($where)->select();
         return to_assign(0, '', $project);
     }
+
+    //需求列表
+    public function get_requirements($pid=0)
+    {
+		$where = [];
+		$where[] = ['status', '=', 1];
+		if($pid>0){
+			$where[] = ['project_id', '=', $pid];
+		}
+        $requirements = Db::name('Requirements')->field('id,title')->where($where)->select();
+        return to_assign(0, '', $requirements);
+    }
 	
 
     //首页公告

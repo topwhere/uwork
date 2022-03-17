@@ -59,6 +59,7 @@ abstract class BaseController
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
         $this->uid = 0;
+        $this->name = '';
         // 控制器初始化
         $this->initialize();
     }
@@ -94,7 +95,7 @@ abstract class BaseController
 				}
 				$params = [
 					'uid' => $this->uid,
-					'nickname' => $loginInfo['nickname'],
+					'name' => $loginInfo['name'],
 					'thumb' => $loginInfo['thumb'],
 					'module' => $this->module,
 					'controller' => $this->controller,

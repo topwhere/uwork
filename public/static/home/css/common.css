@@ -155,8 +155,8 @@
  .layui-tags-all{float: right; font-weight: 200px; background-color:#4285f4; color:#fff; border-radius: 3px; padding: 2px 6px; cursor: pointer; display: none;}
  .layui-table-form{margin-top: 0;}
  .layui-table-form tbody tr:hover{background-color: #fff;}
- .layui-td-gray{color:#8c95a8; width:80px; text-align:right; background-color:#fafafa;}
- .layui-td-gray2{color:#8c95a8; width:100px; text-align:right; background-color:#fafafa;}
+ .layui-td-gray{color:#8c95a8; width:66px; text-align:right; background-color:#fafafa;}
+ .layui-td-gray2{color:#8c95a8; width:90px; text-align:right; background-color:#fafafa;}
  .layui-td-gray3{color:#8c95a8; width:120px; text-align:right; background-color:#fafafa;}
  .layui-td-gray4{color:#8c95a8; width:150px; text-align:right; background-color:#fafafa;}
  .layui-td-gray font,.layui-td-gray2 font,.layui-td-gray3 font{color:#FF6347; margin-left: 3px;}

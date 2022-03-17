@@ -1,21 +1,36 @@
 layui.define(['gougu'], function(exports){
     const layer = layui.layer,gougu = layui.gougu;
 	const obj = {
-		del:function(id,topic_id,module){
-			let that=this;
-			layer.confirm('确定删除该评论吗？', {
-				icon: 3,
-				title: '提示'
-			}, function(index) {
-				let callback = function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						that.load(topic_id,module);
-					}
+		log:function(topic_id,module){
+			let callback = function(res){
+								console.log(res.data.length);
+				if(res.code==0 && res.data.length>0){
+					let itemLog = '';					
+					$.each(res.data, function (index, item) {
+						if(item.field =='content'){
+							itemLog+= `
+							<div class="log-item py-3 border-b">
+								<i class="iconfont ${item.icon}"></i>
+								<span class="log-name">${item.name}</span>
+								<span class="log-content font-gray"> 修改了<b>${item.title}</b><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+							</div>
+						`;
+						}
+						else{
+						itemLog+= `
+							<div class="log-item py-3 border-b">
+								<i class="iconfont ${item.icon}"></i>
+								<span class="log-name">${item.name}</span>
+								<span class="log-content font-gray"> 将<b>${item.title}</b>从 ${item.old_content} 修改为<b>${item.new_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+							</div>
+						`;
+						}
+					});
+
+					$("#log_"+module+"_"+topic_id).html(itemLog);
 				}
-				gougu.delete("/api/comment/delete",{ id: id },callback);
-				layer.close(index);
-			});
+			}
+			gougu.post("/api/log/get_list",{tid:topic_id,m:module},callback);
 		},
 		load:function(topic_id,module){
 			let callback = function(res){
@@ -52,7 +67,7 @@ layui.define(['gougu'], function(exports){
 					layer.closeAll();
 				}
 			}
-			gougu.post("/api/comment/get_list",{tid:topic_id,m:module,},callback);
+			gougu.post("/api/comment/get_list",{tid:topic_id,m:module},callback);
 		},
 		add:function(id,topic_id,pid,padmin_id,module,content,md_content){
 			let that=this;
@@ -61,6 +76,22 @@ layui.define(['gougu'], function(exports){
 			}
 			let postData={id:id,topic_id:topic_id,pid:pid,padmin_id:padmin_id,module:module,content:content,md_content:md_content};
 			gougu.post("/api/comment/add",postData,callback);			
+		},
+		del:function(id,topic_id,module){
+			let that=this;
+			layer.confirm('确定删除该评论吗？', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						that.load(topic_id,module);
+					}
+				}
+				gougu.delete("/api/comment/delete",{ id: id },callback);
+				layer.close(index);
+			});
 		},
 		//编辑器
 		editor:function(id,topic_id,pid,padmin_id,module,txt){

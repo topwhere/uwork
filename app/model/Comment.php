@@ -29,6 +29,7 @@ class Comment extends Model
             ->select()->toArray();
         foreach ($content as $k => &$v) {
             $v['times'] = time_trans($v['create_time']);
+			$v['create_time'] = date('Y-m-d H:i:s',$v['create_time']);
 			if($v['update_time']>0){
 				$v['update_time'] = '，最后编辑时间:'.time_trans($v['update_time']);
 			}

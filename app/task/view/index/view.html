@@ -57,12 +57,19 @@
 				</span>
 				<i class="iconfont icon-wodedianping" title="编辑" data-name="project_id"></i>
 			</div>
+			<div class="pb-4 hover-edit">
+				<p class="font-gray mb-2">关联需求：</p>
+				<span id="requirements_id_{$detail.id}" data-val="{$detail.requirements_id}">
+					{gt name="$detail.requirements_id" value="0"}{$detail.requirements_title}{else/}<span class="font-gray">未设置</span>{/gt}
+				</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-name="requirements_id"></i>
+			</div>
 		</div>
 	</div>
 	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">
 		<ul class="layui-tab-title">
-			<li class="layui-this">员工评论(0)</li>
-			<li>操作日志(0)</li>
+			<li class="layui-this">员工评论({$detail.comments})</li>
+			<li>操作日志({$detail.logs})</li>
 		</ul>
 		<div class="layui-tab-content p-0">
 			<div class="layui-tab-item comment-list layui-show">
@@ -72,33 +79,21 @@
 					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
 				</tr>
 				</table>
-				<div id="comment_4_{$detail.id}">
-					
-				</div>
+				<div id="comment_4_{$detail.id}"></div>
 			</div>
-			<div class="layui-tab-item logs-list">
+			<div  class="layui-tab-item logs-list">
+				<div id="log_task_{$detail.id}"></div>
 				<div class="log-item py-3 border-b">
-					<i class="iconfont icon-wodedianping"></i>
-					<span class="log-name">码云演示账号</span>
-					<span class="log-content font-gray"> 将<b>任务状态</b>从 待办的 修改为<b>进行中</b><span class="font-gray" title="2022/3/10下午2:01:44">2 小时前</span></span>
+					<i class="iconfont icon-zidingyishezhi"></i>
+					<span class="log-name">{$detail.admin_name}</span>
+					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>任务</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
 				</div>
-			
-			<div class="log-item py-3 border-b">
-				<i class="iconfont icon-kaoshijihua"></i>
-				<span class="ge-user-name">码云演示账号</span>
-				<span class="log-content font-gray">移除了<b>enhancement</b><b>标签</b><span class="font-gray" title="2022/3/10上午10:24:26">6 小时前</span></span>
 			</div>
-			
-			<div class="log-item py-3 border-b">
-				<i class="iconfont icon-zidingyishezhi"></i>
-				<span class="log-name">码云演示账号</span>
-				<span class="log-content font-gray"><span class="content link-dark"> 将<b>任务状态</b>从 进行中 修改为<b>待办的</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
-			</div>
-		</div>
 	</div>   
 </div>
 
 <script>
+const admin_id='{$detail.admin_id}';
 const detail_id='{$detail.id}';
 const opsData={
 	flow_status:[
@@ -173,18 +168,23 @@ function pageInit() {
 		comment.del(id,detail_id,4);
 	})
 	
+	//操作记录
+	comment.log(detail_id,'task');
+	
 	
 	let loading=false;
 	
 	let editPost = function(id,name,show_val,real_val){
 		let callback = function (e) {
+			layer.closeAll();
 			layer.msg(e.msg);
-			gougu.load('/task/index/view/id/'+id);
-			setTimeout(function(){
-				layer.closeAll();
-				tableIns.reload();
-				$('#editTips').html('，最近更新于 5秒前');
-			},1000)				
+			if(e.code == 0){
+				gougu.load('/task/index/view/id/'+id);
+				setTimeout(function(){
+					tableIns.reload();
+					$('#editTips').html('，最近更新于 5秒前');
+				},1000)	
+			}			
 		}
 		let postData={id:id};
 		postData[name] = real_val;
@@ -202,7 +202,11 @@ function pageInit() {
 			edit.text(id,name,real_txt,editPost);
 		}
 		if(name=="end_time"){
-			edit.date(id,name,real_txt,editPost);
+			if(admin_id == params.uid){
+				edit.date(id,name,real_txt,editPost);
+			}else{
+				layer.msg('您没权限修改，请联系创建人修改');
+			}			
 		}
 		if(name =="director_uid"){
 			edit.employee_one(id,name,show_txt,real_txt,editPost);
@@ -214,25 +218,45 @@ function pageInit() {
 			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
 		}
 		if(name=="product_id"){		
-			loading=true;
-			gougu.get("/api/index/get_product",{},function(res){
-				let data = res.data;
-				loading=false;
-				edit.dropdown(id,name,real_txt,data,editPost,1);
-			});				
+			if(admin_id == params.uid){
+				gougu.get("/api/index/get_product",{},function(res){
+					let data = res.data;
+					loading=false;
+					edit.dropdown(id,name,real_txt,data,editPost,1);
+				});	
+			}else{
+				layer.msg('您没权限修改，请联系创建人修改');
+			}			
 		}
 		if(name=="project_id"){
-			let product_id = $('#product_id_'+id).data('val');
-			if(product_id == 0){
-				layer.msg('请先关联产品');
-				return false;
+			if(admin_id == params.uid){
+				let product_id = $('#product_id_'+id).data('val');
+				if(product_id == 0){
+					layer.msg('请先关联产品');
+					return false;
+				}
+				gougu.get("/api/index/get_project",{pid:product_id},function(res){
+					let data = res.data;
+					edit.dropdown(id,name,real_txt,data,editPost,1);
+				});	
+			}else{
+				layer.msg('您没权限修改，请联系创建人修改');
 			}
-			loading=true;
-			gougu.get("/api/index/get_project",{},function(res){
-				let data = res.data;
-				loading=false;
-				edit.dropdown(id,name,real_txt,data,editPost,1);
-			});				
+		}
+		if(name=="requirements_id"){
+			if(admin_id == params.uid){
+				let project_id = $('#project_id_'+id).data('val');
+				if(project_id == 0){
+					layer.msg('请先关联项目');
+					return false;
+				}
+				gougu.get("/api/index/get_requirements",{pid:project_id},function(res){
+					let data = res.data;
+					edit.dropdown(id,name,real_txt,data,editPost,1);
+				});		
+			}else{
+				layer.msg('您没权限修改，请联系创建人修改');
+			}			
 		}
 		if(name=="md_content"){
 			edit.editor(id,name,real_txt,editPost);

@@ -24,7 +24,7 @@
 			</td>
 			<td class="layui-td-gray">关联项目</td>
 			<td>
-				<select id="projectId" name="project_id">
+				<select id="projectId" name="project_id" lay-filter="project">
 					<option value="">请先选择关联的产品</option>
 				</select>
 			</td>
@@ -35,12 +35,11 @@
 				<input type="hidden" name="assist_admin_ids" lay-verify="required" readonly lay-reqText="请选择协作人" value="">
 				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray">任务状态<span style="color: red">*</span></td>
+			<td class="layui-td-gray">关联需求</td>
 			<td>
-				<input type="radio" name="flow_status" value="1" title="TODO" checked>
-				<input type="radio" name="flow_status" value="2" title="DOING">				
-				<input type="radio" name="flow_status" value="3" title="DONE">				
-				<input type="radio" name="flow_status" value="4" title="CLOSE">			
+				<select id="requirementsId" name="requirements_id">
+					<option value="">请先选择关联的项目</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -58,14 +57,14 @@
 					<option value="7">会议</option>
 					<option value="8">调研</option>					
 				</select>		
-			</td>
-			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>
+			</td>	
+			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>		
 			<td>
 				<input type="radio" name="priority" value="1" title="低" checked>
 				<input type="radio" name="priority" value="2" title="中">				
 				<input type="radio" name="priority" value="3" title="高">				
 				<input type="radio" name="priority" value="4" title="紧急">				
-			</td>			
+			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>
@@ -75,7 +74,7 @@
 			<td class="layui-td-gray2">预计结束日期<span style="color: red">*</span></td>
 			<td>
 				<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择时间" class="layui-input" value="">
-			</td>		
+			</td>
 		</tr>
 	</table>
 	<div>
@@ -114,13 +113,14 @@
 		console.log(data.value);
 		if(data.value==''){
 			$('#projectId').html('<option value="">请先选择关联的产品</option>');
+			$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
 			form.render("select");
 		}
 		else{
 			gougu.get("/api/index/get_project",{pid:data.value},function(res){
 				let data = res.data;
 				if(data.length>0){
-					let ops='<option value="">请先选择项目</option>';
+					let ops='<option value="">请选择项目</option>';
 					for(let i=0;i<data.length;i++){
 						ops+='<option value="'+data[i].id+'">'+data[i].title+'</option>';
 					}
@@ -130,6 +130,28 @@
 			});
 		}
 	});	
+	
+	//关联需求
+	form.on('select(project)', function(data){
+		console.log(data.value);
+		if(data.value==''){
+			$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
+			form.render("select");
+		}
+		else{
+			gougu.get("/api/index/get_requirements",{pid:data.value},function(res){
+				let data = res.data;
+				if(data.length>0){
+					let ops='<option value="">请选择需求</option>';
+					for(let i=0;i<data.length;i++){
+						ops+='<option value="'+data[i].id+'">'+data[i].title+'</option>';
+					}
+					$('#requirementsId').html(ops);
+					form.render("select");
+				}
+			});
+		}
+	});
 	
 	//选择负责人弹窗	
 	$('.page-content').on('click','[name="director_name"]',function () {

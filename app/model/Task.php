@@ -63,6 +63,9 @@ class Task extends Model
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
 			$detail['type_name'] = self::$Type[(int)$detail['type']];
+			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
+			$detail['logs'] = Db::name('Log')->where(['module' => 'task','topic_id' => $detail['id']])->count()+1;
+			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'status'=>1,'topic_id' => $detail['id']])->count();
         }
         return $detail;
     }

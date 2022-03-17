@@ -242,9 +242,6 @@ function get_product()
 }
 
 
-
-
-
 /**
  * 根据附件表的id返回url地址
  * @param  [type] $id [description]
@@ -275,22 +272,22 @@ function get_file($id)
  * @param int    $param_id 操作类型
  * @param array  $param 提交的参数
  */
-function add_log($type, $param_id = '', $param = [])
+function add_log($type, $param_id = 0, $param = [],$old=[])
 {
 	$action = '未知操作';
 	$type_action = get_config('log.type_action');
+	$data = [];
 	if($type_action[$type]){
 		$action = $type_action[$type];
 	}
     if ($type == 'login') {
         $login_admin = Db::name('Admin')->where(array('id' => $param_id))->find();
     } else {
-        $session_admin = get_config('app.session_admin');
-        $login_admin = \think\facade\Session::get($session_admin);
+		$session_admin = get_config('app.session_admin');
+		$login_admin = \think\facade\Session::get($session_admin);
     }
-    $data = [];
-    $data['uid'] = $login_admin['id'];
-    $data['name'] = $login_admin['name'];
+	$data['uid'] = $login_admin['id'];
+	$data['name'] = $login_admin['name'];
     $data['type'] = $type;
     $data['action'] = $action;
     $data['param_id'] = $param_id;
@@ -313,6 +310,24 @@ function add_log($type, $param_id = '', $param = [])
     $data['ip'] = app('request')->ip();
     $data['create_time'] = time();
     Db::name('AdminLog')->strict(false)->field(true)->insert($data);
+	if(!empty($old)){
+		$log_data = [];
+		$key_array=['id','create_time','update_time','md_content'];
+		foreach ($param as $key => $value) {
+			if(!in_array($key, $key_array)){
+				$log_data[] = array(
+					'module' => $data['module'],
+					'field' => $key,
+					'topic_id' => $param_id ,
+					'admin_id' => $data['uid'],
+					'old_content' => $old[$key],
+					'new_content' => $value,
+					'create_time' => time()
+				);
+			}
+		}    
+		Db::name('Log')->strict(false)->field(true)->insertAll($log_data);
+	}
 }
 
 /**

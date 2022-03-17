@@ -27,7 +27,7 @@ class Index extends BaseController
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = TaskList::where($where)
                 ->withoutField('content,md_content')
-                ->order('create_time asc')
+                ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
@@ -61,34 +61,31 @@ class Index extends BaseController
 				$param['content'] = $param['ueditorcontent'];
 				$param['md_content'] = '';
 			}
-			if(isset($param['start_time'])){
-				$param['start_time'] = strtotime(urldecode($param['start_time']));
-			}
 			if(isset($param['end_time'])){
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
 				$project = (new TaskList())->detail($param['id']);
-				if(isset($param['start_time'])){
-					if($param['start_time']>=$project['end_time']){
-						return to_assign(1,'开始时间不能大于计划结束时间');
-					}
-				}
-				if(isset($param['end_time'])){
-					if($param['end_time']<=$project['start_time']){
-						return to_assign(1,'计划结束时间不能小于开始时间');
-					}
-				}
                 try {
                     validate(TaskCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
+				if(isset($param['product_id'])){
+					if($param['product_id']==0 && $project['project_id']>0){
+						return to_assign(1, '请先取消关联的项目');
+					}
+				}
+				if(isset($param['project_id'])){
+					if($param['project_id']==0 && $project['requirements_id']>0){
+						return to_assign(1, '请先取消关联的需求');
+					}
+				}
                 $param['update_time'] = time();
                 $res = TaskList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
-                    add_log('edit', $param['id'], $param);
+                    add_log('edit', $param['id'], $param, $project);
                 }
                 return to_assign();
             } else {

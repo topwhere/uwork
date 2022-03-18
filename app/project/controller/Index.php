@@ -31,7 +31,8 @@ class Index extends BaseController
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
-					$item->plan_time = date('Y-m-d', $item->start_time) .'至'.date('Y-m-d', $item->end_time);
+					$item->plan_time = date('Y-m-d', $item->start_time) . ' 至 ' .date('Y-m-d', $item->end_time);
+					$item->status_name = ProjectList::$Status[(int)$item->status];
                 });
             return table_assign(0, '', $list);
         } else {
@@ -82,6 +83,7 @@ class Index extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
+				add_log('edit', $param['id'], $param, $project);
                 $param['update_time'] = time();
                 $res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {

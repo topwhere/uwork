@@ -13,6 +13,18 @@ use think\facade\Db;
 class Log extends Model
 {	
 	public static $Sourse = [
+		'project'=>[
+			'status' => ['关闭','开启','暂停'],
+			'field_array'=>[
+				'director_uid' =>array('icon'=>'icon-xueshengzhuce','title'=>'负责人'),
+				'team_admin_ids' =>array('icon'=>'icon-xueshengzhuce','title'=>'项目成员'),
+				'start_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计开始时间'),
+				'end_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计结束时间'),
+				'title' =>array('icon'=>'icon-wodedianping','title'=>'标题'),
+				'status' =>array('icon'=>'icon-wodedianping','title'=>'状态'),
+				'product_id' =>array('icon'=>'icon-wodedianping','title'=>'关联产品'),
+				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
+			]],
 		'requirements'=>[
 			'flow_status' => ['','需求中','设计中','排期中','研发中','测试中','待发布','已发布','已完成','挂起'],
 			'field_array'=>[
@@ -66,6 +78,7 @@ class Log extends Model
 				$v['new_content'] = $sourse[$v['field']][$v['new_content']];
 			}
 			if(strpos($v['field'],'_time') !== false){
+				$v['old_content'] = date('Y-m-d',(int)$v['old_content']);
 				$v['new_content'] = date('Y-m-d',(int)$v['new_content']);
 			}			
 			if(strpos($v['field'],'_uid') !== false){

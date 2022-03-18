@@ -65,7 +65,7 @@ class Index extends BaseController
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
-				$project = (new TaskList())->detail($param['id']);
+				$task = (new TaskList())->detail($param['id']);
                 try {
                     validate(TaskCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
@@ -73,19 +73,19 @@ class Index extends BaseController
                     return to_assign(1, $e->getError());
                 }
 				if(isset($param['product_id'])){
-					if($param['product_id']==0 && $project['project_id']>0){
+					if($param['product_id']==0 && $task['project_id']>0){
 						return to_assign(1, '请先取消关联的项目');
 					}
 				}
 				if(isset($param['project_id'])){
-					if($param['project_id']==0 && $project['requirements_id']>0){
+					if($param['project_id']==0 && $task['requirements_id']>0){
 						return to_assign(1, '请先取消关联的需求');
 					}
 				}
                 $param['update_time'] = time();
                 $res = TaskList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
-                    add_log('edit', $param['id'], $param, $project);
+                    add_log('edit', $param['id'], $param, $task);
                 }
                 return to_assign();
             } else {

@@ -75,17 +75,14 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 			cellMinWidth:200,
 			url: "/project/index/index", //数据接口
 			cols:  [[
-				{field:'id', title: 'ID编号',width: 90, align:'center',fixed:'left',rowspan: 2}
-				,{field:'name',title: '项目名称',rowspan: 2}
+				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
 				,{field:'status',title: '项目状态',align:'center',width: 90,rowspan: 2,templet:function(d){
-					var html = '<span class="layui-badge">关闭</span>';
-					if(d.status == 1){
-						html = '<span class="layui-badge layui-bg-green">开启</span>';
-					}
+					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
 				}}
+				,{field:'name',title: '项目名称',rowspan: 2}
 				,{field:'director_name',title: '项目负责人', align:'center',width: 90,rowspan: 2}
-				,{field:'plan_time',title: '项目起止日期', align:'center',width: 180,rowspan: 2}				
+				,{field:'plan_time',title: '项目起止日期', align:'center',width: 200,rowspan: 2}				
 				,{align: 'center', title: '需求', colspan: 4}
 				,{align: 'center', title: '任务', colspan: 4}
 				,{align: 'center', title: 'BUG', colspan: 3}
@@ -135,6 +132,6 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		});
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
 {/block}
 <!-- /脚本 -->

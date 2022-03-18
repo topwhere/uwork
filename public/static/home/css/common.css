@@ -165,6 +165,14 @@
  
  .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
  
+ .bg-status-0{background-color:#FF5722 !important;}
+ .bg-status-1{background-color:#009688 !important;}
+ .bg-status-2{background-color:#1E9FFF !important;}
+ 
+ .color-status-0{color:#FF5722 !important;}
+ .color-status-1{color:#009688 !important;}
+ .color-status-2{color:#1E9FFF !important;}
+ 
  .bg-priority-0{background-color:#648A8D !important;}
  .bg-priority-1{background-color:#009688 !important;}
  .bg-priority-2{background-color:#1E9FFF !important;}

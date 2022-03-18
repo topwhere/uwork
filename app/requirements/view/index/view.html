@@ -5,7 +5,7 @@
 			<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="title"></i>
 		</h3>
 		<div>
-			<span class="layui-badge layui-bg-gray">#I4X2ZV</span>
+			<span class="layui-badge layui-bg-gray">#R{$detail.id}</span>
 			<span class="mx-2">{$detail.admin_name}</span>
 			<span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
 		</div>
@@ -71,7 +71,7 @@
 				<div class="log-item py-3 border-b">
 					<i class="iconfont icon-zidingyishezhi"></i>
 					<span class="log-name">{$detail.admin_name}</span>
-					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>任务</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
+					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>需求</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
 				</div>
 			</div>
 		</div>

@@ -598,7 +598,7 @@ CREATE TABLE `dev_knowledge_doc`  (
 DROP TABLE IF EXISTS `dev_product`;
 CREATE TABLE `dev_product`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '产品代号',
+  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '产品代号,预留字段',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '产品名称',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '产品负责人',
@@ -621,7 +621,7 @@ CREATE TABLE `dev_product`  (
 DROP TABLE IF EXISTS `dev_project`;
 CREATE TABLE `dev_project`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '项目代号',
+  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '项目代号,预留字段',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
   `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',

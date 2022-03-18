@@ -5,7 +5,7 @@
 			<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="title"></i>
 		</h3>
 		<div>
-			<span class="layui-badge layui-bg-gray">#I4X2ZV</span>
+			<span class="layui-badge layui-bg-gray">#T{$detail.id}</span>
 			<span class="mx-2">{$detail.admin_name}</span>
 			<span class="font-gray">创建于{:time_trans($detail.create_time)}<span id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
 		</div>

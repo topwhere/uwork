@@ -81,7 +81,7 @@
 				</table>
 				<div id="comment_4_{$detail.id}"></div>
 			</div>
-			<div  class="layui-tab-item logs-list">
+			<div class="layui-tab-item logs-list">
 				<div id="log_task_{$detail.id}"></div>
 				<div class="log-item py-3 border-b">
 					<i class="iconfont icon-zidingyishezhi"></i>
@@ -89,6 +89,7 @@
 					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>任务</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
 				</div>
 			</div>
+		</div>
 	</div>   
 </div>
 
@@ -172,8 +173,7 @@ function pageInit() {
 	comment.log(detail_id,'task');
 	
 	
-	let loading=false;
-	
+	let loading=false;	
 	let editPost = function(id,name,show_val,real_val){
 		let callback = function (e) {
 			layer.closeAll();
@@ -217,8 +217,9 @@ function pageInit() {
 		if(name=="flow_status" || name=="type" || name=="priority"){	
 			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
 		}
-		if(name=="product_id"){		
+		if(name=="product_id"){	
 			if(admin_id == params.uid){
+				loading=true;
 				gougu.get("/api/index/get_product",{},function(res){
 					let data = res.data;
 					loading=false;
@@ -235,8 +236,10 @@ function pageInit() {
 					layer.msg('请先关联产品');
 					return false;
 				}
+				loading=true;
 				gougu.get("/api/index/get_project",{pid:product_id},function(res){
 					let data = res.data;
+					loading=false;
 					edit.dropdown(id,name,real_txt,data,editPost,1);
 				});	
 			}else{
@@ -250,8 +253,10 @@ function pageInit() {
 					layer.msg('请先关联项目');
 					return false;
 				}
+				loading=true;
 				gougu.get("/api/index/get_requirements",{pid:project_id},function(res){
 					let data = res.data;
+					loading=false;
 					edit.dropdown(id,name,real_txt,data,editPost,1);
 				});		
 			}else{

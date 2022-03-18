@@ -13,6 +13,21 @@ use think\facade\Db;
 class Log extends Model
 {	
 	public static $Sourse = [
+		'product'=>[
+			'status' => ['关闭','开启','暂停'],
+			'is_open' => ['','私有','公开'],
+			'field_array'=>[
+				'director_uid' =>array('icon'=>'icon-xueshengzhuce','title'=>'负责人'),
+				'check_admin_ids' =>array('icon'=>'icon-xueshengzhuce','title'=>'产品评审人'),
+				'view_admin_ids' =>array('icon'=>'icon-xueshengzhuce','title'=>'白名单'),
+				'test_uid' =>array('icon'=>'icon-xueshengzhuce','title'=>'测试负责人'),
+				'start_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计开始时间'),
+				'end_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计结束时间'),
+				'name' =>array('icon'=>'icon-wodedianping','title'=>'标题'),
+				'status' =>array('icon'=>'icon-wodedianping','title'=>'状态'),
+				'is_open' =>array('icon'=>'icon-wodedianping','title'=>'访问控制'),
+				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
+			]],
 		'project'=>[
 			'status' => ['关闭','开启','暂停'],
 			'field_array'=>[
@@ -20,7 +35,7 @@ class Log extends Model
 				'team_admin_ids' =>array('icon'=>'icon-xueshengzhuce','title'=>'项目成员'),
 				'start_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计开始时间'),
 				'end_time' => array('icon'=>'icon-kaoshijihua','title'=>'预计结束时间'),
-				'title' =>array('icon'=>'icon-wodedianping','title'=>'标题'),
+				'name' =>array('icon'=>'icon-wodedianping','title'=>'标题'),
 				'status' =>array('icon'=>'icon-wodedianping','title'=>'状态'),
 				'product_id' =>array('icon'=>'icon-wodedianping','title'=>'关联产品'),
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),

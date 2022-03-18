@@ -100,7 +100,7 @@ layui.define(['gougu'], function(exports){
 				closeBtn: 2,
 				title: false,
 				type:1,
-				area: ['960px', '360px'],
+				area: ['720px', '360px'],
 				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
 				success: function() {
 					buildEditor('editorBox',268,txt);

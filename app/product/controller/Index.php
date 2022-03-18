@@ -32,7 +32,53 @@ class Index extends BaseController
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
 					$item->test_name = Db::name('Admin')->where(['id' => $item->test_uid])->value('name');
-					//$item->create_time = date('Y-m-d', $item->create_time);
+					$item->status_name = ProductList::$Status[(int)$item->status];
+					$item->projects = Db::name('Project')->where(['status'=>1,'product_id' => $item->id])->count();
+					
+					$requirements_map_a=[];
+					$requirements_map_a[]=['product_id','=',$item->id];
+					$requirements_map_a[]=['status','=',1];
+					$requirements_map_b=$requirements_map_a;
+					$requirements_map_a[]=['flow_status','<',8];
+					$item->requirements_a = Db::name('Requirements')->where($requirements_map_a)->count();
+					$requirements_map_b[]=['flow_status','>',7];
+					$item->requirements_b = Db::name('Requirements')->where($requirements_map_b)->count();
+					if($item->requirements_a+$item->requirements_b>0){
+						$item->requirements_c = round($item->requirements_b /($item->requirements_a+$item->requirements_b) *100,2)."％";
+					}else{
+						$item->requirements_c = "100％";
+					}					
+					
+					$task_map_a =[];
+					$task_map_a[] = ['product_id','=',$item->id];
+					$task_map_a[] = ['test_id','=',0];
+					$task_map_a[] = ['status','=',1];
+					$task_map_b = $task_map_a;
+					$task_map_a[]=['flow_status','<',4];
+					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
+					$task_map_b[]=['flow_status','=',4];
+					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
+					if($item->tasks_a+$item->tasks_b>0){
+						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
+					}else{
+						$item->tasks_c = "100％";
+					}					
+					
+					$bug_map_a =[];
+					$bug_map_a[] = ['product_id','=',$item->id];
+					$bug_map_a[] = ['test_id','>',0];
+					$bug_map_a[] = ['status','=',1];
+					$bug_map_b = $bug_map_a;
+					$bug_map_a[]=['flow_status','<',4];
+					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
+					$bug_map_b[]=['flow_status','=',4];
+					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
+					if($item->bugs_a+$item->bugs_b>0){
+						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";
+					}else{
+						$item->bugs_c = "100％";
+					}
+					
                 });
             return table_assign(0, '', $list);
         } else {
@@ -69,10 +115,11 @@ class Index extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
+				$product = (new ProductList())->detail($param['id']);
                 $param['update_time'] = time();
                 $res = ProductList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
-                    add_log('edit', $param['id'], $param);
+                    add_log('edit', $param['id'], $param,$product);
                 }
                 return to_assign();
             } else {

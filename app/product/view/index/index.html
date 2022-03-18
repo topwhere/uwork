@@ -14,7 +14,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">产品详细</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -75,34 +75,32 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 			cellMinWidth:200,
 			url: "/product/index/index", //数据接口
 			cols:  [[
-				{field:'id', title: 'ID编号',width: 90, align:'center',fixed:'left',rowspan: 2}
-				,{field:'name',title: '产品名称',rowspan: 2}
+				{field:'id', title: '产品编号',width: 90, align:'center',fixed:'left',rowspan: 2,templet:function(d){
+					return 'P'+d.id;
+				}}
 				,{field:'status',title: '产品状态',align:'center',width: 90,rowspan: 2,templet:function(d){
-					var html = '<span class="layui-badge">关闭</span>';
-					if(d.status == 1){
-						html = '<span class="layui-badge layui-bg-green">开启</span>';
-					}
+					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
 				}}
+				,{field:'name',title: '产品名称',rowspan: 2}
 				,{field:'director_name',title: '产品负责人', align:'center',width: 90,rowspan: 2}
 				,{field:'test_name',title: '测试负责人', align:'center',width: 90,rowspan: 2}
-				,{align: 'center', title: '需求', colspan: 4}
-				,{align: 'center', title: '任务', colspan: 4}
-				,{align: 'center', title: 'BUG', colspan: 3}
+				,{field:'projects',title: '关联项目', align:'center',width: 90,rowspan: 2}
+				,{align: 'center', title: '关联需求', colspan: 3}
+				,{align: 'center', title: '关联任务', colspan: 3}
+				,{align: 'center', title: '关联BUG', colspan: 3}
 
-				,{fixed: 'right',title: '操作',align: 'center',width: 100,rowspan: 2,toolbar: '#barDemo',}
+				,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
 			], [
-				{field:'test_uid',align:'center', width:70,'title':'草稿'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'变更'}
-				,{field:'test_uid',align:'center', width:80,'title':'完成率'}
-				,{field:'test_uid',align:'center', width:70,'title':'草稿'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'变更'}
-				,{field:'test_uid',align:'center', width:80,'title':'完成率'}
-				,{field:'test_uid',align:'center', width:70,'title':'激活'}
-				,{field:'test_uid',align:'center', width:70,'title':'关闭'}
-				,{field:'test_uid',align:'center', width:80,'title':'修复率'}
+				{field:'requirements_a',align:'center', width:80,'title':'进行中'}
+				,{field:'requirements_b',align:'center', width:80,'title':'已完成'}
+				,{field:'requirements_c',align:'center', width:80,'title':'完成率'}
+				,{field:'tasks_a',align:'center', width:80,'title':'进行中'}
+				,{field:'tasks_b',align:'center', width:80,'title':'已完成'}
+				,{field:'tasks_c',align:'center', width:80,'title':'完成率'}
+				,{field:'bugs_a',align:'center', width:80,'title':'进行中'}
+				,{field:'bugs_b',align:'center', width:80,'title':'已完成'}
+				,{field:'bugs_c',align:'center', width:80,'title':'修复率'}
 			]]
 		});
 		
@@ -117,24 +115,9 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 				gougu.open('/product/index/view?id='+data.id);
 				return;
 			}
-			if (obj.event === 'del') {
-				layer.confirm('确定关闭该产品吗？', {
-					icon: 3,
-					title: '提示'
-				}, function(index) {
-					let callback = function (e) {
-						layer.msg(e.msg);
-						if (e.code == 0) {
-							obj.del();
-						}
-					}
-					gougu.post("/product/index/close",{ id: obj.data.id },callback);
-					layer.close(index);
-				});
-			}
 		});
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
 {/block}
 <!-- /脚本 -->

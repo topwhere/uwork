@@ -15,7 +15,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">详细情况</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -88,18 +88,17 @@ function init(layui){
 			}}
 			,{field:'director_name',title: '负责人', align:'center',width: 90,rowspan: 2}
 			,{field:'plan_time',title: '预计起止日期', align:'center',width: 180,rowspan: 2}				
-			,{align: 'center', title: '任务', colspan: 4}
-			,{align: 'center', title: 'BUG', colspan: 3}
+			,{align: 'center', title: '关联任务', colspan: 3}
+			,{align: 'center', title: '关联BUG', colspan: 3}
 
-			,{fixed: 'right',title: '操作',align: 'center',width: 100,rowspan: 2,toolbar: '#barDemo',}
+			,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
 		], [
-			{field:'product_id',align:'center', width:70,'title':'草稿'}
-			,{field:'product_id',align:'center', width:70,'title':'激活'}
-			,{field:'product_id',align:'center', width:70,'title':'变更'}
-			,{field:'product_id',align:'center', width:80,'title':'完成率'}
-			,{field:'product_id',align:'center', width:70,'title':'激活'}
-			,{field:'product_id',align:'center', width:70,'title':'关闭'}
-			,{field:'product_id',align:'center', width:80,'title':'修复率'}
+			{field:'tasks_a',align:'center', width:80,'title':'进行中'}
+			,{field:'tasks_b',align:'center', width:80,'title':'已完成'}
+			,{field:'tasks_c',align:'center', width:80,'title':'完成率'}
+			,{field:'bugs_a',align:'center', width:80,'title':'进行中'}
+			,{field:'bugs_b',align:'center', width:80,'title':'已完成'}
+			,{field:'bugs_c',align:'center', width:80,'title':'修复率'}
 		]]
 	});
 	
@@ -113,21 +112,6 @@ function init(layui){
 		if (obj.event === 'view') {
 			gougu.open('/requirements/index/view?id='+data.id);
 			return;
-		}
-		if (obj.event === 'del') {
-			layer.confirm('确定关闭该产品吗？', {
-				icon: 3,
-				title: '提示'
-			}, function(index) {
-				let callback = function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						obj.del();
-					}
-				}
-				gougu.post("/requirements/index/close",{ id: obj.data.id },callback);
-				layer.close(index);
-			});
 		}
 	});
 }		

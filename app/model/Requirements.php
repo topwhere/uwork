@@ -43,7 +43,7 @@ class Requirements extends Model
 			$detail['project_name'] = Db::name('Project')->where(['id' => $detail['project_id']])->value('name');
 			$detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
-			$detail['plan_time'] = date('Y-m-d', $detail['start_time']) .' 至 '.date('Y-m-d', $detail['end_time']);
+			$detail['times'] = time_trans($detail['create_time']);
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
 			$detail['logs'] = Db::name('Log')->where(['module' => 'requirements','topic_id' => $detail['id']])->count()+1;

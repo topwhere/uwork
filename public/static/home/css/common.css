@@ -310,7 +310,7 @@
 .express-mask{ display: none; position: fixed; top: 0; left: 0; z-index: 9998; width: 100%; height: 100%; background-color: rgba(0,0,0,.5); }
 .express-close{position: absolute;width:48px;height:44px;line-height:44px;text-align:center; left: -50px;right:0; top: 50px;background-color:#FF5722;color:#fff;border-radius:6px 0 0 6px; cursor:pointer; border:2px solid #fff; border-right:none}
 .page-content{background-color:#fff;}
-.md-content{min-height:300px;}
+.md-content{min-height:200px;}
 
 /*评论*/
 .comment-input .comment-image{width:50px; height:50px; border-radius:50%}
@@ -352,6 +352,7 @@
 .layui-tab-big .layui-tab-title li{line-height:50px;}
 .layui-tab-big .layui-tab-title .layui-this:after{height:51px;}
 .layui-tab-big li a{padding:0 10px; font-size:15px;}
+.is_open_son2{display:none;}
 /*图标*/
 @font-face {
   font-family: "iconfont"; /* Project id 2936988 */

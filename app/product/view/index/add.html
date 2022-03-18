@@ -6,39 +6,34 @@
 			<td>
 				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称" class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray">产品代号<span style="color: red">*</span></td>
-			<td><input type="text" name="code" lay-verify="required" lay-reqText="请输入产品代号" placeholder="请输入产品代号" class="layui-input" value="">
-			</td>
-		</tr>
-		<tr>
 			<td class="layui-td-gray2">产品负责人<font>*</font></td>
 			<td>
 				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择产品负责人" value="">
 				<input type="text" name="director_name" placeholder="请选择产品负责人" readonly class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray">测试负责人</td>
+			<td class="layui-td-gray2">测试负责人</td>
 			<td>
 				<input type="hidden" name="test_uid" readonly value="">
 				<input type="text" name="test_name" readonly placeholder="请选择测试负责人" class="layui-input" value="">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">产品评审人<span style="color: red">*</span></td>
-			<td colspan="3">
+			<td class="layui-td-gray2">参与评审人<span style="color: red">*</span></td>
+			<td colspan="6">
 				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required" lay-reqText="请选择评审人" value="">
 				<input type="text" id="check_admin_names" name="check_admin_names" readonly class="layui-input" placeholder="请选择评审人" value="">
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray2">访问控制<span style="color: red">*</span></td>
-			<td colspan="3">
+			<td colspan="6">
 				<input type="radio" name="is_open" lay-filter="checkopen" value="1" title="私有(可在白名单设置访问者)">
 				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">				
 			</td>			
 		</tr>
 		<tr id="viewAdmin" style="display:none">
-			<td class="layui-td-gray">白名单<span style="color: red">*</span></td>
-			<td colspan="3">
+			<td class="layui-td-gray2">白名单<span style="color: red">*</span></td>
+			<td colspan="5">
 				<input type="hidden" name="view_admin_ids" class="layui-input" value="">
 				<input type="text" id="view_admin_names" name="view_admin_names"  placeholder="请选择可访问的员工" readonly class="layui-input" value="">
 			</td>

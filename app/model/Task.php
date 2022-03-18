@@ -60,6 +60,7 @@ class Task extends Model
 			$assist_admin_names = Db::name('Admin')->where('id','in',$detail['assist_admin_ids'])->column('name');
 			$detail['assist_admin_names'] = implode(',',$assist_admin_names);
 			$detail['end_time'] = date('Y-m-d', $detail['end_time']);
+			$detail['times'] = time_trans($detail['create_time']);
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
 			$detail['type_name'] = self::$Type[(int)$detail['type']];

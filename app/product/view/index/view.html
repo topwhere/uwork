@@ -1,28 +1,30 @@
 <div class="page-content">
 	<div class="p-4 border-b">
-	<h3 class="h3-title hover-edit">
-	{eq name="$detail.status" value="1" }<span class="layui-btn layui-btn-xs">开启中</span>{/eq}
-	{eq name="$detail.status" value="0" }<span class="layui-btn layui-btn-xs layui-btn-danger">已关闭</span>{/eq}
-	<span id="name_{$detail.id}" data-val="">{$detail.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="name"></i>
+		<h3 class="h3-title hover-edit">
+		<span class="layui-btn layui-btn-xs bg-status-{$detail.status}">{$detail.status_name}</span>
+		<span id="name_{$detail.id}" data-val="">{$detail.name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="name"></i>
 	</h3>
-	<div><span class="layui-badge layui-bg-gray">#I4X2ZV</span><span class="mx-2">{$detail.admin_name}</span><span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span></div>
+	<div>
+		<span class="layui-badge layui-bg-gray">#P{$detail.id}</span>
+		<span class="mx-2">{$detail.admin_name}</span>
+		<span class="font-gray">创建于{$detail.times}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+	</div>
 	</div>
 	<div class="layui-row border-b">
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray">产品负责人</td>
+					<td class="layui-td-gray2">产品负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
-					<td class="layui-td-gray">测试负责人</td>
+					<td class="layui-td-gray2">测试负责人</td>
 					<td class="hover-edit"><span id="test_uid_{$detail.id}" data-val="{$detail.test_uid}">{$detail.test_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="test_uid"></i></td>
+					<td class="layui-td-gray">产品状态</td>
+					<td  class="hover-edit"><span class="color-status-{$detail.status}" id="status_{$detail.id}" data-val="{$detail.status}">{$detail.status_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="status"></i>
+					</td>	
 				</tr>
 				<tr>
-					<td class="layui-td-gray">产品评审人</td>
-					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$detail.id}" data-val="{$detail.check_admin_ids}">{$detail.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="check_admin_ids"></i></td>
-				</tr>
-				<tr>
-					<td class="layui-td-gray">访问控制</td>
-					<td colspan="3" class="hover-edit">
+					<td class="layui-td-gray2">访问控制</td>
+					<td class="hover-edit">
 						<span id="is_open_{$detail.id}" data-val="{$detail.is_open}">
 						{eq name="$detail.is_open" value="1" }
 						私有 <span class="font-gray">(白名单员工可访问者)</span>
@@ -30,11 +32,13 @@
 						{eq name="$detail.is_open" value="2" }公开 <span class="font-gray">(有产品视图权限员工均可访问)</span>{/eq}
 						</span>
 						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="is_open"></i>						
-					</td>			
+					</td>
+					<td class="layui-td-gray2">参与评审人</td>
+					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$detail.id}" data-val="{$detail.check_admin_ids}">{$detail.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="check_admin_ids"></i></td>			
 				</tr>
 				<tr id="is_open_son" class="is_open_son{$detail.is_open}">
-					<td class="layui-td-gray">访问白名单</td>
-					<td colspan="3" class="hover-edit">
+					<td class="layui-td-gray2">访问白名单</td>
+					<td colspan="5" class="hover-edit">
 					{empty name="$detail.view_admin_names"}
 					<span class="font-gray">未设置</span>
 					{/empty}
@@ -50,144 +54,145 @@
 			</div>
 		</div>
 		<div class="layui-col-md3 p-4">
-			<h5 class="pb-4">关联信息</h5>
-			<div class="pb-4"><span class="font-gray">关联项目：</span>2</div>
-			<div class="pb-4"><span class="font-gray">关联需求：</span>101</div>
-			<div class="pb-4"><span class="font-gray">关联任务：</span>135</div>
-			<div class="pb-4"><span class="font-gray">关联BUG：</span>56</div>
+			<div class="pb-4"><span class="font-gray">关联项目：</span>{$detail.projects}</div>
+			<div class="pb-4"><span class="font-gray">关联需求：</span>{$detail.requirements}</div>
+			<div class="pb-4"><span class="font-gray">关联任务：</span>{$detail.tasks}</div>
+			<div class="pb-4"><span class="font-gray">关联BUG：</span>{$detail.bugs}</div>
 		</div>
 	</div>
 	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">
 		<ul class="layui-tab-title">
-			<li class="layui-this">员工评论(0)</li>
-			<li>操作日志(0)</li>
+			<li class="layui-this">员工评论({$detail.comments})</li>
+			<li>操作日志({$detail.logs})</li>
 		</ul>
 		<div class="layui-tab-content p-0">
 			<div class="layui-tab-item comment-list layui-show">
-				<div id="comment_9129378" class="comment-item py-3 border-b">
-					<div class="comment-avatar" title="码云演示账号">
-						<img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100">
-					</div>
-					<div class="comment-body">
-						<div class="comment-meta">
-							<strong class="comment-name">码云演示账号</strong><span class="ml-2 font-gray" title="2022/3/10下午2:23:22">36 分钟前</span>
-						</div>
-						<div class="comment-content py-2">
-							<p>测试哦</p>
-						</div>
-						<div class="comment-actions">
-							<a class="mr-4 text-muted">回复</a><a class="mr-4 text-muted">编辑</a><a class="mr-4 text-muted">删除</a>
-						</div>
-					</div>
-				</div>
-				<div id="comment_9130512" class="comment-item py-3 border-b">
-					<div class="comment-avatar" title="码云演示账号">
-						<img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100">
-					</div>
-					<div class="comment-body">
-						<div class="comment-meta">
-							<strong class="comment-name">码云演示账号</strong><span class="ml-2 font-gray" title="2022/3/10下午2:53:59">6 分钟前</span>
-						</div>
-						<div class="comment-content py-2">
-							<blockquote>
-							<p>898989</p>
-							</blockquote>
-							<p><span>@码云演示账号</span></p>
-						</div>
-						<div class="comment-actions">
-							<a class="mr-4">回复</a><a class="mr-4">编辑</a><a class="mr-4">删除</a>
-						</div>
-					</div>
-				</div>
+				<table width="100%" class="comment-input my-2">
+				<tr>
+					<td style="width:50px;"><img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100"></td>
+					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
+				</tr>
+				</table>
+				<div id="comment_1_{$detail.id}"></div>
 			</div>
 			<div class="layui-tab-item logs-list">
+				<div id="log_product_{$detail.id}"></div>
 				<div class="log-item py-3 border-b">
-					<i class="iconfont icon-wodedianping"></i>
-					<span class="log-name">码云演示账号</span>
-					<span class="log-content font-gray"> 将<b>任务状态</b>从 待办的 修改为<b>进行中</b><span class="font-gray" title="2022/3/10下午2:01:44">2 小时前</span></span>
+					<i class="iconfont icon-zidingyishezhi"></i>
+					<span class="log-name">{$detail.admin_name}</span>
+					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>项目</b></span><span class="font-gray">{$detail.times}</span></span>
 				</div>
-			
-			<div class="log-item py-3 border-b">
-				<i class="iconfont icon-kaoshijihua"></i>
-				<span class="ge-user-name">码云演示账号</span>
-				<span class="log-content font-gray">移除了<b>enhancement</b><b>标签</b><span class="font-gray" title="2022/3/10上午10:24:26">6 小时前</span></span>
-			</div>
-			
-			<div class="log-item py-3 border-b">
-				<i class="iconfont icon-zidingyishezhi"></i>
-				<span class="log-name">码云演示账号</span>
-				<span class="log-content font-gray"><span class="content link-dark"> 将<b>任务状态</b>从 进行中 修改为<b>待办的</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
 			</div>
 		</div>
-	</div>   
+	</div>
 </div>
 
 <script>
-	function pageInit() {
-		var layer = layui.layer,
-			edit = layui.gouguEdit,
-			gougu = layui.gougu;
+const admin_id='{$detail.admin_id}';
+const detail_id='{$detail.id}';
+const opsData={
+	status:[
+		{'id':0,'title':'关闭'},
+		{'id':1,'title':'开启'}
+	]
+}
+
+function pageInit() {
+	const layer = layui.layer,
+		edit = layui.gouguEdit,
+		comment = layui.gouguComment,
+		gougu = layui.gougu;
 		
-		$('.hover-edit').hover(function(){
-			$(this).addClass('hover-on');
-		},function(){
-			$(this).removeClass('hover-on');
-		})
-		
-		$('.hover-edit').on('click','i',function(){
-			let id=$(this).data('id');
-			let name=$(this).data('name');
-			let show_txt=$('#'+name+'_'+id).text().replace(/[\r\n\t]/g,"");
-			let real_txt=$('#'+name+'_'+id).data('val');
-			if(real_txt == ''){
-				real_txt = show_txt;
-			}
-			editShow(id,name,show_txt,real_txt);
-		})
-		
-		let loading=false;
-		
-		let editPost = function(id,name,show_val,real_val){
-			let callback = function (e) {
-				layer.msg(e.msg);
+	$('.hover-edit').hover(function(){
+		$(this).addClass('hover-on');
+	},function(){
+		$(this).removeClass('hover-on');
+	})
+	
+	$('.hover-edit').on('click','i',function(){
+		let name=$(this).data('name');
+		let show_txt=$('#'+name+'_'+detail_id).text().replace(/[\r\n\t]/g,"");
+		let real_txt=$('#'+name+'_'+detail_id).data('val');
+		if(real_txt == ''){
+			real_txt = show_txt;
+		}
+		editShow(detail_id,name,show_txt,real_txt);
+	})
+	
+	//评论
+	comment.load(detail_id,1);
+	$('#commentInput').on('click',function(){
+		comment.editor(0,detail_id,0,0,1,'');
+	})
+	//回复
+	$('#comment_1_'+detail_id).on('click','[data-event="replay"]',function(){
+		let pid = $(this).data('id');
+		let padmin_id = $(this).data('uid');
+		comment.editor(0,detail_id,pid,padmin_id,1,'');
+	})
+	//编辑
+	$('#comment_1_'+detail_id).on('click','[data-event="edit"]',function(){
+		let id = $(this).data('id');
+		let mdcontent=$('#comment_'+id).data('mdcontent');
+		comment.editor(id,detail_id,0,0,1,mdcontent);
+	})
+	
+	//删除
+	$('#comment_1_'+detail_id).on('click','[data-event="del"]',function(){
+		let id = $(this).data('id');
+		comment.del(id,detail_id,1);
+	})
+	
+	//操作记录
+	comment.log(detail_id,'product');
+	
+	let loading=false;	
+	let editPost = function(id,name,show_val,real_val){
+		let callback = function (e) {
+			layer.closeAll();
+			layer.msg(e.msg);
+			if(e.code == 0){
 				gougu.load('/product/index/view/id/'+id);
 				setTimeout(function(){
-					layer.closeAll();
 					tableIns.reload();
 					$('#editTips').html('，最近更新于 5秒前');
-				},1000)				
-			}
-			let postData={id:id};
-			postData[name] = real_val;
-			if(name=='md_content'){
-				postData['content'] = show_val;
-			}
-			gougu.post("/product/index/add",postData,callback);
+				},1000)
+			}			
 		}
-		
-		function editShow (id,name,show_txt,real_txt) {
-			if(loading==true){
-				return false;
-			}
-			if(name=="name"){
-				edit.text(id,name,real_txt,editPost);
-			}
-			if(name =="director_uid" || name =="test_uid"){
-				edit.employee_one(id,name,show_txt,real_txt,editPost);
-			}
-			if(name =="check_admin_ids" || name =="view_admin_ids"){
-				edit.employee_more(id,name,show_txt,real_txt,editPost);
-			}
-			if(name=="is_open"){
-				let data = [
-					{'id':1,'title':'私有<span class="font-gray">(白名单员工可访问者)</span>'},
-					{'id':2,'title':'公开<span class="font-gray">(有产品视图权限员工均可访问)</span>'}
-				];
-				edit.select_type(id,name,real_txt,data,editPost);
-			}
-			if(name=="md_content"){
-				edit.editor(id,name,real_txt);
-			}
-        }
+		let postData={id:id};
+		postData[name] = real_val;
+		if(name=='md_content'){
+			postData['content'] = show_val;
+		}
+		gougu.post("/product/index/add",postData,callback);
 	}
+	
+	function editShow (id,name,show_txt,real_txt) {
+		if(loading==true){
+			return false;
+		}
+		if(name=="name"){
+			edit.text(id,name,real_txt,editPost);
+		}
+		if(name =="director_uid" || name =="test_uid"){
+			edit.employee_one(id,name,show_txt,real_txt,editPost);
+		}
+		if(name =="check_admin_ids" || name =="view_admin_ids"){
+			edit.employee_more(id,name,show_txt,real_txt,editPost);
+		}
+		if(name=="status"){
+			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
+		}
+		if(name=="is_open"){
+			let data = [
+				{'id':1,'title':'私有<span class="font-gray">(白名单员工可访问者)</span>'},
+				{'id':2,'title':'公开<span class="font-gray">(有产品视图权限员工均可访问)</span>'}
+			];
+			edit.select_type(id,name,real_txt,data,editPost);
+		}
+		if(name=="md_content"){
+			edit.editor(id,name,real_txt,editPost);
+		}
+	}
+}
 </script>

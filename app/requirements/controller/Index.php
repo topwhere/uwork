@@ -34,6 +34,36 @@ class Index extends BaseController
 					$item->plan_time = date('Y-m-d', $item->start_time) .'至'.date('Y-m-d', $item->end_time);
 					$item->priority_name = RequirementsList::$Priority[(int)$item->priority];
 					$item->flow_name = RequirementsList::$FlowStatus[(int)$item->flow_status];
+					
+					$task_map_a =[];
+					$task_map_a[] = ['requirements_id','=',$item->id];
+					$task_map_a[] = ['test_id','=',0];
+					$task_map_a[] = ['status','=',1];
+					$task_map_b = $task_map_a;
+					$task_map_a[]=['flow_status','<',4];
+					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
+					$task_map_b[]=['flow_status','=',4];
+					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
+					if($item->tasks_a+$item->tasks_b>0){
+						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
+					}else{
+						$item->tasks_c = "100％";
+					}					
+					
+					$bug_map_a =[];
+					$bug_map_a[] = ['requirements_id','=',$item->id];
+					$bug_map_a[] = ['test_id','>',0];
+					$bug_map_a[] = ['status','=',1];
+					$bug_map_b = $bug_map_a;
+					$bug_map_a[]=['flow_status','<',4];
+					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
+					$bug_map_b[]=['flow_status','=',4];
+					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
+					if($item->bugs_a+$item->bugs_b>0){
+						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";
+					}else{
+						$item->bugs_c = "100％";
+					}
                 });
             return table_assign(0, '', $list);
         } else {

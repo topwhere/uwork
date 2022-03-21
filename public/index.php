@@ -15,10 +15,7 @@ if (empty(file_exists(__DIR__ . '/../vendor/autoload.php'))) {
 require __DIR__ . '/../vendor/autoload.php';
 
 // 定义当前版本号
-define('CMS_VERSION','2.0.9');
-
-// 定义ThinkPHP版本号
-define('TP_VERSION','6.0.9');
+define('CMS_VERSION','1.0.21');
 
 // 定义Layui版本号
 define('LAYUI_VERSION','2.6.8');

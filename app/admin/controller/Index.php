@@ -28,6 +28,7 @@ class Index extends BaseController
             $config = unserialize($conf['content']);
         }
         View::assign('config', $config);
+        View::assign('TP_version',\think\facade\App::version());
         return View();
     }
 

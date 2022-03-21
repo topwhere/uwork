@@ -94,51 +94,47 @@
 				<table class="layui-table" lay-skin="" lay-size="sm">
 					{if condition="($install == true)"}
 					<tr>
-						<td colspan="2" style="color: #E94335;">提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+						<td colspan="4" style="color: #E94335; background-color:#f5f5f5">提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
 					</tr>
 					{/if}
 					<tr>
-						<td><b>服务器系统</b></td>
+						<td class="layui-td-gray2">服务器系统</td>
 						<td>{:get_system_info('os')}</td>
-					</tr>
-					<tr>
-						<td><b>PHP版本</b></td>
+						<td class="layui-td-gray2">PHP版本</td>
 						<td>{:get_system_info('php')}</td>
 					</tr>
 					<tr>
-						<td><b>勾股OA版本</b></td>
-						<td>{:CMS_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:20px"
-							href="https://blog.gougucms.com/home/book/detail/bid/2.html" target="_blank">勾股OA文档</a></td>
-					</tr>
-					<tr>
-						<td><b>ThinkPHP版本</b></td>
-						<td>{:TP_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:20px"
-								href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
-					</tr>
-					<tr>
-						<td><b>Layui版本</b></td>
-						<td>{:LAYUI_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:20px"
-								href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
-					</tr>
-					<tr>
-						<td><b>上传附件限制</b></td>
+						<td class="layui-td-gray2">上传限制</td>
 						<td>{:get_system_info('upload_max_filesize')}</td>
-					</tr>
-					<tr>
-						<td><b>执行时间限制</b></td>
+						<td class="layui-td-gray2">执行限制</td>
 						<td>{:get_system_info('max_execution_time')}</td>
 					</tr>
 					<tr>
-						<td><b>BUG反馈</b></td>
-						<td><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+						<td class="layui-td-gray2">ThinkPHP</td>
+						<td colspan="3">{$TP_version}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+								href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
 					</tr>
 					<tr>
-						<td><b>QQ交流群</b></td>
-						<td>24641076</td>
+						<td class="layui-td-gray2">Layui</td>
+						<td colspan="3">{:LAYUI_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+								href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
 					</tr>
 					<tr>
-						<td><b>同系列开源软件</b></td>
-						<td><a class="layui-badge layui-bg-blue" style="margin-right:20px" href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a class="layui-badge layui-bg-blue" style="margin-right:20px" href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
+						<td class="layui-td-gray2">勾股DEV</td>
+						<td colspan="3">{:CMS_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+							href="https://blog.gougucms.com/home/book/detail/bid/8.html" target="_blank">勾股DEV文档</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">BUG反馈</td>
+						<td colspan="3"><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">QQ交流群</td>
+						<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I" target="_blank" rel="nofollow"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群" title="gougucms交流群" style="vertical-align:middle"></a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">同系开源软件</td>
+						<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/blog" target="_blank">勾股BLOG</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
 					</tr>
 				</table>
 			</div>

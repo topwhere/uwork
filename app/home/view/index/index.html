@@ -7,29 +7,243 @@
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md12">
 				<div class="layui-card">
+					<div class="table-title">企业公告</div>
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="90">
+								<col>
+								<col width="136">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th>公告分类</th>
+									<th>公告标题</th>
+									<th style="text-align:center">发布时间</th>
+								</tr> 
+							</thead>
+							<tbody>
+								{volist name="note_list" id="vo"}
+								<tr>
+								  <td align="center">N{$vo.id}</td>
+								  <td align="center">{$vo.cate_title}</td>
+								  <td>{$vo.title}</td>
+								  <td align="center">{$vo.create_time}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
+						
+					</div>
+				</div>			
+				<div class="layui-card">
+					<div class="table-title">我负责的产品</div>
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="70">
+								<col>
+								<col width="80">
+								<col width="100">
+								<col width="80">
+								<col width="80">
+								<col width="80">
+								<col width="80">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">状态</th>
+									<th>产品主题</th>
+									<th style="text-align:center">负责人</th>
+									<th style="text-align:center">测试负责人</th>
+									<th style="text-align:center">关联项目</th>
+									<th style="text-align:center">关联需求</th>
+									<th style="text-align:center">关联任务</th>
+									<th style="text-align:center">关联BUG</th>
+								</tr> 
+							</thead>
+							<tbody>
+								{volist name="product_list" id="vo"}
+								<tr>
+								  <td align="center">P{$vo.id}</td>
+								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
+								  <td>{$vo.name}</td>
+								  <td align="center">{$vo.director_name}</td>
+								  <td align="center">{$vo.test_name}</td>
+								  <td align="center">{$vo.projects}</td>
+								  <td align="center">{$vo.requirements}</td>
+								  <td align="center">{$vo.tasks}</td>
+								  <td align="center">{$vo.bugs}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="table-title">我参与的项目</div>
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="70">
+								<col>
+								<col width="80">
+								<col width="80">
+								<col width="80">
+								<col width="80">
+								<col width="180">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">状态</th>
+									<th>项目主题</th>
+									<th style="text-align:center">负责人</th>
+									<th style="text-align:center">关联需求</th>
+									<th style="text-align:center">关联任务</th>
+									<th style="text-align:center">关联BUG</th>
+									<th style="text-align:center">计划工期</th>
+								</tr> 
+							</thead>
+							<tbody>
+								{volist name="project_list" id="vo"}
+								<tr>
+								  <td align="center">P{$vo.id}</td>
+								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
+								  <td>{$vo.name}</td>
+								  <td align="center">{$vo.director_name}</td>
+								  <td align="center">{$vo.requirements}</td>
+								  <td align="center">{$vo.tasks}</td>
+								  <td align="center">{$vo.bugs}</td>
+								  <td align="center">{$vo.plan_time}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
+					</div>
+				</div>
+					
+				<div class="layui-card">
 					<div class="table-title">待处理的需求</div>
-					<div style="padding: 15px;">
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="70">
+								<col>
+								<col width="80">
+								<col width="180">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">优先级</th>
+									<th>任务主题</th>
+									<th style="text-align:center">需求状态</th>
+									<th style="text-align:center">计划工期</th>
+								</tr> 
+							</thead>
+							<tbody>
+								{volist name="requirements_list" id="vo"}
+								<tr>
+								  <td align="center">R{$vo.id}</td>
+								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
+								  <td>{$vo.title}</td>
+								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
+								  <td align="center">{$vo.plan_time}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
 					</div>
 				</div>
 				
 				<div class="layui-card">
 					<div class="table-title">待处理的任务</div>
-					<div style="padding: 15px;">
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="70">
+								<col width="80">
+								<col>
+								<col width="80">
+								<col width="80">
+								<col width="110">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">优先级</th>
+									<th style="text-align:center">任务类型</th>
+									<th>任务主题</th>
+									<th style="text-align:center">任务状态</th>
+									<th style="text-align:center">预估工时</th>
+									<th style="text-align:center">计划完成日期</th>
+								</tr> 
+							</thead>
+							<tbody>
+								{volist name="task_list" id="vo"}
+								<tr>
+								  <td align="center">P{$vo.id}</td>
+								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
+								  <td align="center">{$vo.type_name}</td>
+								  <td>{$vo.title}</td>
+								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
+								  <td align="center">{$vo.plan_hours}</td>
+								  <td align="center">{$vo.end_time}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
 					</div>
 				</div>
 				
 				<div class="layui-card">
-					<div class="table-title">待处理的项目</div>
-					<div style="padding: 15px;">
-						<table id="project" lay-filter="project" class="layui-hide" style="margin-top:0"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="project" style=" "><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="id" data-key="1-0-0" class=""><div class="layui-table-cell laytable-cell-1-0-0" align="center"><span>序号</span></div></th><th data-field="name" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1"><span>项目名称</span></div></th><th data-field="process" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2" align="center"><span>当前环节</span></div></th><th data-field="check_name" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3" align="center"><span>当前处理人</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="0"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">93</div></td><td data-field="name" data-key="1-0-1" data-content="测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="93">测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr><tr data-index="1"><td data-field="id" data-key="1-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-0">1</div></td><td data-field="name" data-key="1-0-1" data-content="广瑞测试项目" class=""><div class="layui-table-cell laytable-cell-1-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1">广瑞测试项目</a></div></td><td data-field="process" data-key="1-0-2" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-2">制定项目派遣单及工作服务计划（确定服务团队）</div></td><td data-field="check_name" data-key="1-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-1-0-3">超级管理员</div></td></tr></tbody></table></div></div><style>.laytable-cell-1-0-0{ width: 80px; }.laytable-cell-1-0-1{  }.laytable-cell-1-0-2{ width: 160px; }.laytable-cell-1-0-3{ width: 100px; }</style></div>
+					<div class="table-title">最新知识文档</div>
+					<div style="padding:8px 12px 12px;">
+						<table class="layui-table">
+						  <colgroup>
+								<col width="80">
+								<col width="90">
+								<col>
+								<col width="80">
+								<col width="150">
+							</colgroup>
+							<thead>
+								<tr>
+									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">所属分类</th>
+									<th>知识主题</th>
+									<th style="text-align:center">创建员工</th>
+									<th style="text-align:center">创建时间</th>
+								</tr>
+							</thead>
+							<tbody>
+								{volist name="knowledge_list" id="vo"}
+								<tr>
+								  <td align="center">K{$vo.id}</td>
+								  <td align="center">{$vo.cate_name}</td>
+								  <td>{$vo.title}</td>
+								  <td align="center">{$vo.admin_name}</td>
+								  <td align="center">{$vo.create_time}</td>
+								</tr>
+								{/volist}
+						  </tbody>
+						</table>
 					</div>
 				</div>
-				
 				<div class="layui-card">
-					<div class="table-title">知识列表</div>
-					<div style="padding: 15px;">
-						<table id="knowledge" lay-filter="knowledge" class="layui-hide" style="margin-top:0"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-2" lay-id="knowledge" style=" "><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="id" data-key="2-0-0" class=""><div class="layui-table-cell laytable-cell-2-0-0" align="center"><span>序号</span></div></th><th data-field="name" data-key="2-0-1" class=""><div class="layui-table-cell laytable-cell-2-0-1"><span>知识主题</span></div></th><th data-field="share" data-key="2-0-2" class=""><div class="layui-table-cell laytable-cell-2-0-2" align="center"><span>查看权限</span></div></th><th data-field="knowledge_type" data-key="2-0-3" class=""><div class="layui-table-cell laytable-cell-2-0-3" align="center"><span>知识类型</span></div></th><th data-field="cname" data-key="2-0-4" class=""><div class="layui-table-cell laytable-cell-2-0-4" align="center"><span>所属类别</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0" class=""><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1059</div></td><td data-field="name" data-key="2-0-1" data-content="子公司无偿划转股权的涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1059">子公司无偿划转股权的涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="1"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1058</div></td><td data-field="name" data-key="2-0-1" data-content="复核：关于总院房屋租赁费的会计核算科目建议的回函（顾问函字【2022】第046号）" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1058">复核：关于总院房屋租赁费的会计核算科目建议的回函（顾问函字【2022】第046号）</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="2"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1057</div></td><td data-field="name" data-key="2-0-1" data-content="人员社保涉税风险问题" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1057">人员社保涉税风险问题</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="3"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1056</div></td><td data-field="name" data-key="2-0-1" data-content="三代手续费收入" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1056">三代手续费收入</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="4"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1055</div></td><td data-field="name" data-key="2-0-1" data-content="凯达尔项目涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1055">凯达尔项目涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="5"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1054</div></td><td data-field="name" data-key="2-0-1" data-content="练江流域整治项目公司涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1054">练江流域整治项目公司涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="6"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1053</div></td><td data-field="name" data-key="2-0-1" data-content="接受捐赠的涉税处理" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1053">接受捐赠的涉税处理</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="7"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1052</div></td><td data-field="name" data-key="2-0-1" data-content="粤电力以股权投资入股省风电涉税分析" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1052">粤电力以股权投资入股省风电涉税分析</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="8"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1051</div></td><td data-field="name" data-key="2-0-1" data-content="股权收购事项的确认" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1051">股权收购事项的确认</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr><tr data-index="9"><td data-field="id" data-key="2-0-0" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-0">1050</div></td><td data-field="name" data-key="2-0-1" data-content="纳税评估" class=""><div class="layui-table-cell laytable-cell-2-0-1"><a style="color:#1E9FFF; cursor:pointer;" lay-event="view" data-id="1050">纳税评估</a></div></td><td data-field="share" data-key="2-0-2" align="center" data-content="2" class=""><div class="layui-table-cell laytable-cell-2-0-2"><span style="color:#01AAED">需申请</span></div></td><td data-field="knowledge_type" data-key="2-0-3" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-3">文件</div></td><td data-field="cname" data-key="2-0-4" align="center" class=""><div class="layui-table-cell laytable-cell-2-0-4">税务顾问回函</div></td></tr></tbody></table></div></div><div class="layui-table-page"><div id="layui-table-page2"><div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1"><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon"></i></a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="105">105</a><a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon"></i></a><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span><span class="layui-laypage-count">共 1049 条</span><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option><option value="60">60 条/页</option><option value="70">70 条/页</option><option value="80">80 条/页</option><option value="90">90 条/页</option></select></span></div></div></div><style>.laytable-cell-2-0-0{ width: 80px; }.laytable-cell-2-0-1{  }.laytable-cell-2-0-2{ width: 90px; }.laytable-cell-2-0-3{ width: 90px; }.laytable-cell-2-0-4{ width: 160px; }</style></div>	
-					</div>
+					<div id="chartView" style="width: 100%; height:300px;"></div>
+				</div>
+				<div class="layui-card">
+					<div id="chartYear" style="width: 100%; height:240px;"></div>
 				</div>
 			</div>
 		</div>
@@ -38,18 +252,70 @@
 		<div class="layui-card dashboard-num">
 			<table>
 				<tbody><tr>
-					<td><div class="num-title">产品</div><div class="num-num">3867</div></td>
-					<td><div class="num-title">项目</div><div class="num-num">6036</div></td>
-					<td><div class="num-title">需求</div><div class="num-num">968</div></td>
-					<td><div class="num-title">任务</div><div class="num-num">910</div></td>
+					<td><div class="num-title">产品</div><div class="num-num">{$count_product}</div></td>
+					<td><div class="num-title">项目</div><div class="num-num">{$count_projects}</div></td>
+					<td><div class="num-title">需求</div><div class="num-num">{$count_requirements}</div></td>
+					<td><div class="num-title">任务</div><div class="num-num">{$count_task}</div></td>
 				</tr>
 			</tbody></table>
+		</div>
+		
+		<div class="layui-card">
+			<div class="table-title">系统信息</div>
+			<div class="layui-card-body">
+				<table class="layui-table" lay-skin="" lay-size="sm">
+					{if condition="($install == true)"}
+					<tr>
+						<td colspan="4" style="color: #E94335; background-color:#f5f5f5">提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+					</tr>
+					{/if}
+					<tr>
+						<td class="layui-td-gray2">服务器系统</td>
+						<td>{:get_system_info('os')}</td>
+						<td class="layui-td-gray2">PHP版本</td>
+						<td>{:get_system_info('php')}</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">上传限制</td>
+						<td>{:get_system_info('upload_max_filesize')}</td>
+						<td class="layui-td-gray2">执行限制</td>
+						<td>{:get_system_info('max_execution_time')}</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">ThinkPHP</td>
+						<td colspan="3">{$TP_version}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+								href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">Layui</td>
+						<td colspan="3">{:LAYUI_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+								href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">勾股DEV</td>
+						<td colspan="3">{:CMS_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
+							href="https://blog.gougucms.com/home/book/detail/bid/8.html" target="_blank">勾股DEV文档</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">BUG反馈</td>
+						<td colspan="3"><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">QQ交流群</td>
+						<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I" target="_blank" rel="nofollow"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群" title="gougucms交流群" style="vertical-align:middle"></a></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray2">同系开源软件</td>
+						<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/blog" target="_blank">勾股BLOG</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		
 		<div class="layui-card dashboard-total">
 			<div class="table-title">我的工作情况</div>
 			<div class="layui-card-header">
-				<h3>影响力</h3>
+				<h5>影响力</h5>
 			</div>
 			<div class="layui-card-body">
 				<div class="layui-row">
@@ -72,7 +338,7 @@
 				</div>
 			</div>
 			<div class="layui-card-header">
-				<h3>效率</h3>
+				<h5>效率</h5>
 			</div>
 			<div class="layui-card-body">
 				<div class="layui-row">
@@ -95,7 +361,7 @@
 				</div>
 			</div>
 			<div class="layui-card-header">
-				<h3>勤奋</h3>
+				<h5>勤奋</h5>
 			</div>
 			<div class="layui-card-body">
 				<div class="layui-row">
@@ -121,13 +387,12 @@
 		
 		<div class="layui-card">
 			<div class="table-title">最活跃员工<span style="color:#999; font-size:14px; font-weight:400; margin-left:5px">最近30天前十的活跃度</span></div>
-			<div class="layui-card-body"></div>
+			<div class="layui-card-body"><div id="logChart" style="width: 100%; height:268px;"></div></div>
 		</div>
 		<div class="layui-card">
-			<div class="table-title">员工动态</div>
+			<div class="table-title">员工最新动态</div>
 			<div class="layui-card-body dashboard-logs">
-				<ul class="layui-timeline" id="logs"><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>6小时前</span>，蒋碧晖新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，甄慧霞登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，郑洁秀登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮确认了一份合同协议</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>8小时前</span>，黄丹妮新增了合同协议【尤尼泰广东（总）企税汇缴字【2022】第1125号】的协议信息</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，黄丹妮登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，蒋碧晖新增了一个工作记录</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，陈素茵登录了税项管家</div>										</div>									  </li><li class="layui-timeline-item">										<i class="layui-icon layui-timeline-axis"></i>										<div class="layui-timeline-content layui-text">										  <div class="layui-timeline-title"><span>9小时前</span>，关立斯确认了一张发票的到账信息</div>										</div>									  </li></ul>
-				<div class="panel-more"><a href="javascript:;">查看更多动态</a></div>
+				<ul class="layui-timeline" id="logs"></ul>
 			</div>
 		</div>
 </div>
@@ -135,11 +400,319 @@
 {/block}
 <!-- 脚本 -->
 {block name="script"}
+<script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
 <script>
 function init(layui){
-	console.log('加载完毕...');
+	get_logs();
+	get_view_data();
+}
+
+function setHour(num) {
+	var str = num + ':00';
+	if (num < 10) {
+		str = '0' + num + ':00';
+	}
+	return str;
+}
+var archiveCalendar = {};
+function getRange() {
+	let today = new Date();
+	let tYear = today.getFullYear();
+	let tMonth = today.getMonth() + 1;
+	let tDate = today.getDate();
+	let dateFirst = tYear + "-" + tMonth + "-" + tDate;
+	let datelast = (tYear - 1) + "-" + tMonth + "-" + tDate;
+	let dataRange = [];
+	dataRange.push(dateFirst);
+	dataRange.push(datelast);
+	return dataRange;
+}
+
+function getDay() {
+	var today = new Date();
+	var dayArray = [];
+	for (var i = 0; i < 366; i++) {
+		var targetday_milliseconds = today.getTime() - 1000 * 60 * 60 * 24 * i;
+		var date = new Date(targetday_milliseconds);
+		dayArray.push(retunDay(date));
+	}
+	return dayArray;
+}
+
+function retunDay(day) {
+	var tYear = day.getFullYear();
+	var tMonth = day.getMonth();
+	var tDate = day.getDate();
+	tMonth = tMonth + 1;
+	if (tMonth.toString().length == 1) {
+		tMonth = "0" + tMonth;
+	}
+	if (tDate.toString().length == 1) {
+		tDate = "0" + tDate;
+	}
+	var dateStr = tYear + "-" + tMonth + "-" + tDate;
+	var dateArray = [];
+	dateArray.push(dateStr);
+	if (archiveCalendar[dateStr]) {
+		dateArray.push(archiveCalendar[dateStr]);
+	}
+	else {
+		dateArray.push(0);
+	}
+	return dateArray;
+}
+
+var chartView = echarts.init(document.getElementById('chartView'));
+var chartYear = echarts.init(document.getElementById('chartYear'));
+var logChart = echarts.init(document.getElementById('logChart'));
+function get_view_data() {
+	$.ajax({
+		url: "/home/index/get_view_data",
+		type: 'get',
+		data: {},
+		success: function (e) {
+			if (e.code == 0) {
+				var data_first = e.data.data_first;
+				var data_second = e.data.data_second;
+				archiveCalendar = e.data.data_three;
+				var data_logs = e.data.data_logs;
+				var myDate = new Date();
+				var nowHour = myDate.getHours(); //获取当前小时数(0-23)
+				var xData = [];
+				var yData1 = [];
+				var yData2 = [];
+				var logItem = [];
+				$.each(data_first, function (key, value) {
+					if (key <= nowHour) {
+						yData1.push(value);
+					}
+				});
+				
+				$.each(data_second, function (key, value) {
+					xData.push(setHour(key));
+					yData2.push(value);
+				});
+				
+				$.each(data_logs, function (key, value) {
+					let item = {
+						value: value.count,
+						name: value.name
+					};
+					logItem.push(item);
+				});
+				
+				let opsA = {
+					title: {
+						top: '12px',
+						text: '今日与昨日员工活跃度',
+						left: '8px',
+						textStyle: {
+							fontSize: '18',
+							color: '#333',
+						}
+					},
+					color: ["#1AAD19", "#1890FF"],
+					grid: {
+						left: '20px',
+						right: '30px',
+						bottom: '15px',
+						top: '60px',
+						containLabel: true
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'cross',
+							crossStyle: {
+								color: '#999'
+							}
+						}
+					},
+					toolbox: {
+						show: true,
+					},
+					legend: {
+						data: ["今日", "昨日"],
+						top: '16px',
+					},
+					xAxis: [{
+						type: "category",
+						boundaryGap: !1,
+						data: xData,
+						axisLine: {
+							lineStyle: {
+								color: '#999999',
+								width: 1,
+							}
+						},
+					}],
+					yAxis: [{
+						type: "value",
+						axisLine: {
+							show: true,
+							lineStyle: {
+								color: '#999999',
+								width: 1,
+							}
+						},
+					}],
+					series: [{
+						name: "今日",
+						type: "line",
+						smooth: !0,
+						itemStyle: {
+							normal: {
+								areaStyle: {
+									type: "default",
+									opacity: 0.2
+								}
+							}
+						},
+						data: yData1
+					}, {
+						name: "昨日",
+						type: "line",
+						smooth: !0,
+						itemStyle: {
+							normal: {
+								areaStyle: {
+									type: "default",
+									opacity: 0.2
+								}
+							}
+						},
+						data: yData2
+					}]
+				}
+				chartView.setOption(opsA);
+
+				let opsB = {
+					title: {
+						top: '12px',
+						text: '近一年员工活跃度',
+						left: '8px',
+						textStyle: {
+							fontSize: '18',
+							color: '#333',
+						}
+					},
+					tooltip: {
+						padding: 6,
+						formatter: function (obj) {
+							var value = obj.value;
+							return '<div style="font-size: 12px;">' + value[0] + '员工活跃度：' + value[1] + '</div>';
+						}
+					},
+					visualMap: {
+						min: 0,
+						max: 300,
+						show: false,
+						inRange: {
+							color: ['#fafafa', '#1AAD19']
+						}
+					},
+					calendar: {
+						top: 72,
+						left: 52,
+						right: 20,
+						range: getRange(),
+						cellSize: ['auto', 21],
+						splitLine: {
+							lineStyle: {
+								color: '#aaa',
+								type: 'dashed'
+							}
+						},
+						itemStyle: {
+							borderWidth: 0.5
+						},
+						yearLabel: { show: false },
+						monthLabel: {
+							nameMap: 'cn',
+							fontSize: 12
+						},
+						dayLabel: {
+							show: true,
+							formatter: '{start}  1st',
+							fontWeight: 'lighter',
+							nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+							fontSize: 12
+						}
+					},
+					series: [{
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						calendarIndex: 0,
+						data: getDay()
+					}]
+				};
+				chartYear.setOption(opsB);
+				
+				
+				let optC = {			
+					tooltip: {
+						trigger: 'item',
+						formatter: '{a} <br/>{b} :{d}%'
+					},
+					legend: {
+						top: '1%',
+						left: 'center'
+					},
+					series: [
+						{
+						  name: '活跃度',
+						  type: 'pie',
+						  radius: '50%',
+						  center: ['50%', '60%'],
+						  data:logItem,
+						  emphasis: {
+							itemStyle: {
+							  shadowBlur: 10,
+							  shadowOffsetX: 0,
+							  shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						  }
+						}
+					]
+				};
+				logChart.setOption(optC);
+			}
+		}
+	})
+}
+
+window.onresize = function() {
+	chartView.resize();
+	chartYear.resize();
+	logChart.resize();
+}
+
+//获取工作记录
+function get_logs() {
+	$.ajax({
+		url: "/home/index/log_list",
+		type: 'get',
+		data: {
+			page: 1,
+			limit: 15
+		},
+		success: function (e) {
+			if (e.code == 0) {
+				var html = '';
+				$.each(e.data, function (key, value) {
+					html += `<li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+									 <div class="layui-timeline-title"><span title="${value.id}">${value.times}</span>，${value.content}</div>
+								</div>
+							</li>`;
+				});
+				$('#logs').html(html);
+			}
+		}
+	})
 }
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougucms']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

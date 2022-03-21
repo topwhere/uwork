@@ -389,7 +389,7 @@ CREATE TABLE `dev_note`  (
   `create_time` int(11) NOT NULL DEFAULT 0,
   `update_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告';
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '公告';
 
 -- ----------------------------
 -- Records of dev_note
@@ -565,7 +565,7 @@ CREATE TABLE `dev_knowledge`  (
   `is_share` int(1) NOT NULL DEFAULT 1 COMMENT '是否公开:1是2否',
   `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态:1正常0禁用-1删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
 
 -- ----------------------------
 -- Table structure for dev_knowledge_doc
@@ -589,7 +589,7 @@ CREATE TABLE `dev_knowledge_doc`  (
   `update_time` int(11) NOT NULL DEFAULT 0,
   `delete_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '知识库文档表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '知识库文档表';
 
 
 -- ----------------------------

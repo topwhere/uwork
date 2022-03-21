@@ -8,9 +8,6 @@ declare (strict_types = 1);
 namespace app\api\controller;
 
 use app\api\BaseController;
-use app\model\AdminLog;
-use app\user\validate\AdminCheck;
-use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\Session;
 
@@ -155,37 +152,6 @@ class Index extends BaseController
         return to_assign(0, '系统缓存已清空');
     }
 
-    //获取关键字
-    public function get_keyword_cate()
-    {
-        $keyword = Db::name('Keywords')->where(['status' => 1])->order('id desc')->select()->toArray();
-        return to_assign(0, '', $keyword);
-    }
-
-    // 测试邮件发送
-    public function email_test()
-    {
-        $sender = get_params('email');
-        //检查是否邮箱格式
-        if (!is_email($sender)) {
-            return to_assign(1, '测试邮箱码格式有误');
-        }
-        $email_config = \think\facade\Db::name('config')->where('name', 'email')->find();
-        $config = unserialize($email_config['content']);
-        $content = $config['template'];
-        //所有项目必须填写
-        if (empty($config['smtp']) || empty($config['smtp_port']) || empty($config['smtp_user']) || empty($config['smtp_pwd'])) {
-            return to_assign(1, '请完善邮件配置信息！');
-        }
-
-        $send = send_email($sender, '测试邮件', $content);
-        if ($send) {
-            return to_assign(0, '邮件发送成功！');
-        } else {
-            return to_assign(1, '邮件发送失败！');
-        }
-    }
-
     //获取部门树形节点列表
     public function get_department_tree()
     {
@@ -253,6 +219,31 @@ class Index extends BaseController
         return to_assign(0, '', $product);
     }
 	
+    //获取项目列表
+    public function get_project($pid=0)
+    {
+		$where = [];
+		$where[] = ['status', '=', 1];
+		if($pid>0){
+			$where[] = ['product_id', '=', $pid];
+		}
+        $project = Db::name('Project')->field('id,name as title')->where($where)->select();
+        return to_assign(0, '', $project);
+    }
+
+    //需求列表
+    public function get_requirements($pid=0)
+    {
+		$where = [];
+		$where[] = ['status', '=', 1];
+		if($pid>0){
+			$where[] = ['project_id', '=', $pid];
+		}
+        $requirements = Db::name('Requirements')->field('id,title')->where($where)->select();
+        return to_assign(0, '', $requirements);
+    }
+	
+	
     //文档列表
     public function get_doc_list($kid = 0,$tree=0)
     {
@@ -282,146 +273,6 @@ class Index extends BaseController
 		}
     }
 	
-    //获取项目列表
-    public function get_project($pid=0)
-    {
-		$where = [];
-		$where[] = ['status', '=', 1];
-		if($pid>0){
-			$where[] = ['product_id', '=', $pid];
-		}
-        $project = Db::name('Project')->field('id,name as title')->where($where)->select();
-        return to_assign(0, '', $project);
-    }
-
-    //需求列表
-    public function get_requirements($pid=0)
-    {
-		$where = [];
-		$where[] = ['status', '=', 1];
-		if($pid>0){
-			$where[] = ['project_id', '=', $pid];
-		}
-        $requirements = Db::name('Requirements')->field('id,title')->where($where)->select();
-        return to_assign(0, '', $requirements);
-    }
-	
-
-    //首页公告
-    public function get_note_list()
-    {
-        $list = Db::name('Note')
-            ->field('a.*,c.title as cate_title')
-            ->alias('a')
-            ->join('note_cate c', 'a.cate_id = c.id')
-            ->where(['a.status' => 1])
-            ->order('a.id desc')
-            ->limit(10)
-            ->select()->toArray();
-        foreach ($list as $key => $val) {
-            $list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
-        }
-        $res['data'] = $list;
-        return table_assign(0, '', $res);
-    }
-
-    //修改个人信息
-    public function edit_personal()
-    {
-		if (request()->isAjax()) {
-            $param = get_params();
-            $uid = $this->uid;
-            Db::name('Admin')->where(['id' => $uid])->strict(false)->field(true)->update($param);
-            $session_admin = get_config('app.session_admin');
-            Session::set($session_admin, Db::name('admin')->find($uid));
-            return to_assign();
-        }
-		else{
-			return view('user@user/edit_personal', [
-				'admin' => get_admin($this->uid),
-			]);
-		}
-    }
-
-    //修改密码
-    public function edit_password()
-    {
-		if (request()->isAjax()) {
-            $param = get_params();
-            try {
-                validate(AdminCheck::class)->scene('editPwd')->check($param);
-            } catch (ValidateException $e) {
-                // 验证失败 输出错误信息
-                return to_assign(1, $e->getError());
-            }
-            $uid = $this->uid;
-			
-			$admin = Db::name('Admin')->where(['id' => $uid])->find();
-			$old_psw = set_password($param['old_pwd'], $admin['salt']);
-			if ($admin['pwd'] != $old_psw) {
-				return to_assign(1, '旧密码错误');
-			}
-
-			$salt = set_salt(20);
-			$new_pwd = set_password($param['pwd'], $salt);
-			$data = [
-				'reg_pwd' => '',
-				'salt' => $salt,
-				'pwd' => $new_pwd,
-				'update_time' => time(),
-			];
-            Db::name('Admin')->where(['id' => $uid])->strict(false)->field(true)->update($data);
-            $session_admin = get_config('app.session_admin');
-            Session::set($session_admin, Db::name('admin')->find($uid));
-            return to_assign();
-        }
-		else{
-			return view('user@user/edit_password', [
-				'admin' => get_admin($this->uid),
-			]);
-		}
-    }
-	
-    //系统操作日志
-    public function log_list()
-    {
-		if (request()->isAjax()) {
-			$param = get_params();
-			$log = new AdminLog();
-			$content = $log->get_log_list($param);
-			return table_assign(0, '', $content);
-		}else{
-			return view('home@log/log_list');
-		}
-    }
-
-    //保存密码修改
-    public function password_submit()
-    {
-        if (request()->isAjax()) {
-            $param = get_params();
-            try {
-                validate(AdminCheck::class)->scene('editpwd')->check($param);
-            } catch (ValidateException $e) {
-                // 验证失败 输出错误信息
-                return to_assign(1, $e->getError());
-            }
-            $admin = get_admin($this->uid);
-            if (set_password($param['old_pwd'], $admin['salt']) !== $admin['pwd']) {
-                return to_assign(1, '旧密码不正确!');
-            }
-            unset($param['username']);
-            $param['salt'] = set_salt(20);
-            $param['pwd'] = set_password($param['pwd'], $param['salt']);
-            Db::name('Admin')->where(['id' => $admin['id'],
-            ])->strict(false)->field(true)->update($param);
-            $session_admin = get_config('app.session_admin');
-            Session::set($session_admin, Db::name('admin')->find($admin['id']));
-            return to_assign();
-        }
-    }
-	
-	
     //删除消息附件
     public function del_message_interfix()
     {
@@ -438,23 +289,29 @@ class Index extends BaseController
             return to_assign(1, "您没权限删除该消息附件");
         }
 
-    }
+    }	
 
-    //获取访问记录
-    public function get_view_data()
+    // 测试邮件发送
+    public function email_test()
     {
-        $param = get_params();
-        $first_time = time();
-        $second_time = $first_time - 86400;
-        $three_time = $first_time - 86400 * 365;
-        $begin_first = strtotime(date('Y-m-d', $first_time) . " 00:00:00");
-        $end_first = strtotime(date('Y-m-d', $first_time) . " 23:59:59");
-        $begin_second = strtotime(date('Y-m-d', $second_time) . " 00:00:00");
-        $end_second = strtotime(date('Y-m-d', $second_time) . " 23:59:59");
-        $begin_three = strtotime(date('Y-m-d', $three_time) . " 00:00:00");
-        $data_first = Db::name('AdminLog')->field('create_time')->whereBetween('create_time', "$begin_first,$end_first")->select();
-        $data_second = Db::name('AdminLog')->field('create_time')->whereBetween('create_time', "$begin_second,$end_second")->select();
-        $data_three = Db::name('AdminLog')->field('create_time')->whereBetween('create_time', "$begin_three,$end_first")->select();
-        return to_assign(0, '', ['data_first' => hour_document($data_first), 'data_second' => hour_document($data_second), 'data_three' => date_document($data_three)]);
+        $sender = get_params('email');
+        //检查是否邮箱格式
+        if (!is_email($sender)) {
+            return to_assign(1, '测试邮箱码格式有误');
+        }
+        $email_config = \think\facade\Db::name('config')->where('name', 'email')->find();
+        $config = unserialize($email_config['content']);
+        $content = $config['template'];
+        //所有项目必须填写
+        if (empty($config['smtp']) || empty($config['smtp_port']) || empty($config['smtp_user']) || empty($config['smtp_pwd'])) {
+            return to_assign(1, '请完善邮件配置信息！');
+        }
+
+        $send = send_email($sender, '测试邮件', $content);
+        if ($send) {
+            return to_assign(0, '邮件发送成功！');
+        } else {
+            return to_assign(1, '邮件发送失败！');
+        }
     }
 }

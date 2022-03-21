@@ -7,7 +7,6 @@
 
 declare (strict_types = 1);
 namespace app\model;
-
 use think\Model;
 use think\facade\Db;
 class Log extends Model

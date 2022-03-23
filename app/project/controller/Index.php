@@ -147,7 +147,7 @@ class Index extends BaseController
                 if ($sid) {
                     add_log('add', $sid, $param);
 					$users= Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
-					sendMessage($users,1,['title'=>$param['name'],'action_id'=>$sid]);
+					//sendMessage($users,1,['title'=>$param['name'],'action_id'=>$sid]);
                 }
                 return to_assign();
             }
@@ -175,6 +175,15 @@ class Index extends BaseController
 			return to_assign(1,'项目不存在');
         }
 		else{
+			$file_array = Db::name('FileInterfix')
+                ->field('mf.id,mf.topic_id,mf.admin_id,f.name,f.filesize,f.filepath,a.name as admin_name')
+                ->alias('mf')
+                ->join('File f', 'mf.file_id = f.id', 'LEFT')
+                ->join('Admin a', 'mf.admin_id = a.id', 'LEFT')
+                ->order('mf.create_time desc')
+                ->where(array('mf.topic_id' => $id,'mf.module' => 'project'))
+                ->select()->toArray();
+			View::assign('file_array', $file_array);
 			View::assign('detail', $detail);
 			View::assign('id', $id);
 			return view();

@@ -198,10 +198,7 @@ class Index extends BaseController
     //获取部门所有员工
     public function get_employee_select()
     {
-        $employee = Db::name('admin')
-            ->field('id as value,name')
-            ->where(['status' => 1])
-            ->select();
+        $employee = Db::name('admin')->field('id as value,name')->where(['status' => 1])->select();
         return to_assign(0, '', $employee);
     }
 
@@ -211,6 +208,14 @@ class Index extends BaseController
         $position = Db::name('Position')->field('id,title as name')->where([['status', '=', 1], ['id', '>', 1]])->select();
         return to_assign(0, '', $position);
     }
+	
+    //获取工作类型列表
+    public function get_work()
+    {
+        $cate = Db::name('WorkCate')->field('id,title')->where([['status', '=', 1]])->select();
+        return to_assign(0, '', $cate);
+    }
+	
 	
     //获取产品列表
     public function get_product()
@@ -251,14 +256,14 @@ class Index extends BaseController
 			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
 					->field('id,pid as pId,title as name,type,link,knowledge_id,sort')
 					->order('sort asc,id asc')
-					->select()->toArray();
+					->select();
 			return to_assign(0, '', $list);
 		}
 		else{
 			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
 					->field('id,pid,title,type,knowledge_id,sort')
 					->order('sort asc,id asc')
-					->select()->toArray();
+					->select();
 			if($tree==1){
 				foreach($list as $k => &$v)
 				{

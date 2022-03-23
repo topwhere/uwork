@@ -1,6 +1,8 @@
- a:hover{color:#3582fb}
- html,body{height:100%;}
- body.right-open{overflow:hidden;}
+a:hover{color:#3582fb}
+html,body{height:100%;}
+body.right-open{overflow:hidden;}
+.left{float:left;}
+.right{float:right;}
 .h1,h1{font-size:32px; font-weight: 600;}
 .h2,h2{font-size:28px; font-weight: 600;}
 .h3,h3{font-size:24px; font-weight: 600;}
@@ -150,8 +152,8 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-tags-all{float: right; font-weight: 200px; background-color:#4285f4; color:#fff; border-radius: 3px; padding: 2px 6px; cursor: pointer; display: none;}
 .layui-table-form{margin-top: 0;}
 .layui-table-form tbody tr:hover{background-color: #fff;}
-.layui-td-gray{color:#8c95a8; width:66px; text-align:right; background-color:#fafafa;}
-.layui-td-gray2{color:#8c95a8; width:90px; text-align:right; background-color:#fafafa;}
+.layui-td-gray{color:#8c95a8; width:72px; text-align:right; background-color:#fafafa;}
+.layui-td-gray2{color:#8c95a8; width:100px; text-align:right; background-color:#fafafa;}
 .layui-td-gray3{color:#8c95a8; width:120px; text-align:right; background-color:#fafafa;}
 .layui-td-gray4{color:#8c95a8; width:150px; text-align:right; background-color:#fafafa;}
 .layui-td-gray font,.layui-td-gray2 font,.layui-td-gray3 font{color:#FF6347; margin-left: 3px;}
@@ -308,7 +310,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .md-content{min-height:200px;}
 
 /*评论*/
-.comment-input .comment-image{width:50px; height:50px; border-radius:50%}
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
 .comment-item .comment-avatar{width:50px; float:left}
 .comment-item .comment-image{width:36px; height:36px; border-radius:50%}
 .comment-item .comment-body{margin-left:50px;}
@@ -322,7 +324,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 
 .hover-edit i{margin-left:4px; font-weight:800; cursor:pointer; opacity:0}
 .hover-edit.hover-on i{opacity:1}
-
+.work-record{line-height:1.5;}
 /*知识库*/
 .knowledge-tab .layui-this{background-color:#fff}
 .knowledge-list .layui-card{cursor: pointer; transition: box-shadow .3s,border-color .3s;}

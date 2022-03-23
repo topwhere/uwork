@@ -166,6 +166,15 @@ class Index extends BaseController
 			return to_assign(1,'需求不存在');
         }
 		else{
+			$file_array = Db::name('FileInterfix')
+                ->field('mf.id,mf.topic_id,mf.admin_id,f.name,f.filesize,f.filepath,a.name as admin_name')
+                ->alias('mf')
+                ->join('File f', 'mf.file_id = f.id', 'LEFT')
+                ->join('Admin a', 'mf.admin_id = a.id', 'LEFT')
+                ->order('mf.create_time desc')
+                ->where(array('mf.topic_id' => $id,'mf.module' => 'requirements'))
+                ->select()->toArray();
+			View::assign('file_array', $file_array);
 			View::assign('detail', $detail);
 			View::assign('id', $id);
 			return view();

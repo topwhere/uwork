@@ -3,7 +3,6 @@ layui.define(['gougu'], function(exports){
 	const obj = {
 		log:function(topic_id,module){
 			let callback = function(res){
-								console.log(res.data.length);
 				if(res.code==0 && res.data.length>0){
 					let itemLog = '';					
 					$.each(res.data, function (index, item) {
@@ -16,6 +15,26 @@ layui.define(['gougu'], function(exports){
 							</div>
 						`;
 						}
+						else if(item.field =='file'){
+							if(item.new_content == '未设置'){
+								itemLog+= `
+									<div class="log-item py-3 border-b">
+										<i class="iconfont ${item.icon}"></i>
+										<span class="log-name">${item.name}</span>
+										<span class="log-content font-gray"> 删除了文件<b>${item.old_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+									</div>
+								`;
+							}
+							else{
+								itemLog+= `
+									<div class="log-item py-3 border-b">
+										<i class="iconfont ${item.icon}"></i>
+										<span class="log-name">${item.name}</span>
+										<span class="log-content font-gray"> 上传了文件<b>${item.new_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+									</div>
+								`;
+							}
+						}
 						else{
 						itemLog+= `
 							<div class="log-item py-3 border-b">
@@ -26,7 +45,6 @@ layui.define(['gougu'], function(exports){
 						`;
 						}
 					});
-
 					$("#log_"+module+"_"+topic_id).html(itemLog);
 				}
 			}
@@ -41,7 +59,7 @@ layui.define(['gougu'], function(exports){
 						if(item.padmin_id>0){
 							pAdmin = '<p class="pt-2"><span>@'+item.pname+'</span></p>';
 						}
-						if(item.admin_id == params.uid){
+						if(item.admin_id == GOUGU_DEV.uid){
 							ops='<a class="mr-4" data-event="edit" data-id="'+item.id+'">编辑</a><a class="mr-4" data-event="del" data-id="'+item.id+'">删除</a>';
 						}
 						itemComment+= `

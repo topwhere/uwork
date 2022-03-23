@@ -31,6 +31,37 @@
 				<h5 class="py-4">需求描述<i class="iconfont icon-wodedianping" title="编辑" data-name="md_content"></i></h5>
 				<div id="md_content_{$detail.id}" data-val="{$detail.md_content}">{$detail.content|raw}</div>
 			</div>
+			<div>
+				<h5 class="py-4">文件附件</h5>
+				<div id="file_{$detail.id}">
+					<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="testList">选择文件并上传</button> <span style="color:#FF5722; font-size:12px; margin-left: 10px;">上传前，请规范命名，最大只能上传{:get_system_info('upload_max_filesize')}的文件，超过请压缩成多个文件上传。</span>
+					<div class="layui-upload-list" {empty name="$file_array"}style="display:none;"{/empty}>
+						<table class="layui-table">
+							<thead>
+								<tr>
+								<th width="55%">文件名</th>
+								<th width="15%" style="text-align:center">文件大小</th>
+								<th width="15%" style="text-align:center">上传人</th>
+								<th width="15%" style="text-align:center">操作</th>
+								</tr>
+							</thead>
+							<tbody id="demoList">
+								{volist name="file_array" id="vo"}
+									<tr data-id="{$vo.id}" id="tr_{$vo.id}">
+										<td>{$vo.name}</td>
+										<td style="text-align: center;">{$vo.admin_name}</td>
+									  	<td style="text-align: center;">{$vo.filesize/1048576|round=2}MB</td>
+										<td style="text-align: center;">
+											<div class="layui-btn-group"><a class="layui-btn layui-btn-xs " href="{$vo.filepath}" download="{$vo.name}" data-id="{$vo.id}">下载</a>
+											<span class="layui-btn layui-btn-xs layui-btn-danger file-delete" data-uid="{$vo.admin_id}" data-id="{$vo.id}">删除</span></div>
+										</td>
+									</tr>
+								{/volist}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="layui-col-md3 p-4">
 			<div class="pb-4 hover-edit">
@@ -60,7 +91,7 @@
 			<div class="layui-tab-item comment-list layui-show">
 				<table width="100%" class="comment-input my-2">
 				<tr>
-					<td style="width:50px;"><img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100"></td>
+					<td style="width:40px;padding:5px;"><img class="comment-image" src="{$params.thumb}"></td>
 					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
 				</tr>
 				</table>
@@ -105,6 +136,7 @@ function pageInit() {
 	const layer = layui.layer,
 		edit = layui.gouguEdit,
 		comment = layui.gouguComment,
+		upload = layui.upload,
 		gougu = layui.gougu;
 	
 	$('.hover-edit').hover(function(){
@@ -121,6 +153,45 @@ function pageInit() {
 			real_txt = show_txt;
 		}	
 		editShow(detail_id,name,show_txt,real_txt);
+	})
+	
+	upload.render({ 
+		elem: '#testList'
+		,url: '/api/index/upload'
+		,accept: 'file' //普通文件
+		,exts: 'jpeg|jpg|png|gif|doc|docx|ppt|pptx|xls|xlsx|pdf|zip|rar|7z' //只允许上传文件
+		,before: function(obj){
+			layer.msg('上传中...',{time: 3600000});
+		}
+		,done: function(res, index, upload){
+			let callback = function(e){
+				layer.msg('上传成功');
+				gougu.load("/requirements/index/view?id="+detail_id);
+			}
+			let postData={'topic_id':detail_id,'file_id':res.data.id,'file_name':res.data.name,'module':'requirements'};
+			gougu.post("/api/appendix/add",postData,callback);
+		}
+		,error: function(index, upload){
+			layer.msg('上传失败');
+		}
+	});
+	
+	$('#demoList').on('click','.file-delete',function(){
+		let id = $(this).data('id');
+		let uid = $(this).data('uid');
+		if(uid != GOUGU_DEV.uid){
+			layer.msg('你不是该文件的上传人，无权限删除');
+			return false;
+		}
+		layer.confirm('确定要删除该附件吗?', {icon: 3, title:'提示'}, function(index){
+			let callback = function(e){
+				layer.closeAll();
+				layer.msg(e.msg);
+				gougu.load("/requirements/index/view?id="+detail_id);
+			}
+			let postData={"id":id};
+			gougu.delete("/api/appendix/delete",postData,callback);
+		});
 	})
 	
 	//评论

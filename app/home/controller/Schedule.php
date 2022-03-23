@@ -7,10 +7,10 @@
 
 declare (strict_types = 1);
 
-namespace app\oa\controller;
+namespace app\home\controller;
 
 use app\base\BaseController;
-use app\oa\model\Schedule as ScheduleList;
+use app\model\Schedule as ScheduleList;
 use schedule\Schedule as ScheduleIndex;
 use think\facade\Db;
 use think\facade\View;
@@ -52,6 +52,27 @@ class Schedule extends BaseController
         } else {
             return view();
         }
+    }
+	
+	//获取工作记录列表
+    public function get_list()
+    {
+		$param = get_params();
+		$where = array();
+		$where['a.tid'] = $param['tid'];
+        $where['a.status'] = 1;
+		$list = Db::name('Schedule')
+			->field('a.*,u.name')
+            ->alias('a')
+            ->join('Admin u', 'u.id = a.admin_id')
+            ->order('a.create_time desc')
+            ->where($where)
+            ->select()->toArray();
+        foreach ($list as $k => $v) {
+            $list[$k]['start_time'] = empty($v['start_time']) ? '' : date('Y-m-d H:i', $v['start_time']);
+            $list[$k]['end_time'] = empty($v['end_time']) ? '' : date('H:i', $v['end_time']);
+        }
+		return to_assign(0, '', $list);
     }
 
     //工作记录
@@ -126,67 +147,73 @@ class Schedule extends BaseController
     {
         $param = get_params();
         $admin_id = $this->uid;
-        if ($param['id'] == 0) {
-            if (isset($param['start_time_a'])) {
-                $param['start_time'] = strtotime($param['start_time_a'] . '' . $param['start_time_b']);
-            }
-            if (isset($param['end_time_a'])) {
-                $param['end_time'] = strtotime($param['end_time_a'] . '' . $param['end_time_b']);
-            }
-			if($param['start_time']>time()){
-				return to_assign(1, "开始时间不能大于现在时间");			
+		if (request()->isPost()) {
+			if ($param['id'] == 0) {
+				if (isset($param['start_time_a'])) {
+					$param['start_time'] = strtotime($param['start_time_a'] . '' . $param['start_time_b']);
+				}
+				if (isset($param['end_time_a'])) {
+					$param['end_time'] = strtotime($param['end_time_a'] . '' . $param['end_time_b']);
+				}
+				if($param['start_time']>time()){
+					return to_assign(1, "开始时间不能大于现在时间");			
+				}
+				if ($param['end_time'] <= $param['start_time']) {
+					return to_assign(1, "结束时间需要大于开始时间");
+				}
+				$where1[] = ['status', '=', 1];
+				$where1[] = ['admin_id', '=', $admin_id];
+				$where1[] = ['start_time', 'between', [$param['start_time'], $param['end_time'] - 1]];
+
+				$where2[] = ['status', '=', 1];
+				$where2[] = ['admin_id', '=', $admin_id];
+				$where2[] = ['start_time', '<=', $param['start_time']];
+				$where2[] = ['start_time', '>=', $param['end_time']];
+
+				$where3[] = ['status', '=', 1];
+				$where3[] = ['admin_id', '=', $admin_id];
+				$where3[] = ['end_time', 'between', [$param['start_time'] + 1, $param['end_time']]];
+
+				$record = Db::name('Schedule')
+					->where(function ($query) use ($where1) {
+						$query->where($where1);
+					})
+					->whereOr(function ($query) use ($where2) {
+						$query->where($where2);
+					})
+					->whereOr(function ($query) use ($where3) {
+						$query->where($where3);
+					})
+					->count();
+				if ($record > 0) {
+					return to_assign(1, "您所选的时间区间已有工作记录，请重新选时间");
+				}
+				
+				//$task_detail = Db::name('Task')->where(['id',$param['tid']])->find();
+				$param['labor_time'] = ($param['end_time'] - $param['start_time']) / 3600;
+				$param['admin_id'] = $admin_id;
+				$param['did'] = get_admin($admin_id)['did'];
+				$param['create_time'] = time();
+				$sid = Db::name('Schedule')->strict(false)->field(true)->insertGetId($param);
+				if ($sid > 0) {
+					add_log('add', $sid, $param);
+					return to_assign();
+				} else {
+					return to_assign(1, '操作失败');
+				}
+			} else {
+				$param['update_time'] = time();
+				$res = Db::name('Schedule')->strict(false)->field(true)->update($param);
+				if ($res !== false) {
+					add_log('edit', $param['id'], $param);
+					return to_assign();
+				} else {
+					return to_assign(1, '操作失败');
+				}
 			}
-            if ($param['end_time'] <= $param['start_time']) {
-                return to_assign(1, "结束时间需要大于开始时间");
-            }
-            $where1[] = ['status', '=', 1];
-            $where1[] = ['admin_id', '=', $admin_id];
-            $where1[] = ['start_time', 'between', [$param['start_time'], $param['end_time'] - 1]];
-
-            $where2[] = ['status', '=', 1];
-            $where2[] = ['admin_id', '=', $admin_id];
-            $where2[] = ['start_time', '<=', $param['start_time']];
-            $where2[] = ['start_time', '>=', $param['end_time']];
-
-            $where3[] = ['status', '=', 1];
-            $where3[] = ['admin_id', '=', $admin_id];
-            $where3[] = ['end_time', 'between', [$param['start_time'] + 1, $param['end_time']]];
-
-            $record = Db::name('Schedule')
-                ->where(function ($query) use ($where1) {
-                    $query->where($where1);
-                })
-                ->whereOr(function ($query) use ($where2) {
-                    $query->where($where2);
-                })
-                ->whereOr(function ($query) use ($where3) {
-                    $query->where($where3);
-                })
-                ->count();
-            if ($record > 0) {
-                return to_assign(1, "您所选的时间区间已有工作记录，请重新选时间");
-            }
-            $param['labor_time'] = ($param['end_time'] - $param['start_time']) / 3600;
-            $param['admin_id'] = $admin_id;
-            $param['did'] = get_admin($admin_id)['did'];
-            $param['create_time'] = time();
-            $sid = Db::name('Schedule')->strict(false)->field(true)->insertGetId($param);
-            if ($sid > 0) {
-                add_log('add', $sid, $param);
-                return to_assign(0, '操作成功');
-            } else {
-                return to_assign(0, '操作失败');
-            }
-        } else {
-            $param['update_time'] = time();
-            $res = Db::name('Schedule')->strict(false)->field(true)->update($param);
-            if ($res !== false) {
-                add_log('edit', $param['id'], $param);
-                return to_assign(0, '操作成功');
-            } else {
-                return to_assign(0, '操作失败');
-            }
-        }
+		}else{
+			return to_assign(1, "错误的请求");
+		}
     }
 
     //更改工时

@@ -290,7 +290,7 @@ CREATE TABLE `dev_work_cate`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作类型';
 
 -- ----------------------------
--- Records of dev_expense_cate
+-- Records of dev_work_cate
 -- ----------------------------
 INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
 INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
@@ -463,16 +463,12 @@ DROP TABLE IF EXISTS `dev_schedule`;
 CREATE TABLE `dev_schedule`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '工作记录主题',
-  `wid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联工作内容类型ID',
-  `pid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目ID',
-   `sid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联需求ID',
   `tid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联任务ID',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建员工ID',
   `did` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属部门',
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结束时间',
   `labor_time` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '工时',
-  `labor_type` int(1) NOT NULL DEFAULT 1 COMMENT '工作类型:1案头2外勤',
   `remark` text NOT NULL COMMENT '描述',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
@@ -689,6 +685,19 @@ CREATE TABLE `dev_task`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '任务表';
 
+-- ----------------------------
+-- Table structure for dev_file_interfix
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_file_interfix`;
+CREATE TABLE `dev_file_interfix`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
+  `topic_id` int(11) UNSIGNED NOT NULL COMMENT '关联主题id',
+  `file_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '相关联附件id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '附件关联表';
 
 -- ----------------------------
 -- Table structure for dev_comment

@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
+<style>
+.layui-unselect dl {max-height:188px;}
+</style>
 {/block}
 {block name="body"}
 <div class="table-content">
@@ -39,9 +42,9 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		saveHTMLToTextarea : true,//保存html到textarea
 		toolbarIcons : function() {
 			return [
-					"undo", "redo","bold", "del", "italic", "quote","h3",
-					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "table","watch"
-				];
+				"undo", "redo","bold", "del", "italic", "quote","h3",
+				"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "table","watch"
+			];
 		}, 
 		lang:{
 			dialog:{
@@ -126,6 +129,6 @@ function init(layui){
 	});
 }		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -114,7 +114,7 @@
 							<tbody>
 								{volist name="project_list" id="vo"}
 								<tr>
-								  <td align="center">P{$vo.id}</td>
+								  <td align="center">M{$vo.id}</td>
 								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
 								  <td>{$vo.name}</td>
 								  <td align="center">{$vo.director_name}</td>
@@ -191,7 +191,7 @@
 							<tbody>
 								{volist name="task_list" id="vo"}
 								<tr>
-								  <td align="center">P{$vo.id}</td>
+								  <td align="center">T{$vo.id}</td>
 								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.type_name}</td>
 								  <td>{$vo.title}</td>

@@ -15,7 +15,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">详细情况</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -50,7 +50,7 @@ function init(layui){
 			,{align: 'center', title: '关联任务', colspan: 3}
 			,{align: 'center', title: '关联BUG', colspan: 3}
 
-			,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
+			,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 		], [
 			{field:'tasks_a',align:'center', width:80,'title':'进行中'}
 			,{field:'tasks_b',align:'center', width:80,'title':'已完成'}

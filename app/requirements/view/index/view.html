@@ -110,34 +110,29 @@
 </div>
 
 <script>
-const admin_id='{$detail.admin_id}';
-const detail_id='{$detail.id}';
-const opsData={
-	flow_status:[
-		{'id':1,'title':'需求中'},
-		{'id':2,'title':'设计中'},
-		{'id':3,'title':'排期中'},
-		{'id':4,'title':'研发中'},
-		{'id':5,'title':'测试中'},
-		{'id':6,'title':'待发布'},
-		{'id':7,'title':'已发布'},
-		{'id':8,'title':'已完成'},
-		{'id':9,'title':'挂起'}
-	],
-	priority:[
-		{'id':1,'title':'低'},
-		{'id':2,'title':'中'},
-		{'id':3,'title':'高'},
-		{'id':4,'title':'紧急'}
-	]
-}
-
 function openInit() {
-	const layer = layui.layer,
-		edit = layui.gouguEdit,
-		comment = layui.gouguComment,
-		upload = layui.upload,
-		gougu = layui.gougu;
+	const admin_id='{$detail.admin_id}';
+	const detail_id='{$detail.id}';
+	const opsData={
+		flow_status:[
+			{'id':1,'title':'需求中'},
+			{'id':2,'title':'设计中'},
+			{'id':3,'title':'排期中'},
+			{'id':4,'title':'研发中'},
+			{'id':5,'title':'测试中'},
+			{'id':6,'title':'待发布'},
+			{'id':7,'title':'已发布'},
+			{'id':8,'title':'已完成'},
+			{'id':9,'title':'挂起'}
+		],
+		priority:[
+			{'id':1,'title':'低'},
+			{'id':2,'title':'中'},
+			{'id':3,'title':'高'},
+			{'id':4,'title':'紧急'}
+		]
+	}
+	const layer = layui.layer,edit = layui.gouguEdit,comment = layui.gouguComment,upload = layui.upload,gougu = layui.gougu;
 	
 	$('.hover-edit').hover(function(){
 		$(this).addClass('hover-on');
@@ -222,19 +217,19 @@ function openInit() {
 	comment.log(detail_id,'requirements');
 	
 	
-	
 	let loading=false;	
 	let editPost = function(id,name,show_val,real_val){
 		let callback = function (e) {
 			layer.closeAll();
-			layer.msg(e.msg);
 			if(e.code == 0){
 				gougu.load('/requirements/index/view/id/'+id);
 				setTimeout(function(){
 					layui.pageTable.reload();
-					$('#editTips').html('，最近更新于 5秒前');
-				},1000)
-			}			
+				},500)
+			}	
+			else{
+				layer.msg(e.msg);
+			}
 		}
 		let postData={id:id};
 		postData[name] = real_val;

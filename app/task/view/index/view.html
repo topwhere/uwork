@@ -132,41 +132,35 @@
 </div>
 
 <script>
-const admin_id='{$detail.admin_id}';
-const detail_id='{$detail.id}';
-const opsData={
-	flow_status:[
-		{'id':1,'title':'TODO'},
-		{'id':2,'title':'DOING'},
-		{'id':3,'title':'DONE'},
-		{'id':4,'title':'CLOSE'}
-	],
-	type:[
-		{'id':0,'title':'其他'},
-		{'id':1,'title':'UI设计'},
-		{'id':2,'title':'技术开发'},
-		{'id':3,'title':'产品原型'},
-		{'id':4,'title':'测试'},
-		{'id':5,'title':'编写文档'},
-		{'id':6,'title':'沟通'},
-		{'id':7,'title':'会议'},
-		{'id':8,'title':'调研'}
-	],
-	priority:[
-		{'id':1,'title':'低'},
-		{'id':2,'title':'中'},
-		{'id':3,'title':'高'},
-		{'id':4,'title':'紧急'}
-	]
-}
-
 function openInit() {
-	const layer = layui.layer,
-		edit = layui.gouguEdit,
-		comment = layui.gouguComment,
-		schedule = layui.gouguSchedule,
-		upload = layui.upload,
-		gougu = layui.gougu;
+	const admin_id='{$detail.admin_id}';
+	const detail_id='{$detail.id}';
+	const opsData={
+		flow_status:[
+			{'id':1,'title':'TODO'},
+			{'id':2,'title':'DOING'},
+			{'id':3,'title':'DONE'},
+			{'id':4,'title':'CLOSE'}
+		],
+		type:[
+			{'id':0,'title':'其他'},
+			{'id':1,'title':'UI设计'},
+			{'id':2,'title':'技术开发'},
+			{'id':3,'title':'产品原型'},
+			{'id':4,'title':'测试'},
+			{'id':5,'title':'编写文档'},
+			{'id':6,'title':'沟通'},
+			{'id':7,'title':'会议'},
+			{'id':8,'title':'调研'}
+		],
+		priority:[
+			{'id':1,'title':'低'},
+			{'id':2,'title':'中'},
+			{'id':3,'title':'高'},
+			{'id':4,'title':'紧急'}
+		]
+	}
+	const layer = layui.layer,edit = layui.gouguEdit,comment = layui.gouguComment,schedule = layui.gouguSchedule,upload = layui.upload,gougu = layui.gougu;
 	
 	$('.hover-edit').hover(function(){
 		$(this).addClass('hover-on');
@@ -261,13 +255,14 @@ function openInit() {
 	let editPost = function(id,name,show_val,real_val){
 		let callback = function (e) {
 			layer.closeAll();
-			layer.msg(e.msg);
 			if(e.code == 0){
 				gougu.load('/task/index/view/id/'+id);
 				setTimeout(function(){
-					tableIns.reload();
-					$('#editTips').html('，最近更新于 5秒前');
-				},1000)	
+					layui.pageTable.reload();
+				},500)	
+			}
+			else{
+				layer.msg(e.msg);
 			}			
 		}
 		let postData={id:id};
@@ -286,7 +281,7 @@ function openInit() {
 			edit.text(id,name,real_txt,editPost);
 		}
 		if(name=="end_time"){
-			if(admin_id == params.uid){
+			if(admin_id == GOUGU_DEV.uid){
 				edit.date(id,name,real_txt,editPost);
 			}else{
 				layer.msg('您没权限修改，请联系创建人修改');
@@ -302,7 +297,7 @@ function openInit() {
 			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
 		}
 		if(name=="product_id"){	
-			if(admin_id == params.uid){
+			if(admin_id == GOUGU_DEV.uid){
 				loading=true;
 				gougu.get("/api/index/get_product",{},function(res){
 					let data = res.data;
@@ -314,7 +309,7 @@ function openInit() {
 			}			
 		}
 		if(name=="project_id"){
-			if(admin_id == params.uid){
+			if(admin_id == GOUGU_DEV.uid){
 				let product_id = $('#product_id_'+id).data('val');
 				if(product_id == 0){
 					layer.msg('请先关联产品');
@@ -331,7 +326,7 @@ function openInit() {
 			}
 		}
 		if(name=="requirements_id"){
-			if(admin_id == params.uid){
+			if(admin_id == GOUGU_DEV.uid){
 				let project_id = $('#project_id_'+id).data('val');
 				if(project_id == 0){
 					layer.msg('请先关联项目');

@@ -686,6 +686,24 @@ CREATE TABLE `dev_task`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '任务表';
 
 -- ----------------------------
+-- Table structure for dev_document
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_document`;
+CREATE TABLE `dev_document`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
+  `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `content` text NULL COMMENT '文档内容',
+  `md_content` text NULL COMMENT 'markdown文档内容',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '文档表';
+
+-- ----------------------------
 -- Table structure for dev_file_interfix
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_file_interfix`;

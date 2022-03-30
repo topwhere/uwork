@@ -1,35 +1,37 @@
 <form class="layui-form page-content p-4">
 	<h3 class="h3-title">新建需求</h3>
 	<table class="layui-table layui-table-form">
+		{empty name="$project_id"}
 		<tr>
 			<td class="layui-td-gray">需求主题<font>*</font></td>
-			<td>
+			<td colspan="3">
 				<input type="text" name="title" lay-verify="required" lay-reqText="请输入需求主题" placeholder="请输入需求主题" class="layui-input" value="">
-			</td>
-			<td class="layui-td-gray">关联产品</td>
-			<td>
-				<select name="product_id" lay-filter="product">
-					<option value="">请选择关联产品</option>
-				{volist name=":get_product()" id="v"}
-					<option value="{$v.id}">{$v.name}</option>
-				{/volist}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">负责人<font>*</font></td>
-			<td>
-				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择需求负责人" value="">
-				<input type="text" name="director_name" placeholder="请选择项目负责人" readonly class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">关联项目</td>
 			<td>
 				<select id="projectId" name="project_id">
-					<option value="">请先选择关联的产品</option>
+					<option value="">请选择</option>
+					{volist name=":get_project()" id="v"}
+					<option value="{$v.id}">{$v.name}</option>
+					{/volist}
 				</select>
 			</td>
 		</tr>
+		{else/}
 		<tr>
+			<td class="layui-td-gray">需求主题<font>*</font></td>
+			<td colspan="5">
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入需求主题" placeholder="请输入需求主题" class="layui-input" value="">
+				<input type="hidden" name="project_id" value="{$project_id}">
+			</td>
+		</tr>
+		{/empty}
+		<tr>
+			<td class="layui-td-gray">负责人<font>*</font></td>
+			<td>
+				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择需求负责人" value="">
+				<input type="text" name="director_name" placeholder="请选择需求负责人" readonly class="layui-input" value="">
+			</td>
 			<td class="layui-td-gray">起止日期<span style="color: red">*</span></td>
 			<td id="date">
 				<div class="layui-input-inline">
@@ -40,12 +42,15 @@
 					<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择时间" class="layui-input" value="">
 				</div>
 			</td>
+
 			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>
 			<td>
-				<input type="radio" name="priority" value="1" title="低" checked>
-				<input type="radio" name="priority" value="2" title="中">				
-				<input type="radio" name="priority" value="3" title="高">				
-				<input type="radio" name="priority" value="4" title="紧急">				
+				<select id="projectId" name="priority">
+					<option value="1" selected>低</option>
+					<option value="2">中</option>
+					<option value="3">高</option>
+					<option value="4">紧急</option>
+				</select>		
 			</td>			
 		</tr>
 	</table>
@@ -64,16 +69,16 @@
 </form>
 
 <script>
-	function pageInit() {
-		const form = layui.form,
-			layer = layui.layer,
-			gougu = layui.gougu,
-			laydate = layui.laydate,
-			dropdown = layui.dropdown,
-			employeepicker = layui.employeepicker;
+function openInit() {
+	const form = layui.form,
+		layer = layui.layer,
+		gougu = layui.gougu,
+		laydate = layui.laydate,
+		dropdown = layui.dropdown,
+		employeepicker = layui.employeepicker;
 			
 	form.render();
-	buildEditor('docContent',480,$('#mdContent').val());
+	gougu.editor('docContent',480,$('#mdContent').val());
 	
 	//日期范围
 	laydate.render({
@@ -145,7 +150,7 @@
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				tableIns.reload();
+				layui.pageTable.reload();
 				setTimeout(function(){
 					gougu.close();
 				},500);

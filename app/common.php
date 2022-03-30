@@ -241,6 +241,12 @@ function get_product()
     return $product;
 }
 
+//读取项目
+function get_project()
+{
+    $project = Db::name('Project')->where(['status' => 1])->select()->toArray();
+    return $project;
+}
 
 /**
  * 根据附件表的id返回url地址

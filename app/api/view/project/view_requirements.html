@@ -1,39 +1,30 @@
-{extend name="../../base/view/common/base" /}
-<!-- 主体 -->
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
-{/block}
-{block name="body"}
-<div class="table-content p-3">
+<div class="table-content">
 	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建需求</button>
 	</div>
-	<table class="layui-hide" id="test" lay-filter="test"></table>
+	<table class="layui-hide" id="requirements" lay-filter="test"></table>
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">详细情况</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>
 </script>
-{/block}
-<!-- /主体 -->
 
-<!-- 脚本 -->
-{block name="script"}
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
-function init(layui){
-	var table = layui.table,form = layui.form,gougu = layui.gougu;
-	
+function pageInit() {
+var project_id = {$id};
+var table = layui.table,form = layui.form,gougu = layui.gougu;	
 	layui.pageTable = table.render({
-		elem: '#test',
+		elem: '#requirements',
 		title: '需求列表',
 		cellMinWidth:200,
-		url: "/requirements/index/index", //数据接口
+		url: "/requirements/index/index",
+		where:{
+			'project_id':project_id
+		},
 		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
+			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){		
+				return 'R'+d.id;
+			}}
 			,{field:'priority_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
 				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
 				return html;
@@ -48,7 +39,7 @@ function init(layui){
 			,{align: 'center', title: '关联任务', colspan: 3}
 			,{align: 'center', title: '关联BUG', colspan: 3}
 
-			,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
+			,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 		], [
 			{field:'tasks_a',align:'center', width:80,'title':'进行中'}
 			,{field:'tasks_b',align:'center', width:80,'title':'已完成'}
@@ -60,7 +51,7 @@ function init(layui){
 	});
 	
 	$('.add-new').on('click',function(){
-		gougu.open('/requirements/index/add');
+		gougu.open('/requirements/index/add?project_id='+project_id);
 	});
 	
 	//监听行工具事件
@@ -71,8 +62,5 @@ function init(layui){
 			return;
 		}
 	});
-}		
+}
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
-{/block}
-<!-- /脚本 -->

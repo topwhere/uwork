@@ -1,5 +1,6 @@
 layui.define(['employeepicker'], function(exports){
     const layer = layui.layer;
+    const gougu = layui.gougu;
     const table = layui.table;
     const laydate = layui.laydate;
     const dropdown = layui.dropdown;
@@ -124,6 +125,10 @@ layui.define(['employeepicker'], function(exports){
 		},
 		//编辑器
 		editor:function(id,name,real_txt,editPost){
+			if(typeof editormd=="undefined"){
+				alert('请引入editor.md.js');
+				return false;
+			}
 			let that=this;
 			layer.open({
 				closeBtn: 2,
@@ -132,12 +137,12 @@ layui.define(['employeepicker'], function(exports){
 				area: ['960px', '560px'],
 				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
 				success: function() {
-					buildEditor('editorBox',468,real_txt);
+					gougu.editor('editorBox',468,real_txt);
 				},
 				btnAlign: 'c',
 				btn:['确定'],
 				yes: function() {
-					editPost(id,name,markdownEditor.getHTML(),markdownEditor.getMarkdown());
+					editPost(id,name,layui.Editor.getHTML(),layui.Editor.getMarkdown());
 				}
 			})			
 		}

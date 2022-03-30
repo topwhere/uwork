@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
 {/block}
 {block name="body"}
-<div class="table-content">
+<div class="table-content p-3">
 	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 添加产品</button>
 	</div>
@@ -23,53 +23,13 @@
 {block name="script"}
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
-var markdownEditor;
-function buildEditor(editormdId,editormdHeight,editormdMarkdown){
-	markdownEditor = editormd(editormdId, {
-		placeholder : "此处开始编写您要发布的内容...",//这里不设置则为默认的
-		path : '/static/mdeditor/lib/',
-		height           : editormdHeight,
-		markdown         : editormdMarkdown,
-		htmlDecode       : "style,script,iframe",
-		watch            : false, 
-		imageUpload: true,
-		imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-		imageUploadURL: "/api/index/md_upload",		
-		saveHTMLToTextarea : true,//保存html到textarea
-		toolbarIcons : function() {
-			return [
-					"undo", "redo","bold", "del", "italic", "quote","h3",
-					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "table","watch"
-				];
-		}, 
-		lang:{
-			dialog:{
-				preformattedText:{placeholder : "此处编写代码..."},
-				codeBlock:{placeholder : "此处编写代码...."}
-			}
-		},
-		onfullscreen : function() {
-			this.editor.css("z-index", 120);
-		},
-		onfullscreenExit : function() {
-			this.editor.css({
-				zIndex : 10,
-				border : "none",
-			});			
-			this.resize();
-		}
-	})
-}
-
-
-	var tableIns = null;
 	function init(layui){
 		var table = layui.table
 		  ,form = layui.form
 		  ,gougu = layui.gougu;
 		
 		
-		tableIns = table.render({
+		layui.pageTable = table.render({
 			elem: '#test',
 			title: '产品列表',
 			cellMinWidth:200,

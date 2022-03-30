@@ -92,7 +92,7 @@
 </form>
 
 <script>
-	function pageInit() {
+function openInit() {
 		const form = layui.form,
 			layer = layui.layer,
 			gougu = layui.gougu,
@@ -101,7 +101,7 @@
 			employeepicker = layui.employeepicker;
 			
 	form.render();
-	buildEditor('docContent',480,$('#mdContent').val());
+	gougu.editor('docContent',480,$('#mdContent').val());
 	
 	//日期范围
 	laydate.render({
@@ -110,7 +110,6 @@
 	
 	//关联项目
 	form.on('select(product)', function(data){
-		console.log(data.value);
 		if(data.value==''){
 			$('#projectId').html('<option value="">请先选择关联的产品</option>');
 			$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
@@ -195,7 +194,7 @@
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				tableIns.reload();
+				layui.pageTable.reload();
 				setTimeout(function(){
 					gougu.close();
 				},500);

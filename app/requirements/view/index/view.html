@@ -102,7 +102,7 @@
 				<div class="log-item py-3 border-b">
 					<i class="iconfont icon-zidingyishezhi"></i>
 					<span class="log-name">{$detail.admin_name}</span>
-					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>需求</b></span><span class="font-gray" title="2022/3/4上午9:31:27">6 天前</span></span>
+					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>需求</b></span><span class="font-gray">{:time_trans($detail.create_time)}</span></span>
 				</div>
 			</div>
 		</div>
@@ -132,7 +132,7 @@ const opsData={
 	]
 }
 
-function pageInit() {
+function openInit() {
 	const layer = layui.layer,
 		edit = layui.gouguEdit,
 		comment = layui.gouguComment,
@@ -231,7 +231,7 @@ function pageInit() {
 			if(e.code == 0){
 				gougu.load('/requirements/index/view/id/'+id);
 				setTimeout(function(){
-					tableIns.reload();
+					layui.pageTable.reload();
 					$('#editTips').html('，最近更新于 5秒前');
 				},1000)
 			}			

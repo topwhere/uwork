@@ -1,16 +1,4 @@
-{extend name="../../base/view/common/base" /}
-<!-- 主体 -->
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
-<style>
-.layui-unselect dl {max-height:188px;}
-</style>
-{/block}
-{block name="body"}
-<div class="table-content p-3">
+<div class="table-content">
 	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建任务</button>
 	</div>
@@ -20,24 +8,19 @@
 <script type="text/html" id="barDemo">
 <div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
 </script>
-{/block}
-<!-- /主体 -->
 
-<!-- 脚本 -->
-{block name="script"}
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
-function init(layui){
-	var table = layui.table
-	  ,form = layui.form
-	  ,gougu = layui.gougu;
-	
-	
+function pageInit(){
+	var project_id = {$id};
+	var table = layui.table,form = layui.form,gougu = layui.gougu;	
 	layui.pageTable = table.render({
 		elem: '#test',
 		title: '任务列表',
 		cellMinWidth:200,
-		url: "/task/index/index", //数据接口
+		url: "/task/index/index",
+		where:{
+			'project_id':project_id
+		},
 		cols:  [[
 			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
 			,{field:'priority_name',title: '优先级',align:'center',width: 72,templet:function(d){
@@ -61,7 +44,7 @@ function init(layui){
 	
 	//新增
 	$('.add-new').on('click',function(){
-		gougu.open('/task/index/add');
+		gougu.open('/task/index/add?project_id='+project_id);
 	});
 	
 	//监听行工具事件
@@ -89,6 +72,3 @@ function init(layui){
 	});
 }		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
-{/block}
-<!-- /脚本 -->

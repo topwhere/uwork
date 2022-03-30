@@ -113,6 +113,10 @@ layui.define(['gougu'], function(exports){
 		},
 		//编辑器
 		editor:function(id,topic_id,pid,padmin_id,module,txt){
+			if(typeof editormd=="undefined"){
+				alert('请引入editor.md.js');
+				return false;
+			}
 			let that=this;
 			layer.open({
 				closeBtn: 2,
@@ -121,12 +125,12 @@ layui.define(['gougu'], function(exports){
 				area: ['720px', '360px'],
 				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
 				success: function() {
-					buildEditor('editorBox',268,txt);
+					gougu.editor('editorBox',268,txt);
 				},
 				btnAlign: 'c',
 				btn:['确定'],
 				yes: function() {
-					that.add(id,topic_id,pid,padmin_id,module,markdownEditor.getHTML(),markdownEditor.getMarkdown());
+					that.add(id,topic_id,pid,padmin_id,module,layui.Editor.getHTML(),layui.Editor.getMarkdown());
 				}
 			})			
 		}

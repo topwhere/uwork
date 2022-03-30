@@ -251,7 +251,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
  
 /*内容区域*/
 .main-content{position: relative; padding:0; height:100%; box-sizing: border-box;}
-.table-content{background-color:#F5F8FA; padding:12px;height:100%; box-sizing: border-box;}
+.table-content{background-color:#F5F8FA;height:100%; box-sizing: border-box;}
 .card-content{padding:10px; background-color:#F5F8FA}
 
 .sub-menu{position:relative;}
@@ -265,16 +265,17 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .sub-menu-content{overflow-x: hidden; position: relative;z-index: 2;}
 .sub-menu-content ul{padding:0 16px; line-height:2.2}
 .sub-menu-content li.sub-menu-title{margin-top:10px;}
-.sub-menu-content li.sub-menu-title i{font-size:19px;}
-.sub-menu-content li.sub-menu-title span{padding-left:12px; font-size:15px;}
-.sub-menu-content li.sub-menu-li a{padding-left:32px; font-size:14px;}
+.sub-menu-content li.sub-menu-title i{font-size:18px; font-weight:800}
+.sub-menu-content li.sub-menu-title span{padding-left:8px; font-size:15px;}
+.sub-menu-content li.sub-menu-li a{padding-left:26px; font-size:14px;}
+.sub-menu-content li.sub-menu-title.active a{color:#4285F4;}
 .sub-menu-content li.sub-menu-li.active a{color:#4285F4;}
 .menu-bar{right: 0;height: 100%; position: absolute;}
 .menu-bar .menu-bar-content { height: calc(100% - 50px);overflow: hidden;position: fixed;top: 50px; z-index: 3;margin-left: -10px;width: 20px;}
 .menu-bar .menu-bar-content .line { left: 50%; border-right: 1px solid #e5ecf0; bottom: 0; height: 100%; position: absolute; top: 0;transition: border-color .2s ease 0s; width: 0;}
 
-.main-page-content{background-color:#fff; position:relative; height:100%; margin-left:200px; box-sizing: border-box;}
-.main-page-content .layui-form.layui-border-box.layui-table-view{border-top:none;}
+.main-page-content{background-color:#fff; position:relative; min-height:100%; margin-left:200px; box-sizing: border-box;}
+.main-page-content .layui-form.layui-border-box.layui-table-viewaa{border-top:none;}
 .main-bg-content{background-color:#fafafa; position:relative; height:100%; margin-left:200px; padding:16px; box-sizing: border-box;}
 
 .main-content .layui-form-bar{padding:12px;}

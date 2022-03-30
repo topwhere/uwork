@@ -23,6 +23,9 @@ class Index extends BaseController
         if (request()->isAjax()) {
             $param = get_params();
             $where = array();
+			if(!empty($param['project_id'])){
+				$where[] = ['project_id', '=', $param['project_id']];
+			}
             $where[] = ['status', '>=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = RequirementsList::where($where)
@@ -96,6 +99,10 @@ class Index extends BaseController
 			if(isset($param['end_time'])){
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
 			}
+			if(isset($param['project_id'])){
+				$param['product_id'] = Db::name('Project')->where('id',$param['project_id'])->value('product_id');
+			}
+			
             if (!empty($param['id']) && $param['id'] > 0) {
 				$requirements = (new RequirementsList())->detail($param['id']);
 				if(isset($param['start_time'])){
@@ -151,6 +158,9 @@ class Index extends BaseController
 				}
                 View::assign('detail', $detail);
             }
+			if(isset($param['project_id'])){
+				View::assign('project_id', $param['project_id']);
+			}			
             View::assign('id', $id);
             return view();
         }

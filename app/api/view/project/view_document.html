@@ -1,0 +1,64 @@
+<div class="table-content">
+	<div class="layui-form-bar border-t border-x">
+		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建文档</button>
+	</div>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-xs" lay-event="del">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+</script>
+
+<script>
+function pageInit(){
+	var table = layui.table,form = layui.form,gougu = layui.gougu;	
+	
+	tableIns = table.render({
+		elem: '#test',
+		title: '文档列表',
+		cellMinWidth:200,
+		url: "/api/document/get_list", //数据接口
+		where:{
+			'm':'project',
+			'tid':2
+		},
+		cols:  [[
+			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
+			,{field:'title',title: '标题'}
+			,{field:'name',title: '创建人', align:'center',width: 100}
+			,{field:'create_time',title: '创建时间',align:'center',width: 150}	
+			,{field:'update_time',title: '最后更新时间', align:'center',width: 150}
+			,{fixed: 'right',title: '操作',align: 'center',width: 120,toolbar: '#barDemo',}
+		]]
+	});
+	
+	//新增
+	$('.add-new').on('click',function(){
+		gougu.open('/api/document/add');
+	});
+	
+	//监听行工具事件
+	table.on('tool(test)', function(obj) {
+		var data = obj.data;
+		if (obj.event === 'view') {
+			gougu.open('/api/document/view?id='+data.id);
+			return;
+		}
+		if (obj.event === 'del') {
+			layer.confirm('确定删除该文档吗？', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						obj.del();
+					}
+				}
+				gougu.post("/api/document/delete",{ id: obj.data.id },callback);
+				layer.close(index);
+			});
+		}
+	});
+}		
+</script>

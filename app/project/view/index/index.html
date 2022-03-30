@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
 {/block}
 {block name="body"}
-<div class="table-content">
+<div class="table-content p-3">
 	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建项目</button>
 	</div>
@@ -14,7 +14,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">项目情况</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
+<div class="layui-btn-group"><a class="layui-btn layui-btn-xs" href="/project/index/view?id={{d.id}}">项目情况</a><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
 </script>
 {/block}
 <!-- /主体 -->

@@ -14,7 +14,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><a class="layui-btn layui-btn-xs" href="/project/index/view?id={{d.id}}">项目情况</a><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
+<div class="layui-btn-group"><a class="layui-btn layui-btn-xs" href="/project/index/view?id={{d.id}}">项目情况</a><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">操作</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -23,59 +23,17 @@
 {block name="script"}
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
-var markdownEditor;
-function buildEditor(editormdId,editormdHeight,editormdMarkdown){
-	markdownEditor = editormd(editormdId, {
-		placeholder : "此处开始编写您要发布的内容...",//这里不设置则为默认的
-		path : '/static/mdeditor/lib/',
-		height           : editormdHeight,
-		markdown         : editormdMarkdown,
-		htmlDecode       : "style,script,iframe",
-		watch            : false, 
-		imageUpload: true,
-		imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-		imageUploadURL: "/api/index/md_upload",		
-		saveHTMLToTextarea : true,//保存html到textarea
-		toolbarIcons : function() {
-			return [
-					"undo", "redo","bold", "del", "italic", "quote","h3",
-					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "table","watch"
-				];
-		}, 
-		lang:{
-			dialog:{
-				preformattedText:{placeholder : "此处编写代码..."},
-				codeBlock:{placeholder : "此处编写代码...."}
-			}
-		},
-		onfullscreen : function() {
-			this.editor.css("z-index", 120);
-		},
-		onfullscreenExit : function() {
-			this.editor.css({
-				zIndex : 10,
-				border : "none",
-			});			
-			this.resize();
-		}
-	})
-}
-
-
-	var tableIns = null;
 	function init(layui){
-		var table = layui.table
-		  ,form = layui.form
-		  ,gougu = layui.gougu;
-		
-		
-		tableIns = table.render({
+		var table = layui.table,form = layui.form,gougu = layui.gougu;
+		layui.pageTable = table.render({
 			elem: '#test',
 			title: '项目列表',
 			cellMinWidth:200,
 			url: "/project/index/index", //数据接口
 			cols:  [[
-				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
+				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
+					return 'M'+d.id;
+				}}
 				,{field:'status',title: '项目状态',align:'center',width: 90,rowspan: 2,templet:function(d){
 					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
@@ -108,8 +66,8 @@ function buildEditor(editormdId,editormdHeight,editormdMarkdown){
 		//监听行工具事件
 		table.on('tool(test)', function(obj) {
 			var data = obj.data;
-			if (obj.event === 'view') {
-				gougu.open('/project/index/view?id='+data.id);
+			if (obj.event === 'edit') {
+				gougu.open('/project/index/edit?id='+data.id);
 				return;
 			}
 		});

@@ -30,7 +30,7 @@ class Index extends BaseController
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = RequirementsList::where($where)
                 ->withoutField('content,md_content')
-                ->order('create_time asc')
+                ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');

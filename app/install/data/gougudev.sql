@@ -188,25 +188,25 @@ INSERT INTO `dev_admin_rule` VALUES (53, 51, 'admin/note/delete', '删除', '公
 INSERT INTO `dev_admin_rule` VALUES (54, 51, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (55, 2, 'product/index/list', '列表', '产品', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (56, 55, 'product/index/add', '新建/编辑', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (56, 55, 'product/index/add', '新建', '产品', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (57, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (58, 55, 'product/user/set', '设置', '产品状态', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (59, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (60, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (61, 60, 'project/index/add', '新建/编辑', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (62, 60, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (63, 60, 'project/user/set', '设置', '项目状态', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (61, 60, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (62, 60, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (63, 60, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (64, 60, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (65, 4, 'requirements/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (66, 65, 'requirements/index/add', '新建/编辑', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (66, 65, 'requirements/index/add', '新建', '需求', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (67, 65, 'requirements/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (68, 65, 'requirements/user/set', '设置', '需求', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (69, 65, 'requirements/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (70, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (71, 70, 'task/index/add', '新建/编辑', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (71, 70, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (72, 70, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (73, 70, 'task/user/set', '设置', '任务', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (74, 70, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
@@ -723,7 +723,7 @@ CREATE TABLE `dev_file_interfix`  (
 DROP TABLE IF EXISTS `dev_comment`;
 CREATE TABLE `dev_comment`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `module` tinyint(1) NOT NULL DEFAULT 0 COMMENT '所属模块，1产品,2项目,3需求,4任务',
+  `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
   `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
   `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容id',
   `padmin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容用户id',

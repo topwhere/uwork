@@ -28,10 +28,7 @@
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 function init(layui){
-	var table = layui.table
-	  ,form = layui.form
-	  ,gougu = layui.gougu;
-	
+	var table = layui.table,form = layui.form,gougu = layui.gougu;
 	
 	layui.pageTable = table.render({
 		elem: '#test',
@@ -39,7 +36,9 @@ function init(layui){
 		cellMinWidth:200,
 		url: "/task/index/index", //数据接口
 		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
+			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',templet:function(d){
+				return 'T'+d.id;
+			}}
 			,{field:'priority_name',title: '优先级',align:'center',width: 72,templet:function(d){
 				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
 				return html;

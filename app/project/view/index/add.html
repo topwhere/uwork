@@ -2,22 +2,18 @@
 	<h3 class="h3-title">新建项目</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray2">项目名称<font>*</font></td>
+			<td class="layui-td-gray">项目名称<font>*</font></td>
 			<td>
 				<input type="text" name="name" lay-verify="required" lay-reqText="请输入项目名称" placeholder="请输入项目名称" class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray2">项目代号</td>
-			<td>
-				<input type="text" name="code" placeholder="请输入项目代号" class="layui-input" value="">
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray2">项目负责人<font>*</font></td>
+			<td class="layui-td-gray">项目负责人<font>*</font></td>
 			<td>
 				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择项目负责人" value="">
 				<input type="text" name="director_name" placeholder="请选择项目负责人" readonly class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray2">关联产品<font>*</font></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">关联产品<font>*</font></td>
 			<td>
 				<select name="product_id" lay-verify="required" lay-reqText="请选择关联产品">
 					<option value="">请选择关联产品</option>
@@ -26,16 +22,14 @@
 				{/volist}
 				</select>
 			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray2">起止日期<span style="color: red">*</span></td>
+			<td class="layui-td-gray2">计划完成周期<span style="color: red">*</span></td>
 			<td id="date" colspan="3">
 				<div class="layui-input-inline">
-					<input type="text" id="start_time" name="start_time" readonly lay-verify="required" lay-reqText="请选择开始时间" placeholder="请选择时间" class="layui-input" value="">
+					<input type="text" id="start_time" name="start_time" readonly lay-verify="required" lay-reqText="请选择开始时间" placeholder="请选择" class="layui-input" value="">
 				</div>
 				-
 				<div class="layui-input-inline">
-					<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择时间" class="layui-input" value="">
+					<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择" class="layui-input" value="">
 				</div>
 			</td>
 		</tr>
@@ -77,7 +71,7 @@
 		range: ['#start_time', '#end_time']
 	});
 	
-	buildEditor('docContent',480,$('#mdContent').val());
+	gougu.editor('docContent',480,$('#mdContent').val());
 	//选择产品负责人弹窗	
 	$('.page-content').on('click','[name="director_name"]',function () {
 		var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
@@ -120,7 +114,7 @@
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				tableIns.reload();
+				layui.pageTable.reload();
 				setTimeout(function(){
 					gougu.close();
 				},500);

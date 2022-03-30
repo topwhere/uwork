@@ -95,7 +95,7 @@
 					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
 				</tr>
 				</table>
-				<div id="comment_3_{$detail.id}"></div>
+				<div id="comment_requirements_{$detail.id}"></div>
 			</div>
 			<div class="layui-tab-item logs-list">
 				<div id="log_requirements_{$detail.id}"></div>
@@ -195,27 +195,27 @@ function openInit() {
 	})
 	
 	//评论
-	comment.load(detail_id,3);
+	comment.load(detail_id,'requirements');
 	$('#commentInput').on('click',function(){
-		comment.editor(0,detail_id,0,0,3,'');
+		comment.editor(0,detail_id,0,0,'requirements','');
 	})
 	//回复
-	$('#comment_3_'+detail_id).on('click','[data-event="replay"]',function(){
+	$('#comment_requirements_'+detail_id).on('click','[data-event="replay"]',function(){
 		let pid = $(this).data('id');
 		let padmin_id = $(this).data('uid');
-		comment.editor(0,detail_id,pid,padmin_id,3,'');
+		comment.editor(0,detail_id,pid,padmin_id,'requirements','');
 	})
 	//编辑
-	$('#comment_3_'+detail_id).on('click','[data-event="edit"]',function(){
+	$('#comment_requirements_'+detail_id).on('click','[data-event="edit"]',function(){
 		let id = $(this).data('id');
 		let mdcontent=$('#comment_'+id).data('mdcontent');
-		comment.editor(id,detail_id,0,0,3,mdcontent);
+		comment.editor(id,detail_id,0,0,'requirements',mdcontent);
 	})
 	
 	//删除
-	$('#comment_3_'+detail_id).on('click','[data-event="del"]',function(){
+	$('#comment_requirements_'+detail_id).on('click','[data-event="del"]',function(){
 		let id = $(this).data('id');
-		comment.del(id,detail_id,3);
+		comment.del(id,detail_id,'requirements');
 	})
 	
 	//操作记录

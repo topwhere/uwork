@@ -15,7 +15,7 @@
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray2">项目负责人</td>
+					<td class="layui-td-gray">项目负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
 					<td class="layui-td-gray">项目成员</td>
 					<td colspan="3" class="hover-edit"><span id="team_admin_ids_{$detail.id}" data-val="{$detail.team_admin_ids}">{$detail.team_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="team_admin_ids"></i></td>
@@ -85,11 +85,11 @@
 			<div class="layui-tab-item comment-list layui-show">
 				<table width="100%" class="comment-input my-2">
 				<tr>
-					<td style="width:50px;"><img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100"></td>
+					<td style="width:40px;padding:5px;"><img class="comment-image" src="{$params.thumb}"></td>
 					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
 				</tr>
 				</table>
-				<div id="comment_2_{$detail.id}"></div>
+				<div id="comment_project_{$detail.id}"></div>
 			</div>
 			<div class="layui-tab-item logs-list">
 				<div id="log_project_{$detail.id}"></div>
@@ -104,22 +104,17 @@
 </div>
 
 <script>
-const admin_id='{$detail.admin_id}';
-const detail_id='{$detail.id}';
-const opsData={
-	status:[
-		{'id':0,'title':'关闭'},
-		{'id':1,'title':'开启'},
-		{'id':2,'title':'暂停'}
-	]
-}
-
 function openInit() {
-	const layer = layui.layer,
-		edit = layui.gouguEdit,
-		comment = layui.gouguComment,
-		upload = layui.upload,
-		gougu = layui.gougu;
+	const admin_id='{$detail.admin_id}';
+	const detail_id='{$detail.id}';
+	const opsData={
+		status:[
+			{'id':0,'title':'关闭'},
+			{'id':1,'title':'开启'},
+			{'id':2,'title':'暂停'}
+		]
+	}
+	const layer = layui.layer,edit = layui.gouguEdit,comment = layui.gouguComment,upload = layui.upload,gougu = layui.gougu;
 	
 	$('.hover-edit').hover(function(){
 		$(this).addClass('hover-on');
@@ -177,27 +172,27 @@ function openInit() {
 	})
 	
 	//评论
-	comment.load(detail_id,2);
+	comment.load(detail_id,'project');
 	$('#commentInput').on('click',function(){
-		comment.editor(0,detail_id,0,0,2,'');
+		comment.editor(0,detail_id,0,0,'project','');
 	})
 	//回复
-	$('#comment_2_'+detail_id).on('click','[data-event="replay"]',function(){
+	$('#comment_project_'+detail_id).on('click','[data-event="replay"]',function(){
 		let pid = $(this).data('id');
 		let padmin_id = $(this).data('uid');
-		comment.editor(0,detail_id,pid,padmin_id,2,'');
+		comment.editor(0,detail_id,pid,padmin_id,'project','');
 	})
 	//编辑
-	$('#comment_2_'+detail_id).on('click','[data-event="edit"]',function(){
+	$('#comment_project_'+detail_id).on('click','[data-event="edit"]',function(){
 		let id = $(this).data('id');
 		let mdcontent=$('#comment_'+id).data('mdcontent');
-		comment.editor(id,detail_id,0,0,2,mdcontent);
+		comment.editor(id,detail_id,0,0,'project',mdcontent);
 	})
 	
 	//删除
-	$('#comment_2_'+detail_id).on('click','[data-event="del"]',function(){
+	$('#comment_project_'+detail_id).on('click','[data-event="del"]',function(){
 		let id = $(this).data('id');
-		comment.del(id,detail_id,2);
+		comment.del(id,detail_id,'project');
 	})
 	
 	//操作记录

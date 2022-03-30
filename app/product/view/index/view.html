@@ -7,23 +7,23 @@
 	<div>
 		<span class="layui-badge layui-bg-gray">#P{$detail.id}</span>
 		<span class="mx-2">{$detail.admin_name}</span>
-		<span class="font-gray">创建于{$detail.times}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+		<span class="font-gray">创建于{$detail.times}<span id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
 	</div>
 	</div>
 	<div class="layui-row border-b">
 		<div class="layui-col-md9 p-4 border-r">
 			<table class="layui-table layui-table-form">
 				<tr>
-					<td class="layui-td-gray2">产品负责人</td>
+					<td class="layui-td-gray">产品负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
-					<td class="layui-td-gray2">测试负责人</td>
+					<td class="layui-td-gray">测试负责人</td>
 					<td class="hover-edit"><span id="test_uid_{$detail.id}" data-val="{$detail.test_uid}">{$detail.test_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="test_uid"></i></td>
 					<td class="layui-td-gray">产品状态</td>
 					<td  class="hover-edit"><span class="color-status-{$detail.status}" id="status_{$detail.id}" data-val="{$detail.status}">{$detail.status_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="status"></i>
 					</td>	
 				</tr>
 				<tr>
-					<td class="layui-td-gray2">访问控制</td>
+					<td class="layui-td-gray">访问控制</td>
 					<td class="hover-edit">
 						<span id="is_open_{$detail.id}" data-val="{$detail.is_open}">
 						{eq name="$detail.is_open" value="1" }
@@ -33,11 +33,11 @@
 						</span>
 						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="is_open"></i>						
 					</td>
-					<td class="layui-td-gray2">参与评审人</td>
+					<td class="layui-td-gray">参与评审人</td>
 					<td colspan="3" class="hover-edit"><span id="check_admin_ids_{$detail.id}" data-val="{$detail.check_admin_ids}">{$detail.check_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="check_admin_ids"></i></td>			
 				</tr>
 				<tr id="is_open_son" class="is_open_son{$detail.is_open}">
-					<td class="layui-td-gray2">访问白名单</td>
+					<td class="layui-td-gray">访问白名单</td>
 					<td colspan="5" class="hover-edit">
 					{empty name="$detail.view_admin_names"}
 					<span class="font-gray">未设置</span>
@@ -100,11 +100,11 @@
 			<div class="layui-tab-item comment-list layui-show">
 				<table width="100%" class="comment-input my-2">
 				<tr>
-					<td style="width:50px;"><img class="comment-image" src="https://portrait.gitee.com/uploads/avatars/user/478/1434636_dakeche_admin_1578951393.png!avatar100"></td>
+					<td style="width:40px;padding:5px;"><img class="comment-image" src="{$params.thumb}"></td>
 					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
 				</tr>
 				</table>
-				<div id="comment_1_{$detail.id}"></div>
+				<div id="comment_product_{$detail.id}"></div>
 			</div>
 			<div class="layui-tab-item logs-list">
 				<div id="log_product_{$detail.id}"></div>
@@ -119,21 +119,15 @@
 </div>
 
 <script>
-const admin_id='{$detail.admin_id}';
-const detail_id='{$detail.id}';
-const opsData={
-	status:[
-		{'id':0,'title':'关闭'},
-		{'id':1,'title':'开启'}
-	]
-}
-
 function openInit() {
-	const layer = layui.layer,
-		edit = layui.gouguEdit,
-		comment = layui.gouguComment,
-		upload = layui.upload,
-		gougu = layui.gougu;
+	const detail_id='{$detail.id}';
+	const opsData={
+		status:[
+			{'id':0,'title':'关闭'},
+			{'id':1,'title':'开启'}
+		]
+	}
+	const layer = layui.layer,edit = layui.gouguEdit,comment = layui.gouguComment,upload = layui.upload,gougu = layui.gougu;
 		
 	$('.hover-edit').hover(function(){
 		$(this).addClass('hover-on');
@@ -192,27 +186,27 @@ function openInit() {
 	
 	
 	//评论
-	comment.load(detail_id,1);
+	comment.load(detail_id,'product');
 	$('#commentInput').on('click',function(){
-		comment.editor(0,detail_id,0,0,1,'');
+		comment.editor(0,detail_id,0,0,'product','');
 	})
 	//回复
-	$('#comment_1_'+detail_id).on('click','[data-event="replay"]',function(){
+	$('#comment_product_'+detail_id).on('click','[data-event="replay"]',function(){
 		let pid = $(this).data('id');
 		let padmin_id = $(this).data('uid');
-		comment.editor(0,detail_id,pid,padmin_id,1,'');
+		comment.editor(0,detail_id,pid,padmin_id,'product','');
 	})
 	//编辑
-	$('#comment_1_'+detail_id).on('click','[data-event="edit"]',function(){
+	$('#comment_product_'+detail_id).on('click','[data-event="edit"]',function(){
 		let id = $(this).data('id');
 		let mdcontent=$('#comment_'+id).data('mdcontent');
-		comment.editor(id,detail_id,0,0,1,mdcontent);
+		comment.editor(id,detail_id,0,0,'product',mdcontent);
 	})
 	
 	//删除
-	$('#comment_1_'+detail_id).on('click','[data-event="del"]',function(){
+	$('#comment_product_'+detail_id).on('click','[data-event="del"]',function(){
 		let id = $(this).data('id');
-		comment.del(id,detail_id,1);
+		comment.del(id,detail_id,'product');
 	})
 	
 	//操作记录
@@ -221,14 +215,14 @@ function openInit() {
 	let loading=false;	
 	let editPost = function(id,name,show_val,real_val){
 		let callback = function (e) {
-			layer.closeAll();
-			layer.msg(e.msg);
 			if(e.code == 0){
+				layer.closeAll();
 				gougu.load('/product/index/view/id/'+id);
 				setTimeout(function(){
-					tableIns.reload();
-					$('#editTips').html('，最近更新于 5秒前');
-				},1000)
+					layui.pageTable.reload();
+				},400)
+			}else{
+				layer.msg(e.msg);
 			}			
 		}
 		let postData={id:id};

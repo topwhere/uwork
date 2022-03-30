@@ -27,7 +27,7 @@ class Index extends BaseController
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = ProductList::where($where)
                 ->withoutField('content,md_content')
-                ->order('create_time asc')
+                ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
@@ -109,19 +109,24 @@ class Index extends BaseController
 				$param['view_admin_ids'] ='';
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
-                try {
-                    validate(ProductCheck::class)->scene('edit')->check($param);
-                } catch (ValidateException $e) {
-                    // 验证失败 输出错误信息
-                    return to_assign(1, $e->getError());
-                }
 				$product = (new ProductList())->detail($param['id']);
-                $param['update_time'] = time();
-                $res = ProductList::where('id', $param['id'])->strict(false)->field(true)->update($param);
-                if ($res) {
-                    add_log('edit', $param['id'], $param,$product);
-                }
-                return to_assign();
+				if($this->uid == $product['admin_id'] || $this->uid == $product['director_uid'] ){
+					try {
+						validate(ProductCheck::class)->scene('edit')->check($param);
+					} catch (ValidateException $e) {
+						// 验证失败 输出错误信息
+						return to_assign(1, $e->getError());
+					}
+					$param['update_time'] = time();
+					$res = ProductList::where('id', $param['id'])->strict(false)->field(true)->update($param);
+					if ($res) {
+						add_log('edit', $param['id'], $param,$product);
+					}
+					return to_assign();
+				}
+				else{
+					return to_assign(1, '只有创建人或者负责人才有权限编辑');
+				}
             } else {
                 try {
                     validate(ProductCheck::class)->scene('add')->check($param);

@@ -33,7 +33,9 @@ function init(layui){
 		cellMinWidth:200,
 		url: "/requirements/index/index", //数据接口
 		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2}
+			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
+				return 'R'+d.id;
+			}}
 			,{field:'priority_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
 				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
 				return html;

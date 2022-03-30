@@ -54,14 +54,11 @@
 </form>
 
 <script>
-	function openInit() {
-		var form = layui.form,
-			layer = layui.layer,
-			gougu = layui.gougu,
-			employeepicker = layui.employeepicker;
+function openInit() {
+	var form = layui.form,layer = layui.layer,gougu = layui.gougu,employeepicker = layui.employeepicker;
 			
 	form.render();
-	buildEditor('docContent',480,$('#mdContent').val());
+	gougu.editor('docContent',480,$('#mdContent').val());
 	//选择产品负责人弹窗	
 	$('.page-content').on('click','[name="director_name"]',function () {
 		var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
@@ -148,19 +145,19 @@
     form.on('submit(webform)', function (data) {
 		if(!data.field.is_open || data.field.is_open==''){
 			layer.msg('请选择访问控制');
-			return;
+			return false;
 		}
-		if(data.field.is_open == 1 && data.field.check_admin_ids == ''){
+		if(data.field.is_open == 1 && data.field.view_admin_ids == ''){
 			layer.msg('请完善白名单，选择可访问的员工');
-			return;
+			return false;
 		}
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				tableIns.reload();
+				layui.pageTable.reload();
 				setTimeout(function(){
 					gougu.close();
-				},500);
+				},400);
 			}
 		}
 		gougu.post("/product/index/add",data.field,callback);

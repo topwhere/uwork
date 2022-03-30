@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
+<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
 {/block}
 {block name="body"}
 <div class="table-content p-3">
@@ -14,7 +15,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="del">产品详细</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">操作</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -24,10 +25,7 @@
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 	function init(layui){
-		var table = layui.table
-		  ,form = layui.form
-		  ,gougu = layui.gougu;
-		
+		var table = layui.table,form = layui.form,gougu = layui.gougu;		
 		
 		layui.pageTable = table.render({
 			elem: '#test',
@@ -50,7 +48,7 @@
 				,{align: 'center', title: '关联任务', colspan: 3}
 				,{align: 'center', title: '关联BUG', colspan: 3}
 
-				,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
+				,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 			], [
 				{field:'requirements_a',align:'center', width:80,'title':'进行中'}
 				,{field:'requirements_b',align:'center', width:80,'title':'已完成'}

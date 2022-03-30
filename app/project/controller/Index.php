@@ -27,7 +27,7 @@ class Index extends BaseController
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = ProjectList::where($where)
                 ->withoutField('content,md_content')
-                ->order('create_time asc')
+                ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
@@ -165,8 +165,8 @@ class Index extends BaseController
         }
     }
 	
-	//查看
-    public function view()
+	//编辑
+    public function edit()
     {
 		$param = get_params();
 		$id = isset($param['id']) ? $param['id'] : 0;
@@ -184,6 +184,22 @@ class Index extends BaseController
                 ->where(array('mf.topic_id' => $id,'mf.module' => 'project'))
                 ->select()->toArray();
 			View::assign('file_array', $file_array);
+			View::assign('detail', $detail);
+			View::assign('id', $id);
+			return view();
+		}
+	}
+	
+	//查看
+    public function view()
+    {
+		$param = get_params();
+		$id = isset($param['id']) ? $param['id'] : 0;
+		$detail = (new ProjectList())->detail($id);
+        if (empty($detail)) {
+			return to_assign(1,'项目不存在');
+        }
+		else{
 			View::assign('detail', $detail);
 			View::assign('id', $id);
 			return view();

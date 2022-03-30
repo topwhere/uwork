@@ -23,6 +23,9 @@ class Index extends BaseController
         if (request()->isAjax()) {
             $param = get_params();
             $where = array();
+			if(!empty($param['project_id'])){
+				$where[] = ['project_id', '=', $param['project_id']];
+			}
             $where[] = ['status', '>=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = TaskList::where($where)

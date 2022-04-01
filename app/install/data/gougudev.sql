@@ -189,37 +189,34 @@ INSERT INTO `dev_admin_rule` VALUES (54, 51, 'admin/note/view', '查看', '公�
 
 INSERT INTO `dev_admin_rule` VALUES (55, 2, 'product/index/list', '列表', '产品', '', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (56, 55, 'product/index/add', '新建', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (57, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (58, 55, 'product/user/set', '设置', '产品状态', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (59, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (57, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (58, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (60, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (61, 60, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (62, 60, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (63, 60, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (64, 60, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (59, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (60, 59, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (61, 59, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (62, 59, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (63, 59, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (65, 4, 'requirements/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (66, 65, 'requirements/index/add', '新建', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (67, 65, 'requirements/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (68, 65, 'requirements/user/set', '设置', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (69, 65, 'requirements/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (64, 4, 'requirements/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (65, 64, 'requirements/index/add', '新建', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (66, 64, 'requirements/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (67, 64, 'requirements/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (70, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (71, 70, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (72, 70, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (73, 70, 'task/user/set', '设置', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (74, 70, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (68, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (69, 68, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (70, 68, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (71, 68, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (75, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (76, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (77, 76, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (78, 76, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (81, 76, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (83, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (72, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (73, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (74, 73, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (75, 73, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (76, 73, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (77, 73, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (78, 73, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (79, 73, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 73, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_config
@@ -470,9 +467,9 @@ CREATE TABLE `dev_schedule`  (
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结束时间',
   `labor_time` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '工时',
   `remark` text NOT NULL COMMENT '描述',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作记录';
 
@@ -490,7 +487,7 @@ CREATE TABLE `dev_work`  (
   `admin_id` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人id',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '汇报工作表';
 
@@ -518,7 +515,6 @@ CREATE TABLE `dev_work_record`  (
   `to_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '接收人id',
   `send_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送日期',
   `read_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读时间',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '汇报工作发送记录表';
 
@@ -556,10 +552,10 @@ CREATE TABLE `dev_knowledge`  (
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
   `desc` varchar(1000) NULL DEFAULT '' COMMENT '描述',
   `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
-  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
-  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
   `is_share` int(1) NOT NULL DEFAULT 1 COMMENT '是否公开:1是2否',
-  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态:1正常0禁用-1删除',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '知识库分类表';
 
@@ -579,11 +575,10 @@ CREATE TABLE `dev_knowledge_doc`  (
   `content` text NULL COMMENT '内容',
   `md_content` text NULL COMMENT 'markdown内容',
   `read` int(11) NOT NULL DEFAULT 0 COMMENT '阅读量',
-  `status` int(1) NOT NULL DEFAULT 1 COMMENT '状态:1正常0垃圾箱-1删除',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
-  `create_time` int(11) NOT NULL DEFAULT 0,
-  `update_time` int(11) NOT NULL DEFAULT 0,
-  `delete_time` int(11) NOT NULL DEFAULT 0,
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '知识库文档表';
 
@@ -602,11 +597,12 @@ CREATE TABLE `dev_product`  (
   `check_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '评审人，如:1,2,3',
   `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,2否',
   `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0关闭,1开启',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0关闭,1开启',
   `content` text NULL COMMENT '产品描述',
   `md_content` text NULL COMMENT 'markdown产品描述',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '产品表';
 
@@ -625,11 +621,12 @@ CREATE TABLE `dev_project`  (
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
   `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0关闭,1开启,2暂停',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0关闭,1开启,2暂停',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
 
@@ -651,10 +648,10 @@ CREATE TABLE `dev_requirements`  (
   `md_content` text NULL COMMENT 'markdown需求描述',
   `story` text NULL COMMENT '用户故事',
   `md_story` text NULL COMMENT 'markdown用户故事',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1需求中,2设计中,3排期中,4研发中,5测试中,6待发布,7已发布,8已完成,9挂起',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '需求表';
 
@@ -677,11 +674,11 @@ CREATE TABLE `dev_task`  (
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类别:0其他,1UI设计,2产品原型,3技术开发,4测试,5编写文档,6沟通,7会议,8调研',
   `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1TODO,2DOING,3DONE,4CLOSE',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
   `content` text NULL COMMENT '任务描述',
   `md_content` text NULL COMMENT 'markdown任务描述',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '任务表';
 
@@ -694,12 +691,12 @@ CREATE TABLE `dev_document`  (
   `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
   `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `content` text NULL COMMENT '文档内容',
   `md_content` text NULL COMMENT 'markdown文档内容',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '文档表';
 
@@ -728,11 +725,11 @@ CREATE TABLE `dev_comment`  (
   `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容id',
   `padmin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复内容用户id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除,0禁用,1正常',
   `content` text NULL COMMENT '评论内容',
   `md_content` text NULL COMMENT 'markdown评论内容',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '评论表';
 
@@ -743,11 +740,13 @@ DROP TABLE IF EXISTS `dev_log`;
 CREATE TABLE `dev_log`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
+  `action` varchar(100) NOT NULL DEFAULT 'edit' COMMENT '动作:edit.add,del,upload',
   `field` varchar(100) NOT NULL DEFAULT '' COMMENT '字段',
   `topic_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联主题id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作人',
   `old_content` text NULL COMMENT '修改前的内容',
   `new_content` text NULL COMMENT '修改后的内容',
+  `remark` text NULL COMMENT '补充备注',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '操作记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '操作记录表';

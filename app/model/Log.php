@@ -27,6 +27,7 @@ class Log extends Model
 				'is_open' =>array('icon'=>'icon-wodedianping','title'=>'访问控制'),
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
+				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
 			]],
 		'project'=>[
 			'status' => ['关闭','开启','暂停'],
@@ -40,6 +41,7 @@ class Log extends Model
 				'product_id' =>array('icon'=>'icon-wodedianping','title'=>'关联产品'),
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
+				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
 			]],
 		'requirements'=>[
 			'priority' => ['','低','中','高','紧急'],
@@ -55,6 +57,7 @@ class Log extends Model
 				'project_id' =>array('icon'=>'icon-wodedianping','title'=>'关联项目'),
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
+				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
 			]],
 		'task'=>[
 			'priority' => ['','低','中','高','紧急'],
@@ -74,6 +77,7 @@ class Log extends Model
 				'requirements_id' =>array('icon'=>'icon-wodedianping','title'=>'关联需求'),
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
+				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
 			]]
 	];
 	
@@ -90,6 +94,12 @@ class Log extends Model
             ->where($where)
             ->select()->toArray();
 		$sourse = self::$Sourse[$param['m']];
+		$action = [
+			'add'=>'添加',
+			'edit'=>'修改',
+			'del'=>'删除',
+			'upload'=>'上传',
+		];
 		$field_array = $sourse['field_array'];
 		$data = [];
         foreach ($content as $k => $v) {
@@ -129,6 +139,7 @@ class Log extends Model
 			if($v['new_content'] == '' || $v['new_content'] == null){
 				$v['new_content'] = '未设置';
 			}
+			$v['action'] = $action[$v['action']];
 			$v['icon'] = $field_array[$v['field']]['icon'];
 			$v['title'] = $field_array[$v['field']]['title'];
 			$v['times'] = time_trans($v['create_time']);

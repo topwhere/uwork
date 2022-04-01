@@ -1,0 +1,71 @@
+<form class="layui-form page-content p-4">
+	{eq name="id" value ="0"}
+	<h3 class="h3-title">新建文档</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">文档名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称" class="layui-input" value="">
+			</td>
+		</tr>
+	</table>
+	<div>
+		<div style="padding:10px 0">文档内容<span style="color: red">*</span></div>
+		<div>
+			<textarea id="mdContent" style="display:none;"></textarea>
+			<div id="docContent"></div>
+		</div>
+		<input type="hidden" name="id" value="0" />
+		<input type="hidden" name="topic_id" value="{$project_id}" />
+		<input type="hidden" name="module" value="project" />
+	</div>
+	{else/}
+	<h3 class="h3-title">编辑文档</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">文档名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称" class="layui-input" value="{$detail.title}">
+			</td>
+		</tr>
+	</table>
+	<div>
+		<div style="padding:10px 0">文档内容<span style="color: red">*</span></div>
+		<div>
+			<div id="docContent"></div>
+			<textarea id="mdContent" style="display:none;">{$detail.md_content}</textarea>
+		</div>
+		<input type="hidden" name="id" value="{$detail.id}" />
+	</div>
+	{/eq}
+	<div style="padding: 10px 0">
+		<input type="hidden" name="module" value="project" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+<script>
+function openInit() {
+	var form = layui.form,layer = layui.layer,gougu = layui.gougu;
+			
+	form.render();
+	gougu.editor('docContent',600,$('#mdContent').val());
+		
+    //监听提交
+    form.on('submit(webform)', function (data) {
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				layui.pageTable.reload();
+				setTimeout(function(){
+					gougu.close();
+				},500);
+			}
+		}
+		gougu.post("/api/document/add",data.field,callback);
+		return false;
+    });
+}
+
+</script>

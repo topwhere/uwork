@@ -7,7 +7,7 @@
 
 declare (strict_types = 1);
 namespace app\model;
-
+use think\facade\Db;
 use think\Model;
 
 class Document extends Model
@@ -17,9 +17,9 @@ class Document extends Model
         $where = array();
         $where['a.module'] = $param['m'];
 		$where['a.topic_id'] = $param['tid'];
-        $where['a.status'] = 1;
+        $where['a.delete_time'] = 0;
        // $rows = empty($param['limit']) ? get_config('app.pages') : $param['limit'];
-        $content = \think\facade\Db::name('Document')
+        $content = Db::name('Document')
 			->field('a.*,u.name,u.thumb')
             ->alias('a')
             ->join('Admin u', 'u.id = a.admin_id')
@@ -36,5 +36,16 @@ class Document extends Model
 			}
         }
         return $content;
+    }
+	
+	//详情
+    public function detail($id)
+    {
+        $detail = Db::name('Document')->where(['id' => $id])->find();
+        if (!empty($detail)) {
+			$detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
+			$detail['times'] = time_trans($detail['create_time']);
+        }
+        return $detail;
     }
 }

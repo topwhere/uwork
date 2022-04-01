@@ -248,6 +248,13 @@ function get_project()
     return $project;
 }
 
+//读取需求
+function get_requirements($pid=0)
+{
+    $requirements = Db::name('Requirements')->where(['status' => 1,'Project_id' => $pid])->select()->toArray();
+    return $requirements;
+}
+
 /**
  * 根据附件表的id返回url地址
  * @param  [type] $id [description]
@@ -318,7 +325,7 @@ function add_log($type, $param_id = 0, $param = [],$old=[])
     Db::name('AdminLog')->strict(false)->field(true)->insert($data);
 	if(!empty($old)){
 		$log_data = [];
-		$key_array=['id','create_time','update_time','md_content'];
+		$key_array=['id','create_time','update_time','delete_time','md_content'];
 		foreach ($param as $key => $value) {
 			if(!in_array($key, $key_array)){
 				$log_data[] = array(

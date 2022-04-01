@@ -11,17 +11,26 @@ layui.define(['gougu'], function(exports){
 							<div class="log-item py-3 border-b">
 								<i class="iconfont ${item.icon}"></i>
 								<span class="log-name">${item.name}</span>
-								<span class="log-content font-gray"> 修改了<b>${item.title}</b><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+								<span class="log-content font-gray"> ${item.action}了<strong>${item.title}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 							</div>
 						`;
 						}
 						else if(item.field =='file'){
-							if(item.new_content == '未设置'){
+							itemLog+= `
+								<div class="log-item py-3 border-b">
+									<i class="iconfont ${item.icon}"></i>
+									<span class="log-name">${item.name}</span>
+									<span class="log-content font-gray"> ${item.action}了${item.title}<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+								</div>
+							`;
+						}
+						else if(item.field =='document'){
+							if(item.action =='修改'){
 								itemLog+= `
 									<div class="log-item py-3 border-b">
 										<i class="iconfont ${item.icon}"></i>
 										<span class="log-name">${item.name}</span>
-										<span class="log-content font-gray"> 删除了文件<b>${item.old_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+										<span class="log-content font-gray"> ${item.action}了${item.title}<strong>${item.remark}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 									</div>
 								`;
 							}
@@ -30,7 +39,7 @@ layui.define(['gougu'], function(exports){
 									<div class="log-item py-3 border-b">
 										<i class="iconfont ${item.icon}"></i>
 										<span class="log-name">${item.name}</span>
-										<span class="log-content font-gray"> 上传了文件<b>${item.new_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+										<span class="log-content font-gray"> ${item.action}了${item.title}<strong>${item.remark}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 									</div>
 								`;
 							}
@@ -40,7 +49,7 @@ layui.define(['gougu'], function(exports){
 							<div class="log-item py-3 border-b">
 								<i class="iconfont ${item.icon}"></i>
 								<span class="log-name">${item.name}</span>
-								<span class="log-content font-gray"> 将<b>${item.title}</b>从 ${item.old_content} 修改为<b>${item.new_content}</b><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+								<span class="log-content font-gray"> 将<strong>${item.title}</strong>从 ${item.old_content} ${item.action}为<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 							</div>
 						`;
 						}

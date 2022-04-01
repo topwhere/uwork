@@ -24,6 +24,7 @@ class Appendix extends BaseController
 			$log_data = array(
 				'module' => $param['module'],
 				'field' => 'file',
+				'action' => 'upload',
 				'topic_id' => $param['topic_id'],
 				'admin_id' => $this->uid,
 				'old_content' => '',
@@ -49,10 +50,11 @@ class Appendix extends BaseController
 				$log_data = array(
 					'module' => $detail['module'],
 					'field' => 'file',
+					'action' => 'del',
 					'topic_id' => $detail['topic_id'],
 					'admin_id' => $this->uid,
-					'old_content' => $file_name,
-					'new_content' => '',
+					'old_content' => '',
+					'new_content' => $file_name,
 					'create_time' => time()
 				);  
 				Db::name('Log')->strict(false)->field(true)->insert($log_data);

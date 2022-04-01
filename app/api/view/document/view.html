@@ -1,0 +1,20 @@
+<div class="page-content">
+	<div class="p-4 border-b">
+		<h3 class="h3-title">
+			<span id="title_{$detail.id}" data-val="">{$detail.title}</span></i>
+		</h3>
+		<div>
+			<span class="mr-2">{$detail.admin_name}</span>
+			<span class="font-gray">创建于{$detail.times}<span id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+		</div>
+	</div>
+	<div class="layui-row p-4">
+		<div class="md-content-content">{$detail.content|raw}</div>
+	</div> 
+</div>
+
+<script>
+function openInit() {
+	
+}
+</script>

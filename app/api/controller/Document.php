@@ -10,6 +10,7 @@ namespace app\api\controller;
 use app\api\BaseController;
 use app\model\Document as DocumentList;
 use think\facade\Db;
+use think\facade\View;
 
 class Document extends BaseController
 {	
@@ -22,39 +23,114 @@ class Document extends BaseController
 		return to_assign(0, '', $list);
     }
 
-    //添加修改评论内容
+    //添加修改
     public function add()
     {
 		$param = get_params();
-		if (!empty($param['id']) && $param['id'] > 0) {
-			$param['update_time'] = time();
-            $res = DocumentList::where(['admin_id' => $this->uid,'id'=>$param['id']])->strict(false)->field(true)->update($param);
-			if ($res) {
-				add_log('edit', $param['id'], $param);
-				return to_assign();
+        if (request()->isPost()) {
+			//markdown数据处理
+			if (isset($param['table-align'])) {
+				unset($param['table-align']);
 			}
+			if (isset($param['docContent-html-code'])) {
+				$param['content'] = $param['docContent-html-code'];
+				$param['md_content'] = $param['docContent-markdown-doc'];
+				unset($param['docContent-html-code']);
+				unset($param['docContent-markdown-doc']);
+			}
+			if (isset($param['ueditorcontent'])) {
+				$param['content'] = $param['ueditorcontent'];
+				$param['md_content'] = '';
+			}
+            if (!empty($param['id']) && $param['id'] > 0) {
+                $param['update_time'] = time();
+				$detail = (new DocumentList())->detail($param['id']);
+                $res = DocumentList::where('id', $param['id'])->strict(false)->field(true)->update($param);
+                if ($res) {
+                    $log_data = array(
+						'module' => $param['module'],
+						'field' => 'document',
+						'action' => 'edit',
+						'topic_id' => $detail['topic_id'],
+						'admin_id' => $this->uid,
+						'old_content' => $detail['content'],
+						'new_content' => $param['content'],
+						'remark' => $param['title'],
+						'create_time' => time()
+					);
+					Db::name('Log')->strict(false)->field(true)->insert($log_data);
+                }
+                return to_assign();
+            } else {
+                $param['create_time'] = time();
+                $param['admin_id'] = $this->uid;
+                $sid = DocumentList::strict(false)->field(true)->insertGetId($param);
+                if ($sid) {
+                    $log_data = array(
+						'module' => $param['module'],
+						'field' => 'document',
+						'action' => 'add',
+						'topic_id' => $param['topic_id'],
+						'admin_id' => $this->uid,
+						'remark' => $param['title'],
+						'create_time' => time()
+					);
+					Db::name('Log')->strict(false)->field(true)->insert($log_data);
+                }
+                return to_assign();
+            }
         } else {
-            $param['create_time'] = time();
-            $param['admin_id'] = $this->uid;
-            $cid = DocumentList::strict(false)->field(true)->insertGetId($param);
-			if ($cid) {
-				add_log('add', $cid, $param);
-				//sendMessage($users,1,['title'=>$param['title'],'action_id'=>$sid]);
-				return to_assign();
-			}			
-		}
+            $id = isset($param['id']) ? $param['id'] : 0;
+            if ($id > 0) {
+                $detail = (new DocumentList())->detail($id);
+				if (empty($detail)) {
+					return to_assign(1,'文档不存在');
+				}
+				View::assign('project_id', $detail['topic_id']);
+                View::assign('detail', $detail);
+            }
+			if(isset($param['project_id'])){
+				View::assign('project_id', $param['project_id']);
+			}
+            View::assign('id', $id);
+            return view();
+        }
     }
+	
+	//查看
+    public function view()
+    {
+		$param = get_params();
+		$id = isset($param['id']) ? $param['id'] : 0;
+		$detail = (new DocumentList())->detail($id);
+        if (empty($detail)) {
+			return to_assign(1,'文档不存在');
+        }
+		else{
+			View::assign('detail', $detail);
+			View::assign('id', $id);
+			return view();
+		}
+	}
 	
 	//删除
     public function delete()
     {
 		if (request()->isDelete()) {
 			$id = get_params("id");
-			$data['status'] = '-1';
-			$data['id'] = $id;
-			$data['update_time'] = time();
-			if (DocumentList::update($data) !== false) {
-				add_log('delete', $id);
+			$detail = (new DocumentList())->detail($id);
+			if (DocumentList::where('id', $id)->update(['delete_time'=>time()]) !== false) {
+				$log_data = array(
+					'module' => $detail['module'],
+					'field' => 'document',
+					'action' => 'del',
+					'topic_id' => $detail['topic_id'],
+					'admin_id' => $this->uid,
+					'remark' => $detail['title'],
+					'new_content' => '',
+					'create_time' => time()
+				);  
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
 				return to_assign(0, "删除成功");
 			} else {
 				return to_assign(0, "删除失败");

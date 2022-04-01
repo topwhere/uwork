@@ -1,0 +1,39 @@
+<div class="table-content">
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script>
+function pageInit(){
+	var project_id = {$id};
+	var table = layui.table,form = layui.form,gougu = layui.gougu;	
+	
+	layui.pageTable = table.render({
+		elem: '#test',
+		title: '工作记录列表',
+		cellMinWidth:200,
+		url: "/api/schedule/index", //数据接口
+		where:{
+			'm':'project',
+			'tid':project_id
+		},
+		cols:  [[
+			{field:'id', title: 'ID编号',width: 80, align:'center'}
+			,{field:'title',title: '工作内容'}
+			,{field:'labor_time',title: '所用工时', align:'center',width: 80}
+			,{field:'name',title: '员工', align:'center',width: 100}
+			,{field:'department',title: '所在部门', align:'center',width: 120}
+			,{field:'create_time',title: '创建时间',align:'center',width: 150}	
+			,{title: '操作',align:'center',width: 60,templet:function(d){		
+				return '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span>';
+			}}
+		]]
+	});
+	
+	//监听行工具事件
+	table.on('tool(test)', function(obj) {
+		var data = obj.data;
+		if (obj.event === 'view') {
+			return;
+		}
+	});
+}		
+</script>

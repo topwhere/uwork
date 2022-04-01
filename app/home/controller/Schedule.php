@@ -161,16 +161,16 @@ class Schedule extends BaseController
 				if ($param['end_time'] <= $param['start_time']) {
 					return to_assign(1, "结束时间需要大于开始时间");
 				}
-				$where1[] = ['status', '=', 1];
+				$where1[] = ['delete_time', '=', 0];
 				$where1[] = ['admin_id', '=', $admin_id];
 				$where1[] = ['start_time', 'between', [$param['start_time'], $param['end_time'] - 1]];
 
-				$where2[] = ['status', '=', 1];
+				$where2[] = ['delete_time', '=', 0];
 				$where2[] = ['admin_id', '=', $admin_id];
 				$where2[] = ['start_time', '<=', $param['start_time']];
 				$where2[] = ['start_time', '>=', $param['end_time']];
 
-				$where3[] = ['status', '=', 1];
+				$where3[] = ['delete_time', '=', 0];
 				$where3[] = ['admin_id', '=', $admin_id];
 				$where3[] = ['end_time', 'between', [$param['start_time'] + 1, $param['end_time']]];
 

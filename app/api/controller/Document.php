@@ -48,10 +48,10 @@ class Document extends BaseController
                 $res = DocumentList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
                     $log_data = array(
-						'module' => $param['module'],
+						'module' => 'document',
 						'field' => 'document',
 						'action' => 'edit',
-						'topic_id' => $detail['topic_id'],
+						'document_id' => $param['id'],
 						'admin_id' => $this->uid,
 						'old_content' => $detail['content'],
 						'new_content' => $param['content'],
@@ -67,10 +67,10 @@ class Document extends BaseController
                 $sid = DocumentList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     $log_data = array(
-						'module' => $param['module'],
+						'module' => 'document',
 						'field' => 'document',
 						'action' => 'add',
-						'topic_id' => $param['topic_id'],
+						'document_id' => $sid,
 						'admin_id' => $this->uid,
 						'remark' => $param['title'],
 						'create_time' => time()
@@ -124,7 +124,7 @@ class Document extends BaseController
 					'module' => $detail['module'],
 					'field' => 'document',
 					'action' => 'del',
-					'topic_id' => $detail['topic_id'],
+					'document_id' => $param['id'],
 					'admin_id' => $this->uid,
 					'remark' => $detail['title'],
 					'new_content' => '',

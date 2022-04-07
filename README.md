@@ -35,3 +35,11 @@
 4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
 5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+
+#### ☕请作者喝杯咖啡吧！
+- If the project is very helpful to you, you can buy the author a cup of coffee☕.
+- 如果这个项目对您有帮助，可以请作者喝杯咖啡吧哟☕
+
+|支付宝      |    微信|
+| :--------: | :--------:|
+| <img src="https://www.gougucms.com/static/home/images/zfb.png" width="300"  align=center />|<img src="https://www.gougucms.com/static/home/images/wx.png" width="300"  align=center />|

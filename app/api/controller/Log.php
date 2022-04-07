@@ -14,12 +14,21 @@ use think\facade\Session;
 
 class Log extends BaseController
 {	
-    //获取评论列表
+    //获取日志列表
     public function get_list()
     {
 		$param = get_params();
 		$list = new LogList();
 		$content = $list->get_list($param);
+		return to_assign(0, '', $content);
+    }
+	
+	//获取日志列表
+    public function log_list()
+    {
+		$param = get_params();
+		$list = new LogList();
+		$content = $list->log_list($param);
 		return to_assign(0, '', $content);
     }
 }

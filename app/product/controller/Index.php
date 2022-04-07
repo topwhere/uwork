@@ -139,6 +139,17 @@ class Index extends BaseController
                 $sid = ProductList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     add_log('add', $sid, $param);
+					$log_data = array(
+						'module' => 'product',
+						'product_id' => $sid,
+						'new_content' => $param['name'],
+						'field' => 'new',
+						'action' => 'add',
+						'admin_id' => $this->uid,
+						'old_content' => '',
+						'create_time' => time()
+					);  
+					Db::name('Log')->strict(false)->field(true)->insert($log_data);
 					$users= Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
 					sendMessage($users,1,['title'=>$param['name'],'action_id'=>$sid]);
                 }

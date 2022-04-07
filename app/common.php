@@ -331,7 +331,7 @@ function add_log($type, $param_id = 0, $param = [],$old=[])
 				$log_data[] = array(
 					'module' => $data['module'],
 					'field' => $key,
-					'topic_id' => $param_id ,
+					$data['module'].'_id' => $param_id,
 					'admin_id' => $data['uid'],
 					'old_content' => $old[$key],
 					'new_content' => $value,

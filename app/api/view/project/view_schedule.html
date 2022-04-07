@@ -1,10 +1,22 @@
 <div class="table-content">
+	<div class="layui-form-bar border-t border-x">
+		<form class="layui-form">
+			<div class="layui-input-inline" style="width:110px;">
+				<input type="text" name="username"  placeholder="请选择员工" class="layui-input" readonly data-event="select"/>
+				<input type="text" name="uid" value="" style="display:none" />	
+			</div>
+			<div class="layui-input-inline" style="width:220px;">
+				<input type="text" name="keywords"  placeholder="输入工作内容" class="layui-input"/>
+			</div>	
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button><button type="reset" class="layui-btn layui-btn-danger" lay-filter="clear">清空搜索条件</button>
+		</form>
+	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
 <script>
 function pageInit(){
 	var project_id = {$id};
-	var table = layui.table,form = layui.form,gougu = layui.gougu;	
+	var table = layui.table,form = layui.form,gougu = layui.gougu,employeepicker=layui.employeepicker;	
 	
 	layui.pageTable = table.render({
 		elem: '#test',
@@ -15,23 +27,100 @@ function pageInit(){
 			'm':'project',
 			'tid':project_id
 		},
-		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center'}
-			,{field:'title',title: '工作内容'}
-			,{field:'labor_time',title: '所用工时', align:'center',width: 80}
-			,{field:'name',title: '员工', align:'center',width: 100}
+		cellMinWidth: 200,
+		cols: [[ //表头
+			{field: 'id', title: '序号',width:80, align:'center'}
+			,{field: 'start_time', title: '工作时间范围', align:'center',width:186,templet:function(d){
+				var html=d.start_time+'至'+d.end_time;
+				return html;
+			}}
+			,{field: 'labor_time', title: '工时', align:'center',width:60}
+			,{field: 'title', title: '工作内容'}
+			,{field:'name',title: '执行员工', align:'center',width: 100}
 			,{field:'department',title: '所在部门', align:'center',width: 120}
-			,{field:'create_time',title: '创建时间',align:'center',width: 150}	
+			,{field: 'create_time', title: '记录时间', align:'center',width:150}
 			,{title: '操作',align:'center',width: 60,templet:function(d){		
 				return '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span>';
 			}}
 		]]
 	});
 	
+	// 选择员工
+	$('.layui-form-bar').on('click','[data-event="select"]',function(){
+		var that = $(this);
+		var names = that.val(), ids = $('[name="uid"]').val();
+		employeepicker.init({
+			ids: ids,
+			names: names,
+			type: 0,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			callback: function (ids, names, dids, departments) {
+				$('[name="uid"]').val(ids);
+				that.val(names);
+				$('[lay-filter="webform"]').click();
+			}
+		})
+	});
+
+	//监听搜索提交
+	form.on('submit(webform)', function(data){
+		let f=data.field;
+		layui.pageTable.reload({where:{keywords:f.keywords,uid:f.uid},page:{curr:1}});
+		return false;
+	});
 	//监听行工具事件
 	table.on('tool(test)', function(obj) {
 		var data = obj.data;
 		if (obj.event === 'view') {
+			//查看工作记录
+			$.ajax({
+				url: "/api/schedule/view",
+				data:{
+					id:data.id
+				},
+				success:function(e){
+					if(e.code==0){
+						let detail = e.data;
+						let content=`
+							<div style="width:776px">
+								<table class="layui-table" style="margin:12px 12px 0;">
+									<tr>
+										<td class="layui-td-gray">工作内容</td>
+										<td>${detail.title}</td>
+										<td class="layui-td-gray">执行员工</td>
+										<td>${detail.user}</td>
+									</tr>
+									<tr>
+										<td class="layui-td-gray">工作期间</td>
+										<td>${detail.start_time} ${detail.start_time_1} 至 ${detail.end_time_1}，共${detail.labor_time}工时</td>
+										<td class="layui-td-gray">所在部门</td>
+										<td>${detail.department}</td>
+									</tr>
+									<tr>
+										<td class="layui-td-gray">工作描述</td>
+										<td colspan="3">${detail.remark}</td>
+									</tr>
+								</table>
+							</div>
+						`;
+						layer.open({
+							type:1,
+							title:'工作记录',
+							area:['800px','336px'],
+							content:content,
+							success:function(){
+								
+							},
+							btn: ['关闭'],
+							btnAlign: 'c',
+							yes: function(idx){
+								layer.close(idx);			
+							}
+						})	
+					}
+				}
+			})
 			return;
 		}
 	});

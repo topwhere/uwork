@@ -25,7 +25,7 @@ class Project extends Model
 			$detail['team_admin_names'] = implode(',',$team_admin_names);
 			$detail['status_name'] = self::$Status[(int)$detail['status']];
 			$detail['times'] = time_trans($detail['create_time']);			
-			$detail['logs'] = Db::name('Log')->where(['module' => 'project','topic_id' => $detail['id']])->count()+1;
+			$detail['logs'] = Db::name('Log')->where(['module' => 'project','project_id' => $detail['id']])->count()+1;
 			$detail['comments'] = Db::name('Comment')->where(['module' => 2,'status'=>1,'topic_id' => $detail['id']])->count();
 			$detail['requirements'] = Db::name('Requirements')->where(['status'=>1,'project_id' => $detail['id']])->count();
 			$map =[];

@@ -57,7 +57,7 @@ layui.define(['gougu'], function(exports){
 					$("#log_"+module+"_"+topic_id).html(itemLog);
 				}
 			}
-			gougu.post("/api/log/get_list",{tid:topic_id,m:module},callback);
+			gougu.get("/api/log/get_list",{tid:topic_id,m:module},callback);
 		},
 		load:function(topic_id,module){
 			let callback = function(res){

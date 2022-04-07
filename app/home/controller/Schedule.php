@@ -35,7 +35,7 @@ class Schedule extends BaseController
             } else {
                 $where[] = ['a.admin_id', '=', $this->uid];
             }
-            $where[] = ['a.status', '=', 1];
+            $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $schedule = ScheduleList::where($where)
                 ->field('a.*,u.name as create_admin')
@@ -60,7 +60,7 @@ class Schedule extends BaseController
 		$param = get_params();
 		$where = array();
 		$where['a.tid'] = $param['tid'];
-        $where['a.status'] = 1;
+        $where['a.delete_time'] = 0;
 		$list = Db::name('Schedule')
 			->field('a.*,u.name')
             ->alias('a')

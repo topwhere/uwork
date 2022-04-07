@@ -106,6 +106,17 @@ class Index extends BaseController
                 $sid = TaskList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     add_log('add', $sid, $param);
+					$log_data = array(
+						'module' => 'task',
+						'task_id' => $sid,
+						'new_content' => $param['title'],
+						'field' => 'new',
+						'action' => 'add',
+						'admin_id' => $this->uid,
+						'old_content' => '',
+						'create_time' => time()
+					);  
+					Db::name('Log')->strict(false)->field(true)->insert($log_data);
 					$users= Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
 					sendMessage($users,1,['title'=>$param['title'],'action_id'=>$sid]);
                 }

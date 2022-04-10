@@ -427,13 +427,27 @@ function getCalendarData(arr) {
 
 //燃尽图统计
 function cross_count(arr,arr2){
-	var rangeArray = [];
-    for (var property in arr){
-		rangeArray.push(property);
+	var planArray = [],doArray=[];
+	var today = new Date();
+	var todayStr=today.getFullYear() +'-'+ (today.getMonth()+1) +'-'+ today.getDate();
+    for (var a in arr){
+		planArray.push(a);
 	}
-	var rangeArray = [rangeArray[0],rangeArray[rangeArray.length-1]];
+	var rangeArray = [planArray[0],planArray[planArray.length-1]];
+	if(arr2 instanceof Array == false){
+		for (var b in arr2){
+			doArray.push(b);
+		}
+		if((+echarts.number.parseDate(doArray[doArray.length-1])) < (+echarts.number.parseDate(todayStr))){
+			doArray.push(todayStr);
+		}
+		if((+echarts.number.parseDate(planArray[planArray.length-1]))<(+echarts.number.parseDate(doArray[doArray.length-1]))){
+			rangeArray[1] = doArray[doArray.length-1];
+		}
+	}
 	var start = +echarts.number.parseDate(rangeArray[0]);
 	var end = +echarts.number.parseDate(rangeArray[1]);
+	var todayInt = +echarts.number.parseDate(todayStr);
 	var dayTime = 3600 * 24 * 1000;
 	var xArray=[],yArray=[],yArray2=[],done=0,doneArray=[];
 	for (var time = start; time <= end; time += dayTime) {
@@ -445,7 +459,9 @@ function cross_count(arr,arr2){
 		if(arr2[this_date]){
 			done+=arr2[this_date];	
 		}
-		doneArray.push(done);
+		if(time<=todayInt){
+			doneArray.push(done);
+		}		
 	}
 	for(var i=0;i<doneArray.length;i++){
 		yArray2.push(yArray[0] - doneArray[i]);
@@ -479,9 +495,18 @@ function init(layui) {
 	let callback=function(res){	
 		if(res.data.date_tasks instanceof Array == false){
 			var dataC = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
-			optionC.xAxis.data = dataC.x;
-			optionC.xAxis.boundaryGap = true,
-			optionC.xAxis.axisLabel = {rotate: 30,interval: 0};
+			optionC.xAxis = {
+				type: 'category',
+				boundaryGap: true,
+				splitLine: {
+					show:true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				},
+				data: dataC.x,
+				axisLabel : {rotate: 30}
+			};
 			optionC.series = [
 				{
 				  name: '计划剩余',

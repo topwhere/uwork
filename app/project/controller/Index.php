@@ -121,6 +121,14 @@ class Index extends BaseController
 						return to_assign(1,'计划结束时间不能小于开始时间');
 					}
 				}
+				if(isset($param['flow_status'])){
+					if($param['flow_status']>2){
+						$param['over_time'] = time();
+					}
+					else{
+						$param['over_time'] = 0;
+					}
+				}
                 try {
                     validate(ProjectCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
@@ -212,6 +220,11 @@ class Index extends BaseController
 			return to_assign(1,'项目不存在');
         }
 		else{
+			$tids = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->column('id');
+			$detail['schedules'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->count();
+			$detail['plan_hours'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->sum('plan_hours');
+			$detail['hours'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->sum('labor_time');
+			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id'],'delete_time','=',0]])->count();
 			View::assign('detail', $detail);
 			View::assign('id', $id);
 			return view();

@@ -26,15 +26,21 @@ class Project extends Model
 			$detail['status_name'] = self::$Status[(int)$detail['status']];
 			$detail['times'] = time_trans($detail['create_time']);			
 			$detail['logs'] = Db::name('Log')->where(['module' => 'project','project_id' => $detail['id']])->count()+1;
-			$detail['comments'] = Db::name('Comment')->where(['module' => 2,'status'=>1,'topic_id' => $detail['id']])->count();
-			$detail['requirements'] = Db::name('Requirements')->where(['status'=>1,'project_id' => $detail['id']])->count();
-			$map =[];
-			$map[] = ['status','=',1];
-			$map[] = ['project_id','=',$detail['id']];
-			$map[] = ['test_id','=',0];
-			$detail['tasks'] = Db::name('Task')->where($map)->count();
-			$map[] = ['test_id','>',0];
-			$detail['bugs'] = Db::name('Task')->where($map)->count();
+			$detail['comments'] = Db::name('Comment')->where(['module' => 2,'delete_time'=>0,'topic_id' => $detail['id']])->count();
+			$detail['requirements'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->count();
+			$detail['requirementfixeds'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->where([['flow_status','>',7]])->count();
+			$map1 =[];
+			$map1[] = ['delete_time','=',0];
+			$map1[] = ['project_id','=',$detail['id']];
+			$map2[] = $map1;
+			$map1[] = ['test_id','=',0];
+			$detail['tasks'] = Db::name('Task')->where($map1)->count();
+			$map1[] = ['flow_status','>',2];
+			$detail['taskfixeds'] = Db::name('Task')->where($map1)->count();
+			$map2[] = ['test_id','>',0];
+			$detail['bugs'] = Db::name('Task')->where($map2)->count();
+			$map2[] = ['flow_status','>',2];
+			$detail['bugfixeds'] = Db::name('Task')->where($map2)->count();
         }
         return $detail;
     }

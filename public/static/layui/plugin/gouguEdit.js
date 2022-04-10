@@ -23,6 +23,25 @@ layui.define(['employeepicker'], function(exports){
 				}
 			})
 		},
+		//文本
+		textarea:function(id,name,real_txt,editPost){
+			let that=this;
+			layer.prompt({
+				title: '请输入内容',
+				formType: 2,
+				area: ['600px', '320px'], //自定义文本域宽高
+				value: real_txt,
+				yes: function(index, layero) {
+					// 获取文本框输入的值
+					let newval = layero.find(".layui-layer-input").val();
+					if (newval) {
+						editPost(id,name,newval,newval);
+					} else {
+						layer.msg('请输入内容');
+					}
+				}
+			})
+		},
 		//员工单选
 		employee_one:function(id,name,show_txt,real_txt,editPost){
 			let that=this;

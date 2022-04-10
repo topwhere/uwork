@@ -16,6 +16,16 @@
 	<div id="pageBox" class="main-page-content p-3" style="background-color:#F5F8FA">
 		<h4 class="pb-3">项目概览</h4>
 		<div class="layui-row layui-col-space12">
+			<div class="layui-col-xs12">
+				<div class="layui-card">
+					<div class="layui-card-header"><h5>{$detail.name}</h5></div>
+					<div class="layui-card-body">
+						<p class="py-1"><span class="font-gray">项目编号：</span>M{$detail.id}<span class="font-gray" style="margin-left:36px">创建人：</span>{$detail.admin_name}<span class="font-gray"  style="margin-left:36px">负责人：</span>{$detail.director_name}<span class="font-gray" style="margin-left:36px">计划完成周期：</span>{$detail.start_time| date='Y-m-d'} &nbsp;&nbsp;至&nbsp;&nbsp; <span>{$detail.end_time| date='Y-m-d'}<span class="font-gray" style="margin-left:36px">项目状态：</span><span class="color-status-{$detail.status}">{$detail.status_name}</span></p>
+						<p class="py-1"><span class="font-gray">项目成员：</span>{$detail.team_admin_names}</p>
+						<p class="py-1"><span class="font-gray">项目简介：</span>{$detail.content}</p>
+					</div>
+				</div>
+			</div>
 			<div class="layui-col-xs6 layui-col-md3">
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>项目概况</h5></div>
@@ -23,27 +33,27 @@
 						<div style="width:100%; height:200px;">
 							<dl>
 								<dt class="layui-card-tips">项目需求</dt>
-								<dd class="layui-card-value">2 / 4</dd>
+								<dd class="layui-card-value">{$detail.requirementfixeds} / {$detail.requirements}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">项目任务</dt>
-								<dd class="layui-card-value">3 / 6</dd>
+								<dd class="layui-card-value">{$detail.taskfixeds} / {$detail.tasks}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">项目问题</dt>
-								<dd class="layui-card-value">6 / 12</dd>
+								<dd class="layui-card-value">{$detail.bugfixeds} / {$detail.bugs}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">任务工时</dt>
-								<dd class="layui-card-value">5 / 9</dd>
+								<dd class="layui-card-value">{$detail.hours} / {$detail.plan_hours}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">工作记录</dt>
-								<dd class="layui-card-value">6</dd>
+								<dd class="layui-card-value">{$detail.schedules}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">项目文档</dt>
-								<dd class="layui-card-value">9</dd>
+								<dd class="layui-card-value">{$detail.documents}</dd>
 							</dl>
 						</div>						
 					</div>
@@ -69,7 +79,7 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>项目燃尽图</h5></div>
 					<div class="layui-card-body">
-						<div id="cross" style="width:100%; height:300px;"></div>
+						<div id="cross" style="width:100%; height:360px;"></div>
 					</div>
 				</div>
 			</div>
@@ -106,6 +116,7 @@
 <script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
+var project_id = '{$detail.id}';
 var chartPie = document.getElementById('pie');
 var pieChart = echarts.init(chartPie);
 var optionA;
@@ -219,7 +230,7 @@ optionC = {
 			type: 'dashed'
 		  }
 		},
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: ['2022-03-01', '2022-03-02', '2022-03-03', '2022-03-04', '2022-03-05', '2022-03-06', '2022-03-07']
     }
   ],
   yAxis: [
@@ -244,7 +255,7 @@ optionC = {
       emphasis: {
         focus: 'series'
       },
-      data: [220, 132, 101, 94, 90, 80, 60]
+      data: [70, 60, 50, 40, 30, 20, 10]
     },
     {
       name: '实际线',
@@ -254,7 +265,7 @@ optionC = {
       emphasis: {
         focus: 'series'
       },
-      data: [220, 182, 191, 154, 120, 80, 70]
+     data: [75, 65, 55, 45, 35, 25, 15]
     }
   ]
 };
@@ -264,20 +275,6 @@ var chartPlan = document.getElementById('plan');
 var planChart = echarts.init(chartPlan);
 var optionD;
 
-function getVirtulData(year) {
-  year = year || '2017';
-  var date = +echarts.number.parseDate(year + '-03-01');
-  var end = +echarts.number.parseDate(+year + 1 + '-08-01');
-  var dayTime = 3600 * 24 * 1000;
-  var data = [];
-  for (var time = date; time < end; time += dayTime) {
-    data.push([
-      echarts.format.formatTime('yyyy-MM-dd', time),
-      Math.floor(Math.random() * 12)
-    ]);
-  }
-  return data;
-}
 optionD = {
 	title: {
 		top: 0,
@@ -307,7 +304,7 @@ optionD = {
 		left: 36,
 		right: 4,
 		cellSize: ['auto', 16],
-		range: ['2021-03-01','2021-08-01'],
+		range: ['2022-03-01','2022-08-01'],
 		splitLine: {
 			lineStyle: {
 				color: '#333',
@@ -333,7 +330,7 @@ optionD = {
 	series: {
 		type: 'heatmap',
 		coordinateSystem: 'calendar',
-		data: getVirtulData('2021')
+		data: []
 	}
 };
 
@@ -371,7 +368,7 @@ optionE = {
 		left: 36,
 		right: 4,
 		cellSize: ['auto', 16],
-		range: ['2021-03-01','2021-08-01'],
+		range: ['2022-03-01','2022-08-01'],
 		splitLine: {
 			lineStyle: {
 				color: '#333',
@@ -397,10 +394,76 @@ optionE = {
 	series: {
 		type: 'heatmap',
 		coordinateSystem: 'calendar',
-		data: getVirtulData('2021')
+		data: []
 	}
 };
 
+
+function getCalendarData(arr) {	
+	var rangeArray = [];
+    for (var property in arr){
+		rangeArray.push(property);
+	}
+	var rangeArray = [rangeArray[0],rangeArray[rangeArray.length-1]];
+	var start = +echarts.number.parseDate(rangeArray[0]);
+	var end = +echarts.number.parseDate(rangeArray[1]);
+	if(start+7776000000>end){
+		end = start+8640000000;
+		rangeArray[1] = echarts.format.formatTime('yyyy-MM-dd', end);
+	}
+	var dayTime = 3600 * 24 * 1000;
+	var data = [];
+	for (var time = start; time < end; time += dayTime) {
+		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+		if(arr[this_date]){
+			data.push([this_date,arr[this_date]]);
+		}else{
+			data.push([this_date,0]);
+		}
+	}
+	var res={'range':rangeArray,'data':data};
+	return res;
+}
+
+//燃尽图统计
+function cross_count(arr,arr2){
+	var rangeArray = [];
+    for (var property in arr){
+		rangeArray.push(property);
+	}
+	var rangeArray = [rangeArray[0],rangeArray[rangeArray.length-1]];
+	var start = +echarts.number.parseDate(rangeArray[0]);
+	var end = +echarts.number.parseDate(rangeArray[1]);
+	var dayTime = 3600 * 24 * 1000;
+	var xArray=[],yArray=[],yArray2=[],done=0,doneArray=[];
+	for (var time = start; time <= end; time += dayTime) {
+		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+		xArray.push(this_date);
+		var plan = cross_recursion(time,end,arr);
+		yArray.push(plan);
+		
+		if(arr2[this_date]){
+			done+=arr2[this_date];	
+		}
+		doneArray.push(done);
+	}
+	for(var i=0;i<doneArray.length;i++){
+		yArray2.push(yArray[0] - doneArray[i]);
+	}	
+	return {'x':xArray,'y':yArray,'y2':yArray2};
+}
+
+function cross_recursion(start,end,arr){
+	var count = 0;
+	var dayTime = 3600 * 24 * 1000;
+	for (var time = start; time <= end; time += dayTime) {
+		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+		if(arr[this_date]){
+			count+=arr[this_date];
+		}		
+	}
+	return count;
+}
 	
 function init(layui) {
 	var gougu = layui.gougu;
@@ -413,10 +476,56 @@ function init(layui) {
 	})
 	optionA && pieChart.setOption(optionA);
 	optionB && roseChart.setOption(optionB);
-	optionC && crossChart.setOption(optionC);
-	optionD && planChart.setOption(optionD);
-	optionE && workChart.setOption(optionE);
+	let callback=function(res){	
+		if(res.data.date_tasks instanceof Array == false){
+			var dataC = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
+			optionC.xAxis.data = dataC.x;
+			optionC.xAxis.boundaryGap = true,
+			optionC.xAxis.axisLabel = {rotate: 30,interval: 0};
+			optionC.series = [
+				{
+				  name: '计划剩余',
+				  type: 'line',
+				  areaStyle: {},
+				  data: dataC.y
+				},
+				{
+				  name: '实际剩余',
+				  type: 'line',
+				  areaStyle: {},
+				  data: dataC.y2
+				}
+			]
+			optionC && crossChart.setOption(optionC)
+		
+			var dataD = getCalendarData(res.data.date_tasks);
+			optionD.calendar.range = dataD.range,
+			optionD.series={
+				type: 'heatmap',
+				coordinateSystem: 'calendar',
+				data: dataD.data
+			}
+			optionD && planChart.setOption(optionD);
+			
+			var dataE = getCalendarData(res.data.date_schedules);
+			optionE.calendar.range = dataE.range,
+			optionE.series={
+				type: 'heatmap',
+				coordinateSystem: 'calendar',
+				data: dataE.data
+			}
+			optionE && workChart.setOption(optionE);
+		}
+	}
+	gougu.get('/api/project/get_chart_data',{'project_id':project_id},callback);	
 	
+	window.onresize = function() {
+		pieChart.resize();
+		roseChart.resize();
+		crossChart.resize();
+		planChart.resize();
+		workChart.resize();
+	}	
 }
 </script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}

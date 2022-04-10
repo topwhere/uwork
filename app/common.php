@@ -325,7 +325,7 @@ function add_log($type, $param_id = 0, $param = [],$old=[])
     Db::name('AdminLog')->strict(false)->field(true)->insert($data);
 	if(!empty($old)){
 		$log_data = [];
-		$key_array=['id','create_time','update_time','delete_time','md_content'];
+		$key_array=['id','create_time','update_time','delete_time','over_time','md_content'];
 		foreach ($param as $key => $value) {
 			if(!in_array($key, $key_array)){
 				$log_data[] = array(
@@ -450,6 +450,56 @@ function send_email($to, $subject = '', $content = '')
         return false;
     }
 }
+
+//任务分配情况统计
+function plan_count($arrData)
+{
+    $documents = array();
+    foreach ($arrData as $index => $value) {
+        $planTime = date("Y-m-d", $value['end_time']);
+		if (empty($documents[$planTime])) {
+			$documents[$planTime]=1;
+        }
+		else{
+			$documents[$planTime] += 1;
+		}
+    }
+    return $documents;
+}
+
+//工时登记情况统计
+function hour_count($arrData)
+{
+    $documents = array();
+    foreach ($arrData as $index => $value) {
+        $hourTime = date("Y-m-d", $value['start_time']);
+		if (empty($documents[$hourTime])) {
+			$documents[$hourTime]=$value['labor_time']+0;
+        }
+		else{
+			$documents[$hourTime] += $value['labor_time'];
+		}
+		$documents[$hourTime] = round($documents[$hourTime],2);
+    }
+    return $documents;
+}
+
+//燃尽图统计
+function cross_count($arrData)
+{
+    $documents = array();
+    foreach ($arrData as $index => $value) {
+        $planTime = date("Y-m-d", $value['end_time']);
+		if (empty($documents[$planTime])) {
+			$documents[$planTime]=1;
+        }
+		else{
+			$documents[$planTime] += 1;
+		}
+    }
+    return $documents;
+}
+
 /**
  * 截取文章摘要
  *  @return bool

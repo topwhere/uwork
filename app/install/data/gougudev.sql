@@ -669,6 +669,7 @@ CREATE TABLE `dev_task`  (
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `plan_hours` decimal(10, 1) NOT NULL DEFAULT 0.00 COMMENT '预估工时',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计结束时间',
+  `over_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '实际结束时间',
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
   `assist_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '协助人员，如:1,2,3',
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类别:0其他,1UI设计,2产品原型,3技术开发,4测试,5编写文档,6沟通,7会议,8调研',

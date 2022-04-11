@@ -63,7 +63,14 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>项目进度</h5></div>
 					<div class="layui-card-body">
-						<div id="pie" style="width:100%; height:200px;"></div>
+						<div class="layui-row">
+						  <div class="layui-col-md6">
+							<div id="progress" style="width:100%; height:200px;"></div>
+						  </div>
+						  <div class="layui-col-md6">
+							<div id="delay" style="width:100%; height:200px;"></div>
+						  </div>
+						</div>						
 					</div>
 				</div>
 			</div>
@@ -117,41 +124,98 @@
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 var project_id = '{$detail.id}';
-var chartPie = document.getElementById('pie');
-var pieChart = echarts.init(chartPie);
-var optionA;
 
+var chartProgress = document.getElementById('progress');
+var progressChart = echarts.init(chartProgress);
+var optionA;
 optionA = {
-  tooltip: {
-    trigger: 'item'
-  },
-  legend: {
-    orient: 'vertical',
-    left: 'left'
-  },
-  series: [
+	title: {
+      text:'67.45%',//主标题文本
+      subtext:'任务完成率',//副标题文本
+      x: 'center',
+      y: '39%',
+      textStyle:{
+        fontWeight: 'normal',
+        fontSize: 18,
+        color:'#FF974C',
+        align:'center'
+      },
+      subtextStyle:{
+        fontSize: 12,
+        color:'#6c7a89',
+      }
+    },
+    tooltip: {
+      trigger: "item",
+      formatter: '{b}：<br/><strong>{c}</strong>',
+      show: true,
+    },
+	series: [
     {
-      name: '工时',
       type: 'pie',
       radius: ['60%', '80%'],
-	  center: ['60%', '50%'],
+	  center: ['50%', '50%'],
       avoidLabelOverlap: false,
       label: {
-        show: false,
-        position: 'center'
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '20',
-          fontWeight: 'bold'
-        }
+        show: false
       },
       data: [
-        { value: 1048, name: 'TODO' },
-        { value: 735, name: 'DOING' },
-        { value: 580, name: 'DONGE' },
-        { value: 484, name: 'CLOSE' }
+        { value: 1048, name: '待处理' },
+        { value: 735, name: '已完成' }
+      ]
+    }
+  ]
+};
+
+var chartDelay = document.getElementById('delay');
+var delayChart = echarts.init(chartDelay);
+var optionB;
+optionB = {
+	title: {
+      text:'40.25%',//主标题文本
+      subtext:'任务延迟率',//副标题文本
+      x: 'center',
+      y: '39%',
+      textStyle:{
+        fontWeight: 'normal',
+        fontSize: 18,
+        color:'#FF974C',
+        align:'center',
+        marginLeft:'-10px'
+      },
+      subtextStyle:{
+        fontSize: 12,
+        color:'#6c7a89',
+      }
+    },
+    tooltip: {
+      trigger: "item",
+      formatter: '{b}：<br/><strong>{c}</strong>',
+      show: true,
+    },
+	series: [
+    {
+      type: 'pie',
+      radius: ['60%', '80%'],
+	  center: ['50%', '50%'],
+      avoidLabelOverlap: false,
+      label: {
+        show: false
+      },
+      data: [{
+			value: 1048,
+			name: '延误',
+			itemStyle: {
+              color: "#ED6666",
+            }
+		},
+        { 
+			value: 735, 
+			name: '按时完成',
+			itemStyle: {
+              color: "#91CC75",
+            }
+		}
       ]
     }
   ]
@@ -160,9 +224,9 @@ optionA = {
 
 var chartRose = document.getElementById('rose');
 var roseChart = echarts.init(chartRose);
-var optionB;
+var optionC;
 
-optionB = {
+optionC = {
   legend: {
     orient: 'vertical',
     left: 'left'
@@ -185,7 +249,6 @@ optionB = {
         { value: 40, name: '待解决'},
         { value: 38, name: '进行中' },
         { value: 32, name: '已解决' },
-        { value: 30, name: '暂缓' },
         { value: 28, name: '不解决' },
         { value: 26, name: '已关闭' }
       ]
@@ -196,9 +259,9 @@ optionB = {
 
 var chartCross = document.getElementById('cross');
 var crossChart = echarts.init(chartCross);
-var optionC;
+var optionD;
 
-optionC = {
+optionD = {
   title: {
     text: ''
   },
@@ -212,7 +275,7 @@ optionC = {
     }
   },
   legend: {
-    data: ['计划线', '实际线']
+    data: ['计划剩余', '实际剩余']
   },
   grid: {
     left: '8px',
@@ -248,7 +311,7 @@ optionC = {
   ],
   series: [
     {
-      name: '计划线',
+      name: '计划剩余',
       type: 'line',
       stack: 'Total',
       areaStyle: {},
@@ -258,7 +321,7 @@ optionC = {
       data: [70, 60, 50, 40, 30, 20, 10]
     },
     {
-      name: '实际线',
+      name: '实际剩余',
       type: 'line',
       stack: 'Total',
       areaStyle: {},
@@ -273,9 +336,9 @@ optionC = {
 
 var chartPlan = document.getElementById('plan');
 var planChart = echarts.init(chartPlan);
-var optionD;
+var optionE;
 
-optionD = {
+optionE = {
 	title: {
 		top: 0,
 		left: 0,
@@ -337,9 +400,9 @@ optionD = {
 
 var chartWork = document.getElementById('work');
 var workChart = echarts.init(chartWork);
-var optionE;
+var optionF;
 
-optionE = {
+optionF = {
 	title: {
 		top: 0,
 		left: 0,
@@ -490,12 +553,13 @@ function init(layui) {
 		$(this).addClass('active');
 		gougu.page(page);
 	})
-	optionA && pieChart.setOption(optionA);
-	optionB && roseChart.setOption(optionB);
+	optionA && progressChart.setOption(optionA);
+	optionB && delayChart.setOption(optionB);
+	optionC && roseChart.setOption(optionC);
 	let callback=function(res){	
 		if(res.data.date_tasks instanceof Array == false){
-			var dataC = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
-			optionC.xAxis = {
+			var dataD = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
+			optionD.xAxis = {
 				type: 'category',
 				boundaryGap: true,
 				splitLine: {
@@ -504,48 +568,49 @@ function init(layui) {
 						type: 'dashed'
 					}
 				},
-				data: dataC.x,
+				data: dataD.x,
 				axisLabel : {rotate: 30}
 			};
-			optionC.series = [
+			optionD.series = [
 				{
 				  name: '计划剩余',
 				  type: 'line',
 				  areaStyle: {},
-				  data: dataC.y
+				  data: dataD.y
 				},
 				{
 				  name: '实际剩余',
 				  type: 'line',
 				  areaStyle: {},
-				  data: dataC.y2
+				  data: dataD.y2
 				}
 			]
-			optionC && crossChart.setOption(optionC)
+			optionD && crossChart.setOption(optionD)
 		
-			var dataD = getCalendarData(res.data.date_tasks);
-			optionD.calendar.range = dataD.range,
-			optionD.series={
-				type: 'heatmap',
-				coordinateSystem: 'calendar',
-				data: dataD.data
-			}
-			optionD && planChart.setOption(optionD);
-			
-			var dataE = getCalendarData(res.data.date_schedules);
+			var dataE = getCalendarData(res.data.date_tasks);
 			optionE.calendar.range = dataE.range,
 			optionE.series={
 				type: 'heatmap',
 				coordinateSystem: 'calendar',
 				data: dataE.data
 			}
-			optionE && workChart.setOption(optionE);
+			optionE && planChart.setOption(optionE);
+			
+			var dataF = getCalendarData(res.data.date_schedules);
+			optionF.calendar.range = dataF.range,
+			optionF.series={
+				type: 'heatmap',
+				coordinateSystem: 'calendar',
+				data: dataE.data
+			}
+			optionF && workChart.setOption(optionF);
 		}
 	}
 	gougu.get('/api/project/get_chart_data',{'project_id':project_id},callback);	
 	
 	window.onresize = function() {
-		pieChart.resize();
+		progressChart.resize();
+		delayChart.resize();
 		roseChart.resize();
 		crossChart.resize();
 		planChart.resize();

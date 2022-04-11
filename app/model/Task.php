@@ -24,13 +24,19 @@ class Task extends Model
 	];
 	public static $FlowStatus = [
 		self::ZERO => '未设置',
-		self::ONE => 'TODO',
-		self::TWO => 'DOING',
-		self::THREE => 'DONE',
-		self::FOUR => 'CLOSE',
+		self::ONE => '代办的',
+		self::TWO => '进行中',
+		self::THREE => '已完成',
+		self::FOUR => '已拒绝',
+		self::FIVE => '已关闭',
 	];
 	
 	public static $Type = [
+		self::ZERO => '未设置',
+		self::ONE => '任务',
+		self::TWO => '缺陷',
+	];
+	public static $Cate = [
 		self::ZERO => '其他',
 		self::ONE => 'UI设计',
 		self::TWO => '产品原型',
@@ -64,6 +70,7 @@ class Task extends Model
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
 			$detail['type_name'] = self::$Type[(int)$detail['type']];
+			$detail['cate_name'] = self::$Cate[(int)$detail['cate']];
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
 			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count()+1;
 			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'status'=>1,'topic_id' => $detail['id']])->count();

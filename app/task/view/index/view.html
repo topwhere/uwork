@@ -17,7 +17,13 @@
 					<td class="layui-td-gray">负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="director_uid"></i></td>
 					<td class="layui-td-gray">协作人</td>
-					<td class="hover-edit"><span id="assist_admin_ids_{$detail.id}" data-val="{$detail.assist_admin_ids}">{$detail.assist_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="assist_admin_ids"></i></td>
+					<td class="hover-edit" colspan="3"><span id="assist_admin_ids_{$detail.id}" data-val="{$detail.assist_admin_ids}">{$detail.assist_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="assist_admin_ids"></i></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">任务类别</td>
+					<td class="hover-edit"><span id="cate_{$detail.id}" data-val="{$detail.cate}">{$detail.cate_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="cate"></i></td>
+					<td class="layui-td-gray">任务类型</td>
+					<td class="hover-edit"><span id="type_{$detail.id}" data-val="{$detail.type}">{$detail.type_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="type"></i></td>
 					<td class="layui-td-gray">任务状态</td>
 					<td class="hover-edit">
 						<span class="color-flow-{$detail.flow_status}" id="flow_status_{$detail.id}" data-val="{$detail.flow_status}">{$detail.flow_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="flow_status"></i>
@@ -70,10 +76,6 @@
 			</div>
 		</div>
 		<div class="layui-col-md3 p-4">
-			<div class="pb-4 hover-edit">
-				<p class="font-gray mb-2">任务类型：</p>
-				<span id="type_{$detail.id}" data-val="{$detail.type}">{$detail.type_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="type"></i>
-			</div>
 			<div class="pb-4 hover-edit">
 				<p class="font-gray mb-2">关联产品：</p>
 				<span id="product_id_{$detail.id}" data-val="{$detail.product_id}">
@@ -137,12 +139,13 @@ function openInit() {
 	const detail_id='{$detail.id}';
 	const opsData={
 		flow_status:[
-			{'id':1,'title':'TODO'},
-			{'id':2,'title':'DOING'},
-			{'id':3,'title':'DONE'},
-			{'id':4,'title':'CLOSE'}
+			{'id':1,'title':'代办的'},
+			{'id':2,'title':'进行中'},
+			{'id':3,'title':'已完成'},
+			{'id':4,'title':'不解决'},
+			{'id':5,'title':'已关闭'}
 		],
-		type:[
+		cate:[
 			{'id':0,'title':'其他'},
 			{'id':1,'title':'UI设计'},
 			{'id':2,'title':'技术开发'},
@@ -152,6 +155,10 @@ function openInit() {
 			{'id':6,'title':'沟通'},
 			{'id':7,'title':'会议'},
 			{'id':8,'title':'调研'}
+		],
+		type:[
+			{'id':1,'title':'任务'},
+			{'id':2,'title':'缺陷'},
 		],
 		priority:[
 			{'id':1,'title':'低'},
@@ -293,7 +300,7 @@ function openInit() {
 		if(name =="assist_admin_ids"){
 			edit.employee_more(id,name,show_txt,real_txt,editPost);
 		}
-		if(name=="flow_status" || name=="type" || name=="priority"){	
+		if(name=="flow_status" || name=="type" || name=="cate" || name=="priority"){	
 			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
 		}
 		if(name=="product_id"){	

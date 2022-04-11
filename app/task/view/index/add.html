@@ -3,7 +3,7 @@
 	<table class="layui-table layui-table-form">
 		<tr>
 			<td class="layui-td-gray">任务主题<font>*</font></td>
-			<td colspan="3">
+			<td colspan="5">
 				<input type="text" name="title" lay-verify="required" lay-reqText="请输入任务主题" placeholder="请输入任务主题" class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>		
@@ -23,7 +23,7 @@
 				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">协作人<font>*</font></td>
-			<td colspan="3">
+			<td colspan="5">
 				<input type="hidden" name="assist_admin_ids" lay-verify="required" readonly lay-reqText="请选择协作人" value="">
 				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
 			</td>
@@ -44,7 +44,13 @@
 					<option value="8">调研</option>					
 				</select>		
 			</td>	
-
+			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>		
+			<td>
+				<select name="priority" lay-verify="required" lay-reqText="请选择任务类型">
+					<option value="1">任务</option>
+					<option value="2">缺陷</option>	
+				</select>	
+			</td>
 			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>
 			<td>
 				<input type="text" name="plan_hours" lay-verify="required" lay-reqText="请填写预估工时" placeholder="请填写预估工时" class="layui-input" value="">
@@ -66,7 +72,7 @@
 				</select>
 			</td>
 			<td class="layui-td-gray">关联需求</td>
-			<td colspan="3">
+			<td colspan="5">
 				<select id="requirementsId" name="requirements_id">
 					<option value="">请先选择关联的项目</option>
 				</select>
@@ -75,7 +81,7 @@
 		{else/}
 		<tr>
 			<td class="layui-td-gray">关联需求</td>
-			<td colspan="5">
+			<td colspan="7">
 				<input type="hidden" name="project_id" value="{$project_id}">
 				<select id="requirementsId" name="requirements_id">
 				{volist name=":get_requirements($project_id)" id="v"}

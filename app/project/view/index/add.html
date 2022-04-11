@@ -40,14 +40,13 @@
 				<input type="text" id="team_admin_names" name="team_admin_names"  placeholder="请选择项目成员" readonly class="layui-input" value="">
 			</td>
 		</tr>
+		<tr>
+			<td class="layui-td-gray">项目简介<span style="color: red">*</span></td>
+			<td colspan="3">
+				<textarea name="content" class="layui-textarea" lay-verify="required" lay-reqText="请完善项目简介"></textarea>
+			</td>
+		</tr>
 	</table>
-	<div>
-		<div style="padding:10px 0">项目描述<span style="color: red">*</span></div>
-		<div>
-			<textarea id="mdContent" style="display:none;"></textarea>
-			<div id="docContent"></div>
-		</div>
-	</div>
 	<div style="padding: 10px 0">
 		<input type="hidden" name="id" value="0" />
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
@@ -56,7 +55,7 @@
 </form>
 
 <script>
-	function openInit() {
+function openInit() {
 		var form = layui.form,
 			layer = layui.layer,
 			gougu = layui.gougu,

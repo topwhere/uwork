@@ -11,7 +11,7 @@ namespace app\project\controller;
 
 use app\base\BaseController;
 use app\model\Project as ProjectList;
-use app\Project\validate\ProjectCheck;
+use app\project\validate\ProjectCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;
@@ -23,7 +23,7 @@ class Index extends BaseController
         if (request()->isAjax()) {
             $param = get_params();
             $where = array();
-            $where[] = ['status', '>=', 0];
+            $where[] = ['delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = ProjectList::where($where)
                 ->withoutField('content,md_content')
@@ -36,7 +36,7 @@ class Index extends BaseController
 					
 					$requirements_map_a=[];
 					$requirements_map_a[]=['project_id','=',$item->id];
-					$requirements_map_a[]=['status','=',1];
+					$requirements_map_a[]=['delete_time','=',0];
 					$requirements_map_b=$requirements_map_a;
 					$requirements_map_a[]=['flow_status','<',8];
 					$item->requirements_a = Db::name('Requirements')->where($requirements_map_a)->count();
@@ -51,7 +51,7 @@ class Index extends BaseController
 					$task_map_a =[];
 					$task_map_a[] = ['project_id','=',$item->id];
 					$task_map_a[] = ['test_id','=',0];
-					$task_map_a[] = ['status','=',1];
+					$task_map_a[] = ['delete_time','=',0];
 					$task_map_b = $task_map_a;
 					$task_map_a[]=['flow_status','<',4];
 					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
@@ -66,7 +66,7 @@ class Index extends BaseController
 					$bug_map_a =[];
 					$bug_map_a[] = ['project_id','=',$item->id];
 					$bug_map_a[] = ['test_id','>',0];
-					$bug_map_a[] = ['status','=',1];
+					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
 					$bug_map_a[]=['flow_status','<',4];
 					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();

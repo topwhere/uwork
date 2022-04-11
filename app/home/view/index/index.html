@@ -24,7 +24,12 @@
 									<th style="text-align:center">发布时间</th>
 								</tr> 
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="note_list"}
+								<tr>									
+									<td colspan="4"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="note_list" id="vo"}
 								<tr>
 								  <td align="center">N{$vo.id}</td>
@@ -66,7 +71,12 @@
 									<th style="text-align:center">关联BUG</th>
 								</tr> 
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="product_list"}
+								<tr>									
+									<td colspan="9"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="product_list" id="vo"}
 								<tr>
 								  <td align="center">P{$vo.id}</td>
@@ -111,7 +121,12 @@
 									<th style="text-align:center">计划工期</th>
 								</tr> 
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="project_list"}
+								<tr>									
+									<td colspan="8"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="project_list" id="vo"}
 								<tr>
 								  <td align="center">M{$vo.id}</td>
@@ -149,7 +164,12 @@
 									<th style="text-align:center">计划工期</th>
 								</tr> 
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="requirements_list"}
+								<tr>									
+									<td colspan="5"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="requirements_list" id="vo"}
 								<tr>
 								  <td align="center">R{$vo.id}</td>
@@ -188,7 +208,12 @@
 									<th style="text-align:center">计划完成日期</th>
 								</tr> 
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="task_list"}
+								<tr>									
+									<td colspan="7"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="task_list" id="vo"}
 								<tr>
 								  <td align="center">T{$vo.id}</td>
@@ -225,7 +250,12 @@
 									<th style="text-align:center">创建时间</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody class="layui-table-body">
+								{empty name="knowledge_list"}
+								<tr>									
+									<td colspan="5"><div class="layui-none">无数据</div></td>
+								</tr>
+								{/empty}
 								{volist name="knowledge_list" id="vo"}
 								<tr>
 								  <td align="center">K{$vo.id}</td>

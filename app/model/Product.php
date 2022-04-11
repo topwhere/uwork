@@ -26,11 +26,11 @@ class Product extends Model
 			$detail['status_name'] = self::$Status[(int)$detail['status']];
 			$detail['times'] = time_trans($detail['create_time']);
 			$detail['logs'] = Db::name('Log')->where(['module' => 'product','product_id' => $detail['id']])->count()+1;
-			$detail['comments'] = Db::name('Comment')->where(['module' => 1,'status'=>1,'topic_id' => $detail['id']])->count();
-			$detail['projects'] = Db::name('Project')->where(['status'=>1,'product_id' => $detail['id']])->count();
-			$detail['requirements'] = Db::name('Requirements')->where(['status'=>1,'project_id' => $detail['id']])->count();
+			$detail['comments'] = Db::name('Comment')->where(['module' => 1,'delete_time'=>0,'topic_id' => $detail['id']])->count();
+			$detail['projects'] = Db::name('Project')->where(['delete_time'=>0,'product_id' => $detail['id']])->count();
+			$detail['requirements'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->count();
 			$map =[];
-			$map[] = ['status','=',1];
+			$map[] = ['delete_time','=',0];
 			$map[] = ['product_id','=',$detail['id']];
 			$map[] = ['test_id','=',0];
 			$detail['tasks'] = Db::name('Task')->where($map)->count();

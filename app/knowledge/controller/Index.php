@@ -29,7 +29,7 @@ class Index extends BaseController
             if (!empty($param['cate_id'])) {
                 $where[] = ['a.cate_id', '=', $param['cate_id']];
             }
-            $where[] = ['a.status', '>=', 0];
+            $where[] = ['a.delete_time', '=', 0];
             $where[] = ['a.admin_id', '=', $this->uid];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $content = KnowledgeList::where($where)

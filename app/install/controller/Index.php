@@ -26,6 +26,8 @@ class Index
 
     public function index()
     {
+		$TP_version = \think\facade\App::version();
+		View::assign('TP_version',$TP_version);
         return view('step1');
     }
 

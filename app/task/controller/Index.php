@@ -26,7 +26,7 @@ class Index extends BaseController
 			if(!empty($param['project_id'])){
 				$where[] = ['project_id', '=', $param['project_id']];
 			}
-            $where[] = ['status', '>=', 0];
+            $where[] = ['delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = TaskList::where($where)
                 ->withoutField('content,md_content')

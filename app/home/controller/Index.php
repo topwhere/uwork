@@ -43,32 +43,32 @@ class Index extends BaseController
 				$note_list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
 			}
 			
-			$product_list = Db::name('Product')->where([['director_uid','<>',$this->uid],['status','>=',0]])->select()->toArray();
+			$product_list = Db::name('Product')->where([['director_uid','<>',$this->uid],['delete_time','=',0]])->select()->toArray();
 			foreach ($product_list as $k => &$v) {
 				$v['director_name'] = Db::name('Admin')->where(['id' => $v['director_uid']])->value('name');
 				$v['test_name'] = Db::name('Admin')->where(['id' => $v['test_uid']])->value('name');
 				$v['status_name'] = Product::$Status[(int)$v['status']];
-				$v['projects'] = Db::name('Project')->where(['status'=>1,'product_id' => $v['id']])->count();
+				$v['projects'] = Db::name('Project')->where(['delete_time'=>0,'product_id' => $v['id']])->count();
 				
 				$requirements_map=[];
 				$requirements_map[]=['product_id','=',$v['id']];
-				$requirements_map[]=['status','=',1];
+				$requirements_map[]=['delete_time','=',0];
 				$v['requirements'] = Db::name('Requirements')->where($requirements_map)->count();				
 					
 				$task_map = [];
 				$task_map[] = ['product_id','=',$v['id']];
 				$task_map[] = ['test_id','=',0];
-				$task_map[] = ['status','=',1];
+				$task_map[] = ['delete_time','=',0];
 				$v['tasks'] = Db::name('Task')->where($task_map)->count();
 					
 				$bug_map =[];
 				$bug_map[] = ['product_id','=',$v['id']];
 				$bug_map[] = ['test_id','>',0];
-				$bug_map[] = ['status','=',1];
+				$bug_map[] = ['delete_time','=',0];
 				$v['bugs'] = Db::name('Task')->where($bug_map)->count();
 			}
 			
-			$project_list = Db::name('Project')->where([['director_uid','<>',$this->uid],['status','>=',0]])->select()->toArray();
+			$project_list = Db::name('Project')->where([['director_uid','<>',$this->uid],['delete_time','=',0]])->select()->toArray();
 			foreach ($project_list as $k => &$v) {
 				$v['director_name'] = Db::name('Admin')->where(['id' => $v['director_uid']])->value('name');
 				$v['status_name'] = Project::$Status[(int)$v['status']];
@@ -76,30 +76,30 @@ class Index extends BaseController
 				
 				$requirements_map=[];
 				$requirements_map[]=['project_id','=',$v['id']];
-				$requirements_map[]=['status','=',1];
+				$requirements_map[]=['delete_time','=',0];
 				$v['requirements'] = Db::name('Requirements')->where($requirements_map)->count();				
 					
 				$task_map = [];
 				$task_map[] = ['project_id','=',$v['id']];
 				$task_map[] = ['test_id','=',0];
-				$task_map[] = ['status','=',1];
+				$task_map[] = ['delete_time','=',0];
 				$v['tasks'] = Db::name('Task')->where($task_map)->count();
 					
 				$bug_map =[];
 				$bug_map[] = ['project_id','=',$v['id']];
 				$bug_map[] = ['test_id','>',0];
-				$bug_map[] = ['status','=',1];
+				$bug_map[] = ['delete_time','=',0];
 				$v['bugs'] = Db::name('Task')->where($bug_map)->count();
 			}
 			
-			$requirements_list = Db::name('Requirements')->where([['director_uid','<>',$this->uid],['status','=',1]])->select()->toArray();
+			$requirements_list = Db::name('Requirements')->where([['director_uid','<>',$this->uid],['delete_time','=',0]])->select()->toArray();
 			foreach ($requirements_list as $k => &$v) {
 				$v['plan_time'] = date('Y-m-d', $v['start_time']) .'至'.date('Y-m-d', $v['end_time']);
 				$v['priority_name'] = Requirements::$Priority[(int)$v['priority']];
 				$v['flow_name'] = Requirements::$FlowStatus[(int)$v['flow_status']];
 			}
 			
-			$task_list = Db::name('Task')->where([['director_uid','<>',$this->uid],['flow_status','<',4],['status','=',1]])->select()->toArray();
+			$task_list = Db::name('Task')->where([['director_uid','<>',$this->uid],['flow_status','<',4],['delete_time','=',0]])->select()->toArray();
 			foreach ($task_list as $k => &$v) {
 				$v['end_time'] = date('Y-m-d',$v['end_time']);
 				$v['priority_name'] = Task::$Priority[(int)$v['priority']];
@@ -107,17 +107,17 @@ class Index extends BaseController
 				$v['type_name'] = Task::$Type[(int)$v['type']];
 			}
 			
-			$knowledge_list = Db::name('Knowledge')->where([['is_share','=',1],['status','=',1]])->select()->toArray();
+			$knowledge_list = Db::name('Knowledge')->where([['is_share','=',1],['delete_time','=',0]])->select()->toArray();
 			foreach ($knowledge_list as $k => &$v) {
 				$v['create_time'] = date('Y-m-d H:i',$v['create_time']);
 				$v['admin_name'] = Db::name('Admin')->where(['id' => $v['admin_id']])->value('name');
 				$v['cate_name'] = Db::name('KnowledgeCate')->where(['id'=>$v['cate_id']])->value('title');
 			}
 			
-			$count_product = Db::name('Product')->where([['status','>=',0]])->count();
-			$count_projects = Db::name('Project')->where([['status','>=',0]])->count();
-			$count_requirements = Db::name('Requirements')->where(['status'=>1])->count();
-			$count_task = Db::name('Task')->where(['status'=>1])->count();
+			$count_product = Db::name('Product')->where(['delete_time'=>0])->count();
+			$count_projects = Db::name('Project')->where(['delete_time'=>0])->count();
+			$count_requirements = Db::name('Requirements')->where(['delete_time'=>0])->count();
+			$count_task = Db::name('Task')->where(['delete_time'=>0])->count();
 			View::assign([
 				'install' => $install,
 				'note_list' => $note_list,

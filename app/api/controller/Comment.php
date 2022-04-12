@@ -51,9 +51,8 @@ class Comment extends BaseController
     {
 		if (request()->isDelete()) {
 			$id = get_params("id");
-			$data['status'] = '-1';
+			$data['delete_titme'] = time();
 			$data['id'] = $id;
-			$data['update_time'] = time();
 			if (CommentList::update($data) !== false) {
 				add_log('delete', $id);
 				return to_assign(0, "删除成功");

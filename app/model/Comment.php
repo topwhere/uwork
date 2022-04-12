@@ -17,7 +17,7 @@ class Comment extends Model
         $where = array();
         $where['a.module'] = $param['m'];
 		$where['a.topic_id'] = $param['tid'];
-        $where['a.status'] = 1;
+        $where['a.delete_time'] = 0;
        // $rows = empty($param['limit']) ? get_config('app.pages') : $param['limit'];
         $content = \think\facade\Db::name('Comment')
 			->field('a.*,u.name,u.thumb,pu.name as pname')

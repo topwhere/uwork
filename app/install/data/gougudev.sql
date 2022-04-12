@@ -379,12 +379,12 @@ CREATE TABLE `dev_note`  (
   `content` text NOT NULL COMMENT '内容',
   `md_content` text NOT NULL COMMENT 'markdown内容',
   `src` varchar(100) NULL DEFAULT NULL COMMENT '关联链接',
-  `status` int(1) NOT NULL DEFAULT 1 COMMENT '1可用-1禁用',
   `sort` int(11) NOT NULL DEFAULT 0,
   `start_time` int(11) NOT NULL DEFAULT 0 COMMENT '展示开始时间',
   `end_time` int(11) NOT NULL DEFAULT 0 COMMENT '展示结束时间',
   `create_time` int(11) NOT NULL DEFAULT 0,
   `update_time` int(11) NOT NULL DEFAULT 0,
+  `delete_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '公告';
 

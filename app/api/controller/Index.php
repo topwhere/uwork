@@ -220,7 +220,7 @@ class Index extends BaseController
     //获取产品列表
     public function get_product()
     {
-        $product = Db::name('Product')->field('id,name as title')->where([['status', '=', 1]])->select();
+        $product = Db::name('Product')->field('id,name as title')->where([['delete_time', '=', 0]])->select();
         return to_assign(0, '', $product);
     }
 	
@@ -228,7 +228,7 @@ class Index extends BaseController
     public function get_project($pid=0)
     {
 		$where = [];
-		$where[] = ['status', '=', 1];
+		$where[] = ['delete_time', '=', 0];
 		if($pid>0){
 			$where[] = ['product_id', '=', $pid];
 		}
@@ -240,7 +240,7 @@ class Index extends BaseController
     public function get_requirements($pid=0)
     {
 		$where = [];
-		$where[] = ['status', '=', 1];
+		$where[] = ['delete_time', '=', 0];
 		if($pid>0){
 			$where[] = ['project_id', '=', $pid];
 		}
@@ -253,14 +253,14 @@ class Index extends BaseController
     public function get_doc_list($kid = 0,$tree=0)
     {
 		if($tree==2){
-			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
+			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'delete_time' => 0])
 					->field('id,pid as pId,title as name,type,link,knowledge_id,sort')
 					->order('sort asc,id asc')
 					->select();
 			return to_assign(0, '', $list);
 		}
 		else{
-			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])
+			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'delete_time' => 0])
 					->field('id,pid,title,type,knowledge_id,sort')
 					->order('sort asc,id asc')
 					->select();

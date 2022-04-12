@@ -9,8 +9,9 @@ declare (strict_types = 1);
 
 namespace app\home\controller;
 use app\base\BaseController;
-use app\home\validate\AdminCheck;
+use app\admin\validate\AdminCheck;
 use think\exception\ValidateException;
+use think\facade\Session;
 use think\facade\Db;
 use think\facade\View;
 
@@ -68,7 +69,7 @@ class User extends BaseController
             return to_assign();
         }
 		else{
-			return view('user@user/edit_password', [
+			return view('', [
 				'admin' => get_admin($this->uid),
 			]);
 		}

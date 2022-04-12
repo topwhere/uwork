@@ -9,7 +9,7 @@
 {block name="body"}
 <div class="table-content p-3">
 	<div class="layui-form-bar border-t border-x">
-		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 添加产品</button>
+		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建产品</button>
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
@@ -36,7 +36,7 @@
 				{field:'id', title: '产品编号',width: 90, align:'center',fixed:'left',rowspan: 2,templet:function(d){
 					return 'P'+d.id;
 				}}
-				,{field:'status',title: '产品状态',align:'center',width: 90,rowspan: 2,templet:function(d){
+				,{field:'status',title: '状态',align:'center',width: 60,rowspan: 2,templet:function(d){
 					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
 				}}
@@ -50,15 +50,15 @@
 
 				,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 			], [
-				{field:'requirements_a',align:'center', width:80,'title':'进行中'}
-				,{field:'requirements_b',align:'center', width:80,'title':'已完成'}
-				,{field:'requirements_c',align:'center', width:80,'title':'完成率'}
-				,{field:'tasks_a',align:'center', width:80,'title':'进行中'}
-				,{field:'tasks_b',align:'center', width:80,'title':'已完成'}
-				,{field:'tasks_c',align:'center', width:80,'title':'完成率'}
-				,{field:'bugs_a',align:'center', width:80,'title':'进行中'}
-				,{field:'bugs_b',align:'center', width:80,'title':'已完成'}
-				,{field:'bugs_c',align:'center', width:80,'title':'修复率'}
+				{field:'requirements_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
+				,{field:'requirements_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
+				,{field:'requirements_c',align:'center', style:'color: #EE6666;', width:80,'title':'完成率'}
+				,{field:'tasks_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
+				,{field:'tasks_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
+				,{field:'tasks_c',align:'center', style:'color: #EE6666;', width:80,'title':'完成率'}
+				,{field:'bugs_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
+				,{field:'bugs_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
+				,{field:'bugs_c',align:'center', style:'color: #EE6666;', width:80,'title':'修复率'}
 			]]
 		});
 		

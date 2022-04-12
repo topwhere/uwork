@@ -253,6 +253,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .main-content{position: relative; padding:0; height:100%; box-sizing: border-box;}
 .table-content{background-color:#F5F8FA;height:100%; box-sizing: border-box;}
 .card-content{padding:10px; background-color:#F5F8FA}
+.box-800{width:800px; margin:0 auto;}
 
 .sub-menu{position:relative;}
 .sub-menu .line {right:0; border-right: 1px solid #e5ecf0; bottom: 0; height: 100%; position: absolute;top: 0; transition: border-color .2s ease 0s; width: 0;}

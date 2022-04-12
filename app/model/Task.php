@@ -24,7 +24,7 @@ class Task extends Model
 	];
 	public static $FlowStatus = [
 		self::ZERO => '未设置',
-		self::ONE => '代办的',
+		self::ONE => '待办的',
 		self::TWO => '进行中',
 		self::THREE => '已完成',
 		self::FOUR => '已拒绝',
@@ -73,7 +73,7 @@ class Task extends Model
 			$detail['cate_name'] = self::$Cate[(int)$detail['cate']];
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
 			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count()+1;
-			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'status'=>1,'topic_id' => $detail['id']])->count();
+			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'delete_time'=>0,'topic_id' => $detail['id']])->count();
         }
         return $detail;
     }

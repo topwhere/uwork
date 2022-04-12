@@ -11,7 +11,7 @@ namespace app\requirements\controller;
 
 use app\base\BaseController;
 use app\model\Requirements as RequirementsList;
-use app\Requirements\validate\RequirementsCheck;
+use app\requirements\validate\RequirementsCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;

@@ -26,7 +26,7 @@ class Note extends BaseController
             if (!empty($param['keywords'])) {
                 $where[] = ['a.title|a.content', 'like', '%' . $param['keywords'] . '%'];
             }
-            $where[] = ['a.status', '>=', 0];
+            $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $note = NoteList::where($where)
                 ->field('a.*,c.title as cate_title')
@@ -122,9 +122,8 @@ class Note extends BaseController
     {
 		if (request()->isDelete()) {
 			$id = get_params("id");
-			$data['status'] = '-1';
+			$data['delete_time'] = time();
 			$data['id'] = $id;
-			$data['update_time'] = time();
 			if (Db::name('Note')->update($data) !== false) {
 				add_log('delete', $id);
 				return to_assign(0, "删除成功");

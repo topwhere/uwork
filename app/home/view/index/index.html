@@ -18,7 +18,7 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">编号ID</th>
 									<th>公告分类</th>
 									<th>公告标题</th>
 									<th style="text-align:center">发布时间</th>
@@ -53,22 +53,22 @@
 								<col>
 								<col width="80">
 								<col width="100">
-								<col width="80">
-								<col width="80">
-								<col width="80">
-								<col width="80">
+								<col width="60">
+								<col width="60">
+								<col width="60">
+								<col width="60">
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">编号ID</th>
 									<th style="text-align:center">状态</th>
 									<th>产品主题</th>
 									<th style="text-align:center">负责人</th>
 									<th style="text-align:center">测试负责人</th>
-									<th style="text-align:center">关联项目</th>
-									<th style="text-align:center">关联需求</th>
-									<th style="text-align:center">关联任务</th>
-									<th style="text-align:center">关联BUG</th>
+									<th style="text-align:center">项目</th>
+									<th style="text-align:center">需求</th>
+									<th style="text-align:center">任务</th>
+									<th style="text-align:center">BUG</th>
 								</tr> 
 							</thead>
 							<tbody class="layui-table-body">
@@ -104,20 +104,20 @@
 								<col width="70">
 								<col>
 								<col width="80">
-								<col width="80">
-								<col width="80">
-								<col width="80">
+								<col width="60">
+								<col width="60">
+								<col width="60">
 								<col width="180">
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">编号ID</th>
 									<th style="text-align:center">状态</th>
 									<th>项目主题</th>
 									<th style="text-align:center">负责人</th>
-									<th style="text-align:center">关联需求</th>
-									<th style="text-align:center">关联任务</th>
-									<th style="text-align:center">关联BUG</th>
+									<th style="text-align:center">需求</th>
+									<th style="text-align:center">任务</th>
+									<th style="text-align:center">BUG</th>
 									<th style="text-align:center">计划工期</th>
 								</tr> 
 							</thead>
@@ -152,15 +152,15 @@
 								<col width="80">
 								<col width="70">
 								<col>
-								<col width="80">
+								<col width="70">
 								<col width="180">
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">编号ID</th>
+									<th style="text-align:center">状态</th>
+									<th>需求主题</th>									
 									<th style="text-align:center">优先级</th>
-									<th>任务主题</th>
-									<th style="text-align:center">需求状态</th>
 									<th style="text-align:center">计划工期</th>
 								</tr> 
 							</thead>
@@ -173,9 +173,9 @@
 								{volist name="requirements_list" id="vo"}
 								<tr>
 								  <td align="center">R{$vo.id}</td>
-								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
+								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.flow_name}</span></td>
 								  <td>{$vo.title}</td>
-								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
+								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.plan_time}</td>
 								</tr>
 								{/volist}
@@ -190,20 +190,20 @@
 						<table class="layui-table">
 						  <colgroup>
 								<col width="80">
-								<col width="70">
-								<col width="80">
+								<col width="70">								
 								<col>
-								<col width="80">
+								<col width="70">
+								<col width="60">
 								<col width="80">
 								<col width="110">
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
-									<th style="text-align:center">优先级</th>
-									<th style="text-align:center">任务类型</th>
+									<th style="text-align:center">编号ID</th>
+									<th style="text-align:center">状态</th>									
 									<th>任务主题</th>
-									<th style="text-align:center">任务状态</th>
+									<th style="text-align:center">优先级</th>
+									<th style="text-align:center">类型</th>									
 									<th style="text-align:center">预估工时</th>
 									<th style="text-align:center">计划完成日期</th>
 								</tr> 
@@ -216,11 +216,11 @@
 								{/empty}
 								{volist name="task_list" id="vo"}
 								<tr>
-								  <td align="center">T{$vo.id}</td>
+								  <td align="center">T{$vo.id}</td>								  
+								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
+								  <td>{$vo.title}</td>
 								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.type_name}</td>
-								  <td>{$vo.title}</td>
-								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
 								  <td align="center">{$vo.plan_hours}</td>
 								  <td align="center">{$vo.end_time}</td>
 								</tr>
@@ -243,7 +243,7 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align:center">ID编号</th>
+									<th style="text-align:center">编号ID</th>
 									<th style="text-align:center">所属分类</th>
 									<th>知识主题</th>
 									<th style="text-align:center">创建员工</th>

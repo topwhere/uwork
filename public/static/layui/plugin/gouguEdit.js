@@ -117,6 +117,12 @@ layui.define(['employeepicker'], function(exports){
 		//下拉选择
 		dropdown:function(id,name,real_val,data,editPost,is_cancel){
 			let that=this;
+			let i = data.length;
+			while(i--){
+				if(data[i].id==real_val){
+					data.splice(i,1);
+				}
+			}
 			if(is_cancel){
 				data.push({id:0,title:'<span style="color:#FF5722">取消关联</span>'});
 			}

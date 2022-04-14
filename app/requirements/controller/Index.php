@@ -98,13 +98,17 @@ class Index extends BaseController
 			}
 			if(isset($param['end_time'])){
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
-			}
-			if(isset($param['project_id'])){
-				$param['product_id'] = Db::name('Project')->where('id',$param['project_id'])->value('product_id');
-			}
-			
+			}			
             if (!empty($param['id']) && $param['id'] > 0) {
 				$requirements = (new RequirementsList())->detail($param['id']);
+				if(isset($param['project_id']) && $param['project_id'] > 0){
+					$param['product_id'] = Db::name('Project')->where('id',$param['project_id'])->value('product_id');
+				}
+				if(isset($param['product_id'])){
+					if($requirements['project_id']>0){
+						return to_assign(1, '请先取消关联的项目');
+					}
+				}
 				if(isset($param['start_time'])){
 					if($param['start_time']>=$requirements['end_time']){
 						return to_assign(1,'开始时间不能大于计划结束时间');
@@ -121,14 +125,17 @@ class Index extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
-				if(isset($param['product_id'])){
-					if($param['product_id']==0 && $requirements['project_id']>0){
-						return to_assign(1, '请先取消关联的项目');
-					}
-				}
                 $param['update_time'] = time();
                 $res = RequirementsList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {
+					//更新关联该需求的任务的所属产品
+					if(isset($param['product_id'])){
+						Db::name('Task')->where('requirements_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
+					}
+					//更新关联该需求的任务的所属项目
+					if(isset($param['project_id'])){
+						Db::name('Task')->where('requirements_id', $param['id'])->strict(false)->field(true)->update(['project_id'=>$param['project_id']]);
+					}
                     add_log('edit', $param['id'], $param, $requirements);
                 }
                 return to_assign();

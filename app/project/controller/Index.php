@@ -151,7 +151,7 @@ class Index extends BaseController
 					$res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
 					if ($res) {
 						//更新关联该项目的需求、任务的所属产品
-						if(isset($param['product_id']) && $param['product_id'] > 0){
+						if(isset($param['product_id'])){
 							Db::name('Requirements')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
 							Db::name('Task')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
 						}

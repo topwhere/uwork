@@ -141,7 +141,7 @@ function openInit() {
 		let name=$(this).data('name');
 		let show_txt=$('#'+name+'_'+detail_id).text().replace(/[\r\n\t]/g,"");
 		let real_txt=$('#'+name+'_'+detail_id).data('val');
-		if(real_txt == ''){
+		if(real_txt === ''){
 			real_txt = show_txt;
 		}	
 		editShow(detail_id,name,show_txt,real_txt);
@@ -282,7 +282,7 @@ function openInit() {
 				return false;
 			}
 			loading=true;
-			gougu.get("/api/index/get_project",{},function(res){
+			gougu.get("/api/index/get_project",{pid:product_id},function(res){
 				let data = res.data;
 				loading=false;
 				edit.dropdown(id,name,real_txt,data,editPost,1);

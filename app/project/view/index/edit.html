@@ -123,7 +123,7 @@ function openInit() {
 		let name=$(this).data('name');
 		let show_txt=$('#'+name+'_'+detail_id).text().replace(/[\r\n\t]/g,"");
 		let real_txt=$('#'+name+'_'+detail_id).data('val');
-		if(real_txt == ''){
+		if(real_txt === ''){
 			real_txt = show_txt;
 		}	
 		editShow(detail_id,name,show_txt,real_txt);

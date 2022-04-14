@@ -253,15 +253,15 @@ class Index extends BaseController
     public function get_doc_list($kid = 0,$tree=0)
     {
 		if($tree==2){
-			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'delete_time' => 0])
-					->field('id,pid as pId,title as name,type,link,knowledge_id,sort')
+			$list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid,'delete_time' => 0])
+					->field('id,pid as pId,title as name,type,link,knowledge_id,sort,read')
 					->order('sort asc,id asc')
 					->select();
 			return to_assign(0, '', $list);
 		}
 		else{
-			$list = Db::name('Doc')->where(['knowledge_id' => $kid,'delete_time' => 0])
-					->field('id,pid,title,type,knowledge_id,sort')
+			$list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid,'delete_time' => 0])
+					->field('id,pid,title,type,knowledge_id,sort,read')
 					->order('sort asc,id asc')
 					->select();
 			if($tree==1){

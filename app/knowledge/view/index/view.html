@@ -45,7 +45,7 @@
 			,treeId:'id'//树形id字段名称
 			,treeUpId:'pid'//树形父id字段名称
 			,treeShowName:'title'//以树形式显示的字段
-			,heightRemove:[".dHead",120]//不计算的高度,表格设定的是固定高度，此项不生效
+			,heightRemove:[".dHead",138]//不计算的高度,表格设定的是固定高度，此项不生效
 			,height:'100%'
 			,isFilter:false
 			,iconOpen:false//是否显示图标【默认显示】
@@ -54,7 +54,7 @@
 			,isPage:false
 			,where:{kid:$('[name="knowledge_id"]').val()}
 			,cols: [[
-				{field:'id',width:80, title: 'ID号', align:'center'}
+				{field:'id',width:80, title: '编码ID', align:'center'}
 				,{field: 'sort', title: '排序', edit: 'text', align:'center', style:'cursor: pointer;', width:80}
 				,{field:'pid', title: '父级ID', edit:'text',width:80, align:'center'}
 				,{field:'type', title: '类型',width:80,align:'center',templet: function(d){

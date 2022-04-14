@@ -38,7 +38,10 @@ class Index extends BaseController
                 ->join('KnowledgeCate c', 'a.cate_id = c.id')
                 ->join('admin u', 'a.admin_id = u.id','LEFT')
                 ->order('a.create_time desc')
-                ->paginate($rows, false, ['query' => $param]);
+                ->paginate($rows, false, ['query' => $param])
+				->each(function ($item, $key) {
+					$item->views = Db::name('KnowledgeDoc')->where([['delete_time','=',0],['knowledge_id','=',$item->id]])->sum('read');
+				});
             return table_assign(0, '', $content);
         } else {			
 			$eid = isset($param['eid']) ? $param['eid'] : 0;
@@ -60,7 +63,7 @@ class Index extends BaseController
             if (!empty($param['cate_id'])) {
                 $where[] = ['a.cate_id', '=', $param['cate_id']];
             }
-            $where[] = ['a.status', '>', 0];
+            $where[] = ['a.delete_time', '=', 0];
             $where[] = ['a.is_share', '=', 1];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $content = KnowledgeList::where($where)
@@ -136,9 +139,8 @@ class Index extends BaseController
     public function delete()
     {
         $id = get_params("id");
-        $data['status'] = '-1';
         $data['id'] = $id;
-        $data['update_time'] = time();
+        $data['delete_time'] = time();
         if (Db::name('Knowledge')->update($data) !== false) {
             add_log('delete', $id);
             return to_assign(0, "删除成功");
@@ -163,7 +165,7 @@ class Index extends BaseController
 			}
             if (isset($param['id']) && $param['id'] > 0) {
                 $param['update_time'] = time();
-                $res = Db::name('Doc')->strict(false)->field(true)->update($param);
+                $res = Db::name('KnowledgeDoc')->strict(false)->field(true)->update($param);
                 $aid = $param['id'];
                 if ($res) {
                     add_log('edit', $param['id'], $param);
@@ -178,7 +180,7 @@ class Index extends BaseController
 				if (isset($param['content'])) {
 					$param['desc'] = getDescriptionFromContent($param['content'], 100);
 				}
-				$aid = Db::name('Doc')->strict(false)->field(true)->insertGetId($param);
+				$aid = Db::name('KnowledgeDoc')->strict(false)->field(true)->insertGetId($param);
 				if ($aid) {
 					add_log('add', $aid, $param);
 					return to_assign(0,'保存成功',$aid);
@@ -194,7 +196,7 @@ class Index extends BaseController
 			View::assign('id', $id);
 			View::assign('pid', $pid);
 			if ($id > 0) {
-				$detail = Db::name('Doc')->where(['id'=>$id])->find();
+				$detail = Db::name('KnowledgeDoc')->where(['id'=>$id])->find();
 				View::assign('detail', $detail);
 			}
 			return view();
@@ -206,14 +208,13 @@ class Index extends BaseController
     public function doc_delete()
     {
         $id = get_params("id");
-        $count = Db::name('Doc')->where(["pid" => $id,"status"=>1])->count();
+        $count = Db::name('KnowledgeDoc')->where(["pid" => $id,"delete_time"=>0])->count();
         if ($count > 0) {
             return to_assign(1, "该分类下还有子文档，无法删除");
         }
-        $data['status'] = '-1';
         $data['id'] = $id;
         $data['delete_time'] = time();
-        if (Db::name('Doc')->update($data) !== false) {
+        if (Db::name('KnowledgeDoc')->update($data) !== false) {
             add_log('delete', $id);
             return to_assign(0, "删除成功");
         } else {
@@ -231,16 +232,16 @@ class Index extends BaseController
 		$kid = empty($param['kid']) ? 0 : $param['kid'];
 		$id = empty($param['id']) ? 0 : $param['id'];
 		if (request()->isAjax()) {
-			$info = Db::name('Doc')->where(['id'=>$id])->find();
-			Db::name('Doc')->where(['id'=>$id])->inc('read')->update();
+			$info = Db::name('KnowledgeDoc')->where(['id'=>$id])->find();
+			Db::name('KnowledgeDoc')->where(['id'=>$id])->inc('read')->update();
 			add_log('view', $id);
 			return to_assign(0, '', $info);
 		}
 		else{
 			$where = array();
 			$where[] = ['knowledge_id', '=', $kid];
-			$where[] = ['status', '>', 0];
-			$list = Db::name('Doc')->where($where)
+			$where[] = ['delete_time', '=', 0];
+			$list = Db::name('KnowledgeDoc')->where($where)
 				->field('id,pid,title,type,knowledge_id,link,read,sort,create_time,update_time')
 				->order('sort asc,id asc')
 				->select()->toArray();
@@ -249,8 +250,8 @@ class Index extends BaseController
 			if($id==0 && !empty($list)){
 				$id = $list[0]['id'];
 			}
-			$info = Db::name('Doc')->where(['id'=>$id])->find();
-			Db::name('Doc')->where(['id'=>$id])->inc('read')->update();
+			$info = Db::name('KnowledgeDoc')->where(['id'=>$id])->find();
+			Db::name('KnowledgeDoc')->where(['id'=>$id])->inc('read')->update();
 			View::assign([
 				'detail' => $detail,
 				'info' => $info,

@@ -84,7 +84,7 @@ class Log extends Model
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-icon-zidingyishezhi','title'=>'任务'),
+				'new' =>array('icon'=>'icon-zidingyishezhi','title'=>'任务'),
 				'delete' =>array('icon'=>'icon-shanchu','title'=>'任务'),
 			]],
 		'document'=>[

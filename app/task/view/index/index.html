@@ -63,6 +63,15 @@ function init(layui){
 	$('.add-new').on('click',function(){
 		gougu.open('/task/index/add');
 	});
+	
+	//监听行工具事件
+	table.on('tool(test)', function(obj) {
+		var data = obj.data;
+		if (obj.event === 'view') {
+			gougu.open('/task/index/view?id='+data.id);
+			return;
+		}
+	});
 }		
 </script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}

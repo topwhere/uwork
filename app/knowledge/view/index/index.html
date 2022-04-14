@@ -63,13 +63,13 @@
 							<div class="layui-col-md4">
 								<div class="layui-card">
 									<div class="card-body">
-										<div class="meta-title text-overflow1"><a href="/knowledge/index/view/id/${item.id}.html" target="_blank">${item.title}</a></div>
-										<div class="meta-desc text-overflow3"><a href="/knowledge/index/view/id/${item.id}.html" target="_blank">${item.desc}</a></div>
+										<div class="meta-title text-overflow1"><a href="/knowledge/index/doc_detail/kid/${item.id}">${item.title}</a></div>
+										<div class="meta-desc text-overflow3"><a href="/knowledge/index/doc_detail/kid/${item.id}">${item.desc}</a></div>
 									</div>
 									<div class="card-actions">
 										<ul>
-											<li title="收藏数"><i class="layui-icon layui-icon-star-fill"></i>18</li>
-											<li title="查看数"><i class="layui-icon layui-icon-friends"></i>20</li>
+											<li title="收藏数"><i class="layui-icon layui-icon-star-fill"></i>0</li>
+											<li title="查看数"><i class="layui-icon layui-icon-friends"></i>${item.views}</li>
 											<li title="编辑"><a class="action-edit" data-id="${item.id}" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
 											<li title="浏览详情"><a class="action-view" href="/knowledge/index/doc_detail/kid/${item.id}"><i class="layui-icon layui-icon-link"></i>查看</a></li>
 										</ul>

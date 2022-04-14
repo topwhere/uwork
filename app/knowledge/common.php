@@ -19,6 +19,6 @@ function knowledge_cate()
 
 function knowledge_doc($kid=0)
 {
-    $list = Db::name('Doc')->where(['knowledge_id' => $kid,'status' => 1])->select()->toArray();
+    $list = Db::name('KnowledgeDoc')->where(['knowledge_id' => $kid,'delete_time' => 1])->select()->toArray();
     return $list;
 }

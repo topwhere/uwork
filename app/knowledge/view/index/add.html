@@ -7,19 +7,9 @@
 	<table class="layui-table layui-table-form">
 		<tr>
 			<td class="layui-td-gray">知识标题<font>*</font></td>
-			<td colspan="3">
+			<td colspan="5">
 				<input type="text" name="title" lay-verify="required" lay-reqText="请输入知识标题" placeholder="请输入知识标题" class="layui-input"
 			  {notempty name="$knowledge.title" }value="{$knowledge.title}" {/notempty}>
-			</td>
-			<td class="layui-td-gray">状态<span style="color: red">*</span></td>
-			<td>
-				{if condition="$id eq 0"}
-				<input type="radio" name="status" value="1" title="正常" checked>
-				<input type="radio" name="status" value="0" title="禁用">
-				{else/}
-				<input type="radio" name="status" value="1" title="正常" {eq name="$knowledge.status" value="1" }checked{/eq}>
-				<input type="radio" name="status" value="0" title="禁用" {eq name="$knowledge.status" value="0" }checked{/eq}>
-				{/if}
 			</td>
 		</tr>
 		<tr>

@@ -5,7 +5,7 @@
 .layui-tree-set .layui-tree-txt.on,.layui-tree-set .layui-tree-txt.on:hover{font-weight:800; color:#1E9FFF}
 .layui-tree-txt{display:inline-block; width:132px; overflow:hidden;}
 .layui-tree-iconClick{margin-right:3px;}
-.tree-left{width:268px; float:left; height:calc(100% - 22px); overflow-y: scroll; overflow-x: hidden; border:1px solid #e5ecf0; background-color:#fff; padding:12px 10px 10px 5px;}
+.tree-left{width:268px; float:left; height:calc(100% - 22px); overflow-y: scroll; overflow-x: hidden; border-right:1px solid #e5ecf0; background-color:#fff; padding:12px 10px 10px 5px;}
 .tree-left h3{font-size:16px; height:30px; padding-left:10px; font-weight:800}
 .editormd-code-toolbar select{display:inline;}
 .editormd{margin-bottom:0}
@@ -20,7 +20,7 @@
 		<h3>知识库目录</h3>
 		<div id="tree"></div>
 	</div>
-	<div class="body-table" style="margin-left:296px; margin-bottom:0">
+	<div class="body-table pt-3 pr-3" style="margin-left:296px;">
 		<form class="layui-form">
 			<table class="layui-table" style="margin-bottom:0;">
 				<tr>
@@ -91,7 +91,7 @@
 						}
 					})
 				}
-				buildEditor('docContent',468,$('#mdContent').val());
+				buildEditor('docContent',window.innerHeight-240,$('#mdContent').val());
 				</script>
 			</div>
 			{/eq}

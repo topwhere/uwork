@@ -18,8 +18,8 @@ class Knowledge extends Model
         if (!empty($detail)) {
 			$detail['user'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
 			$detail['cate_name'] = Db::name('KnowledgeCate')->where(['id' => $detail['cate_id']])->value('title');
-			$detail['count'] = Db::name('Doc')->where(['knowledge_id'=>$id,'status'=>1])->count();
-			$detail['views'] = Db::name('Doc')->where(['knowledge_id'=>$id,'status'=>1])->sum('read');
+			$detail['count'] = Db::name('KnowledgeDoc')->where(['knowledge_id'=>$id,'delete_time'=>0])->count();
+			$detail['views'] = Db::name('KnowledgeDoc')->where(['knowledge_id'=>$id,'delete_time'=>0])->sum('read');
         }
         return $detail;
     }

@@ -219,7 +219,7 @@ class Index extends BaseController
 			}
 			$detail = Db::name('Requirements')->where('id',$id)->find();
 			if($detail['admin_id'] != $this->uid){
-				return to_assign(1, "你不是该项目的创建人，无权限删除");
+				return to_assign(1, "你不是该需求的创建人，无权限删除");
 			}
 			if (Db::name('Requirements')->where('id',$id)->update(['delete_time'=>time()]) !== false) {
 				$log_data = array(
@@ -229,7 +229,7 @@ class Index extends BaseController
 					'requirements_id' => $detail['id'],
 					'admin_id' => $this->uid,
 					'old_content' => '',
-					'new_content' => $detail['name'],
+					'new_content' => $detail['title'],
 					'create_time' => time()
 				);  
 				Db::name('Log')->strict(false)->field(true)->insert($log_data);

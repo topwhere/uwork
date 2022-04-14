@@ -123,6 +123,10 @@ layui.define(['employeepicker'], function(exports){
 					data.splice(i,1);
 				}
 			}
+			if(data.length==0){
+				layer.msg('无可关联的内容');
+				return false;
+			}
 			if(is_cancel){
 				data.push({id:0,title:'<span style="color:#FF5722">取消关联</span>'});
 			}

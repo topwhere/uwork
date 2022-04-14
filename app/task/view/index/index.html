@@ -18,7 +18,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -55,37 +55,13 @@ function init(layui){
 			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
 			,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
 
-			,{fixed: 'right',title: '操作',align: 'center',width: 100,toolbar: '#barDemo',}
+			,{fixed: 'right',title: '操作',align: 'center',width: 60,toolbar: '#barDemo',}
 		]]
 	});
 	
 	//新增
 	$('.add-new').on('click',function(){
 		gougu.open('/task/index/add');
-	});
-	
-	//监听行工具事件
-	table.on('tool(test)', function(obj) {
-		var data = obj.data;
-		if (obj.event === 'view') {
-			gougu.open('/task/index/view?id='+data.id);
-			return;
-		}
-		if (obj.event === 'del') {
-			layer.confirm('确定关闭该任务吗？', {
-				icon: 3,
-				title: '提示'
-			}, function(index) {
-				let callback = function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						obj.del();
-					}
-				}
-				gougu.post("/task/index/close",{ id: obj.data.id },callback);
-				layer.close(index);
-			});
-		}
 	});
 }		
 </script>

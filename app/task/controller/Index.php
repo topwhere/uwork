@@ -75,7 +75,7 @@ class Index extends BaseController
 					$param['over_time'] = 0;
 				}
 			}
-			if(isset($param['project_id'])){
+			if(isset($param['project_id']) && $param['project_id'] > 0){
 				$param['product_id'] = Db::name('Project')->where('id',$param['project_id'])->value('product_id');
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
@@ -171,4 +171,34 @@ class Index extends BaseController
 			return view();
 		}
 	}
+	
+	//删除
+    public function delete()
+    {
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$detail = Db::name('Task')->where('id',$id)->find();
+			if($detail['admin_id'] != $this->uid){
+				return to_assign(1, "你不是该任务的创建人，无权限删除");
+			}
+			if (Db::name('Task')->where('id',$id)->update(['delete_time'=>time()]) !== false) {
+				$log_data = array(
+					'module' => 'task',
+					'field' => 'delete',
+					'action' => 'del',
+					'task_id' => $detail['id'],
+					'admin_id' => $this->uid,
+					'old_content' => '',
+					'new_content' => $detail['title'],
+					'create_time' => time()
+				);  
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(0, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
+    }
 }

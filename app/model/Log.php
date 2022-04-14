@@ -28,7 +28,8 @@ class Log extends Model
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-jichushezhi','title'=>''),
+				'new' =>array('icon'=>'icon-zidingyishezhi','title'=>'产品'),
+				'delete' =>array('icon'=>'icon-shanchu','title'=>'产品'),
 			]],
 		'project'=>[
 			'status' => ['关闭','开启','暂停'],
@@ -43,7 +44,8 @@ class Log extends Model
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-jichushezhi','title'=>''),
+				'new' =>array('icon'=>'icon-zidingyishezhi','title'=>'项目'),
+				'delete' =>array('icon'=>'icon-shanchu','title'=>'项目'),
 			]],
 		'requirements'=>[
 			'priority' => ['','低','中','高','紧急'],
@@ -60,11 +62,12 @@ class Log extends Model
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-jichushezhi','title'=>''),
+				'new' =>array('icon'=>'icon-zidingyishezhi','title'=>'需求'),
+				'delete' =>array('icon'=>'icon-shanchu','title'=>'需求'),
 			]],
 		'task'=>[
 			'priority' => ['','低','中','高','紧急'],
-			'flow_status' => ['','TODO','DOING','DONE','CLOSE'],
+			'flow_status' => ['','待办的','进行中','已完成','已拒绝','已关闭'],
 			'type' => ['其他','UI设计','产品原型','技术开发','测试','编写文档','沟通','会议','调研'],
 			'field_array'=>[
 				'director_uid' =>array('icon'=>'icon-xueshengzhuce','title'=>'负责人'),
@@ -81,12 +84,14 @@ class Log extends Model
 				'content' =>array('icon'=>'icon-wodedianping','title'=>'描述'),
 				'file' =>array('icon'=>'icon-sucaiziyuan','title'=>'文件'),
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-jichushezhi','title'=>''),
+				'new' =>array('icon'=>'icon-icon-zidingyishezhi','title'=>'任务'),
+				'delete' =>array('icon'=>'icon-shanchu','title'=>'任务'),
 			]],
 		'document'=>[
 			'field_array'=>[
 				'document' =>array('icon'=>'icon-jichushezhi','title'=>'文档'),
-				'new' =>array('icon'=>'icon-jichushezhi','title'=>''),
+				'new' =>array('icon'=>'icon-zidingyishezhi','title'=>'文档'),
+				'delete' =>array('icon'=>'icon-shanchu','title'=>'文档'),
 			]]
 	];
 	

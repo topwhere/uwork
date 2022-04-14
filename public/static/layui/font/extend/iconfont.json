@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7007278",
+      "name": "插入链接-22",
+      "font_class": "charulianjie-",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "18336452",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "9922129",
+      "name": "查看详情",
+      "font_class": "chakanxiangqing",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
       "icon_id": "8574208",
       "name": "学生异动",
       "font_class": "xueshengyidong",
@@ -538,13 +559,6 @@
       "unicode_decimal": 59275
     },
     {
-      "icon_id": "15562236",
-      "name": "名片报表",
-      "font_class": "mingpianbaobiao_1",
-      "unicode": "e78c",
-      "unicode_decimal": 59276
-    },
-    {
       "icon_id": "15562237",
       "name": "固定资产",
       "font_class": "gudingzichan",
@@ -566,32 +580,11 @@
       "unicode_decimal": 59279
     },
     {
-      "icon_id": "15562240",
-      "name": "呼叫统计",
-      "font_class": "hujiaotongji",
-      "unicode": "e790",
-      "unicode_decimal": 59280
-    },
-    {
-      "icon_id": "15562241",
-      "name": "销售报表",
-      "font_class": "xiaoshoubaobiao_1",
-      "unicode": "e791",
-      "unicode_decimal": 59281
-    },
-    {
       "icon_id": "15562242",
       "name": "大数据",
       "font_class": "dashuju",
       "unicode": "e792",
       "unicode_decimal": 59282
-    },
-    {
-      "icon_id": "15562243",
-      "name": "活动管理",
-      "font_class": "huodongguanli",
-      "unicode": "e793",
-      "unicode_decimal": 59283
     },
     {
       "icon_id": "15562244",
@@ -1054,13 +1047,6 @@
       "font_class": "daijinquan",
       "unicode": "e7e3",
       "unicode_decimal": 59363
-    },
-    {
-      "icon_id": "18494030",
-      "name": "呼叫中心",
-      "font_class": "hujiaozhongxin",
-      "unicode": "e7e4",
-      "unicode_decimal": 59364
     },
     {
       "icon_id": "18494031",
@@ -1530,20 +1516,6 @@
       "font_class": "caidanguanli",
       "unicode": "e6e2",
       "unicode_decimal": 59106
-    },
-    {
-      "icon_id": "8525001",
-      "name": "集团设置",
-      "font_class": "jituanshezhi",
-      "unicode": "e6e3",
-      "unicode_decimal": 59107
-    },
-    {
-      "icon_id": "8525011",
-      "name": "市场管理",
-      "font_class": "shichangguanli",
-      "unicode": "e6e4",
-      "unicode_decimal": 59108
     },
     {
       "icon_id": "8525013",

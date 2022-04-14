@@ -122,12 +122,12 @@
 								</tr> 
 							</thead>
 							<tbody class="layui-table-body">
-								{empty name="project_list"}
+								{empty name="$project.list"}
 								<tr>									
 									<td colspan="8"><div class="layui-none">无数据</div></td>
 								</tr>
 								{/empty}
-								{volist name="project_list" id="vo"}
+								{volist name="$project.list" id="vo"}
 								<tr>
 								  <td align="center">M{$vo.id}</td>
 								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
@@ -209,12 +209,12 @@
 								</tr> 
 							</thead>
 							<tbody class="layui-table-body">
-								{empty name="task_list"}
+								{empty name="$task.list"}
 								<tr>									
 									<td colspan="7"><div class="layui-none">无数据</div></td>
 								</tr>
 								{/empty}
-								{volist name="task_list" id="vo"}
+								{volist name="$task.list" id="vo"}
 								<tr>
 								  <td align="center">T{$vo.id}</td>								  
 								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
@@ -282,10 +282,10 @@
 		<div class="layui-card dashboard-num">
 			<table>
 				<tbody><tr>
-					<td><div class="num-title">产品</div><div class="num-num">{$count_product}</div></td>
-					<td><div class="num-title">项目</div><div class="num-num">{$count_projects}</div></td>
-					<td><div class="num-title">需求</div><div class="num-num">{$count_requirements}</div></td>
-					<td><div class="num-title">任务</div><div class="num-num">{$count_task}</div></td>
+					<td><div class="num-title">产品</div><div class="num-num">{$count.product}</div></td>
+					<td><div class="num-title">项目</div><div class="num-num">{$count.projects}</div></td>
+					<td><div class="num-title">需求</div><div class="num-num">{$count.requirements}</div></td>
+					<td><div class="num-title">任务</div><div class="num-num">{$count.tasks}</div></td>
 				</tr>
 			</tbody></table>
 		</div>
@@ -351,19 +351,19 @@
 				<div class="layui-row">
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">参与项目</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$project.count}</div>
 					</div>
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">已完成</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$project.count_ok}</div>
 					</div>
 						<div class="layui-col-md3">
-						<div class="layui-card-tips">正在进行</div>
-					<div class="layui-card-value">0</div>
+						<div class="layui-card-tips">未完成</div>
+					<div class="layui-card-value">{$project.count_no}</div>
 					</div>
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">完成率</div>
-						<div class="layui-card-value">100%</div>
+						<div class="layui-card-value">{$project.count_lv}%</div>
 					</div>
 				</div>
 			</div>
@@ -374,19 +374,19 @@
 				<div class="layui-row">
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">任务总数</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$task.count}</div>
 					</div>
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">已完成</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$task.count_ok}</div>
 					</div>
 						<div class="layui-col-md3">
-						<div class="layui-card-tips">未完成</div>
-					<div class="layui-card-value">0</div>
+						<div class="layui-card-tips">延期</div>
+					<div class="layui-card-value">{$task.delay}</div>
 					</div>
 					<div class="layui-col-md3">
-						<div class="layui-card-tips">完成率</div>
-						<div class="layui-card-value">100%</div>
+						<div class="layui-card-tips">延期率</div>
+						<div class="layui-card-value">{$task.count_lv}%</div>
 					</div>
 				</div>
 			</div>
@@ -397,18 +397,18 @@
 				<div class="layui-row">
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">工作记录</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$work.count}</div>
 					</div>
 					<div class="layui-col-md3">
 						<div class="layui-card-tips">总工时</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-value">{$work.hours}</div>
 					</div>
 						<div class="layui-col-md3">
-						<div class="layui-card-tips">外勤工时</div>
+						<div class="layui-card-tips">延时</div>
 					<div class="layui-card-value">0</div>
 					</div>
 					<div class="layui-col-md3">
-						<div class="layui-card-tips">案头工时</div>
+						<div class="layui-card-tips">延时率</div>
 						<div class="layui-card-value">0</div>
 					</div>
 				</div>

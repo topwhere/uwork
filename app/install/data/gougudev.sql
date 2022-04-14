@@ -621,7 +621,7 @@ CREATE TABLE `dev_project`  (
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
   `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0关闭,1开启,2暂停',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0关闭,1开启,2暂停,2关闭',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',

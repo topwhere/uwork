@@ -22,11 +22,29 @@ class Index extends BaseController
     {
         if (request()->isAjax()) {
             $param = get_params();
-            $where = array();
-            $where[] = ['delete_time', '=', 0];
+			
+			$map1=[
+				['admin_id','=',$this->uid],
+			];
+			$map2=[
+				['director_uid','=',$this->uid],
+			];
+			$map3=[
+				['test_uid','=',$this->uid],
+			];
+			$map4=[
+				['', 'exp', Db::raw("FIND_IN_SET({$this->uid},view_admin_ids)")],
+			];
+			$map5=[
+				['is_open','=',2],
+			];
+			
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $list = ProductList::where($where)
-                ->withoutField('content,md_content')
+            $list = ProductList::withoutField('content,md_content')
+				->where(function($query) use ($map1,$map2,$map3,$map4,$map5) {
+					$query->where($map1)->whereor($map2)->whereor($map3)->whereor($map4)->whereor($map5);
+				})
+				->where('delete_time',0)     
                 ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
@@ -193,4 +211,38 @@ class Index extends BaseController
 			return view();
 		}
 	}
+	
+	//删除
+    public function delete()
+    {
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$count = Db::name('Project')->where([['product_id','=',$id],['delete_time','=',0]])->count();
+			if($count>0){
+				return to_assign(1, "该产品下有关联项目，无法删除");
+			}
+			$detail = Db::name('Product')->where('id',$id)->find();
+			if($detail['admin_id'] != $this->uid){
+				return to_assign(1, "你不是该产品的创建人，无权限删除");
+			}
+			if (Db::name('Product')->where('id',$id)->update(['delete_time'=>time()]) !== false) {
+				$log_data = array(
+					'module' => 'product',
+					'field' => 'delete',
+					'action' => 'del',
+					'product_id' => $detail['id'],
+					'admin_id' => $this->uid,
+					'old_content' => '',
+					'new_content' => $detail['name'],
+					'create_time' => time()
+				);  
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(0, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
+    }
 }

@@ -23,6 +23,14 @@ layui.define(['gougu'], function(exports){
 									<span class="log-content font-gray"> ${item.action}了${item.title}<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 								</div>
 							`;
+						}else if(item.field =='new' || item.field =='delete'){
+							itemLog+= `
+								<div class="log-item py-3 border-b">
+									<i class="iconfont ${item.icon}"></i>
+									<span class="log-name">${item.name}</span>
+									<span class="log-content font-gray"> ${item.action}了<strong>${item.title}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+								</div>
+							`;
 						}
 						else if(item.field =='document'){
 							if(item.action =='修改'){

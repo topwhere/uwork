@@ -67,6 +67,13 @@ class Index extends BaseController
 			}
 			if(isset($param['end_time'])){
 				$param['end_time'] = strtotime(urldecode($param['end_time']));
+			}if(isset($param['flow_status'])){
+				if($param['flow_status'] == 3){
+					$param['over_time'] = time();
+				}
+				else{
+					$param['over_time'] = 0;
+				}
 			}
 			if(isset($param['project_id'])){
 				$param['product_id'] = Db::name('Project')->where('id',$param['project_id'])->value('product_id');

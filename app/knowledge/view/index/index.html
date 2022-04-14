@@ -2,7 +2,7 @@
 <!-- 主体 -->
 {block name="body"}
 <div class="table-content p-3">
-	<div class="layui-tab knowledge-tab" style="margin:0">
+	<div class="layui-tab knowledge-tab" style="margin:0" lay-filter="docDemoTabBrief">
 		<ul class="layui-tab-title">
 			<li class="layui-this">个人知识库</li>
 			<li>共享知识库</li>
@@ -41,12 +41,18 @@
 	const eid = {$eid};
 	const kid = {$kid};
 	var getKnowledge = null;
-	var getData = {'page':1};
+	var getData = {'page':1,'share':0};
 	function init(layui) {
 		var gougu = layui.gougu,
 			form = layui.form,
+			element = layui.element,
 			laypage = layui.laypage;
 			
+		element.on('tab(docDemoTabBrief)', function(data){
+			getData.share=data.index;
+			getKnowledge();
+		});
+
 		if(eid>0 && kid == 0){
 			gougu.open('/knowledge/index/add/id/'+kid+'.html');
 		}
@@ -77,6 +83,9 @@
 								</div>
 							</div>
 							`;
+					}
+					if(card == ''){
+						card='<div style="text-align:center; color:#999; padding:24px 0">暂无数据</div>';
 					}
 					$('#knowledgeContent').html(card);
 					if(getData.page==1 && res.data.length>9){

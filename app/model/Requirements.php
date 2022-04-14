@@ -46,7 +46,7 @@ class Requirements extends Model
 			$detail['times'] = time_trans($detail['create_time']);
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
-			$detail['logs'] = Db::name('Log')->where(['module' => 'requirements','requirements_id' => $detail['id']])->count()+1;
+			$detail['logs'] = Db::name('Log')->where(['module' => 'requirements','requirements_id' => $detail['id']])->count();
 			$detail['comments'] = Db::name('Comment')->where(['module' => 3,'delete_time'=>0,'topic_id' => $detail['id']])->count();
 			$map =[];
 			$map[] = ['delete_time','=',0];

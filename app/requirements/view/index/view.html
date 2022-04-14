@@ -8,6 +8,9 @@
 			<span class="layui-badge layui-bg-gray">#R{$detail.id}</span>
 			<span class="mx-2">{$detail.admin_name}</span>
 			<span class="font-gray">创建于{:time_trans($detail.create_time)}<span  id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+			{eq name="$detail.admin_id" value="$params.uid"}
+			<span class="layui-btn layui-btn-xs layui-btn-danger ml-4" id="delBtn"><i class="layui-icon">&#xe640;</i>删除</span>
+			{/eq}
 		</div>
 	</div>
 	<div class="layui-row border-b">
@@ -99,11 +102,6 @@
 			</div>
 			<div class="layui-tab-item logs-list">
 				<div id="log_requirements_{$detail.id}"></div>
-				<div class="log-item py-3 border-b">
-					<i class="iconfont icon-zidingyishezhi"></i>
-					<span class="log-name">{$detail.admin_name}</span>
-					<span class="log-content font-gray"><span class="content link-dark"> 创建了<b>需求</b></span><span class="font-gray">{:time_trans($detail.create_time)}</span></span>
-				</div>
 			</div>
 		</div>
 	</div>  
@@ -111,7 +109,6 @@
 
 <script>
 function openInit() {
-	const admin_id='{$detail.admin_id}';
 	const detail_id='{$detail.id}';
 	const opsData={
 		flow_status:[
@@ -148,6 +145,20 @@ function openInit() {
 			real_txt = show_txt;
 		}	
 		editShow(detail_id,name,show_txt,real_txt);
+	})
+	
+	$('#delBtn').on('click',function(){
+		layer.confirm('确定要删除该需求吗？请慎重', {icon: 3, title:'提示'}, function(index){
+			let callback = function(e){
+				layer.closeAll();
+				layer.msg(e.msg);
+				setTimeout(function(){
+					location.reload();
+				},1000)
+			}
+			let postData={"id":detail_id};
+			gougu.delete("/requirements/index/delete",postData,callback);
+		});
 	})
 	
 	upload.render({ 

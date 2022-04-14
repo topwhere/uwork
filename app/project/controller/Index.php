@@ -250,4 +250,42 @@ class Index extends BaseController
 			return view();
 		}
 	}
+	
+	//删除
+    public function delete()
+    {
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$count_a = Db::name('Requirements')->where([['project_id','=',$id],['delete_time','=',0]])->count();
+			if($count_a>0){
+				return to_assign(1, "该项目下有关联的需求，无法删除");
+			}
+			$count_b = Db::name('Task')->where([['project_id','=',$id],['delete_time','=',0]])->count();
+			if($count_b>0){
+				return to_assign(1, "该项目下有关联的任务，无法删除");
+			}
+			$detail = Db::name('Project')->where('id',$id)->find();
+			if($detail['admin_id'] != $this->uid){
+				return to_assign(1, "你不是该项目的创建人，无权限删除");
+			}
+			if (Db::name('Project')->where('id',$id)->update(['delete_time'=>time()]) !== false) {
+				$log_data = array(
+					'module' => 'project',
+					'field' => 'delete',
+					'action' => 'del',
+					'project_id' => $detail['id'],
+					'admin_id' => $this->uid,
+					'old_content' => '',
+					'new_content' => $detail['name'],
+					'create_time' => time()
+				);  
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(0, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
+    }
 }

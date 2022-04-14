@@ -43,9 +43,9 @@ class Index extends BaseController
 					$task_map_a[] = ['test_id','=',0];
 					$task_map_a[] = ['delete_time','=',0];
 					$task_map_b = $task_map_a;
-					$task_map_a[]=['flow_status','<',4];
+					$task_map_a[]=['flow_status','<',3];
 					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
-					$task_map_b[]=['flow_status','=',4];
+					$task_map_b[]=['flow_status','>',2];
 					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
 					if($item->tasks_a+$item->tasks_b>0){
 						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
@@ -58,9 +58,9 @@ class Index extends BaseController
 					$bug_map_a[] = ['test_id','>',0];
 					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
-					$bug_map_a[]=['flow_status','<',4];
+					$bug_map_a[]=['flow_status','<',3];
 					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
-					$bug_map_b[]=['flow_status','=',4];
+					$bug_map_b[]=['flow_status','>',2];
 					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
 					if($item->bugs_a+$item->bugs_b>0){
 						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";
@@ -201,4 +201,37 @@ class Index extends BaseController
 			return view();
 		}
 	}
+	//删除
+    public function delete()
+    {
+		if (request()->isDelete()) {
+			$id = get_params("id");
+			$count = Db::name('Task')->where([['requirements_id','=',$id],['delete_time','=',0]])->count();
+			if($count>0){
+				return to_assign(1, "该项目下有关联的任务，无法删除");
+			}
+			$detail = Db::name('Requirements')->where('id',$id)->find();
+			if($detail['admin_id'] != $this->uid){
+				return to_assign(1, "你不是该项目的创建人，无权限删除");
+			}
+			if (Db::name('Requirements')->where('id',$id)->update(['delete_time'=>time()]) !== false) {
+				$log_data = array(
+					'module' => 'requirements',
+					'field' => 'delete',
+					'action' => 'del',
+					'requirements_id' => $detail['id'],
+					'admin_id' => $this->uid,
+					'old_content' => '',
+					'new_content' => $detail['name'],
+					'create_time' => time()
+				);  
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
+				return to_assign(0, "删除成功");
+			} else {
+				return to_assign(0, "删除失败");
+			}
+		}else{
+			return to_assign(1, "错误的请求");
+		}
+    }
 }

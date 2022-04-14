@@ -72,7 +72,7 @@ class Task extends Model
 			$detail['type_name'] = self::$Type[(int)$detail['type']];
 			$detail['cate_name'] = self::$Cate[(int)$detail['cate']];
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
-			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count()+1;
+			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count();
 			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'delete_time'=>0,'topic_id' => $detail['id']])->count();
         }
         return $detail;

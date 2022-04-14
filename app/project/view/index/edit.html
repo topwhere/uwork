@@ -130,6 +130,20 @@ function openInit() {
 	})
 	
 	$('#delBtn').on('click',function(){
+		layer.confirm('确定要删除该项目吗？请慎重', {icon: 3, title:'提示'}, function(index){
+			let callback = function(e){
+				layer.closeAll();
+				layer.msg(e.msg);
+				setTimeout(function(){
+					location.reload();
+				},1000)
+			}
+			let postData={"id":detail_id};
+			gougu.delete("/project/index/delete",postData,callback);
+		});
+	})
+	
+	$('#delBtn').on('click',function(){
 		layer.confirm('确定要删除该产品吗？请慎重', {icon: 3, title:'提示'}, function(index){
 			let callback = function(e){
 				layer.closeAll();

@@ -109,7 +109,7 @@ class Log extends Model
             ->select()->toArray();
 		$sourse = self::$Sourse[$param['m']];
 		$action = [
-			'add'=>'新建',
+			'add'=>'创建',
 			'edit'=>'修改',
 			'del'=>'删除',
 			'upload'=>'上传',

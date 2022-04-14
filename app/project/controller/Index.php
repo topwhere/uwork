@@ -22,11 +22,21 @@ class Index extends BaseController
     {
         if (request()->isAjax()) {
             $param = get_params();
-            $where = array();
-            $where[] = ['delete_time', '=', 0];
+            $map1=[
+				['admin_id','=',$this->uid],
+			];
+			$map2=[
+				['director_uid','=',$this->uid],
+			];
+			$map3=[
+				['', 'exp', Db::raw("FIND_IN_SET({$this->uid},team_admin_ids)")],
+			];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $list = ProjectList::where($where)
-                ->withoutField('content,md_content')
+            $list = ProjectList::withoutField('content,md_content')
+				->where(function($query) use ($map1,$map2,$map3) {
+					$query->where($map1)->whereor($map2)->whereor($map3);
+				})
+				->where('delete_time',0)
                 ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
@@ -50,12 +60,12 @@ class Index extends BaseController
 					
 					$task_map_a =[];
 					$task_map_a[] = ['project_id','=',$item->id];
-					$task_map_a[] = ['test_id','=',0];
+					$task_map_a[] = ['type','=',1];
 					$task_map_a[] = ['delete_time','=',0];
 					$task_map_b = $task_map_a;
-					$task_map_a[]=['flow_status','<',4];
+					$task_map_a[]=['flow_status','<',3];
 					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
-					$task_map_b[]=['flow_status','=',4];
+					$task_map_b[]=['flow_status','>',2];
 					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
 					if($item->tasks_a+$item->tasks_b>0){
 						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
@@ -65,12 +75,12 @@ class Index extends BaseController
 					
 					$bug_map_a =[];
 					$bug_map_a[] = ['project_id','=',$item->id];
-					$bug_map_a[] = ['test_id','>',0];
+					$bug_map_a[] = ['type','=',2];
 					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
-					$bug_map_a[]=['flow_status','<',4];
+					$bug_map_a[]=['flow_status','<',3];
 					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
-					$bug_map_b[]=['flow_status','=',4];
+					$bug_map_b[]=['flow_status','>',2];
 					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
 					if($item->bugs_a+$item->bugs_b>0){
 						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";
@@ -111,37 +121,47 @@ class Index extends BaseController
 			}
             if (!empty($param['id']) && $param['id'] > 0) {
 				$project = (new ProjectList())->detail($param['id']);
-				if(isset($param['start_time'])){
-					if($param['start_time']>=$project['end_time']){
-						return to_assign(1,'开始时间不能大于计划结束时间');
+				if($this->uid == $project['admin_id'] || $this->uid == $project['director_uid'] ){
+					if(isset($param['start_time'])){
+						if($param['start_time']>=$project['end_time']){
+							return to_assign(1,'开始时间不能大于计划结束时间');
+						}
 					}
+					if(isset($param['end_time'])){
+						if($param['end_time']<=$project['start_time']){
+							return to_assign(1,'计划结束时间不能小于开始时间');
+						}
+					}
+					if(isset($param['flow_status'])){
+						if($param['flow_status']>2){
+							$param['over_time'] = time();
+						}
+						else{
+							$param['over_time'] = 0;
+						}
+					}
+					try {
+						validate(ProjectCheck::class)->scene('edit')->check($param);
+					} catch (ValidateException $e) {
+						// 验证失败 输出错误信息
+						return to_assign(1, $e->getError());
+					}
+					add_log('edit', $param['id'], $param, $project);
+					$param['update_time'] = time();
+					$res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
+					if ($res) {
+						//更新关联该项目的需求、任务的所属产品
+						if(isset($param['product_id']) && $param['product_id'] > 0){
+							Db::name('Requirements')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
+							Db::name('Task')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
+						}
+						add_log('edit', $param['id'], $param);
+					}
+					return to_assign();
 				}
-				if(isset($param['end_time'])){
-					if($param['end_time']<=$project['start_time']){
-						return to_assign(1,'计划结束时间不能小于开始时间');
-					}
+				else{
+					return to_assign(1, '只有创建人或者负责人才有权限编辑');
 				}
-				if(isset($param['flow_status'])){
-					if($param['flow_status']>2){
-						$param['over_time'] = time();
-					}
-					else{
-						$param['over_time'] = 0;
-					}
-				}
-                try {
-                    validate(ProjectCheck::class)->scene('edit')->check($param);
-                } catch (ValidateException $e) {
-                    // 验证失败 输出错误信息
-                    return to_assign(1, $e->getError());
-                }
-				add_log('edit', $param['id'], $param, $project);
-                $param['update_time'] = time();
-                $res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
-                if ($res) {
-                    add_log('edit', $param['id'], $param);
-                }
-                return to_assign();
             } else {
                 try {
                     validate(ProjectCheck::class)->scene('add')->check($param);

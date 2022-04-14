@@ -69,12 +69,12 @@ class Index extends BaseController
 					
 					$task_map_a =[];
 					$task_map_a[] = ['product_id','=',$item->id];
-					$task_map_a[] = ['test_id','=',0];
+					$task_map_a[] = ['type','=',1];
 					$task_map_a[] = ['delete_time','=',0];
 					$task_map_b = $task_map_a;
-					$task_map_a[]=['flow_status','<',4];
+					$task_map_a[]=['flow_status','<',3];
 					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
-					$task_map_b[]=['flow_status','=',4];
+					$task_map_b[]=['flow_status','>',2];
 					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
 					if($item->tasks_a+$item->tasks_b>0){
 						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
@@ -84,12 +84,12 @@ class Index extends BaseController
 					
 					$bug_map_a =[];
 					$bug_map_a[] = ['product_id','=',$item->id];
-					$bug_map_a[] = ['test_id','>',0];
+					$bug_map_a[] = ['type','>',2];
 					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
-					$bug_map_a[]=['flow_status','<',4];
+					$bug_map_a[]=['flow_status','<',3];
 					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
-					$bug_map_b[]=['flow_status','=',4];
+					$bug_map_b[]=['flow_status','>',2];
 					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
 					if($item->bugs_a+$item->bugs_b>0){
 						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";

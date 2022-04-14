@@ -25,7 +25,7 @@ class Product extends Model
 			$detail['view_admin_names'] = implode(',',$view_admin_names);
 			$detail['status_name'] = self::$Status[(int)$detail['status']];
 			$detail['times'] = time_trans($detail['create_time']);
-			$detail['logs'] = Db::name('Log')->where(['module' => 'product','product_id' => $detail['id']])->count()+1;
+			$detail['logs'] = Db::name('Log')->where(['module' => 'product','product_id' => $detail['id']])->count();
 			$detail['comments'] = Db::name('Comment')->where(['module' => 1,'delete_time'=>0,'topic_id' => $detail['id']])->count();
 			$detail['projects'] = Db::name('Project')->where(['delete_time'=>0,'product_id' => $detail['id']])->count();
 			$detail['requirements'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->count();

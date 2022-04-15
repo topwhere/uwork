@@ -553,11 +553,78 @@ function init(layui) {
 		$(this).addClass('active');
 		gougu.page(page);
 	})
-	optionA && progressChart.setOption(optionA);
-	optionB && delayChart.setOption(optionB);
-	optionC && roseChart.setOption(optionC);
+
 	let callback=function(res){	
-		if(res.data.date_tasks instanceof Array == false){
+		if(res.data.date_tasks instanceof Array == false){			
+			optionA.title.text = res.data.task_pie.ok_lv+'%';
+			optionA.series = [
+				{
+				  type: 'pie',
+				  radius: ['60%', '80%'],
+				  center: ['50%', '50%'],
+				  avoidLabelOverlap: false,
+				  label: {
+					show: false
+				  },
+				  data: [
+					{ value: res.data.task_pie.count-res.data.task_pie.count_ok, name: '待处理' },
+					{ value: res.data.task_pie.count_ok, name: '已完成' }
+				  ]
+				}
+			];
+			optionA && progressChart.setOption(optionA);
+			
+			optionB.title.text = res.data.task_pie.delay_lv+'%';
+			optionB.series = [
+				{
+				  type: 'pie',
+				  radius: ['60%', '80%'],
+				  center: ['50%', '50%'],
+				  avoidLabelOverlap: false,
+				  label: {
+					show: false
+				  },
+				  data: [{
+						value: res.data.task_pie.delay,
+						name: '延误',
+						itemStyle: {
+						  color: "#ED6666",
+						}
+					},
+					{ 
+						value: res.data.task_pie.count-res.data.task_pie.delay, 
+						name: '按时完成',
+						itemStyle: {
+						  color: "#91CC75",
+						}
+					}
+				  ]
+				}
+			];
+			optionB && delayChart.setOption(optionB);
+			
+			optionC.series = [
+				{
+				  name: 'Bugfixed',
+				  type: 'pie',
+				  radius: ['20%', '80%'],
+				  center: ['60%', '50%'],
+				  roseType: 'area',
+				  itemStyle: {
+					borderRadius: 8
+				  },
+				  data: [
+					{ value: res.data.bug_status.status_a, name: '待解决'},
+					{ value: res.data.bug_status.status_b, name: '进行中' },
+					{ value: res.data.bug_status.status_c, name: '已解决' },
+					{ value: res.data.bug_status.status_d, name: '不解决' },
+					{ value: res.data.bug_status.status_e, name: '已关闭' }
+				  ]
+				}
+			]
+			optionC && roseChart.setOption(optionC);
+		
+		
 			var dataD = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
 			optionD.xAxis = {
 				type: 'category',

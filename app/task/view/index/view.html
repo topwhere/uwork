@@ -114,12 +114,9 @@
 		</ul>
 		<div class="layui-tab-content p-0">
 			<div class="layui-tab-item comment-list layui-show">
-				<table width="100%" class="comment-input my-2">
-				<tr>
-					<td style="width:40px;padding:5px;"><img class="comment-image" src="{$params.thumb}"></td>
-					<td><input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value=""></td>
-				</tr>
-				</table>
+				<div class="comment-input my-2">
+					<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+				</div>
 				<div id="comment_task_{$detail.id}"></div>
 			</div>
 			<div class="layui-tab-item logs-list">

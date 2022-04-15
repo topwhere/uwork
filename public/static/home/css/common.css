@@ -333,7 +333,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .log-timeline:after {content: ""; position: absolute; top: 0; left: 24px; width: 1px; height: 100%; background: #e3e9ed;}
 .log-timeline dl{padding-bottom: 8px; position: relative;}
 .log-timeline dt{font-size: 16px; line-height: 2.4; color: #182b50; font-weight:600}
-.log-timeline dd{font-size: 14px; line-height: 1.6; padding:4px 0}
+.log-timeline dd{font-size: 14px; line-height: 1.6; padding:5px 0}
 .log-timeline .date-second-point{width: 10px; height: 10px; display: block; border-radius: 50%; border: 3px solid #FBBC05; background: #fff; position: absolute; z-index: 99; left:-32px; top:9px}
 .log-timeline .log-thumb{width: 24px; height: 24px; border-radius: 50%; margin-right:4px;}
 .log-timeline .log-link{margin:0 4px; color:#4285F4; cursor:pointer;}

@@ -145,7 +145,7 @@ layui.define(['gougu'], function(exports){
 					gougu.editor('editorBox',300,txt);
 				},
 				btnAlign: 'c',
-				btn:['提交保存'],
+				btn:['提交发布'],
 				yes: function() {
 					that.add(id,topic_id,pid,padmin_id,module,layui.Editor.getHTML(),layui.Editor.getMarkdown());
 				}

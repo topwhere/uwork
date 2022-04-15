@@ -165,9 +165,9 @@ class Log extends Model
 	
 	public function log_list($param = [])
     {		
-		$requirements = Db::name('Requirements')->where('project_id',$param['topic_id'])->column('id');		
-		$task = Db::name('Task')->where('project_id',$param['topic_id'])->column('id');
-		$document = Db::name('Document')->where([['module','=','project'],['topic_id','=',$param['topic_id']]])->column('id');
+		$requirement_ids = Db::name('Requirements')->where(['project_id'=>$param['topic_id'],'delete_time'=>0])->column('id');		
+		$task_ids = Db::name('Task')->where(['project_id'=>$param['topic_id'],'delete_time'=>0])->column('id');
+		$document_ids = Db::name('Document')->where(['module'=>'project','topic_id'=>$param['topic_id'],'delete_time'=>0])->column('id');
 
 		$where1=[];
 		$where2=[];
@@ -178,17 +178,14 @@ class Log extends Model
 		$where1[] = ['a.project_id','=',$param['topic_id']];
 
 		$where2[] = ['a.module','=','requirements'];
-		$where2[] = ['a.requirements_id','in',$requirements];
+		$where2[] = ['a.requirements_id','in',$requirement_ids];
 		
 		$where3[] = ['a.module','=','task'];
-		$where3[] = ['a.task_id','in',$task];
-		
-		$where3[] = ['a.module','=','task'];
-		$where3[] = ['a.task_id','in',$task];
+		$where3[] = ['a.task_id','in',$task_ids];
 		
 		$where4[] = ['a.module','=','document'];
-		$where4[] = ['a.document_id','in',$document];
-		
+		$where4[] = ['a.document_id','in',$document_ids];
+		$page = intval($param['page']);
 		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];		
 		$content = Db::name('Log')
 			->field('a.*,u.name,u.thumb')
@@ -196,7 +193,7 @@ class Log extends Model
             ->join('Admin u', 'u.id = a.admin_id')
             ->order('a.create_time desc')
 			->whereOr([$where1,$where2,$where3,$where4])
-			->page(1,$rows)
+			->page($page,$rows)
 			->select()->toArray();
 		
 		//$content = array_merge($project,$requirements,$task);//数组合并
@@ -209,7 +206,8 @@ class Log extends Model
 			'document'=>'文档'
 		];
 		$action = [
-			'add'=>'添加',
+			'delete'=>'删除',
+			'add'=>'创建',
 			'edit'=>'修改',
 			'del'=>'删除',
 			'upload'=>'上传',

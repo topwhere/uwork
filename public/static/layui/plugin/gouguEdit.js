@@ -9,13 +9,16 @@ layui.define(['employeepicker'], function(exports){
 		//文本
 		text:function(id,name,real_txt,editPost){
 			let that=this;
-			layer.prompt({
-				title: '请输入内容',
-				value: real_txt,
-				yes: function(index, layero) {
-					// 获取文本框输入的值
-					let newval = layero.find(".layui-layer-input").val();
-					if (newval) {
+			layer.open({
+				type:1,
+				title:'请输入内容',
+				area: ['500px', '158px'],
+				content: '<div style="padding:5px;"><input class="layui-input" id="goguEditInput" value="'+real_txt+'"/></div>',
+				btnAlign: 'c',
+				btn:['提交保存'],
+				yes: function() {
+					let newval = $("#goguEditInput").val();
+					if (newval!='') {
 						editPost(id,name,newval,newval);
 					} else {
 						layer.msg('请输入内容');
@@ -26,15 +29,16 @@ layui.define(['employeepicker'], function(exports){
 		//文本
 		textarea:function(id,name,real_txt,editPost){
 			let that=this;
-			layer.prompt({
-				title: '请输入内容',
-				formType: 2,
-				area: ['600px', '320px'], //自定义文本域宽高
-				value: real_txt,
-				yes: function(index, layero) {
-					// 获取文本框输入的值
-					let newval = layero.find(".layui-layer-input").val();
-					if (newval) {
+			layer.open({
+				type:1,
+				title:'请输入内容',
+				area: ['800px', '360px'],
+				content: '<div style="padding:5px;"><textarea class="layui-textarea" id="goguEditTextarea" style="width: 100%; height: 240px;">'+real_txt+'</textarea></div>',
+				btnAlign: 'c',
+				btn:['提交保存'],
+				yes: function() {
+					let newval = $("#goguEditTextarea").val();
+					if (newval!='') {
 						editPost(id,name,newval,newval);
 					} else {
 						layer.msg('请输入内容');
@@ -163,13 +167,13 @@ layui.define(['employeepicker'], function(exports){
 				closeBtn: 2,
 				title: false,
 				type:1,
-				area: ['960px', '560px'],
-				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
+				area: ['900px', '560px'],
+				content: '<div style="padding-right:3px"><div id="editorBox" style="margin:0 auto!important;"></div></div>',
 				success: function() {
-					gougu.editor('editorBox',468,real_txt);
+					gougu.editor('editorBox',500,real_txt);
 				},
 				btnAlign: 'c',
-				btn:['确定'],
+				btn:['提交保存'],
 				yes: function() {
 					editPost(id,name,layui.Editor.getHTML(),layui.Editor.getMarkdown());
 				}

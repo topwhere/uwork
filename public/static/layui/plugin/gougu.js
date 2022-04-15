@@ -14,6 +14,7 @@ layui.define(['layer'], function(exports){
 				imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
 				imageUploadURL: "/api/index/md_upload",		
 				saveHTMLToTextarea : true,//保存html到textarea
+				lineNumbers:false,
 				toolbarIcons : function() {
 					return [
 						"undo", "redo","bold", "del", "italic", "quote","h3",

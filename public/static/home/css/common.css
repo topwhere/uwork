@@ -159,6 +159,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-td-gray font,.layui-td-gray2 font,.layui-td-gray3 font{color:#FF6347; margin-left: 3px;}
 
 .layui-laypage a, .layui-laypage span {height: 36px;line-height: 36px;font-size: 14px;}
+.layui-layer-setwin .layui-layer-close2{z-index:12;}
 
 .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
 

@@ -140,12 +140,12 @@ layui.define(['gougu'], function(exports){
 				title: false,
 				type:1,
 				area: ['720px', '360px'],
-				content: '<div style="padding:10px 16px 0 12px;"><div id="editorBox"></div></div>',
+				content: '<div style="padding-right:3px"><div id="editorBox" style="margin:0 auto!important;"></div></div>',
 				success: function() {
-					gougu.editor('editorBox',268,txt);
+					gougu.editor('editorBox',300,txt);
 				},
 				btnAlign: 'c',
-				btn:['确定'],
+				btn:['提交保存'],
 				yes: function() {
 					that.add(id,topic_id,pid,padmin_id,module,layui.Editor.getHTML(),layui.Editor.getMarkdown());
 				}

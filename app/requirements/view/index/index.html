@@ -39,20 +39,20 @@ function init(layui){
 		cellMinWidth:200,
 		url: "/requirements/index/index", //数据接口
 		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
+			{field:'id', title: '需求编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
 				return 'R'+d.id;
 			}}
-			,{field:'priority_name',title: '优先级',align:'center',width: 72,rowspan: 2,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
-				return html;
-			}}
-			,{field:'title',title: '需求主题',rowspan: 2}
-			,{field:'flow_name',title: '需求状态',align:'center',width: 80,rowspan: 2,templet:function(d){
+			,{field:'flow_name',title: '状态',align:'center',width: 80,rowspan: 2,templet:function(d){
 				var html = '<span class="layui-badge layui-bg-'+d.flow_status+'">'+d.flow_name+'</span>';
 				return html;
 			}}
+			,{field:'title',title: '需求主题',rowspan: 2}
+			,{field:'priority_name',title: '优先级',align:'center',width: 70,rowspan: 2,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+				return html;
+			}}
 			,{field:'director_name',title: '负责人', align:'center',width: 90,rowspan: 2}
-			,{field:'plan_time',title: '预计起止日期', align:'center',width: 180,rowspan: 2}				
+			,{field:'plan_time',title: '需求周期', align:'center',width: 180,rowspan: 2}				
 			,{align: 'center', title: '关联任务', colspan: 3}
 			,{align: 'center', title: '关联BUG', colspan: 3}
 

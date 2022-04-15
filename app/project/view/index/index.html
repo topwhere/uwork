@@ -37,7 +37,7 @@
 			cellMinWidth:200,
 			url: "/project/index/index", //数据接口
 			cols:  [[
-				{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
+				{field:'id', title: '项目编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
 					return 'M'+d.id;
 				}}
 				,{field:'status',title: '状态',align:'center',width: 60,rowspan: 2,templet:function(d){
@@ -46,7 +46,7 @@
 				}}
 				,{field:'name',title: '项目名称',rowspan: 2}
 				,{field:'director_name',title: '项目负责人', align:'center',width: 90,rowspan: 2}
-				,{field:'plan_time',title: '项目起止日期', align:'center',width: 200,rowspan: 2}
+				,{field:'plan_time',title: '项目周期', align:'center',width: 200,rowspan: 2}
 				,{align: 'center', title: '关联需求', colspan: 3}
 				,{align: 'center', title: '关联任务', colspan: 3}
 				,{align: 'center', title: '关联BUG', colspan: 3}

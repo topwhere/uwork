@@ -34,6 +34,8 @@ class Index extends BaseController
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
+					$assist_admin_names = Db::name('Admin')->where([['id','in',$item->assist_admin_ids]])->column('name');
+					$item->assist_admin_names = implode(',',$assist_admin_names);
 					$item->end_time = date('Y-m-d', $item->end_time);
 					$item->priority_name = TaskList::$Priority[(int)$item->priority];
 					$item->flow_name = TaskList::$FlowStatus[(int)$item->flow_status];

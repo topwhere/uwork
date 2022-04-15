@@ -237,21 +237,21 @@ function get_position()
 //读取产品
 function get_product()
 {
-    $product = Db::name('Product')->where(['status' => 1])->select()->toArray();
+    $product = Db::name('Product')->where(['delete_time' => 0])->select()->toArray();
     return $product;
 }
 
 //读取项目
 function get_project()
 {
-    $project = Db::name('Project')->where(['status' => 1])->select()->toArray();
+    $project = Db::name('Project')->where(['delete_time' => 0])->select()->toArray();
     return $project;
 }
 
 //读取需求
 function get_requirements($pid=0)
 {
-    $requirements = Db::name('Requirements')->where(['status' => 1,'Project_id' => $pid])->select()->toArray();
+    $requirements = Db::name('Requirements')->where(['delete_time' => 0,'Project_id' => $pid])->select()->toArray();
     return $requirements;
 }
 

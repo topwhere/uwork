@@ -22,19 +22,22 @@ function pageInit(){
 			'project_id':project_id
 		},
 		cols:  [[
-			{field:'id', title: 'ID编号',width: 80, align:'center',fixed:'left'}
-			,{field:'priority_name',title: '优先级',align:'center',width: 72,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
-				return html;
-			}}
-			,{field:'type_name',title: '任务类型',width: 100,align:'center'}
-			,{field:'title',title: '任务主题'}
-			,{field:'flow_name',title: '任务状态',align:'center',width: 80,templet:function(d){
+			{field:'id', title: '任务编号',width: 80, align:'center',fixed:'left'}
+			,{field:'flow_name',title: '状态',align:'center',width: 80,templet:function(d){
 				var html = '<span class="layui-badge bg-flow-'+d.flow_status+'">'+d.flow_name+'</span>';
 				return html;
 			}}
+			,{field:'type_name',title: '类型',width: 60,align:'center',templet:function(d){
+				var html = '<span class="color-status-'+d.type+'">'+d.type_name+'</span>';
+				return html;
+			}}
+			,{field:'title',title: '任务主题'}
+			,{field:'priority_name',title: '优先级',align:'center',width: 70,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+				return html;
+			}}
 			,{field:'director_name',title: '负责人', align:'center',width: 90}
-			,{field:'director_name',title: '协作人',width: 200}
+			,{field:'assist_admin_names',title: '协作人',width: 200}
 			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
 			,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
 

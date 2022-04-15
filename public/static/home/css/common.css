@@ -186,14 +186,16 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .bg-flow-0{background-color:#648A8D !important;}
 .bg-flow-1{background-color:#4AC8BE !important;}
 .bg-flow-2{background-color:#409CDE !important;}
-.bg-flow-3{background-color:#C0DB38 !important;}
-.bg-flow-4{background-color:#FF5722 !important;}
+.bg-flow-3{background-color:#FF5722 !important;}
+.bg-flow-4{background-color:#666666 !important;}
+.bg-flow-5{background-color:#999999 !important;}
 
 .color-flow-0{color:#648A8D !important;}
 .color-flow-1{color:#4AC8BE !important;}
 .color-flow-2{color:#409CDE !important;}
-.color-flow-3{color:#C0DB38 !important;}
-.color-flow-4{color:#FF5722 !important;}
+.color-flow-3{color:#FF5722 !important;}
+.color-flow-4{color:#666666 !important;}
+.color-flow-5{color:#999999 !important;}
 
 .layui-bg-0{background-color:#648A8D !important;}
 .layui-bg-1{background-color:#4AC8BE !important;}

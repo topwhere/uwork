@@ -1,18 +1,18 @@
-# 勾股DEV
+## 勾股DEV
 ![输入图片说明](https://dev.gougucms.com/storage/202204/banner.jpg)
 
-####相关链接
+### ✅相关链接
 - gitee：https://gitee.com/gougucms/dev.git
 - 文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
 - 项目会不定时进行更新，建议⭐star⭐和👁️watch👁️一份。
 
-#### 开源项目
+### ⭕开源项目
 1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列之勾股OA](https://gitee.com/gougucms/office)
 2. [![勾股CMS](https://img.shields.io/badge/GouguCMS-2.0.18-brightgreen.svg)](https://gitee.com/gougucms/gougucms) [开源项目系列之勾股CMS](https://gitee.com/gougucms/gougucms)
 3. [![勾股BLOG](https://img.shields.io/badge/GouguBLOG-2.0.16-brightgreen.svg)](https://gitee.com/gougucms/blog) [开源项目系列之勾股BLOG](https://gitee.com/gougucms/blog)
 
 
-#### 介绍
+### 📰系统介绍
 勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
 
 勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。
@@ -20,7 +20,8 @@
 [![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office/)
 [![star](https://gitee.com/gougucms/office/badge/star.svg?theme=dark)](https://gitee.com/gougucms/office/stargazers)
 [![fork](https://gitee.com/gougucms/office/badge/fork.svg?theme=dark)](https://gitee.com/gougucms/office/members)
-#### 演示地址
+
+### ✳️演示地址
 
 勾股DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
    
@@ -35,7 +36,7 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
    产品：gouguchanpin        123456
 ~~~
 
-#### 特点
+### ✴️系统特点
 ● 多产品支持，可添加多产品管理
 ● 多项目支持，可以多项目同时进行管理
 ● 可配置的用户角色控制，不同的角色可配置不同的操作权限
@@ -46,12 +47,12 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 ● 任务安排，任务分配指定多人，可设置负责人、多协同人员
 ● 员工的操作记录全覆盖跟踪
 
-#### 功能矩阵
+### 🟥功能矩阵
 
 ![输入图片说明](https://blog.gougucms.com/storage/202203/75b9d309eae7f9ae1e9f17b9946ff29b.png)
 
 
-#### 安装教程
+### 📚安装教程
 
 一、勾股DEV推荐你使用阿里云和腾讯云服务器。
 
@@ -127,7 +128,7 @@ composer install
 ~~~
 
 
-#### 常见问题
+### ❓常见问题
 
 1.  安装失败，可能存在php配置文件禁止了putenv 和 proc_open函数。解决方法，查找php.ini文件位置，打开php.ini，搜索 disable_functions 项，看是否禁用了putenv 和 proc_open函数。如果在禁用列表里，移除putenv proc_open然后退出，重启php即可。
 
@@ -143,20 +144,18 @@ composer install
 
 7.  如果遇到无法解决的问题请到QQ群：24641076 反馈交流。
 
-#### 截图预览
+### 🖼️截图预览
 ![输入图片说明](https://dev.gougucms.com/storage/202204/dev1.png)
 ![输入图片说明](https://dev.gougucms.com/storage/202204/dev2.png)
 
-#### ⭐开源协议  
-勾股DEV遵循GPL-2.0开源协议发布。 
-
-#### ⭐开源助力
+### ⭐开源助力
+- 勾股DEV遵循GPL-2.0开源协议发布。 
 - 开源的系统少不了大家的参与，如果大家在体验的过程中发现有问题或者BUG，请到Issue里面反馈，谢谢！
 - 如果觉得勾股DEV不错，不要吝啬您的赞许和鼓励，请给我们⭐ STAR ⭐吧！
 
-#### ☕请作者喝杯咖啡吧！
+### 👍支持我们
 - If the project is very helpful to you, you can buy the author a cup of coffee☕.
-- 如果这个项目对您有帮助，可以请作者喝杯咖啡吧哟☕
+- 如果这个项目对您有帮助，请支持一下我们，可以请我们喝杯咖啡哟☕
 
 |支付宝      |    微信|
 | :--------: | :--------:|

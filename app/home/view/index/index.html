@@ -172,9 +172,9 @@
 								{volist name="requirements_list" id="vo"}
 								<tr>
 								  <td align="center">R{$vo.id}</td>
-								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.flow_name}</span></td>
+								  <td align="center"><span class="layui-badge layui-bg-{$vo.flow_status}">{$vo.flow_name}</span></td>
 								  <td>{$vo.title}</td>
-								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.priority_name}</span></td>
+								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.plan_time}</td>
 								</tr>
 								{/volist}

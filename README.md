@@ -149,7 +149,7 @@ composer install
 ![输入图片说明](https://dev.gougucms.com/storage/202204/dev2.png)
 
 ### ⭐开源助力
-- 勾股DEV遵循GPL-2.0开源协议发布。 
+- 勾股DEV遵循GPL-3.0开源协议发布。 
 - 开源的系统少不了大家的参与，如果大家在体验的过程中发现有问题或者BUG，请到Issue里面反馈，谢谢！
 - 如果觉得勾股DEV不错，不要吝啬您的赞许和鼓励，请给我们⭐ STAR ⭐吧！
 

@@ -67,6 +67,7 @@ layui.define(['layer'], function(exports){
 					
 					$('#expressClose').click(function(){
 						$('#expressMask').fadeOut(100);
+						$('body').removeClass('right-open');
 						$('#expressLayer').animate({'right': '-100%'}, 100, 'linear', function () {
 							$('#expressLayer').remove();
 							$('#expressMask').remove();							

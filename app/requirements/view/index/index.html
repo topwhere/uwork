@@ -37,6 +37,8 @@ function init(layui){
 		elem: '#test',
 		title: '需求列表',
 		cellMinWidth:200,
+		page: true, //开启分页
+		limit: 20,
 		url: "/requirements/index/index", //数据接口
 		cols:  [[
 			{field:'id', title: '需求编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){

@@ -35,6 +35,8 @@
 			elem: '#test',
 			title: '项目列表',
 			cellMinWidth:200,
+			page: true, //开启分页
+			limit: 20,
 			url: "/project/index/index", //数据接口
 			cols:  [[
 				{field:'id', title: '项目编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){

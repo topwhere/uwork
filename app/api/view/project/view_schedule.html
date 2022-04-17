@@ -23,11 +23,9 @@ function pageInit(){
 		title: '工作记录列表',
 		cellMinWidth:200,
 		url: "/api/schedule/index", //数据接口
-		where:{
-			'm':'project',
-			'tid':project_id
-		},
-		cellMinWidth: 200,
+		where:{'m':'project','tid':project_id},
+		page: true, //开启分页
+		limit: 20,
 		cols: [[ //表头
 			{field: 'id', title: '序号',width:80, align:'center'}
 			,{field: 'start_time', title: '工作时间范围', align:'center',width:186,templet:function(d){

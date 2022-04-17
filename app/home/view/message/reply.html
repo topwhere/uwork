@@ -145,7 +145,7 @@
 						success: function (e) {
 							layer.msg(e.msg);
 							if (e.code == 0) {
-								layui.tableIns.reload();
+								layui.pageTable.reload();
 								setTimeout(function(){
 									gougu.close();
 								},1000);

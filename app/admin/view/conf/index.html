@@ -26,13 +26,12 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	var tableIns = null;
 	function init(layui) {
 		var table = layui.table,
 			gougu = layui.gougu,
 			form = layui.form;
 
-		tableIns = table.render({
+		layui.pageTable = table.render({
 			elem: '#test',
 			title: '配置列表',
 			url: "/admin/conf/index",

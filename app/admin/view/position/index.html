@@ -30,12 +30,11 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	var tableIns = null;
 	function init(layui) {
 		var layer = layui.layer,
 			gougu = layui.gougu,
 			table = layui.table;
-		tableIns= table.render({
+		layui.pageTable= table.render({
 			elem: '#test',
 			title: '岗位列表',
 			url: "/admin/position/index", //数据接口				

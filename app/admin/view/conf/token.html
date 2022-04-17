@@ -51,7 +51,7 @@
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
-					tableIns.reload();
+					layui.pageTable.reload();
 					setTimeout(function(){
 						gougu.close();
 					},500);

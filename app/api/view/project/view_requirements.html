@@ -18,9 +18,9 @@ var table = layui.table,form = layui.form,gougu = layui.gougu;
 		title: '需求列表',
 		cellMinWidth:200,
 		url: "/requirements/index/index",
-		where:{
-			'project_id':project_id
-		},
+		where:{'project_id':project_id},
+		page: true, //开启分页
+		limit: 20,
 		cols:  [[
 			{field:'id', title: '产品编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){		
 				return 'R'+d.id;

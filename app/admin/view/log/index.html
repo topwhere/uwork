@@ -40,7 +40,7 @@
 		var table = layui.table,
 			form = layui.form;
 
-		var tableIns = table.render({
+		layui.pageTable = table.render({
 			elem: '#test',
 			title: '操作日志列表',
 			url: "/admin/log/index", //数据接口	
@@ -93,7 +93,7 @@
 
 		//监听搜索提交
 		form.on('submit(webform)', function (data) {
-			tableIns.reload({
+			layui.pageTable.reload({
 				where: {
 					keywords: data.field.keywords,
 					action: data.field.action

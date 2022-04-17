@@ -28,13 +28,13 @@
 			gougu=layui.gougu,
 			layer=layui.layer;
 			
-			var tableIns = table.render({
+		layui.pageTable = table.render({
 			elem: '#test'
 			,title:'工作类别列表'
 			,url: "/admin/wcate/index"
 			,page: true //开启分页
 			,limit: 20
-			,cellMinWidth: 80
+			,cellMinWidth: 200
 			,cols: [[
 					{field:'id',width:80, title: 'ID号', align:'center'}
 					,{field:'title',title: '类别名称'}
@@ -73,7 +73,7 @@
 						let callback = function (e) {
 							layer.msg(e.msg);
 							if (e.code == 0) {
-								tableIns.reload();
+								layui.pageTable.reload();
 							}
 						}
 						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 0 },callback);
@@ -85,7 +85,7 @@
 						let callback = function (e) {
 							layer.msg(e.msg);
 							if (e.code == 0) {
-								tableIns.reload();
+								layui.pageTable.reload();
 							}
 						}
 						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 1 },callback);
@@ -113,7 +113,7 @@
 							let callback = function (e) {
 								layer.msg(e.msg);
 								if (e.code == 0) {
-									tableIns.reload();
+									layui.pageTable.reload();
 								}
 								layer.close(index);
 							}

@@ -88,11 +88,6 @@ abstract class BaseController
             } else {
 				$loginInfo = Session::get($session_admin);
                 $this->uid = $loginInfo['id'];
-				if($this->uid>1){
-					if (request()->isPut() || request()->isPut()) {
-						return to_assign(205, '测试环境，不开放新增/编辑数据');
-					}
-				}
 				$params = [
 					'uid' => $this->uid,
 					'name' => $loginInfo['name'],

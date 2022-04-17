@@ -32,8 +32,8 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 **登录账号及密码：**
 ~~~
    技术总监：gougujishu     123456
-   工程师：gougugongchengshi    123456
-   产品：gouguchanpin        123456
+   工程师：ligong    123456
+   产品：ouyangchanpin        123456
 ~~~
 
 ### ✴️系统特点

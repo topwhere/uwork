@@ -376,16 +376,16 @@
 						<div class="layui-card-value">{$task.count}</div>
 					</div>
 					<div class="layui-col-md3">
-						<div class="layui-card-tips">已完成</div>
+						<div class="layui-card-tips">已完成任务</div>
 						<div class="layui-card-value">{$task.count_ok}</div>
 					</div>
 						<div class="layui-col-md3">
-						<div class="layui-card-tips">延期</div>
+						<div class="layui-card-tips">缺陷总数</div>
 					<div class="layui-card-value">{$task.delay}</div>
 					</div>
 					<div class="layui-col-md3">
-						<div class="layui-card-tips">延期率</div>
-						<div class="layui-card-value">{$task.count_lv}%</div>
+						<div class="layui-card-tips">已修复缺陷</div>
+						<div class="layui-card-value">{$task.count_lv}</div>
 					</div>
 				</div>
 			</div>
@@ -403,12 +403,12 @@
 						<div class="layui-card-value">{$work.hours}</div>
 					</div>
 						<div class="layui-col-md3">
-						<div class="layui-card-tips">延时</div>
-					<div class="layui-card-value">0</div>
+						<div class="layui-card-tips">延期</div>
+					<div class="layui-card-value">{$task.delay}</div>
 					</div>
 					<div class="layui-col-md3">
-						<div class="layui-card-tips">延时率</div>
-						<div class="layui-card-value">0</div>
+						<div class="layui-card-tips">延期率</div>
+						<div class="layui-card-value">{$task.count_lv}%</div>
 					</div>
 				</div>
 			</div>

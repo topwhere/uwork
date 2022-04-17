@@ -23,7 +23,12 @@ class Index extends BaseController
     public function index()
     {
         if (request()->isAjax()) {
-            
+            //未读消息统计
+            $msg_map[] = ['to_uid','=',$this->uid];
+            $msg_map[] = ['read_time','=',0];
+            $msg_map[] = ['status','=',1];
+            $msg_count = Db::name('Message')->where($msg_map)->count();
+            return to_assign(0,'ok',['msg_num'=>$msg_count]);
         }
         else{
 			$install = false;

@@ -10,16 +10,16 @@
 1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列之勾股OA](https://gitee.com/gougucms/office)
 2. [![勾股CMS](https://img.shields.io/badge/GouguCMS-2.0.18-brightgreen.svg)](https://gitee.com/gougucms/gougucms) [开源项目系列之勾股CMS](https://gitee.com/gougucms/gougucms)
 3. [![勾股BLOG](https://img.shields.io/badge/GouguBLOG-2.0.16-brightgreen.svg)](https://gitee.com/gougucms/blog) [开源项目系列之勾股BLOG](https://gitee.com/gougucms/blog)
-
+4. [![勾股DEV](https://img.shields.io/badge/GouguDEV-1.4.18-brightgreen.svg)](https://gitee.com/gougucms/dev) [开源项目系列之勾股DEV](https://gitee.com/gougucms/dev)
 
 ### 📰系统介绍
 勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
 
 勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。
 
-[![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office/)
-[![star](https://gitee.com/gougucms/office/badge/star.svg?theme=dark)](https://gitee.com/gougucms/office/stargazers)
-[![fork](https://gitee.com/gougucms/office/badge/fork.svg?theme=dark)](https://gitee.com/gougucms/office/members)
+[![勾股DEV](https://img.shields.io/badge/GougDEV-1.4.18-brightgreen.svg)](https://gitee.com/gougucms/dev/)
+[![star](https://gitee.com/gougucms/dev/badge/star.svg?theme=dark)](https://gitee.com/gougucms/dev/stargazers)
+[![fork](https://gitee.com/gougucms/dev/badge/fork.svg?theme=dark)](https://gitee.com/gougucms/dev/members)
 
 ### ✳️演示地址
 
@@ -32,24 +32,20 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 **登录账号及密码：**
 ~~~
    技术总监：gougujishu     123456
-   工程师：ligong    123456
-   产品：ouyangchanpin        123456
+   工 程 师：ligong    123456
+   产品经理：ouyangchanpin        123456
 ~~~
 
 ### ✴️系统特点
-● 多产品支持，可添加多产品管理
-● 多项目支持，可以多项目同时进行管理
-● 可配置的用户角色控制，不同的角色可配置不同的操作权限
-● Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷
-● 每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块
-● 任务时间跟踪机制，项目任务多状态流转，任务成功可见可控。
-● 工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间
-● 任务安排，任务分配指定多人，可设置负责人、多协同人员
-● 员工的操作记录全覆盖跟踪
-
-### 🟥功能矩阵
-
-![输入图片说明](https://blog.gougucms.com/storage/202203/75b9d309eae7f9ae1e9f17b9946ff29b.png)
+- 多产品支持，可添加多产品管理
+- 多项目支持，可以多项目同时进行管理
+- 可配置的用户角色控制，不同的角色可配置不同的操作权限
+- Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷
+- 每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块
+- 任务时间跟踪机制，项目任务多状态流转，任务成功可见可控。
+- 工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间
+- 任务安排，任务分配指定多人，可设置负责人、多协同人员
+- 员工的操作记录全覆盖跟踪
 
 
 ### 📚安装教程

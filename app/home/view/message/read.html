@@ -101,6 +101,8 @@
 
 <script>
 	function openInit() {
-		var gougu = layui.gougu;
+		if(layui.pageTable){
+			layui.pageTable.reload();
+		}		
 	}		
 </script>

@@ -74,7 +74,9 @@
 					title: '提示'
 				}, function (index) {
 					$.ajax({
-						url: "/admin/database/import?id="+id,
+						url: "/admin/database/import/",
+						type:'post',
+						data: {'id':id},
 						success: function (res) {
 							layer.msg(res.msg);
 						}
@@ -91,6 +93,7 @@
 				}, function (index) {
 					$.ajax({
 						url: "/admin/database/del",
+						type:'post',
 						data: {'id':id},
 						success: function (res) {
 							layer.msg(res.msg);

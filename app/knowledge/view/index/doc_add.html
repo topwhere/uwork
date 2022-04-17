@@ -120,51 +120,43 @@ function init(layui) {
 	var doc_id = '{$detail.id}';
 	var knowledge_id = '{$detail.knowledge_id}';
 	
-	$.ajax({
-		url:"/api/index/get_doc_list",
-		data:{kid:knowledge_id,tree:1},
-		type:'post',
-		success:function(res){					
-			//仅节点左侧图标控制收缩
-			var book = tree.render({
-				elem: '#tree',
-				data: res.trees,
-				spread: true,
-				id: 'book',
-				edit: ['add', 'del'], //操作节点的图标
-				onlyIconControl: true,  //是否仅允许节点左侧图标控制展开收缩
-				click: function(obj){
-					//layer.msg(JSON.stringify(obj.data));
-					window.location.href='/knowledge/index/doc_add?id='+obj.data.id;
-				},
-				operate: function(obj){
-					let type = obj.type; //得到操作类型：add、edit、del
-					let data = obj.data; //得到当前节点的数据
-					let elem = obj.elem; //得到当前节点元素					
-					if(type === 'add'){ //增加节点
-					  add(obj.data.id);
-					} else if(type === 'update'){ //修改节点
-					 // console.log(elem.find('.layui-tree-txt').html()); //得到修改后的内容
-					} else if(type === 'del'){ //删除节点
-						$.ajax({
-							url:"/knowledge/index/doc_delete",
-							type:'post',
-							data:{id:obj.data.id},
-							success:function(e){
-								layer.msg(e.msg);
-								setTimeout(function(){							
-									$('#tree').find('.layui-tree-txt').eq(0).click();
-								},1000)	
-							}
-						}) 
-					};
-				}
-			});	
-			setTimeout(function(){
-				$('[data-id="'+doc_id+'"]').find('.layui-tree-txt').eq(0).addClass('on');
-			},100)			
-		}
-	})
+	var treeRender = function(res){
+		//仅节点左侧图标控制收缩
+		tree.render({
+			elem: '#tree',
+			data: res.trees,
+			spread: true,
+			id: 'book',
+			edit: ['add', 'del'], //操作节点的图标
+			onlyIconControl: true,  //是否仅允许节点左侧图标控制展开收缩
+			click: function(obj){
+				//layer.msg(JSON.stringify(obj.data));
+				window.location.href='/knowledge/index/doc_add?id='+obj.data.id;
+			},
+			operate: function(obj){
+				let type = obj.type; //得到操作类型：add、edit、del
+				let data = obj.data; //得到当前节点的数据
+				let elem = obj.elem; //得到当前节点元素					
+				if(type === 'add'){ //增加节点
+				  add(obj.data.id);
+				} else if(type === 'update'){ //修改节点
+				 // console.log(elem.find('.layui-tree-txt').html()); //得到修改后的内容
+				} else if(type === 'del'){ //删除节点				
+					let deletecallback = function (e) {
+						layer.msg(e.msg);
+						setTimeout(function(){							
+							$('#tree').find('.layui-tree-txt').eq(0).click();
+						},1000)	
+					}
+					gougu.delete("/knowledge/index/doc_delete",{ id: obj.data.id },deletecallback);
+				};
+			}
+		});	
+		setTimeout(function(){
+			$('[data-id="'+doc_id+'"]').find('.layui-tree-txt').eq(0).addClass('on');
+		},100)	
+	}
+	gougu.get("/api/index/get_doc_list",{kid:knowledge_id,tree:1},treeRender);	
 	
     //监听提交
     form.on('submit(webform)', function (data) {

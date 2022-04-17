@@ -135,33 +135,28 @@
 			});
 			console.log(file_ids.join(','));
 			data.field.file_ids = file_ids.join(',');
-			$.ajax({
-				url: "/home/message/save",
-				type:'post',
-				data:data.field,
-				success:function(e){
-					if(e.code==0){
-						layer.msg('消息保存成功，正在发送中...');
-						$.ajax({
-							url: "/home/message/send",
-							type:'post',
-							data:{'id':e.data},
-							success: function (e) {
-								layer.msg(e.msg);
-								if (e.code == 0) {
-									layui.tableIns.reload();
-									setTimeout(function(){
-										gougu.close();
-									},1000);
-								}
+			let callback = function (e) {
+				if(e.code==0){
+					layer.msg('消息正在发送中...');
+					$.ajax({
+						url: "/home/message/send",
+						type:'post',
+						data:{'id':e.data},
+						success: function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								layui.tableIns.reload();
+								setTimeout(function(){
+									gougu.close();
+								},1000);
 							}
-						})
-					}else{
-					  layer.msg(e.msg);
-					}
+						}
+					})
+				}else{
+				  layer.msg(e.msg);
 				}
-			})
-			return false;
+			}
+			gougu.post("/home/message/save",data.field,callback);
 		});
 		  
 		//监听保存到草稿
@@ -176,20 +171,16 @@
 			});
 			console.log(file_ids.join(','));
 			data.field.file_ids = file_ids.join(',');
-			$.ajax({
-				url: "/home/message/save",
-				type:'post',
-				data:data.field,
-				success: function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						parent.tableIns.reload();
-						setTimeout(function(){
-							parent.layui.rightpage.close();
-						},1000);
-					}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					layui.pageTable.reload();
+					setTimeout(function(){
+						gougu.close();
+					},500);
 				}
-			})
+			}
+			gougu.post("/home/message/save",data.field,callback);
 			return false;
 		});
 
@@ -285,7 +276,7 @@
 				success:function(){
 					$.ajax({
 						url: "/api/index/get_department_tree",
-						type:'post',
+						type:'get',
 						success:function(res){					
 							dtree.render({
 								elem: "#checkemployeetree",

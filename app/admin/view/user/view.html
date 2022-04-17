@@ -113,8 +113,7 @@
 </form>
 <script>
 	function openInit() {
-		var form = layui.form,
-			layer = layui.layer;
+		var form = layui.form,layer = layui.layer,gougu=layui.gougu;
 		
 		form.render();
 		//重设密码
@@ -124,20 +123,15 @@
 				icon: 3,
 				title: '提示'
 			}, function (index) {
-				$.ajax({
-					url: "/admin/admin/reset_psw",
-					data: {
-						id: id
-					},
-					success: function (e) {
-						layer.msg(e.msg);
-						if(e.code==0){
-							setTimeout(function(){
-								location.reload();
-							},2000);
-						}							
+				let callback = function(e){
+					layer.msg(e.msg);
+					if(e.code==0){
+						setTimeout(function(){
+							location.reload();
+						},2000);
 					}
-				})
+				}
+				gougu.post('/admin/admin/reset_psw',{id: id},callback);
 				layer.close(index);
 			});
 		})

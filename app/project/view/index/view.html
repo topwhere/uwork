@@ -131,6 +131,7 @@
 <script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 var project_id = '{$detail.id}';
+var project_start_time = '{$detail.start_time| date="Y-m-d"}';
 
 var chartProgress = document.getElementById('progress');
 var progressChart = echarts.init(chartProgress);
@@ -535,7 +536,18 @@ function cross_count(arr,arr2){
 	}
 	for(var i=0;i<doneArray.length;i++){
 		yArray2.push(yArray[0] - doneArray[i]);
-	}	
+	}
+	var start_time = +echarts.number.parseDate(project_start_time),tem_x_array=[],tem_y_array=[];
+	if(start_time < start){
+		for (var tem_time = start_time; tem_time < start; tem_time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', tem_time);
+			tem_x_array.push(this_date);
+			tem_y_array.push(yArray[0]);	
+		}
+		xArray= tem_x_array.concat(xArray);
+		yArray= tem_y_array.concat(yArray);
+		yArray2= tem_y_array.concat(yArray2);
+	}
 	return {'x':xArray,'y':yArray,'y2':yArray2};
 }
 

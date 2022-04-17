@@ -33,11 +33,11 @@ class Project extends Model
 			$map1[] = ['delete_time','=',0];
 			$map1[] = ['project_id','=',$detail['id']];
 			$map2[] = $map1;
-			$map1[] = ['test_id','=',0];
+			$map1[] = ['type','=',1];
 			$detail['tasks'] = Db::name('Task')->where($map1)->count();
 			$map1[] = ['flow_status','>',2];
 			$detail['taskfixeds'] = Db::name('Task')->where($map1)->count();
-			$map2[] = ['test_id','>',0];
+			$map2[] = ['type','=',2];
 			$detail['bugs'] = Db::name('Task')->where($map2)->count();
 			$map2[] = ['flow_status','>',2];
 			$detail['bugfixeds'] = Db::name('Task')->where($map2)->count();

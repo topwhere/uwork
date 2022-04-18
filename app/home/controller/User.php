@@ -17,7 +17,23 @@ use think\facade\View;
 
 class User extends BaseController
 {
-
+	public function setting()
+    {
+        $install = false;
+        if (file_exists(CMS_ROOT . 'app/install')) {
+            $install = true;
+        }
+		View::assign('install', $install);
+		$conf = Db::name('Config')->where('id', 1)->find();
+        $config = [];
+        if ($conf['content']) {
+            $config = unserialize($conf['content']);
+        }
+        View::assign('admin', get_admin($this->uid));
+        View::assign('config', $config);
+        View::assign('TP_version',\think\facade\App::version());
+        return View();
+    }
     //修改个人信息
     public function edit_personal()
     {
@@ -30,7 +46,7 @@ class User extends BaseController
             return to_assign();
         }
 		else{
-			return view('user@user/edit_personal', [
+			return view('', [
 				'admin' => get_admin($this->uid),
 			]);
 		}

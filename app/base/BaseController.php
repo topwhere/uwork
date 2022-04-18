@@ -88,6 +88,7 @@ abstract class BaseController
             } else {
 				$loginInfo = Session::get($session_admin);
                 $this->uid = $loginInfo['id'];
+
 				$params = [
 					'uid' => $this->uid,
 					'name' => $loginInfo['name'],
@@ -95,6 +96,7 @@ abstract class BaseController
 					'module' => $this->module,
 					'controller' => $this->controller,
 					'action' => $this->action,
+					'url' => $this->module.'/'.$this->controller.'/'.$this->action,
 					'version' => get_system_config('web','version')
 				];
                 View::assign('params', $params);

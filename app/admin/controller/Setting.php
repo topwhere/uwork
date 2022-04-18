@@ -13,7 +13,7 @@ use app\base\BaseController;
 use think\facade\Db;
 use think\facade\View;
 
-class Index extends BaseController
+class Setting extends BaseController
 {
     public function index()
     {

@@ -117,7 +117,7 @@ CREATE TABLE `dev_admin_rule`  (
 -- ----------------------------
 -- Records of dev_admin_rule
 -- ----------------------------
-INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/index/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/setting/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (3, 0, 'project/index/index', '项目', '项目管理', 'icon-xiangmuguanli', 1, 3, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (4, 0, 'requirements/index/index', '需求', '项目管理', 'icon-lunwenguanli', 1, 4, 1, 0, 0);
@@ -411,8 +411,8 @@ CREATE TABLE `dev_note_cate`  (
 -- ----------------------------
 -- Records of dev_note_cate
 -- ----------------------------
-INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299);
-INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310);
+INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299,1);
+INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310,1);
 
 -- ----------------------------
 -- Table structure for dev_position

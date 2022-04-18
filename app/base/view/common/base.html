@@ -78,7 +78,7 @@
 						<img src="{__IMG__}/icon.png" alt="{:get_system_config('web','admin_title')}" />
 					</div>
 				</a>
-				<a class="item {if condition="$params.module eq 'home'"} active{/if}" href="/home/index"><i class="iconfont icon-xueshuguanli"></i><div class="text">工作台</div></a>			
+				<a class="item {if condition="$params.url eq 'home/index/index'"} active{/if}" href="/home/index"><i class="iconfont icon-xueshuguanli"></i><div class="text">工作台</div></a>			
 				{foreach name=":get_menus()" item="a"}
 					{gt name="$a.id" value="1"}
 					<a class="item {if condition='strpos($a.src,$params.module) nheq false'} active{/if}" href="/{$a.src}"><i class="iconfont {$a.icon}"></i><div class="text">{$a.title}</div></a>
@@ -86,7 +86,7 @@
 				{/foreach}
 			</div>
 			<div class="side-memu-footer">
-				<a class="item" href="/admin" title="系统设置"><i class="iconfont icon-shezhi"></i></a>
+				<a class="item" href="/home/user/setting" title="设置"><i class="iconfont icon-shezhi"></i></a>
 			</div>
 		</div>
 		{/block}

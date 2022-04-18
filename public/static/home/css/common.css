@@ -280,7 +280,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 
 .main-page-content{background-color:#fff; position:relative; min-height:100%; margin-left:200px; box-sizing: border-box;}
 .main-page-content .layui-form.layui-border-box.layui-table-viewaa{border-top:none;}
-.main-bg-content{background-color:#fafafa; position:relative; height:100%; margin-left:200px; padding:16px; box-sizing: border-box;}
+.main-bg-content{background-color:#fafafa; position:relative; min-height:100%; margin-left:200px; padding:16px; box-sizing: border-box;}
 
 .main-content .layui-form-bar{padding:12px;}
 .table-content .layui-form-bar{padding:12px; background-color:#fff;}

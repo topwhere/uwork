@@ -19,12 +19,16 @@ class Schedule extends BaseController
     {
         if (request()->isAjax()) {
             $param = get_params();
+			$task_ids = Db::name('Task')->where(['delete_time'=>0,'project_id'=>$param['tid']])->column('id');
             $where = array();
             if (!empty($param['keywords'])) {
                 $where[] = ['a.title', 'like', '%' . $param['keywords'] . '%'];
             }
 			if (!empty($param['uid'])) {
                 $where[] = ['a.admin_id', '=', $param['uid']];
+            }
+			if (!empty($task_ids)) {
+                $where[] = ['a.tid', 'in', $task_ids];
             }
             $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];

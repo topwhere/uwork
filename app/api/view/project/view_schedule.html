@@ -23,7 +23,7 @@ function pageInit(){
 		title: '工作记录列表',
 		cellMinWidth:200,
 		url: "/api/schedule/index", //数据接口
-		where:{'m':'project','tid':project_id},
+		where:{'tid':project_id},
 		page: true, //开启分页
 		limit: 20,
 		cols: [[ //表头
@@ -64,7 +64,7 @@ function pageInit(){
 	//监听搜索提交
 	form.on('submit(webform)', function(data){
 		let f=data.field;
-		layui.pageTable.reload({where:{keywords:f.keywords,uid:f.uid},page:{curr:1}});
+		layui.pageTable.reload({where:{keywords:f.keywords,uid:f.uid,tid:project_id},page:{curr:1}});
 		return false;
 	});
 	//监听行工具事件

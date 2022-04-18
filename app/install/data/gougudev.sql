@@ -120,8 +120,8 @@ CREATE TABLE `dev_admin_rule`  (
 INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/setting/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (3, 0, 'project/index/index', '项目', '项目管理', 'icon-xiangmuguanli', 1, 3, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (4, 0, 'requirements/index/index', '需求', '项目管理', 'icon-lunwenguanli', 1, 4, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (5, 0, 'task/index/index', '任务', '任务管理', 'icon-renwuguanli', 1, 5, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (4, 0, 'requirements/index/index', '需求', '项目管理', 'icon-renwuguanli', 1, 4, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (5, 0, 'task/index/index', '任务', '任务管理', 'icon-lunwenguanli', 1, 5, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (6, 0, 'knowledge/index/index', '知识库', '知识库', 'icon-shujiguanli', 1, 6, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (7, 1, '', '系统设置', '系统设置', 'icon-jichupeizhi', 1, 1, 1, 0, 0);

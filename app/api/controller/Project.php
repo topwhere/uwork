@@ -23,14 +23,21 @@ class Project extends BaseController
 	public function get_chart_data()
     {
 		$param = get_params();   
+		$tasks = Db::name('Task')->field('id,plan_hours,end_time,flow_status,over_time')->order('end_time asc')->where(['delete_time'=>0,'project_id'=>$param['project_id']])->select()->toArray();
 		
-		$task_count = Db::name('Task')->where(['delete_time'=>0,'project_id'=>$param['project_id']])->count();
+		$task_count = count($tasks);
 		$task_count_ok = Db::name('Task')->where([['project_id','=',$param['project_id']],['delete_time','=',0],['flow_status','>',2]])->count();
-		$task_delay = Db::name('Task')
-		->where(function($query){
-			$query->where([['flow_status','<',3],['end_time','<',time()-86400]])->whereor([['flow_status','=',3],['end_time','<','over_time']]);
-		})
-		->where([['project_id','=',$param['project_id']],['delete_time','=',0]])->count();
+		$task_delay = 0;
+		if($task_count>0){
+			foreach ($tasks as $k => $v) {
+				if(($v['flow_status']<3) && ($v['end_time'] < time()-86400)){
+					$task_delay++;
+				}
+				if(($v['flow_status']==3) && ($v['end_time'] < $v['over_time']-86400)){
+					$task_delay++;
+				}
+			}
+		}
 		$task_pie=[
 			'count'=>$task_count,
 			'count_ok'=>$task_count_ok,
@@ -66,7 +73,6 @@ class Project extends BaseController
 			'status_e'=>$status_e,
 		];
 		
-		$tasks = Db::name('Task')->field('id,plan_hours,end_time,flow_status')->order('end_time asc')->where(['delete_time'=>0,'project_id'=>$param['project_id']])->select()->toArray();
 		$date_tasks=[];
 		if($tasks){
 			$date_tasks = plan_count($tasks);

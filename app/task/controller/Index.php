@@ -30,6 +30,7 @@ class Index extends BaseController
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = TaskList::where($where)
                 ->withoutField('content,md_content')
+                ->order('flow_status asc')
                 ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {

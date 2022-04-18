@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright (c) 2021 勾股工作室
- * @license https://opensource.org/licenses/GPL-2.0
+ * @copyright Copyright (c) 2022 勾股工作室
+ * @license https://opensource.org/licenses/GPL-3.0
  * @link https://www.gougucms.com
  */
 
@@ -9,6 +9,6 @@
 return [
     //开启session中间件
     //'think\middleware\SessionInit',
-    //验证勾股OA是否完成安装
+    //验证勾股DEV是否完成安装
     \app\home\middleware\Install::class,
 ];

@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright (c) 2021 勾股工作室
- * @license https://opensource.org/licenses/GPL-2.0
+ * @copyright Copyright (c) 2022 勾股工作室
+ * @license https://opensource.org/licenses/GPL-3.0
  * @link https://www.gougucms.com
  */
 
@@ -19,7 +19,7 @@ class Index
     {
         // 检测是否安装过
         if (is_installed()) {
-            echo '你已经安装过勾股OA系统！如需重新安装，请删除“config/install.lock”文件';
+            echo '你已经安装过勾股DEV系统！如需重新安装，请删除“config/install.lock”文件';
             die();
         }
     }
@@ -99,8 +99,8 @@ class Index
         }
         $link->select_db($data['DB_NAME']);
         // 导入sql数据并创建表
-        $oa_sql = file_get_contents(CMS_ROOT . '/app/install/data/gougudev.sql');
-        $sql_array = preg_split("/;[\r\n]+/", str_replace("oa_", $data['DB_PREFIX'], $oa_sql));
+        $dev_sql = file_get_contents(CMS_ROOT . '/app/install/data/gougudev.sql');
+        $sql_array = preg_split("/;[\r\n]+/", str_replace("dev_", $data['DB_PREFIX'], $dev_sql));
         foreach ($sql_array as $k => $v) {
             if (!empty($v)) {
                 $link->query($v);
@@ -115,13 +115,12 @@ class Index
         $thumb = '/static/home/images/icon.png';
         $salt = set_salt(20);
         $password = set_password($password, $salt);
-        $create_time = time();
-        $update_time = time();
+        $now_time = time();
 
         $create_admin_sql = "INSERT INTO " . $data['DB_PREFIX'] . "admin " .
-            "(username,salt,pwd,name,nickname,position_id,did,sex,mobile,thumb,create_time,update_time)"
+            "(username,salt,pwd,name,nickname,position_id,did,sex,mobile,thumb,entry_time,create_time,update_time)"
             . "VALUES "
-            . "('$username','$salt','$password','$name','$nickname',1,1,1,'13800138000','$thumb','$create_time','$update_time')";
+            . "('$username','$salt','$password','$name','$nickname',1,1,1,'13800138000','$thumb','$now_time','$now_time','$now_time')";
         if (!$link->query($create_admin_sql)) {
             return to_assign(1, '创建管理员信息失败');
         }
@@ -185,7 +184,7 @@ return [
         if (false == file_put_contents(CMS_ROOT . "config/database.php", $db_str)) {
             return to_assign(1, '创建数据库配置文件失败，请检查目录权限');
         }
-        if (false == file_put_contents(CMS_ROOT . "config/install.lock", '勾股OA安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
+        if (false == file_put_contents(CMS_ROOT . "config/install.lock", '勾股DEV安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
             return to_assign(1, '创建安装鉴定文件失败，请检查目录权限');
         }
         return to_assign();

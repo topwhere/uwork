@@ -10,8 +10,8 @@
 <div class="table-content p-3">
 	<div class="layui-tab knowledge-tab" style="margin:0" lay-filter="docDemoTabBrief">
 		<ul class="layui-tab-title">
-			<li class="layui-this">个人知识库</li>
-			<li>共享知识库</li>
+			<li>个人知识库</li>
+			<li class="layui-this">共享知识库</li>
 		</ul>
 	</div>
 	<form class="layui-form layui-form-bar border-x border-b mb-3">
@@ -47,7 +47,7 @@
 	const eid = {$eid};
 	const kid = {$kid};
 	var getKnowledge = null;
-	var getData = {'page':1,'share':0};
+	var getData = {'page':1,'share':1};
 	function init(layui) {
 		var gougu = layui.gougu,
 			form = layui.form,

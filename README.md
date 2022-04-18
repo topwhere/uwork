@@ -25,7 +25,7 @@
 
 勾股DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
    
-勾股OA文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
+勾股DEV文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
 
 PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 

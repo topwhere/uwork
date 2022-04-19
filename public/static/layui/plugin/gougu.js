@@ -70,7 +70,10 @@ layui.define(['layer'], function(exports){
 						$('body').removeClass('right-open');
 						$('#expressLayer').animate({'right': '-100%'}, 100, 'linear', function () {
 							$('#expressLayer').remove();
-							$('#expressMask').remove();							
+							$('#expressMask').remove();
+							if(layui.pageTable){
+								layui.pageTable.reload();
+							}
 						})
 					})
 					$(window).resize(function () {

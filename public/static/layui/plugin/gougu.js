@@ -79,7 +79,7 @@ layui.define(['layer'], function(exports){
 							$('#expressLayer').remove();
 							$('#expressMask').remove();
 							if(layui.pageTable){
-								layui.pageTable.reload();
+								layui.pageTable.resize();
 							}
 						})
 					})

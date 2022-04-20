@@ -1,5 +1,12 @@
 layui.define(['layer'], function(exports){
     var layer = layui.layer;
+	$('body').on('click','.open-a',function(){
+		let url = $(this).data('url');
+		if(url && url!==''){
+			obj.open(url);
+		}		
+		return;
+	});
 	var obj = {
 		loading:false,
 		editor:function(editormdId,editormdHeight,editormdMarkdown){

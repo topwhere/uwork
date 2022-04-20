@@ -227,9 +227,11 @@ function openInit() {
 			if(e.code == 0){
 				layer.closeAll();
 				gougu.load('/product/index/view/id/'+id);
-				setTimeout(function(){
-					layui.pageTable.reload();
-				},400)
+				if(layui.pageTable){
+					setTimeout(function(){
+						layui.pageTable.reload();
+					},400)
+				}
 			}else{
 				layer.msg(e.msg);
 			}			

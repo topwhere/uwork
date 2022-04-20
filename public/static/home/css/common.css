@@ -1,3 +1,4 @@
+a.open-a,a.open-link{color:#4285F4; cursor:pointer;}
 a:hover{color:#3582fb}
 html,body{height:100%;}
 body.right-open{overflow:hidden;}
@@ -242,7 +243,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-layout-right .msg-num span {min-width: 18px; height: 18px; margin: 0; padding: 0 5px; display: inline-block; font-size: 11px;line-height: 18px;text-align: center; background-color: #FF5722; color: #fff;border-radius: 12px; cursor: pointer;}
 /*左侧菜单*/
 .side-memu{align-items: stretch;display: flex; flex-flow: column nowrap; justify-content: space-between; min-width: 0;height:100%; overflow:hidden; position: relative;}
-.side-memu .item {align-items: center; cursor: pointer;display: flex; flex-direction: column; height: 66px; justify-content: center; position: relative; text-align: center;}
+.side-memu .item {align-items: center; cursor: pointer;display: flex; flex-direction: column; height: 64px; justify-content: center; position: relative; text-align: center;}
 .side-memu .item>*{ position: relative;}
 .side-memu a {color: #D2E2FE; text-decoration: none;}
 .side-memu .item.logo {width: 56px; height: 50px; text-align:center;}
@@ -250,8 +251,8 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .side-memu .item.logo .gg-logo img {height: 36px; width: 36px; border-radius:50%}
 .side-memu .item:hover{background-color:#333E5C}
 .side-memu .item.active { color: #fff; background-color:#4285F4}
-.side-memu .item .iconfont {font-size: 22px; margin: 0;}
-.side-memu .item .text {font-size:12px; padding-top:5px; line-height: 1.5;}
+.side-memu .item .iconfont {font-size: 20px; margin: 0;}
+.side-memu .item .text {font-size:12px; padding-top:2px; line-height: 1.5;}
  
 /*内容区域*/
 .main-content{position: relative; padding:0; height:100%; box-sizing: border-box;}
@@ -340,7 +341,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .log-timeline dd{font-size: 14px; line-height: 1.6; padding:5px 0}
 .log-timeline .date-second-point{width: 10px; height: 10px; display: block; border-radius: 50%; border: 3px solid #FBBC05; background: #fff; position: absolute; z-index: 99; left:-32px; top:9px}
 .log-timeline .log-thumb{width: 24px; height: 24px; border-radius: 50%; margin-right:4px;}
-.log-timeline .log-link{margin:0 4px; color:#4285F4; cursor:pointer;}
+.log-timeline .open-a{margin:0 4px;}
 /*知识库*/
 .knowledge-tab .layui-this{background-color:#fff}
 .knowledge-list .layui-card{cursor: pointer; transition: box-shadow .3s,border-color .3s;}

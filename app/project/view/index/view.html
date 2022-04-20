@@ -572,6 +572,11 @@ function init(layui) {
 		$(this).addClass('active');
 		gougu.page(page);
 	})
+	
+	$('#subMenu').on('click','[data-event="open"]',function(){
+		let url = $(this).data('url');
+		gougu.open(url);
+	})
 
 	let callback=function(res){	
 		if(res.data.date_tasks instanceof Array == false){			

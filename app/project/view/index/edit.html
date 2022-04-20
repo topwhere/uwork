@@ -227,10 +227,11 @@ function openInit() {
 			layer.msg(e.msg);
 			if(e.code == 0){
 				gougu.load('/project/index/edit/id/'+id);
-				setTimeout(function(){
-					layui.pageTable.reload();
-					$('#editTips').html('，最近更新于 5秒前');
-				},1000)
+				if(layui.pageTable){
+					setTimeout(function(){
+						layui.pageTable.reload();
+					},400)
+				}
 			}
 		}
 		let postData={id:id};

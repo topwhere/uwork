@@ -271,9 +271,11 @@ function openInit() {
 			layer.closeAll();
 			if(e.code == 0){
 				gougu.load('/task/index/view/id/'+id);
-				setTimeout(function(){
-					layui.pageTable.reload();
-				},500)	
+				if(layui.pageTable){
+					setTimeout(function(){
+						layui.pageTable.reload();
+					},400)
+				}
 			}
 			else{
 				layer.msg(e.msg);

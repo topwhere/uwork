@@ -1,5 +1,11 @@
 {extend name="../../base/view/common/base" /}
 <!-- 主体 -->
+{block name="style"}
+<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
+<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
+<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
+<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
+{/block}
 {block name="body"}
 <div class="card-content">
 <div class="layui-row layui-col-space10">
@@ -34,7 +40,7 @@
 								<tr>
 								  <td align="center">N{$vo.id}</td>
 								  <td align="center">{$vo.cate_title}</td>
-								  <td>{$vo.title}</td>
+								  <td><a class="open-a" data-url="/admin/note/view/id/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center">{$vo.create_time}</td>
 								</tr>
 								{/volist}
@@ -80,7 +86,7 @@
 								<tr>
 								  <td align="center">P{$vo.id}</td>
 								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
-								  <td>{$vo.name}</td>
+								  <td><a class="open-a" data-url="/product/index/view/id/{$vo.id}">{$vo.name}</a></td>
 								  <td align="center">{$vo.director_name}</td>
 								  <td align="center">{$vo.test_name}</td>
 								  <td align="center">{$vo.projects}</td>
@@ -130,7 +136,7 @@
 								<tr>
 								  <td align="center">M{$vo.id}</td>
 								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
-								  <td>{$vo.name}</td>
+								  <td><a class="open-link" href="/project/index/view/id/{$vo.id}">{$vo.name}</a></td>
 								  <td align="center">{$vo.director_name}</td>
 								  <td align="center">{$vo.requirements}</td>
 								  <td align="center">{$vo.tasks}</td>
@@ -173,7 +179,7 @@
 								<tr>
 								  <td align="center">R{$vo.id}</td>
 								  <td align="center"><span class="layui-badge layui-bg-{$vo.flow_status}">{$vo.flow_name}</span></td>
-								  <td>{$vo.title}</td>
+								  <td><a class="open-a" data-url="/requirements/index/view/id/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.plan_time}</td>
 								</tr>
@@ -217,7 +223,7 @@
 								<tr>
 								  <td align="center">T{$vo.id}</td>								  
 								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
-								  <td>{$vo.title}</td>
+								  <td><a class="open-a" data-url="/task/index/view/id/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
 								  <td align="center">{$vo.type_name}</td>
 								  <td align="center">{$vo.plan_hours}</td>
@@ -259,7 +265,7 @@
 								<tr>
 								  <td align="center">K{$vo.id}</td>
 								  <td align="center">{$vo.cate_name}</td>
-								  <td>{$vo.title}</td>
+								  <td><a class="open-link" href="/knowledge/index/doc_detail/kid/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center">{$vo.admin_name}</td>
 								  <td align="center">{$vo.create_time}</td>
 								</tr>
@@ -742,6 +748,7 @@ function get_logs() {
 	})
 }
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
+<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+{include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
 {/block}
 <!-- /脚本 -->

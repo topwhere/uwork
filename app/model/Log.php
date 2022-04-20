@@ -258,17 +258,21 @@ class Log extends Model
 			
 			$v['topic'] = '';
 			$v['topic_title'] = '';
+			$v['url'] = '';
 			if($v['module'] == 'requirements'){
 				$v['topic'] = 'R'.$v['requirements_id'];
 				$v['topic_title'] = Db::name('Requirements')->where('id',$v['requirements_id'])->value('title');
+				$v['url'] = '/requirements/index/view/id/'.$v['requirements_id'];
 			}
 			if($v['module'] == 'task'){
 				$v['topic'] = 'T'.$v['task_id'];
 				$v['topic_title'] = Db::name('Task')->where('id',$v['task_id'])->value('title');
+				$v['url'] = '/task/index/view/id/'.$v['task_id'];
 			}
 			if($v['module'] == 'document'){
 				$v['topic'] = 'D'.$v['document_id'];
 				$v['topic_title'] = Db::name('Document')->where('id',$v['document_id'])->value('title');
+				$v['url'] = '/api/document/view/id/'.$v['document_id'];
 			}
 			
 			$v['action'] = $action[$v['action']];

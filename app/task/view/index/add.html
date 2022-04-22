@@ -19,12 +19,12 @@
 		<tr>
 			<td class="layui-td-gray">负责人<font>*</font></td>
 			<td>
-				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择负责人" value="">
-				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="">
+				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择负责人" value="{$params.uid}">
+				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="{$params.name}">
 			</td>
-			<td class="layui-td-gray">协作人<font>*</font></td>
+			<td class="layui-td-gray">协作人</td>
 			<td colspan="5">
-				<input type="hidden" name="assist_admin_ids" lay-verify="required" readonly lay-reqText="请选择协作人" value="">
+				<input type="hidden" name="assist_admin_ids" readonly value="">
 				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
 			</td>
 		</tr>

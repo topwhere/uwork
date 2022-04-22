@@ -28,8 +28,15 @@
 				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
 			</td>
 		</tr>
-		<tr>
-			<td class="layui-td-gray">任务类别<span style="color: red">*</span></td>
+		<tr>	
+			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>		
+			<td>
+				<select name="type" lay-verify="required" lay-reqText="请选择任务类型">
+					<option value="1">任务</option>
+					<option value="2">缺陷</option>	
+				</select>	
+			</td>
+			<td class="layui-td-gray">所属工作类型<span style="color: red">*</span></td>
 			<td>
 				<select name="cate" lay-verify="required" lay-reqText="请选择任务类别">
 					<option value="">请选择</option>
@@ -43,13 +50,6 @@
 					<option value="7">会议</option>
 					<option value="8">调研</option>					
 				</select>		
-			</td>	
-			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>		
-			<td>
-				<select name="type" lay-verify="required" lay-reqText="请选择任务类型">
-					<option value="1">任务</option>
-					<option value="2">缺陷</option>	
-				</select>	
 			</td>
 			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>
 			<td>

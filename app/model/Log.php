@@ -80,6 +80,7 @@ class Log extends Model
 				'priority' =>array('icon'=>'icon-wodedianping','title'=>'等级'),
 				'type' =>array('icon'=>'icon-wodedianping','title'=>'类型'),
 				'cate' =>array('icon'=>'icon-wodedianping','title'=>'类别'),
+				'done_ratio' =>array('icon'=>'icon-wodedianping','title'=>'完成进度'),
 				'product_id' =>array('icon'=>'icon-wodedianping','title'=>'关联产品'),
 				'project_id' =>array('icon'=>'icon-wodedianping','title'=>'关联项目'),
 				'requirements_id' =>array('icon'=>'icon-wodedianping','title'=>'关联需求'),
@@ -142,6 +143,10 @@ class Log extends Model
 			if($v['field'] == 'requirements_id'){
 				$v['old_content'] = Db::name('Requirements')->where(['id' => $v['old_content']])->value('title');
 				$v['new_content'] = Db::name('Requirements')->where(['id' => $v['new_content']])->value('title');
+			}
+			if($v['field'] == 'done_ratio'){
+				$v['old_content'] = $v['old_content'].'%';
+				$v['new_content'] = $v['new_content'].'%';
 			}
 			if(strpos($v['field'],'_ids') !== false){
 				$old_ids = Db::name('Admin')->where('id','in',$v['old_content'])->column('name');
@@ -241,6 +246,10 @@ class Log extends Model
 			if($v['field'] == 'requirements_id'){
 				$v['old_content'] = Db::name('Requirements')->where(['id' => $v['old_content']])->value('title');
 				$v['new_content'] = Db::name('Requirements')->where(['id' => $v['new_content']])->value('title');
+			}
+			if($v['field'] == 'done_ratio'){
+				$v['old_content'] = $v['old_content'].'%';
+				$v['new_content'] = $v['new_content'].'%';
 			}
 			if(strpos($v['field'],'_ids') !== false){
 				$old_ids = Db::name('Admin')->where('id','in',$v['old_content'])->column('name');

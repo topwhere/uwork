@@ -47,59 +47,7 @@
 						  </tbody>
 						</table>						
 					</div>
-				</div>			
-				<div class="layui-card">
-					<div class="table-title">我负责的产品</div>
-					<div style="padding:8px 12px 12px;">
-						<table class="layui-table">
-						  <colgroup>
-								<col width="80">
-								<col width="70">
-								<col>
-								<col width="80">
-								<col width="100">
-								<col width="60">
-								<col width="60">
-								<col width="60">
-								<col width="60">
-							</colgroup>
-							<thead>
-								<tr>
-									<th style="text-align:center">编号ID</th>
-									<th style="text-align:center">状态</th>
-									<th>产品主题</th>
-									<th style="text-align:center">负责人</th>
-									<th style="text-align:center">测试负责人</th>
-									<th style="text-align:center">项目</th>
-									<th style="text-align:center">需求</th>
-									<th style="text-align:center">任务</th>
-									<th style="text-align:center">BUG</th>
-								</tr> 
-							</thead>
-							<tbody class="layui-table-body">
-								{empty name="product_list"}
-								<tr>									
-									<td colspan="9"><div class="layui-none">无数据</div></td>
-								</tr>
-								{/empty}
-								{volist name="product_list" id="vo"}
-								<tr>
-								  <td align="center">P{$vo.id}</td>
-								  <td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
-								  <td><a class="open-a" data-url="/product/index/view/id/{$vo.id}">{$vo.name}</a></td>
-								  <td align="center">{$vo.director_name}</td>
-								  <td align="center">{$vo.test_name}</td>
-								  <td align="center">{$vo.projects}</td>
-								  <td align="center">{$vo.requirements}</td>
-								  <td align="center">{$vo.tasks}</td>
-								  <td align="center">{$vo.bugs}</td>
-								</tr>
-								{/volist}
-						  </tbody>
-						</table>
-					</div>
-				</div>
-				
+				</div>				
 				<div class="layui-card">
 					<div class="table-title">我参与的项目</div>
 					<div style="padding:8px 12px 12px;">

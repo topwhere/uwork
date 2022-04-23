@@ -48,44 +48,6 @@ class Index extends BaseController
 				$note_list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
 			}
 			
-			$product_map1=[
-				['admin_id','=',$this->uid],
-			];
-			$product_map2=[
-				['director_uid','=',$this->uid],
-			];
-			$product_map3=[
-				['test_uid','=',$this->uid],
-			];
-			$product_list = Db::name('Product')
-			->where(function($query) use ($product_map1,$product_map2,$product_map3) {
-				$query->where($product_map1)->whereor($product_map2)->whereor($product_map3);
-			})
-			->where('delete_time',0)->limit(5)->select()->toArray();
-			foreach ($product_list as $k => &$v) {
-				$v['director_name'] = Db::name('Admin')->where(['id' => $v['director_uid']])->value('name');
-				$v['test_name'] = Db::name('Admin')->where(['id' => $v['test_uid']])->value('name');
-				$v['status_name'] = Product::$Status[(int)$v['status']];
-				$v['projects'] = Db::name('Project')->where(['delete_time'=>0,'product_id' => $v['id']])->count();
-				
-				$requirements_map=[];
-				$requirements_map[]=['product_id','=',$v['id']];
-				$requirements_map[]=['delete_time','=',0];
-				$v['requirements'] = Db::name('Requirements')->where($requirements_map)->count();				
-					
-				$task_map = [];
-				$task_map[] = ['product_id','=',$v['id']];
-				$task_map[] = ['test_id','=',0];
-				$task_map[] = ['delete_time','=',0];
-				$v['tasks'] = Db::name('Task')->where($task_map)->count();
-					
-				$bug_map =[];
-				$bug_map[] = ['product_id','=',$v['id']];
-				$bug_map[] = ['test_id','>',0];
-				$bug_map[] = ['delete_time','=',0];
-				$v['bugs'] = Db::name('Task')->where($bug_map)->count();
-			}
-			
 			$project_map1=[
 				['admin_id','=',$this->uid],
 			];
@@ -112,13 +74,13 @@ class Index extends BaseController
 					
 				$task_map = [];
 				$task_map[] = ['project_id','=',$v['id']];
-				$task_map[] = ['test_id','=',0];
+				$task_map[] = ['type','=',1];
 				$task_map[] = ['delete_time','=',0];
 				$v['tasks'] = Db::name('Task')->where($task_map)->count();
 					
 				$bug_map =[];
 				$bug_map[] = ['project_id','=',$v['id']];
-				$bug_map[] = ['test_id','>',0];
+				$bug_map[] = ['type','>',2];
 				$bug_map[] = ['delete_time','=',0];
 				$v['bugs'] = Db::name('Task')->where($bug_map)->count();
 			}
@@ -171,7 +133,7 @@ class Index extends BaseController
 			->where(function($query) use ($task_map1,$task_map2,$task_map3) {
 				$query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
 			})
-			->where('delete_time',0)->limit(5)->select()->toArray();
+			->where([['delete_time','=',0],['flow_status','<',3]])->limit(10)->select()->toArray();
 			foreach ($task_list as $k => &$v) {
 				$v['end_time'] = date('Y-m-d',$v['end_time']);
 				$v['priority_name'] = Task::$Priority[(int)$v['priority']];
@@ -228,7 +190,6 @@ class Index extends BaseController
 			View::assign([
 				'install' => $install,
 				'note_list' => $note_list,
-				'product_list' => $product_list,
 				'project' => $project,
 				'requirements_list' => $requirements_list,
 				'task' => $task,

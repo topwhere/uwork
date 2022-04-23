@@ -28,7 +28,6 @@
 
 <!-- 脚本 -->
 {block name="script"}
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 function init(layui){
 	var table = layui.table,form = layui.form,gougu = layui.gougu;
@@ -83,6 +82,8 @@ function init(layui){
 	});
 }		
 </script>
+<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -60,6 +60,7 @@
 				<textarea id="mdContent" style="display:none;">{$detail.md_content|raw}</textarea>
 				<div id="docContent"></div>
 				<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+				<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 				<script>
 				var markdownEditor;
 				function buildEditor(editormdId,editormdHeight,editormdMarkdown){
@@ -95,6 +96,9 @@
 								border : "none",
 							});			
 							this.resize();
+						},
+						onload : function() {
+							initPasteDragImg(this); //必须
 						}
 					})
 				}

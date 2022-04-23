@@ -43,6 +43,9 @@ layui.define(['layer'], function(exports){
 						border : "none",
 					});			
 					this.resize();
+				},
+				onload : function() {
+					initPasteDragImg(this); //必须
 				}
 			})
 		},

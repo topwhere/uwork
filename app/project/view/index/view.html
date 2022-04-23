@@ -128,7 +128,6 @@
 <!-- 脚本 -->
 {block name="script"}
 <script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
 <script>
 var project_id = '{$detail.id}';
 var project_start_time = '{$detail.start_time| date="Y-m-d"}';
@@ -709,6 +708,8 @@ function init(layui) {
 	}	
 }
 </script>
+<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -1,5 +1,6 @@
 	<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
 	<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+	<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 	<script type="text/javascript">
 		var editormdId='[id]';
 		var editormdMarkdown='[markdown]';
@@ -44,6 +45,9 @@
 						border : "none",
 					});			
 					this.resize();
+				},
+				onload : function() {
+					initPasteDragImg(this); //必须
 				}
 			})
 		},200);

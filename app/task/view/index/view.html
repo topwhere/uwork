@@ -147,17 +147,6 @@ function openInit() {
 			{'id':4,'title':'不解决'},
 			{'id':5,'title':'已关闭'}
 		],
-		cate:[
-			{'id':0,'title':'其他'},
-			{'id':1,'title':'UI设计'},
-			{'id':2,'title':'技术开发'},
-			{'id':3,'title':'产品原型'},
-			{'id':4,'title':'测试'},
-			{'id':5,'title':'编写文档'},
-			{'id':6,'title':'沟通'},
-			{'id':7,'title':'会议'},
-			{'id':8,'title':'调研'}
-		],
 		type:[
 			{'id':1,'title':'任务'},
 			{'id':2,'title':'缺陷'},
@@ -327,8 +316,16 @@ function openInit() {
 		if(name =="assist_admin_ids"){
 			edit.employee_more(id,name,show_txt,real_txt,editPost);
 		}
-		if(name=="flow_status" || name=="type" || name=="cate" || name=="priority" || name=="done_ratio"){	
+		if(name=="flow_status" || name=="type" || name=="priority" || name=="done_ratio"){	
 			edit.dropdown(id,name,real_txt,opsData[name],editPost);			
+		}
+		if(name=="cate"){	
+			loading=true;
+			gougu.get("/api/index/get_work",{},function(res){
+				let data = res.data;
+				loading=false;
+				edit.dropdown(id,name,real_txt,data,editPost,1);
+			});			
 		}
 		if(name=="product_id"){	
 			if(admin_id == GOUGU_DEV.uid){
@@ -339,7 +336,7 @@ function openInit() {
 					edit.dropdown(id,name,real_txt,data,editPost,1);
 				});	
 			}else{
-				layer.msg('您没权限修改，请联系创建人修改');
+				layer.msg('您没权限修改，请联系创建人或负责人修改');
 			}			
 		}
 		if(name=="project_id"){
@@ -356,7 +353,7 @@ function openInit() {
 					edit.dropdown(id,name,real_txt,data,editPost,1);
 				});	
 			}else{
-				layer.msg('您没权限修改，请联系创建人修改');
+				layer.msg('您没权限修改，请联系创建人或负责人修改');
 			}
 		}
 		if(name=="requirements_id"){

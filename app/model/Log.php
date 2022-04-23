@@ -69,7 +69,6 @@ class Log extends Model
 			'priority' => ['','低','中','高','紧急'],
 			'flow_status' => ['','待办的','进行中','已完成','已拒绝','已关闭'],
 			'type' => ['其他','任务','缺陷'],
-			'cate' => ['其他','UI设计','产品原型','技术开发','测试','编写文档','沟通','会议','调研'],
 			'field_array'=>[
 				'director_uid' =>array('icon'=>'icon-xueshengzhuce','title'=>'负责人'),
 				'assist_admin_ids' =>array('icon'=>'icon-xueshengbaoming','title'=>'协作人'),
@@ -143,6 +142,10 @@ class Log extends Model
 			if($v['field'] == 'requirements_id'){
 				$v['old_content'] = Db::name('Requirements')->where(['id' => $v['old_content']])->value('title');
 				$v['new_content'] = Db::name('Requirements')->where(['id' => $v['new_content']])->value('title');
+			}
+			if($v['field'] == 'cate'){
+				$v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');
+				$v['new_content'] = Db::name('WorkCate')->where(['id' => $v['new_content']])->value('title');
 			}
 			if($v['field'] == 'done_ratio'){
 				$v['old_content'] = $v['old_content'].'%';

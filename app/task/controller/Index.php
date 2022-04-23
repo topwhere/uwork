@@ -40,7 +40,7 @@ class Index extends BaseController
 					$item->end_time = date('Y-m-d', $item->end_time);
 					$item->priority_name = TaskList::$Priority[(int)$item->priority];
 					$item->flow_name = TaskList::$FlowStatus[(int)$item->flow_status];
-					$item->cate_name = TaskList::$Cate[(int)$item->cate];
+					$item->cate_name = Db::name('WorkCate')->where(['id' => $item->cate,'status' => 1])->value('title');
 					$item->type_name = TaskList::$Type[(int)$item->type];
                 });
             return table_assign(0, '', $list);

@@ -36,17 +36,6 @@ class Task extends Model
 		self::ONE => '任务',
 		self::TWO => '缺陷',
 	];
-	public static $Cate = [
-		self::ZERO => '其他',
-		self::ONE => 'UI设计',
-		self::TWO => '产品原型',
-		self::THREE => '技术开发',
-		self::FOUR => '测试',
-		self::FIVE => '编写文档',
-		self::SIX => '沟通',
-		self::SEVEN => '会议',
-		self::EIGHT => '调研',
-	];
 	
 	//判断编辑查看权限
 	public function role($admin_id){
@@ -71,7 +60,7 @@ class Task extends Model
 			$detail['priority_name'] = self::$Priority[(int)$detail['priority']];
 			$detail['flow_name'] = self::$FlowStatus[(int)$detail['flow_status']];
 			$detail['type_name'] = self::$Type[(int)$detail['type']];
-			$detail['cate_name'] = self::$Cate[(int)$detail['cate']];
+			$detail['cate_name'] = Db::name('WorkCate')->where(['id' => $detail['cate']])->value('title');
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
 			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count();
 			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'delete_time'=>0,'topic_id' => $detail['id']])->count();

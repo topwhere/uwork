@@ -42,7 +42,7 @@
 				</tr>
 				<tr>
 					<td class="layui-td-gray">实际工时</td>
-					<td class="hover-edit">{$detail.work_hours}</td>
+					<td class="hover-edit">{eq name="$detail.work_hours" value="0"}-{else/}{$detail.work_hours}{/eq}</td>
 					<td class="layui-td-gray2">实际完成日期</td>
 					<td  class="hover-edit">{eq name="$detail.over_time" value="0"}-{else/}{$detail.over_time| date='Y-m-d'}{/eq}</td>
 					<td class="layui-td-gray">完成进度</td>

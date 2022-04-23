@@ -38,6 +38,13 @@ class Index extends BaseController
 					$assist_admin_names = Db::name('Admin')->where([['id','in',$item->assist_admin_ids]])->column('name');
 					$item->assist_admin_names = implode(',',$assist_admin_names);
 					$item->end_time = date('Y-m-d', $item->end_time);
+					$item->delay = 0;
+					if($item->over_time>0 && $item->flow_status<4){
+						$item->delay = countDays($item->end_time,date('Y-m-d', $item->over_time));
+					}
+					if($item->over_time==0 && $item->flow_status<4){
+						$item->delay = countDays($item->end_time);
+					}
 					$item->priority_name = TaskList::$Priority[(int)$item->priority];
 					$item->flow_name = TaskList::$FlowStatus[(int)$item->flow_status];
 					$item->cate_name = Db::name('WorkCate')->where(['id' => $item->cate,'status' => 1])->value('title');

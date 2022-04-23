@@ -64,8 +64,13 @@ function init(layui){
 			,{field:'director_name',title: '负责人', align:'center',width: 90}
 			,{field:'assist_admin_names',title: '协作人',width: 200}
 			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
-			,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
-
+			,{field:'end_time',title: '预计结束日期', width: 160,templet:function(d){
+				var html = d.end_time;	
+				if(d.delay>0){
+					html+= '<span class="color-status-0 ml-1">逾期'+d.delay+'天</span>';	
+				}			
+				return html;
+			}}
 			,{fixed: 'right',title: '操作',align: 'center',width: 60,toolbar: '#barDemo',}
 		]]
 	});

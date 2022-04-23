@@ -981,7 +981,7 @@ function getTimeBySec($time)
 }
 
 /*
- *根据年月计算有几天
+ *根据年月计算当月天数
  */
 function getmonthByYM($param)
 {
@@ -1281,12 +1281,36 @@ function advancedDate($type)
  * @param string $format 格式 【d：显示到天 i显示到分钟 s显示到秒】
  * @return string
  */
+function countDays($a,$b=0){
+	if($b==0){
+		$b=date("Y-m-d");
+	}	
+	$date_1=$a;
+	$date_2=$b;
+	$d1=strtotime($date_1);
+	$d2=strtotime($date_2);
+	$days=round(($d2-$d1)/3600/24);
+	if($days>0){
+		return $days;
+	}
+	else{
+		return 0;
+	}
+	
+}
+
+/**
+ * 间隔时间段格式化
+ * @param int $time 时间戳
+ * @param string $format 格式 【d：显示到天 i显示到分钟 s显示到秒】
+ * @return string
+ */
 function time_trans($time, $format = 'd')
 {
     $now = time();
     $diff = $now - $time;
     if ($diff < 60) {
-        return '1分钟前';
+        return $diff . '秒前';
     } else if ($diff < 3600) {
         return floor($diff / 60) . '分钟前';
     } else if ($diff < 86400) {

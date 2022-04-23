@@ -64,6 +64,13 @@ class Task extends Model
 			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
 			$detail['logs'] = Db::name('Log')->where(['module' => 'task','task_id' => $detail['id']])->count();
 			$detail['comments'] = Db::name('Comment')->where(['module' => 4,'delete_time'=>0,'topic_id' => $detail['id']])->count();
+			$detail['delay'] = 0;
+			if($detail['over_time']>0 && $detail['flow_status']<4){
+				$detail['delay'] = countDays($detail['end_time'],date('Y-m-d', $detail['over_time']));
+			}
+			if($detail['over_time']==0 && $detail['flow_status']<4){
+				$detail['delay'] = countDays($detail['end_time']);
+			}
         }
         return $detail;
     }

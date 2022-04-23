@@ -2,7 +2,8 @@
 	<div class="p-4 border-b">
 		<h3 class="h3-title hover-edit">
 			<span class="layui-btn layui-btn-xs bg-priority-{$detail.priority}">{$detail.priority_name}</span>
-			<span id="title_{$detail.id}" data-val="">{$detail.title}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="title"></i>
+			<span id="title_{$detail.id}" data-val="">{$detail.title}</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-name="title"></i>
 		</h3>
 		<div>
 			<span class="layui-badge layui-bg-gray">#T{$detail.id}</span>
@@ -33,7 +34,7 @@
 					<td class="layui-td-gray">预估工时</td>
 					<td class="hover-edit"><span id="plan_hours_{$detail.id}" data-val="">{$detail.plan_hours}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="plan_hours"></i></td>
 					<td class="layui-td-gray2">计划完成日期</td>
-					<td  class="hover-edit"><span id="end_time_{$detail.id}" data-val="">{$detail.end_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="end_time"></i></td>
+					<td  class="hover-edit"><span id="end_time_{$detail.id}" data-val="">{$detail.end_time| date='Y-m-d'}</span>{gt name="$detail.delay" value="0"}<span class="layui-badge ml-2">逾期 {$detail.delay} 天</span>{/gt}<i class="iconfont icon-wodedianping" title="编辑" data-name="end_time"></i></td>
 					<td class="layui-td-gray">任务状态</td>
 					<td class="hover-edit">
 						<span class="color-flow-{$detail.flow_status}" id="flow_status_{$detail.id}" data-val="{$detail.flow_status}">{$detail.flow_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-name="flow_status"></i>

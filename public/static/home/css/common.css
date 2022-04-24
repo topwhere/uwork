@@ -98,8 +98,8 @@ body.right-open{overflow:hidden;}
 ::-moz-scrollbar {width: 8px; background-color: transparent;}
 ::-moz-scrollbar-thumb {background-color: #c1c1c1;border-radius: 8px;}
  
-div.layui-table-main::-webkit-scrollbar{width:15px;height:15px}
-div.layui-table-main::-webkit-scrollbar-thumb{min-width:15px;min-height:15px;background-color:rgba(0,0,0,.15);background-clip:content-box;border:2px solid transparent;border-radius:15px}
+div.layui-table-main::-webkit-scrollbar{width:12px;height:12px}
+div.layui-table-main::-webkit-scrollbar-thumb{min-width:12px;min-height:12px;background-color:rgba(0,0,0,.15);background-clip:content-box;border:2px solid transparent;border-radius:12px}
 div.layui-table-main::-webkit-scrollbar-track{background-color:transparent}
 div.layui-table-main::-webkit-scrollbar-track:hover{background-color:rgba(0,0,0,.04)}
 div.layui-table-main::-webkit-scrollbar-thumb:hover{background-color:rgba(0,0,0,.4);border:2px solid transparent}
@@ -131,7 +131,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 	-webkit-line-clamp: 3;
 }
 .layui-timeline-title{line-height:20px;}
-.layui-card { box-shadow: 0 1px 3px 0 rgb(5 32 96 / 10%);}
+.layui-card { box-shadow: 0 1px 3px 0 rgb(5 32 96 / 10%); margin-bottom:12px!important;}
 .layui-table, .layui-table-view{margin:0}
 .layui-table td,.layui-table th{padding:9px 10px;}
 .layui-table-cell{padding:0 10px;}
@@ -266,6 +266,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .table-title {font-size: 18px;font-weight: 800;padding: 8px 12px 0;}
 .h3-title{font-size:18px; height:39px; font-weight:800}
 .body-form-btn{padding:10px 0;}
+.info-td{width:90px; text-align:right; background-color:#f8f8f8; color:#999; padding:5px 3px;}
 
 .sub-menu{overflow: hidden; position: absolute;height:100%; background-color:#fff; top:0;left:0;}
 .sub-menu-content{overflow-x: hidden; position: relative;z-index: 2;}
@@ -313,7 +314,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .express-box { position: fixed; z-index:9999; height:100%; right: -100%; top:0;background-color: #fff;}
 .express-box article{width:100%; height:100%; overflow:auto;}
 .express-mask{ display: none; position: fixed; top: 0; left: 0; z-index: 9998; width: 100%; height: 100%; background-color: rgba(0,0,0,.6); }
-.express-close{position: absolute;width:24px;height:60px; padding:30px 6px; line-height:30px;text-align:center; left: -38px;right:0; top: 24%;background-color:#FF5722;color:#fff;border-radius:6px 0 0 6px; cursor:pointer; border:2px solid #fff; border-right:none; font-weight:600; font-size:14px;}
+.express-close{position: absolute;width:24px;height:60px; padding:30px 6px; line-height:30px;text-align:center; left: -38px;right:0; top: 20%;background-color:#FF5722;color:#fff;border-radius:6px 0 0 6px; cursor:pointer; border:2px solid #fff; border-right:none; font-weight:600; font-size:14px;}
 .express-close:hover{opacity:0.9}
 .page-content{background-color:#fff;}
 .md-content{min-height:200px;}
@@ -347,7 +348,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .knowledge-tab .layui-this{background-color:#fff}
 .knowledge-list .layui-card{cursor: pointer; transition: box-shadow .3s,border-color .3s;}
 .knowledge-list .layui-card:hover {border-color: transparent; box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);}
-.knowledge-list .card-body{height:100px; padding: 15px;}
+.knowledge-list .card-body{height:100px; padding: 12px;}
 .knowledge-list .meta-title{font-size: 16px; height:33px}
 .knowledge-list .meta-desc{font-size: 14px; line-height: 1.6; color: #666;}
 .knowledge-list .meta-desc a{color: #666;}

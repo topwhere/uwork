@@ -4,7 +4,7 @@
 ### ✅ 相关链接
 - gitee：https://gitee.com/gougucms/dev.git
 - 文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
-- 项目会不定时进行更新，建议⭐star⭐和👁️watch👁️一份。
+- 项目会不定时进行更新，**建议⭐star⭐和👁️watch👁️一份**。
 
 ### ⭕ 开源项目
 1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
@@ -81,7 +81,7 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 
 Linux下，勾股DEV的安装请使用以下命令进行安装。  
 
-第一步：克隆勾股CMS到你本地  
+第一步：克隆勾股DEV到你本地  
     git clone https://gitee.com/gougucms/dev.git
 
 第二步：进入目录  

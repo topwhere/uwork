@@ -9,7 +9,7 @@
 namespace think;
 
 if (empty(file_exists(__DIR__ . '/../vendor/autoload.php'))) {
-    echo '您还未安装PHP依赖包，请输入命令安装：composer install，安装教程点击<a href="https://blog.gougucms.com/home/book/detail/bid/3/id/8.html" target="_blank">这里</a>。';
+    echo '您还未安装PHP依赖包，请输入命令安装：composer install，安装教程点击<a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">这里</a>。';
     exit;
 }
 require __DIR__ . '/../vendor/autoload.php';

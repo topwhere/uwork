@@ -31,7 +31,7 @@ class User extends BaseController
         }
         View::assign('admin', get_admin($this->uid));
         View::assign('config', $config);
-        View::assign('TP_version',\think\facade\App::version());
+        View::assign('TP_VERSION',\think\facade\App::version());
         return View();
     }
     //修改个人信息

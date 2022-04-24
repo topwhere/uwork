@@ -196,7 +196,7 @@ class Index extends BaseController
 				'knowledge_list' => $knowledge_list,
 				'work' => $work,
 				'count' => $count,
-				'TP_version' => \think\facade\App::version()
+				'TP_VERSION' => \think\facade\App::version()
 			]);
             return View();
         }

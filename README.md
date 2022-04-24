@@ -17,9 +17,8 @@
 
 勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。
 
-[![勾股DEV](https://img.shields.io/badge/GougDEV-1.4.18-brightgreen.svg)](https://gitee.com/gougucms/dev/)
-[![star](https://gitee.com/gougucms/dev/badge/star.svg?theme=dark)](https://gitee.com/gougucms/dev/stargazers)
-[![fork](https://gitee.com/gougucms/dev/badge/fork.svg?theme=dark)](https://gitee.com/gougucms/dev/members)
+![输入图片说明](https://dev.gougucms.com/storage/202204/flow.png)
+
 
 ### ✳️ 演示地址
 

@@ -50,6 +50,7 @@
 	var getData = {'page':1,'share':1};
 	function init(layui) {
 		var gougu = layui.gougu,
+			layer = layui.layer,
 			form = layui.form,
 			element = layui.element,
 			laypage = layui.laypage;
@@ -82,7 +83,7 @@
 										<ul>
 											<li title="收藏数"><i class="layui-icon layui-icon-star-fill"></i>0</li>
 											<li title="查看数"><i class="layui-icon layui-icon-friends"></i>${item.views}</li>
-											<li title="编辑"><a class="action-edit" data-id="${item.id}" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
+											<li title="编辑"><a class="action-edit" data-id="${item.id}" data-admin="${item.admin_id}" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
 											<li title="浏览详情"><a class="action-view" href="/knowledge/index/doc_detail/kid/${item.id}"><i class="layui-icon layui-icon-link"></i>查看</a></li>
 										</ul>
 									</div>
@@ -119,6 +120,11 @@
 			gougu.open('/knowledge/index/add');
 		});
 		$('#knowledgeContent').on('click','.action-edit',function(){
+			let admin_id = $(this).data('admin');
+			if(admin_id != GOUGU_DEV.uid){
+				layer.msg('您不是该知识库创建者，无权限编辑');
+				return false;
+			}
 			let id=$(this).data('id');
 			gougu.open('/knowledge/index/view/id/'+id+'.html');
 		});

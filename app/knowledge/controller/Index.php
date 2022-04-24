@@ -137,6 +137,9 @@ class Index extends BaseController
     {
         $id = get_params("id");
         $detail = (new KnowledgeList())->detail($id);
+		if($detail['admin_id']!=$this->uid){
+			return to_assign(1, "您不是该知识库创建者，无权限操作");
+		}
         View::assign('detail', $detail);
         return view();
     }

@@ -36,19 +36,13 @@
 					<option value="2">缺陷</option>	
 				</select>	
 			</td>
-			<td class="layui-td-gray">所属工作类型<span style="color: red">*</span></td>
+			<td class="layui-td-gray">工作类型<span style="color: red">*</span></td>
 			<td>
-				<select name="cate" lay-verify="required" lay-reqText="请选择任务类别">
+				<select name="cate" lay-verify="required" lay-reqText="请选择工作类型">
 					<option value="">请选择</option>
-					<option value="0">其他</option>
-					<option value="1">UI设计</option>
-					<option value="2">产品原型</option>
-					<option value="3">技术开发</option>
-					<option value="4">测试</option>
-					<option value="5">编写文档</option>
-					<option value="6">沟通</option>
-					<option value="7">会议</option>
-					<option value="8">调研</option>					
+					{volist name="cate" id="vo"}
+					<option value="{$vo.id}">{$vo.title}</option>
+					{/volist}				
 				</select>		
 			</td>
 			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>

@@ -157,6 +157,8 @@ class Index extends BaseController
 			if(isset($param['project_id'])){
 				View::assign('project_id', $param['project_id']);
 			}
+			$cate = Db::name('WorkCate')->where('status',1)->select()->toArray();
+            View::assign('cate', $cate);
             View::assign('id', $id);
             return view();
         }

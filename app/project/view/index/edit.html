@@ -15,13 +15,13 @@
 		</div>
 	</div>
 	<div class="layui-row border-b">
-		<div class="layui-col-md9 p-4 border-r">
+		<div class="p-4">
 			<table class="layui-table layui-table-form">
 				<tr>
 					<td class="layui-td-gray">项目负责人</td>
 					<td class="hover-edit"><span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i></td>
 					<td class="layui-td-gray">项目成员</td>
-					<td colspan="3" class="hover-edit"><span id="team_admin_ids_{$detail.id}" data-val="{$detail.team_admin_ids}">{$detail.team_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="team_admin_ids"></i></td>
+					<td colspan="5" class="hover-edit"><span id="team_admin_ids_{$detail.id}" data-val="{$detail.team_admin_ids}">{$detail.team_admin_names}</span><i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="team_admin_ids"></i></td>
 				</tr>
 				<tr>
 					<td class="layui-td-gray">项目状态</td>
@@ -29,6 +29,12 @@
 					</td>
 					<td class="layui-td-gray2">计划完成周期</td>
 					<td class="hover-edit"><span id="start_time_{$detail.id}" data-val="">{$detail.start_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="修改计划开始日期" data-name="start_time"></i> 至&nbsp;&nbsp;&nbsp;&nbsp; <span id="end_time_{$detail.id}" data-val="">{$detail.end_time| date='Y-m-d'}</span><i class="iconfont icon-wodedianping" title="修改计划结束日期" data-name="end_time"></i></td>
+					<td class="layui-td-gray">关联产品</td>
+					<td  class="hover-edit"><span id="product_id_{$detail.id}" data-val="{$detail.product_id}">
+							{gt name="$detail.product_id" value="0"}{$detail.product_name}{else/}<span class="font-gray">未设置</span>{/gt}
+						</span>
+						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="product_id"></i></div>
+					</td>
 				</tr>
 			</table>
 			<div class="md-content hover-edit">
@@ -67,31 +73,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="layui-col-md3 p-4">
-			<div class="pb-4 hover-edit">
-			<p class="font-gray mb-2">关联产品：</p>
-			<span id="product_id_{$detail.id}" data-val="{$detail.product_id}">
-				{gt name="$detail.product_id" value="0"}{$detail.product_name}{else/}<span class="font-gray">未设置</span>{/gt}
-			</span>
-			<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="product_id"></i></div>
-			<div class="pb-4"><span class="font-gray">关联需求：</span>{$detail.requirements}</div>
-			<div class="pb-4"><span class="font-gray">关联任务：</span>{$detail.tasks}</div>
-			<div class="pb-4"><span class="font-gray">关联BUG：</span>{$detail.bugs}</div>
-		</div>
 	</div>
 	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">
 		<ul class="layui-tab-title">
-			<li class="layui-this">员工评论({$detail.comments})</li>
-			<li>操作日志({$detail.logs})</li>
+			<li class="layui-this">操作日志({$detail.logs})</li>
 		</ul>
 		<div class="layui-tab-content p-0">
-			<div class="layui-tab-item comment-list layui-show">
-				<div class="comment-input my-2">
-					<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
-				</div>
-				<div id="comment_project_{$detail.id}"></div>
-			</div>
-			<div class="layui-tab-item logs-list">
+			<div class="layui-tab-item logs-list layui-show">
 				<div id="log_project_{$detail.id}"></div>
 			</div>
 		</div>
@@ -128,20 +116,6 @@ function openInit() {
 	
 	$('#delBtn').on('click',function(){
 		layer.confirm('确定要删除该项目吗？请慎重', {icon: 3, title:'提示'}, function(index){
-			let callback = function(e){
-				layer.closeAll();
-				layer.msg(e.msg);
-				setTimeout(function(){
-					location.reload();
-				},1000)
-			}
-			let postData={"id":detail_id};
-			gougu.delete("/project/index/delete",postData,callback);
-		});
-	})
-	
-	$('#delBtn').on('click',function(){
-		layer.confirm('确定要删除该产品吗？请慎重', {icon: 3, title:'提示'}, function(index){
 			let callback = function(e){
 				layer.closeAll();
 				layer.msg(e.msg);
@@ -191,30 +165,6 @@ function openInit() {
 			let postData={"id":id};
 			gougu.delete("/api/appendix/delete",postData,callback);
 		});
-	})
-	
-	//评论
-	comment.load(detail_id,'project');
-	$('#commentInput').on('click',function(){
-		comment.editor(0,detail_id,0,0,'project','');
-	})
-	//回复
-	$('#comment_project_'+detail_id).on('click','[data-event="replay"]',function(){
-		let pid = $(this).data('id');
-		let padmin_id = $(this).data('uid');
-		comment.editor(0,detail_id,pid,padmin_id,'project','');
-	})
-	//编辑
-	$('#comment_project_'+detail_id).on('click','[data-event="edit"]',function(){
-		let id = $(this).data('id');
-		let mdcontent=$('#comment_'+id).data('mdcontent');
-		comment.editor(id,detail_id,0,0,'project',mdcontent);
-	})
-	
-	//删除
-	$('#comment_project_'+detail_id).on('click','[data-event="del"]',function(){
-		let id = $(this).data('id');
-		comment.del(id,detail_id,'project');
 	})
 	
 	//操作记录

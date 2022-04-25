@@ -25,7 +25,7 @@
 							<thead>
 								<tr>
 									<th style="text-align:center">编号ID</th>
-									<th>公告分类</th>
+									<th style="text-align:center">公告分类</th>
 									<th>公告标题</th>
 									<th style="text-align:center">发布时间</th>
 								</tr> 
@@ -57,9 +57,9 @@
 								<col width="70">
 								<col>
 								<col width="80">
-								<col width="60">
-								<col width="60">
-								<col width="60">
+								<col width="50">
+								<col width="50">
+								<col width="50">
 								<col width="180">
 							</colgroup>
 							<thead>
@@ -105,30 +105,27 @@
 								<col width="80">
 								<col width="70">
 								<col>
-								<col width="70">
 								<col width="180">
 							</colgroup>
 							<thead>
 								<tr>
 									<th style="text-align:center">编号ID</th>
 									<th style="text-align:center">状态</th>
-									<th>需求主题</th>									
-									<th style="text-align:center">优先级</th>
+									<th>需求主题</th>
 									<th style="text-align:center">计划工期</th>
 								</tr> 
 							</thead>
 							<tbody class="layui-table-body">
 								{empty name="requirements_list"}
 								<tr>									
-									<td colspan="5"><div class="layui-none">无数据</div></td>
+									<td colspan="4"><div class="layui-none">无数据</div></td>
 								</tr>
 								{/empty}
 								{volist name="requirements_list" id="vo"}
 								<tr>
 								  <td align="center">R{$vo.id}</td>
 								  <td align="center"><span class="layui-badge layui-bg-{$vo.flow_status}">{$vo.flow_name}</span></td>
-								  <td><a class="open-a" data-url="/requirements/index/view/id/{$vo.id}">{$vo.title}</a></td>
-								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
+								  <td><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span> <a class="open-a" data-url="/requirements/index/view/id/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center">{$vo.plan_time}</td>
 								</tr>
 								{/volist}
@@ -145,7 +142,6 @@
 								<col width="80">
 								<col width="70">								
 								<col>
-								<col width="70">
 								<col width="60">
 								<col width="80">
 								<col width="110">
@@ -155,7 +151,6 @@
 									<th style="text-align:center">编号ID</th>
 									<th style="text-align:center">状态</th>									
 									<th>任务主题</th>
-									<th style="text-align:center">优先级</th>
 									<th style="text-align:center">类型</th>									
 									<th style="text-align:center">预估工时</th>
 									<th style="text-align:center">计划完成日期</th>
@@ -164,15 +159,14 @@
 							<tbody class="layui-table-body">
 								{empty name="$task.list"}
 								<tr>									
-									<td colspan="7"><div class="layui-none">无数据</div></td>
+									<td colspan="6"><div class="layui-none">无数据</div></td>
 								</tr>
 								{/empty}
 								{volist name="$task.list" id="vo"}
 								<tr>
 								  <td align="center">T{$vo.id}</td>								  
 								  <td align="center"><span class="layui-badge bg-flow-{$vo.flow_status}">{$vo.flow_name}</span></td>
-								  <td><a class="open-a" data-url="/task/index/view/id/{$vo.id}">{$vo.title}</a></td>
-								  <td align="center"><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span></td>
+								  <td><span class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span> <a class="open-a" data-url="/task/index/view/id/{$vo.id}">{$vo.title}</a></td>
 								  <td align="center">{$vo.type_name}</td>
 								  <td align="center">{$vo.plan_hours}</td>
 								  <td align="center">{$vo.end_time}</td>

@@ -46,6 +46,7 @@ class Index extends BaseController
                 ->paginate($rows, false, ['query' => $param])
 				->each(function ($item, $key) {
 					$item->views = Db::name('KnowledgeDoc')->where([['delete_time','=',0],['knowledge_id','=',$item->id]])->sum('read');
+					$item->sections = Db::name('KnowledgeDoc')->where([['delete_time','=',0],['knowledge_id','=',$item->id]])->count();
 				});
             return table_assign(0, '', $content);
         } else {			

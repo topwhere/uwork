@@ -354,11 +354,11 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .knowledge-list .meta-desc a{color: #666;}
 
 .knowledge-list .card-actions{padding: 12px 0; border-top: 1px solid #f0f0f0;}
-.knowledge-list .card-actions li{width: 24%; height:24px; line-height: 24px; font-size: 16px; display:inline-block; text-align: center; box-sizing: border-box; border-right: 1px solid #f0f0f0;color:#8c95a8}
+.knowledge-list .card-actions li{width: 24%; height:24px; line-height: 24px; font-size: 14px; display:inline-block; text-align: center; box-sizing: border-box; border-right: 1px solid #f0f0f0;color:#8c95a8}
 .knowledge-list .card-actions li:last-child{border-right: none;}
-.knowledge-list .card-actions li a{font-size:14px;color:#8c95a8}
-.knowledge-list .card-actions li a:hover{color:#3582fb}
-.knowledge-list .card-actions li i{font-size:16px; margin-right:4px}
+.knowledge-list .card-actions li a.action-edit{color:#26AB3A}
+.knowledge-list .card-actions li a.action-view{color:#3582fb}
+.knowledge-list .card-actions li a:hover{color:#1E9FFF}
 
 /*特殊css*/
 .checkbox16 .layui-form-checkbox span{font-size:15px;font-weight:800;}

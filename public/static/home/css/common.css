@@ -1,5 +1,5 @@
-a.open-a,a.open-link{color:#4285F4; cursor:pointer;}
-a:hover{color:#3582fb}
+a.open-a,a.open-link{color:#2e405e; cursor:pointer;}
+a:hover,a.open-a:hover,a.open-link:hover{color:#3582fb}
 html,body{height:100%;}
 body.right-open{overflow:hidden;}
 .left{float:left;}

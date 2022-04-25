@@ -26,7 +26,7 @@ class Comment extends BaseController
     //添加修改评论内容
     public function add()
     {
-		$param = get_params();
+		$param = get_params();	
 		if (!empty($param['id']) && $param['id'] > 0) {
 			$param['update_time'] = time();
             $res = CommentList::where(['admin_id' => $this->uid,'id'=>$param['id']])->strict(false)->field(true)->update($param);
@@ -51,13 +51,12 @@ class Comment extends BaseController
     {
 		if (request()->isDelete()) {
 			$id = get_params("id");
-			$data['delete_titme'] = time();
-			$data['id'] = $id;
-			if (CommentList::update($data) !== false) {
+			$res = CommentList::where('id',$id)->strict(false)->field(true)->update(['delete_time'=>time()]);
+			if ($res) {
 				add_log('delete', $id);
 				return to_assign(0, "删除成功");
 			} else {
-				return to_assign(0, "删除失败");
+				return to_assign(1, "删除失败");
 			}
 		}else{
 			return to_assign(1, "错误的请求");

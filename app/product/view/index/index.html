@@ -19,10 +19,6 @@
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
-
-<script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>
-</script>
 {/block}
 <!-- /主体 -->
 
@@ -47,15 +43,16 @@
 					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
 				}}
-				,{field:'name',title: '产品名称',rowspan: 2}
+				,{field:'name',title: '产品名称',rowspan: 2,templet:function(d){
+					var html = '<a class="open-a" data-url="/product/index/view/id/'+d.id+'">'+d.name+'</a>';
+					return html;
+				}}
 				,{field:'director_name',title: '产品负责人', align:'center',width: 90,rowspan: 2}
 				,{field:'test_name',title: '测试负责人', align:'center',width: 90,rowspan: 2}
 				,{field:'projects',title: '关联项目', align:'center',width: 90,rowspan: 2}
 				,{align: 'center', title: '关联需求', colspan: 3}
 				,{align: 'center', title: '关联任务', colspan: 3}
 				,{align: 'center', title: '关联BUG', colspan: 3}
-
-				,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 			], [
 				{field:'requirements_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
 				,{field:'requirements_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
@@ -71,15 +68,6 @@
 		
 		$('.add-new').on('click',function(){
 			gougu.open('/product/index/add');
-		});
-		
-		//监听行工具事件
-		table.on('tool(test)', function(obj) {
-			var data = obj.data;
-			if (obj.event === 'view') {
-				gougu.open('/product/index/view?id='+data.id);
-				return;
-			}
 		});
 	}		
 </script>

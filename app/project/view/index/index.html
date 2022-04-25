@@ -20,7 +20,7 @@
 </div>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><a class="layui-btn layui-btn-xs" href="/project/index/view?id={{d.id}}">项目情况</a><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</span></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -45,14 +45,17 @@
 					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
 					return html;
 				}}
-				,{field:'name',title: '项目名称',rowspan: 2}
+				,{field:'name',title: '项目名称',rowspan: 2,templet:function(d){
+					var html = '<a class="open-link" href="/project/index/view/id/'+d.id+'">'+d.name+'</a>';
+					return html;
+				}}
 				,{field:'director_name',title: '项目负责人', align:'center',width: 90,rowspan: 2}
 				,{field:'plan_time',title: '项目周期', align:'center',width: 200,rowspan: 2}
 				,{align: 'center', title: '关联需求', colspan: 3}
 				,{align: 'center', title: '关联任务', colspan: 3}
 				,{align: 'center', title: '关联BUG', colspan: 3}
 
-				,{fixed: 'right',title: '操作',align: 'center',width: 120,rowspan: 2,toolbar: '#barDemo',}
+				,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 			], [
 				{field:'requirements_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
 				,{field:'requirements_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}

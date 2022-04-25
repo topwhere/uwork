@@ -22,10 +22,6 @@
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
-
-<script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span></div>
-</script>
 {/block}
 <!-- /主体 -->
 
@@ -50,42 +46,31 @@ function init(layui){
 				var html = '<span class="layui-badge bg-flow-'+d.flow_status+'">'+d.flow_name+'</span>';
 				return html;
 			}}
-			,{field:'cate_name',title: '类别',width: 100,align:'center'}
 			,{field:'type_name',title: '类型',width: 60,align:'center',templet:function(d){
 				var html = '<span class="color-status-'+d.type+'">'+d.type_name+'</span>';
 				return html;
 			}}
-			,{field:'title',title: '任务主题'}
-			,{field:'priority_name',title: '优先级',align:'center',width: 70,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+			,{field:'title',title: '任务主题',rowspan: 2,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span> <a class="open-a" data-url="/task/index/view/id/'+d.id+'">'+d.title+'</a>';
 				return html;
 			}}
-			,{field:'director_name',title: '负责人', align:'center',width: 90}
-			,{field:'assist_admin_names',title: '协作人',width: 200}
+			,{field:'director_name',title: '负责人', align:'center',width: 80}
+			,{field:'assist_admin_names',title: '协作人',width: 160}
+			,{field:'cate_name',title: '工作类型',width: 90,align:'center'}
 			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
-			,{field:'end_time',title: '预计结束日期', width: 160,templet:function(d){
+			,{field:'end_time',title: '预计结束日期', width: 150,templet:function(d){
 				var html = d.end_time;	
 				if(d.delay>0){
-					html+= '<span class="color-status-0 ml-1">逾期'+d.delay+'天</span>';	
+					html+= '<span class="color-status-0 ml-1" style="font-size:12px;">逾期'+d.delay+'天</span>';	
 				}			
 				return html;
 			}}
-			,{fixed: 'right',title: '操作',align: 'center',width: 60,toolbar: '#barDemo',}
 		]]
 	});
 	
 	//新增
 	$('.add-new').on('click',function(){
 		gougu.open('/task/index/add');
-	});
-	
-	//监听行工具事件
-	table.on('tool(test)', function(obj) {
-		var data = obj.data;
-		if (obj.event === 'view') {
-			gougu.open('/task/index/view?id='+data.id);
-			return;
-		}
 	});
 }		
 </script>

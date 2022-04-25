@@ -109,6 +109,10 @@ layui.define(['gougu'], function(exports){
 			let callback = function(res){
 				that.load(topic_id,module);
 			}
+			if(content == ''){
+				layer.msg('请完善评论内容');
+				return false;
+			}
 			let postData={id:id,topic_id:topic_id,pid:pid,padmin_id:padmin_id,module:module,content:content,md_content:md_content};
 			gougu.post("/api/comment/add",postData,callback);			
 		},

@@ -36,7 +36,12 @@ class Index extends BaseController
                 ->each(function ($item, $key) {
 					$item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
 					$assist_admin_names = Db::name('Admin')->where([['id','in',$item->assist_admin_ids]])->column('name');
-					$item->assist_admin_names = implode(',',$assist_admin_names);
+					if(empty($assist_admin_names)){
+						$item->assist_admin_names='-';
+					}
+					else{
+						$item->assist_admin_names = implode(',',$assist_admin_names);	
+					}					
 					$item->end_time = date('Y-m-d', $item->end_time);
 					$item->delay = 0;
 					if($item->over_time>0 && $item->flow_status<4){

@@ -84,7 +84,7 @@ class Index extends BaseController
 					
 					$bug_map_a =[];
 					$bug_map_a[] = ['product_id','=',$item->id];
-					$bug_map_a[] = ['type','>',2];
+					$bug_map_a[] = ['type','=',2];
 					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
 					$bug_map_a[]=['flow_status','<',3];

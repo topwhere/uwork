@@ -19,10 +19,6 @@
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
-
-<script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span></div>
-</script>
 {/block}
 <!-- /主体 -->
 
@@ -47,17 +43,14 @@ function init(layui){
 				var html = '<span class="layui-badge layui-bg-'+d.flow_status+'">'+d.flow_name+'</span>';
 				return html;
 			}}
-			,{field:'title',title: '需求主题',rowspan: 2}
-			,{field:'priority_name',title: '优先级',align:'center',width: 70,rowspan: 2,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+			,{field:'title',title: '需求主题',rowspan: 2,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span> <a class="open-a" data-url="/requirements/index/view/id/'+d.id+'">'+d.title+'</a>';
 				return html;
 			}}
 			,{field:'director_name',title: '负责人', align:'center',width: 90,rowspan: 2}
 			,{field:'plan_time',title: '需求周期', align:'center',width: 180,rowspan: 2}				
 			,{align: 'center', title: '关联任务', colspan: 3}
 			,{align: 'center', title: '关联BUG', colspan: 3}
-
-			,{fixed: 'right',title: '操作',align: 'center',width: 60,rowspan: 2,toolbar: '#barDemo',}
 		], [
 			{field:'tasks_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
 			,{field:'tasks_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
@@ -70,15 +63,6 @@ function init(layui){
 	
 	$('.add-new').on('click',function(){
 		gougu.open('/requirements/index/add');
-	});
-	
-	//监听行工具事件
-	table.on('tool(test)', function(obj) {
-		var data = obj.data;
-		if (obj.event === 'view') {
-			gougu.open('/requirements/index/view?id='+data.id);
-			return;
-		}
 	});
 }		
 </script>

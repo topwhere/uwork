@@ -40,7 +40,7 @@ class Index extends BaseController
 					
 					$task_map_a =[];
 					$task_map_a[] = ['requirements_id','=',$item->id];
-					$task_map_a[] = ['test_id','=',0];
+					$task_map_a[] = ['type','=',1];
 					$task_map_a[] = ['delete_time','=',0];
 					$task_map_b = $task_map_a;
 					$task_map_a[]=['flow_status','<',3];
@@ -55,7 +55,7 @@ class Index extends BaseController
 					
 					$bug_map_a =[];
 					$bug_map_a[] = ['requirements_id','=',$item->id];
-					$bug_map_a[] = ['test_id','>',0];
+					$bug_map_a[] = ['type','=',2];
 					$bug_map_a[] = ['delete_time','=',0];
 					$bug_map_b = $bug_map_a;
 					$bug_map_a[]=['flow_status','<',3];

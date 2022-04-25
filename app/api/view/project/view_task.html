@@ -4,11 +4,6 @@
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
-
-<script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
-</script>
-
 <script>
 function pageInit(){
 	var project_id = {$id};
@@ -31,47 +26,26 @@ function pageInit(){
 				var html = '<span class="color-status-'+d.type+'">'+d.type_name+'</span>';
 				return html;
 			}}
-			,{field:'title',title: '任务主题'}
-			,{field:'priority_name',title: '优先级',align:'center',width: 70,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span>';			
+			,{field:'title',title: '任务主题',rowspan: 2,templet:function(d){
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span> <a class="open-a" data-url="/task/index/view/id/'+d.id+'">'+d.title+'</a>';
 				return html;
 			}}
-			,{field:'director_name',title: '负责人', align:'center',width: 90}
-			,{field:'assist_admin_names',title: '协作人',width: 200}
+			,{field:'director_name',title: '负责人', align:'center',width: 80}
+			,{field:'assist_admin_names',title: '协作人',width: 160}
 			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
-			,{field:'end_time',title: '预计结束日期', align:'center',width: 120}				
-
-			,{fixed: 'right',title: '操作',align: 'center',width: 100,toolbar: '#barDemo',}
+			,{field:'end_time',title: '预计结束日期', width: 150,templet:function(d){
+				var html = d.end_time;	
+				if(d.delay>0){
+					html+= '<span class="color-status-0 ml-1" style="font-size:12px;">逾期'+d.delay+'天</span>';	
+				}			
+				return html;
+			}}
 		]]
 	});
 	
 	//新增
 	$('.add-new').on('click',function(){
 		gougu.open('/task/index/add?project_id='+project_id);
-	});
-	
-	//监听行工具事件
-	table.on('tool(test)', function(obj) {
-		var data = obj.data;
-		if (obj.event === 'view') {
-			gougu.open('/task/index/view?id='+data.id);
-			return;
-		}
-		if (obj.event === 'del') {
-			layer.confirm('确定关闭该任务吗？', {
-				icon: 3,
-				title: '提示'
-			}, function(index) {
-				let callback = function (e) {
-					layer.msg(e.msg);
-					if (e.code == 0) {
-						obj.del();
-					}
-				}
-				gougu.post("/task/index/close",{ id: obj.data.id },callback);
-				layer.close(index);
-			});
-		}
 	});
 }		
 </script>

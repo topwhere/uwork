@@ -165,6 +165,17 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
 .layui-form-checkbox[lay-skin=primary]{padding-left:24px!important}
 
+.gougu-tab-bar{background-color:#fff;}
+.gougu-tab{text-align: left!important;}
+.gougu-tab-title{position: relative;left: 0; height: 40px; white-space: nowrap; font-size: 0; transition: all .2s; -webkit-transition: all .2s;}
+.gougu-tab-title li{display: inline-block;*display: inline;*zoom: 1;vertical-align: middle; font-size: 16px;transition: all .2s;-webkit-transition: all .2s; position: relative;line-height: 40px; min-width: 64px; padding: 0 12px;text-align: center;cursor: pointer;}
+.gougu-tab-title li:hover,.gougu-tab li.tab-this{ color:#1E9FFF;}
+.gougu-tab-title li.tab-this:after{border-bottom: 2px solid #1E9FFF;position: absolute;left: 0; top: 0;  content: ""; width: 100%; height: 41px; box-sizing: border-box;pointer-events: none;}
+.gougu-tab-title.big{height: 46px;}
+.gougu-tab-title.big li{line-height: 46px;}
+.gougu-tab-title.big li{line-height: 46px;}
+.gougu-tab-title.big li.tab-this:after{height: 47px;}
+
 .bg-status-0{background-color:#FF5722 !important;}
 .bg-status-1{background-color:#009688 !important;}
 .bg-status-2{background-color:#1E9FFF !important;}

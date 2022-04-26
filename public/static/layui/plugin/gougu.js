@@ -1,5 +1,5 @@
 layui.define(['layer'], function(exports){
-    var layer = layui.layer;
+    var layer = layui.layer,dropdown = layui.dropdown;
 	$('body').on('click','.open-a',function(){
 		let url = $(this).data('url');
 		if(url && url!==''){
@@ -7,6 +7,21 @@ layui.define(['layer'], function(exports){
 		}		
 		return;
 	});
+	const newData=[
+		{id:1,title:'新建产品',url:'/product/index/add'},
+		{id:2,title:'新建项目',url:'/project/index/add'},
+		{id:3,title:'新建需求',url:'/requirements/index/add'},
+		{id:4,title:'新建任务',url:'/task/index/add'},
+		{id:5,title:'新建知识库',url:'/knowledge/index/add'},
+	];
+	dropdown.render({
+		elem: '#add-new'
+		,data: newData
+		,click: function(data, othis){
+			obj.open(data.url);
+		}
+	});
+	
 	var obj = {
 		loading:false,
 		editor:function(editormdId,editormdHeight,editormdMarkdown){

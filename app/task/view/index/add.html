@@ -16,18 +16,6 @@
 				</select>	
 			</td>
 		</tr>
-		<tr>
-			<td class="layui-td-gray">负责人<font>*</font></td>
-			<td>
-				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择负责人" value="{$params.uid}">
-				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="{$params.name}">
-			</td>
-			<td class="layui-td-gray">协作人</td>
-			<td colspan="5">
-				<input type="hidden" name="assist_admin_ids" readonly value="">
-				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
-			</td>
-		</tr>
 		<tr>	
 			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>		
 			<td>
@@ -52,6 +40,18 @@
 			<td class="layui-td-gray2">预计结束日期<span style="color: red">*</span></td>
 			<td>
 				<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择时间" class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">负 责 人</td>
+			<td>
+				<input type="hidden" name="director_uid" readonly value="">
+				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">协 作 人</td>
+			<td colspan="5">
+				<input type="hidden" name="assist_admin_ids" readonly value="">
+				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
 			</td>
 		</tr>
 		{empty name="$project_id"}
@@ -87,7 +87,7 @@
 		{/empty}
 	</table>
 	<div>
-		<div style="padding:10px 0">任务描述<span style="color: red">*</span></div>
+		<div style="padding:10px 0">详细描述<span style="color: red">*</span></div>
 		<div>
 			<textarea id="mdContent" style="display:none;"></textarea>
 			<div id="docContent"></div>

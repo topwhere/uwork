@@ -1,8 +1,6 @@
 {extend name="../../base/view/common/base" /}
 {block name="style"}
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css">
 <style>
 .layui-card-body dl{width: 50%; float:left; display: block;}
 .layui-card-tips{; color:#999;}
@@ -708,8 +706,6 @@ function init(layui) {
 	}	
 }
 </script>
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
-<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
 {/block}
 <!-- /脚本 -->

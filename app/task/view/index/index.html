@@ -3,8 +3,6 @@
 {block name="style"}
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css?v=1.0.2">
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
 <style>
 .layui-unselect dl {max-height:188px;}
 </style>
@@ -16,9 +14,85 @@
 </span>
 {/block}
 {block name="body"}
-<div class="table-content p-3">
+<div id="taskList" class="table-content p-3">
+	<div class="gougu-tab-bar border-t border-x">
+		<div class="layui-row">
+			<div class="layui-col-md6 gougu-tab">
+				<ul class="gougu-tab-title big" id="taskTab">
+					<li class="tab-this" data-type="0">全部</li>
+					<li data-type="1">任务</li>
+					<li data-type="2">缺陷</li>
+				</ul> 
+			</div>
+			<div class="layui-col-md6 py-2 px-3" style="text-align:right">
+				<div class="layui-btn-group mr-4">
+					<button type="button" data-event="show" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon">&#xe62d;</i>列表</button>
+					<button type="button" data-event="show" class="layui-btn layui-btn-sm layui-btn-primary"><i class="layui-icon">&#xe630;</i>看板</button>
+					<button type="button" data-event="show" class="layui-btn layui-btn-sm layui-btn-primary"><i class="layui-icon">&#xe637;</i>日历</button>
+				</div>
+				<input type="hidden" name="type" />
+			  <button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建任务</button>
+			</div>
+		</div>
+	</div>
 	<div class="layui-form-bar border-t border-x">
-		<button class="layui-btn layui-btn-sm layui-btn-normal add-new">+ 新建任务</button>
+		<form class="layui-form">
+			<div class="layui-input-inline" style="width:100px;">
+				<select name="flow_status" lay-filter="status">
+					<option value="">任务状态</option>
+					<option value="1">待办的</option>
+					<option value="2">进行中</option>
+					<option value="3">已完成</option>
+					<option value="4">已拒绝</option>
+					<option value="5">已关闭</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:90px;">
+				<select name="priority" lay-filter="priority">
+					<option value="">优先级</option>
+					<option value="1">低</option>
+					<option value="2">中</option>
+					<option value="3">高</option>
+					<option value="4">紧急</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:100px;">
+				<select name="cate" lay-filter="cate">
+					<option value="">工作类型</option>
+					{volist name="cate" id="vo"}
+						<option value="{$vo.id}">{$vo.title}</option>
+					{/volist}
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:100px;">
+				<select name="delay" lay-filter="delay">
+					<option value="">逾期类型</option>
+					<option value="1">已逾期</option>
+					<option value="2">当天逾期</option>
+					<option value="3">本周逾期</option>
+					<option value="4">本月逾期</option>
+					<option value="5">本周逾期</option>
+					<option value="6">未逾期</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:160px;">
+				<select name="project_id" lay-filter="project">
+					<option value="">所属项目</option>
+					{volist name="project" id="vo"}
+						<option value="{$vo.id}">{$vo.name}</option>
+					{/volist}
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:180px;">
+				<input name="director_uid" style="display: none;" value="" />
+				<input type="text" name="director" placeholder="选择负责人，可多选" readonly class="layui-input employeepicker" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="keywords" placeholder="主题/描述内容" class="layui-input" autocomplete="off" />
+			</div>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">搜索</button>
+			<button type="reset"style="height: 38px; background-color:#fff;line-height: 38px;border: 1px solid transparent;padding: 0 10px;white-space: nowrap;text-align: center;font-size: 14px; cursor: pointer;" lay-filter="clear">清空</button>
+		</form>
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
@@ -29,7 +103,7 @@
 {block name="script"}
 <script>
 function init(layui){
-	var table = layui.table,form = layui.form,gougu = layui.gougu;
+	var table = layui.table,form = layui.form,gougu = layui.gougu,employeepicker = layui.employeepicker;
 	
 	layui.pageTable = table.render({
 		elem: '#test',
@@ -68,14 +142,88 @@ function init(layui){
 		]]
 	});
 	
+	//选择人弹窗	
+	$('#taskList').on('click','.employeepicker',function () {
+		let that = $(this);
+		let ids_name = that.attr('name')+'_uid';
+		var ids=$('[name="'+ids_name+'"]').val(),names=that.val(),id_array=[],name_array=[];
+		if(ids.length>0){
+			id_array = ids.split(',');
+			name_array = names.split(',');
+		}
+		employeepicker.init({
+			ids:id_array,
+			names:name_array,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			type:1,
+			callback:function(ids,names,dids,departments){
+				$('[name="'+ids_name+'"]').val(ids);
+				that.val(names);
+				tableReload();
+			}
+		});
+	});
+	
 	//新增
-	$('.add-new').on('click',function(){
+	$('#taskList').on('click','.add-new',function(){
 		gougu.open('/task/index/add');
 	});
+	
+	//查看模式
+	$('#taskList').on('click','[data-event="show"]',function(){
+		layer.msg('开源版只支持列表模式');
+	});
+	
+	//任务类型
+	$('#taskTab').on('click','li',function(){
+		$(this).addClass('tab-this').siblings().removeClass('tab-this');
+		let type=$(this).data('type');
+		$('#taskList').find('[name="type"]').val(type);
+		tableReload();
+	});
+	
+	form.on('select(status)', function(data){
+		tableReload();
+	});
+	form.on('select(priority)', function(data){
+		tableReload();
+	});
+	form.on('select(cate)', function(data){
+		tableReload();
+	});
+	form.on('select(project)', function(data){
+		tableReload();
+	});
+	//监听搜索提交
+	form.on('submit(webform)', function(data){
+		if(data.field.keywords==''){
+			return false;
+		}
+		tableReload();
+		return false;
+	});
+	$('#taskList').on('click','[lay-filter="clear"]',function(){
+		setTimeout(function(){
+			tableReload();
+		},10)			
+	})
+	
+	function tableReload(){
+		let postData = {
+			type : $('#taskList').find('[name="type"]').val(),
+			flow_status : $('#taskList').find('[name="flow_status"]').val(),
+			priority : $('#taskList').find('[name="priority"]').val(),
+			cate : $('#taskList').find('[name="cate"]').val(),
+			delay : $('#taskList').find('[name="delay"]').val(),
+			director_uid : $('#taskList').find('[name="director_uid"]').val(),
+			project_id : $('#taskList').find('[name="project_id"]').val(),
+			keywords : $('#taskList').find('[name="keywords"]').val()
+		}
+		layui.pageTable.reload({where:postData});
+	}
 }		
 </script>
-<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
-<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
 {/block}
 <!-- /脚本 -->

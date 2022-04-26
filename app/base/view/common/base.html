@@ -18,6 +18,8 @@
 {block name="css"}
 	<link rel="stylesheet" href="{__LAYUI__}/css/layui.css?v={$params.version}" media="all">
 	<link rel="stylesheet" href="{__CSS__}/common.css?v={$params.version}" media="all">
+	<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.min.css">
+	<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css">
 {/block}
 {block name="style"}{/block}
 <script src="{__STATIC__}/jquery.min.js"></script>
@@ -46,13 +48,8 @@
 		</div>
 		<ul class="layui-layout-right">
 			<li class="layui-nav-item">
-				<a href="javascript:;" id="del-cache" title="清空缓存">
-					<i class="layui-icon layui-icon-fonts-clear"></i>
-				</a>
-			</li>
-			<li class="layui-nav-item">
-				<a href="javascript:;"  id="refresh" title="刷新当前页">
-					<i class="layui-icon layui-icon-refresh"></i>
+				<a href="javascript:;" id="add-new" title="新建内容">
+					<i class="layui-icon layui-icon-add-circle"></i>
 				</a>
 			</li>
 			<li class="layui-nav-item">
@@ -60,6 +57,16 @@
 					<i class="layui-icon layui-icon-notice"></i>
 				</a>
 				<div id="msgNum" class="msg-num" style="display:none;"><span>0</span></div>
+			</li>
+			<li class="layui-nav-item">
+				<a href="javascript:;" id="del-cache" title="清空缓存">
+					<i class="layui-icon layui-icon-fonts-clear"></i>
+				</a>
+			</li>
+			<li class="layui-nav-item">
+				<a href="javascript:;" id="refresh" title="刷新当前页">
+					<i class="layui-icon layui-icon-refresh"></i>
+				</a>
 			</li>
 			<li class="layui-nav-item">
 				<a href="javascript:;" id="loginout" title="{$params.name}-点击退出登录">
@@ -189,6 +196,8 @@
 		}, 30000);
 	},3000)
 </script>
+<script src="{__STATIC__}/mdeditor/editormd.min.js"></script>
+<script src="{__STATIC__}/mdeditor/plugins/paste.upload.img.js"></script>
 <!-- 脚本 -->
 {block name="script"}
 <script>

@@ -255,6 +255,13 @@ function get_requirements($pid=0)
     return $requirements;
 }
 
+//读取工作类型
+function get_work_cate()
+{
+    $cate = Db::name('WorkCate')->where('status',1)->select()->toArray();
+    return $cate;
+}
+
 /**
  * 根据附件表的id返回url地址
  * @param  [type] $id [description]

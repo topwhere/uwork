@@ -26,6 +26,27 @@ class Index extends BaseController
 			if(!empty($param['project_id'])){
 				$where[] = ['project_id', '=', $param['project_id']];
 			}
+			if(!empty($param['type'])){
+				$where[] = ['type', '=', $param['type']];
+			}
+			if(!empty($param['flow_status'])){
+				$where[] = ['flow_status', '=', $param['flow_status']];
+			}
+			if(!empty($param['priority'])){
+				$where[] = ['priority', '=', $param['priority']];
+			}
+			if(!empty($param['cate'])){
+				$where[] = ['cate', '=', $param['cate']];
+			}
+			if(!empty($param['director_uid'])){
+				$where[] = ['director_uid', 'in', $param['director_uid']];
+			}
+			if (!empty($param['keywords'])){
+                $where[] = ['title|content', 'like', '%' . $param['keywords'] . '%'];
+            }
+			if(!empty($param['delay'])){
+				$where[] = ['delay', '=', $param['delay']];
+			}
             $where[] = ['delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = TaskList::where($where)
@@ -57,6 +78,8 @@ class Index extends BaseController
                 });
             return table_assign(0, '', $list);
         } else {
+			View::assign('cate', get_work_cate());
+			View::assign('project', get_project());
             return view();
         }
     }
@@ -157,8 +180,7 @@ class Index extends BaseController
 			if(isset($param['project_id'])){
 				View::assign('project_id', $param['project_id']);
 			}
-			$cate = Db::name('WorkCate')->where('status',1)->select()->toArray();
-            View::assign('cate', $cate);
+            View::assign('cate', get_work_cate());
             View::assign('id', $id);
             return view();
         }

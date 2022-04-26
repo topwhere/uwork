@@ -108,7 +108,6 @@
 	{/block}	
 </div>
 <script>
-	var msgNum = 0;
 	//右上角注销
 	$("#loginout").on("click", function () {
 		layer.confirm('确认注销登录吗?', { icon: 7, title: '警告' }, function (index) {
@@ -163,12 +162,14 @@
 		})
 	})	
 	
-	//轮循获取消息
-	var getStatus = setInterval(function () {
+	var intervalTime = 3000;
+	//获取消息
+	function getMsg(){
 		$.ajax({
 			url: "/home/index/index",
 			type:'get',
 			success:function(e){
+				intervalTime = 30000;
 				if(e.code==0 && e.data!=''){
 					if(e.data.msg_num>0){
 						$('#msgNum').show().find('span').html(e.data.msg_num);
@@ -179,7 +180,14 @@
 				}
 			}
 		})
-	}, 10000);
+	}
+	//轮循获取消息,第一次页面加载完成3秒后，后期每30秒轮询一次
+	setTimeout(function(){
+		getMsg();
+		setInterval(function () {
+			getMsg();
+		}, 30000);
+	},3000)
 </script>
 <!-- 脚本 -->
 {block name="script"}

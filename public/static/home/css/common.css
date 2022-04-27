@@ -235,7 +235,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
  /*框架布局*/
 .layui-layout-admin .layui-header{height:50px; padding-left:60px;background: #fff; box-shadow: inset 0 -1px 0 0 #e5ecf0; z-index:1686}
 .layui-layout-admin .layui-side{width:60px; top:0; z-index:1688;background-color: #222b45; color: #fff;} 
-.layui-layout-admin .layui-body{left:60px; top:50px; height:calc(100% - 50px); padding-bottom:0;}
+.layui-layout-admin .layui-body{left:60px; top:50px; height:calc(100% - 50px); padding-bottom:0; z-index: initial;}
 .layui-layout-admin .layui-footer{left:60px;}
 
 /*头部区域*/

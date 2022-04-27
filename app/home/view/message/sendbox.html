@@ -34,13 +34,13 @@
 
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
-		<button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe61f;</i>新建消息</button>
+		<button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe61f;</i>新建消息</button>
 		<button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i>批量删除</button>
 	</div>
 </script>
 
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">查看</span><span class="layui-btn layui-btn-xs layui-btn-warm" lay-event="resend">转发</span><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs layui-btn-warm" lay-event="resend">转发</span><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>
 </script>
 {/block}
 <!-- /主体 -->
@@ -62,10 +62,13 @@
 			cols: [[ //表头
 			  {type:'checkbox',fixed:'left'},
 			  {field: 'type_title', title: '接收人类型',width:100,align:'center'},
-			  {field: 'title', title: '消息主题'},
+			  {field: 'title', title: '消息主题',templet:function(d){
+				var html = '<a class="open-a" data-url="/home/message/read/id/'+d.id+'">'+d.title+'</a>';
+				return html;
+			}},
 			  {field: 'send_time', title: '发件时间', align:'center',width:160},
-			  {field: 'files', title: '附件(个)',align:'center', width:90},
-			  {field: 'right', title: '操作',fixed:'right', toolbar: '#barDemo', width:150, align:'center'}
+			  {field: 'files', title: '附件(个)',align:'center', width:80},
+			  {field: 'right', title: '操作',fixed:'right', toolbar: '#barDemo', width:100, align:'center'}
 			]]
 		});
 
@@ -95,10 +98,6 @@
 					},callback);
 					layer.close(index);
 				})
-			}
-			if(obj.event === 'view'){
-				gougu.open('/home/message/read?id='+data.id);
-				return;
 			}
 			if(obj.event === 'resend'){
 				gougu.open('/home/message/reply?id='+data.id+'&type=2');

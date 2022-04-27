@@ -164,6 +164,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 
 .layui-badge.layui-bg-gray{background-color:#f2f2f2!important}
 .layui-form-checkbox[lay-skin=primary]{padding-left:24px!important}
+.layui-table-cell .layui-form-checkbox[lay-skin=primary]{padding-left:0!important}
 
 .gougu-tab-bar{background-color:#fff;}
 .gougu-tab{text-align: left!important;}

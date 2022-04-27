@@ -72,20 +72,20 @@ class Message extends BaseController
     {
         if (request()->isAjax()) {
             $param = get_params();
-            $param['status'] = 1;
+			$param['status'] = 1;
             $map = [];
             if (!empty($param['keywords'])) {
                 $map[] = ['title', 'like', '%' . $param['keywords'] . '%'];
             }
             if (!empty($param['read'])) {
-				if($param['read']==0){
+				if($param['read']==1){
 					$map[] = ['read_time', '=', 0];
 				}else{
 					$map[] = ['read_time', '>', 0];
 				}                
             }
             if (!empty($param['template'])) {
-				if($param['template']==0){
+				if($param['template']==1){
 					$map[] = ['template', '=', 0];
 				}else{
 					$map[] = ['template', '>', 0];

@@ -1,4 +1,4 @@
-<div class="table-content">
+<div class="table-content" id="scheduleList">
 	<div class="layui-form-bar border-t border-x">
 		<form class="layui-form">
 			<div class="layui-input-inline" style="width:110px;">
@@ -8,7 +8,7 @@
 			<div class="layui-input-inline" style="width:220px;">
 				<input type="text" name="keywords"  placeholder="输入工作内容" class="layui-input"/>
 			</div>	
-			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button><button type="reset" class="layui-btn layui-btn-danger" lay-filter="clear">清空搜索条件</button>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button><button type="reset" class="gougu-clear" lay-filter="clear">清空</button>
 		</form>
 	</div>
 	<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -67,6 +67,11 @@ function pageInit(){
 		layui.pageTable.reload({where:{keywords:f.keywords,uid:f.uid,tid:project_id},page:{curr:1}});
 		return false;
 	});
+	$('#scheduleList').on('click','[lay-filter="clear"]',function(){
+		setTimeout(function(){
+			$('[lay-filter="webform"]').click();
+		},10)			
+	})
 	//监听行工具事件
 	table.on('tool(test)', function(obj) {
 		var data = obj.data;

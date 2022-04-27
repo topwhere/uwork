@@ -330,6 +330,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .page-content{background-color:#fff;}
 .md-content{min-height:200px;}
 .data-none{background:url(../images/datanone.png) no-repeat center center; background-size:auto 80%;}
+.gougu-clear{height: 38px; background-color:#fff;line-height: 38px;border: 1px solid transparent;padding: 0 10px;white-space: nowrap;text-align: center;font-size: 14px; cursor: pointer;}
 /*评论*/
 .comment-input .comment-image{width:40px; height:40px; border-radius:50%}
 .comment-item .comment-avatar{width:50px; float:left}

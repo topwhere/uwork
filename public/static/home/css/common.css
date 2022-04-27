@@ -329,7 +329,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .express-close:hover{opacity:0.9}
 .page-content{background-color:#fff;}
 .md-content{min-height:200px;}
-
+.data-none{background:url(../images/datanone.png) no-repeat center center; background-size:auto 80%;}
 /*评论*/
 .comment-input .comment-image{width:40px; height:40px; border-radius:50%}
 .comment-item .comment-avatar{width:50px; float:left}

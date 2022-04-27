@@ -1,6 +1,5 @@
 {extend name="../../base/view/common/base" /}
 {block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/mdeditor/css/editormd.preview.min.css?v=1.0.2">
 <link rel="stylesheet" href="{__STATIC__}/prism/prism.css?v=1"/>
 <link rel="stylesheet" href="{__STATIC__}/viewer/viewer.min.css?v=1"/>
 <link rel="stylesheet" href="{__STATIC__}/ztree/css/metroStyle/metroStyle.css" >
@@ -10,10 +9,10 @@
 .menu-title span{font-size:12px; font-weight:400}
 .tree-menu{height:calc(100% - 145px); overflow-y: scroll; overflow-x: hidden;}
 
-.editormd-preview{font-size:16px; line-height:1.72; background-color:#fff;}
+.editormd-preview2{font-size:16px; line-height:1.72; background-color:#fff;}
 .editormd-html-preview code, .editormd-preview-container code {padding:2px; border-radius:2px; font-size:14px; font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
 .editormd-html-preview, .editormd-preview-container .code-toolbar{font-size:14px;}
-.editormd-preview li {list-style: initial;}
+.editormd-preview2 li {list-style: initial;}
 .editormd-html-preview pre, .editormd-preview-container pre{border: 1px solid #f6f6f6; font-size:14px;}
 </style>
 {/block}
@@ -42,7 +41,7 @@
 	</div>
 	<div class="content-text">		
 		<div class="pb-4"><h2 id="infoTilte">{$info.title}</h2></div>
-		<div class="editormd-preview">
+		<div class="editormd-preview2">
 			<div class="markdown-body" id="infoContent">
 			{$info.content|raw}
 			</div>

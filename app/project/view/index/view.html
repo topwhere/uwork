@@ -70,10 +70,10 @@
 					<div class="layui-card-body">
 						<div class="layui-row">
 						  <div class="layui-col-md6">
-							<div id="progress" style="width:100%; height:200px;"></div>
+							<div id="progress" class="data-none" style="width:100%; height:200px;"></div>
 						  </div>
 						  <div class="layui-col-md6">
-							<div id="delay" style="width:100%; height:200px;"></div>
+							<div id="delay" class="data-none" style="width:100%; height:200px;"></div>
 						  </div>
 						</div>						
 					</div>
@@ -83,7 +83,7 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>项目缺陷</h5></div>
 					<div class="layui-card-body">
-						<div id="rose" style="width:100%; height:200px;"></div>
+						<div id="rose" class="data-none" style="width:100%; height:200px;"></div>
 					</div>
 				</div>
 			</div>
@@ -91,7 +91,7 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>项目燃尽图</h5></div>
 					<div class="layui-card-body">
-						<div id="cross" style="width:100%; height:360px;"></div>
+						<div id="cross" class="data-none" style="width:100%; height:360px;"></div>
 					</div>
 				</div>
 			</div>
@@ -99,7 +99,7 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>任务分配情况</h5></div>
 					<div class="layui-card-body">
-						<div id="plan" style="width:100%; height:150px;"></div>
+						<div id="plan" class="data-none" style="width:100%; height:150px;"></div>
 					</div>
 				</div>
 			</div>
@@ -107,7 +107,7 @@
 				<div class="layui-card">
 					<div class="layui-card-header"><h5>工时登记情况</h5></div>
 					<div class="layui-card-body">
-						<div id="work" style="width:100%; height:150px;"></div>
+						<div id="work" class="data-none" style="width:100%; height:150px;"></div>
 					</div>
 				</div>
 			</div>
@@ -134,6 +134,7 @@ var chartProgress = document.getElementById('progress');
 var progressChart = echarts.init(chartProgress);
 var optionA;
 optionA = {
+	backgroundColor: "#ffffff",
 	title: {
       text:'67.45%',//主标题文本
       subtext:'任务完成率',//副标题文本
@@ -176,6 +177,7 @@ var chartDelay = document.getElementById('delay');
 var delayChart = echarts.init(chartDelay);
 var optionB;
 optionB = {
+	backgroundColor: "#ffffff",
 	title: {
       text:'40.25%',//主标题文本
       subtext:'任务延迟率',//副标题文本
@@ -232,6 +234,7 @@ var roseChart = echarts.init(chartRose);
 var optionC;
 
 optionC = {
+  backgroundColor: "#ffffff",
   legend: {
     orient: 'vertical',
     left: 'left'
@@ -244,12 +247,8 @@ optionC = {
     {
       name: 'Bugfixed',
       type: 'pie',
-      radius: ['20%', '80%'],
+      radius: ['25%', '75%'],
       center: ['60%', '50%'],
-      roseType: 'area',
-      itemStyle: {
-        borderRadius: 8
-      },
       data: [
         { value: 40, name: '待解决'},
         { value: 38, name: '进行中' },
@@ -267,6 +266,7 @@ var crossChart = echarts.init(chartCross);
 var optionD;
 
 optionD = {
+  backgroundColor: "#ffffff",
   title: {
     text: ''
   },
@@ -344,6 +344,7 @@ var planChart = echarts.init(chartPlan);
 var optionE;
 
 optionE = {
+    backgroundColor: "#ffffff",
 	title: {
 		top: 0,
 		left: 0,
@@ -408,6 +409,7 @@ var workChart = echarts.init(chartWork);
 var optionF;
 
 optionF = {
+	backgroundColor: "#ffffff",
 	title: {
 		top: 0,
 		left: 0,
@@ -628,12 +630,8 @@ function init(layui) {
 				{
 				  name: 'Bugfixed',
 				  type: 'pie',
-				  radius: ['20%', '80%'],
+				  radius: ['25%', '75%'],
 				  center: ['60%', '50%'],
-				  roseType: 'area',
-				  itemStyle: {
-					borderRadius: 8
-				  },
 				  data: [
 					{ value: res.data.bug_status.status_a, name: '待解决'},
 					{ value: res.data.bug_status.status_b, name: '进行中' },

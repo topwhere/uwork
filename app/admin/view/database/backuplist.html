@@ -44,8 +44,8 @@
 					<td align="center"><span>{:format_bytes($voo.size)}</span></td>
 					<td align="center"><span>.sql</span></td>
 					<td align="center"><span>{$voo.compress}</span></td>
-					<td align="center" data-id='{$voo.time}'>
-						<div class="layui-btn-group">
+					<td align="center">
+						<div class="layui-btn-group" data-id='{$voo.time}'>
 						<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="import">数据还原</a>
 						<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?name={:date("Ymd",$voo.time)}{$voo.compress}{:date("His",$voo.time)}{$voo.compress}{$voo.part}.sql'>备份下载</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">备份删除</a>
 						</div>

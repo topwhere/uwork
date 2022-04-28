@@ -241,11 +241,22 @@ class Index extends BaseController
         }
 		else{
 			$tids = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->column('id');
+			$detail['requirements'] = Db::name('Requirements')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['schedules'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->count();
 			$detail['plan_hours'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->sum('plan_hours');
 			$detail['hours'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->sum('labor_time');
-			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id'],'delete_time','=',0]])->count();
+			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['comments'] = Db::name('Comment')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['task_total'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['task_finish'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0],['flow_status','>',2]])->count();
+			$detail['task_unfinish'] = $detail['task_total'] - $detail['task_finish'];
+			//判断是否有编辑项目的权限
+			$role = 0;
+			if($detail['admin_id'] == $this->uid || $detail['director_uid'] == $this->uid){
+				$role = 1;
+			}
 			View::assign('detail', $detail);
+			View::assign('role', $role);
 			View::assign('id', $id);
 			return view();
 		}

@@ -21,7 +21,7 @@ class Wcate extends BaseController
     public function index()
     {
         if (request()->isAjax()) {
-            $cate = Db::name('WorkCate')->order('create_time asc')->select();
+            $cate = Db::name('WorkCate')->order('id asc')->select();
             return to_assign(0, '', $cate);
         } else {
             return view();

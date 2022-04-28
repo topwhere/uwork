@@ -10,7 +10,7 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\base\BaseController;
-use app\admin\validate\workCateCheck;
+use app\admin\validate\WorkCateCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;

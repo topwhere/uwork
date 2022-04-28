@@ -46,8 +46,9 @@
 					<td align="center"><span>{$voo.compress}</span></td>
 					<td align="center">
 						<div class="layui-btn-group" data-id='{$voo.time}'>
-						<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="import">数据还原</a>
-						<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?name={:date("Ymd",$voo.time)}{$voo.compress}{:date("His",$voo.time)}{$voo.compress}{$voo.part}.sql'>备份下载</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">备份删除</a>
+							<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="import">数据还原</a>
+							<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?name={:date("Ymd",$voo.time)}{$voo.compress}{:date("His",$voo.time)}{$voo.compress}{$voo.part}.sql'>备份下载</a>
+							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">备份删除</a>
 						</div>
 					</td>
 				</tr>
@@ -73,6 +74,7 @@
 					icon: 3,
 					title: '提示'
 				}, function (index) {
+					layer.msg("数据还原中...");
 					$.ajax({
 						url: "/admin/database/import/",
 						type:'post',

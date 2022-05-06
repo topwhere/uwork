@@ -1,13 +1,42 @@
-layui.define(['gougu'], function(exports){
-    const layer = layui.layer,gougu = layui.gougu;
+layui.define(['gougu'], function (exports) {
+	const layer = layui.layer, gougu = layui.gougu;
 	const obj = {
-		log:function(topic_id,module){
-			let callback = function(res){
-				if(res.code==0 && res.data.length>0){
-					let itemLog = '';					
+		addLink: function (id, topic_id, module,url,desc) {
+			let that = this;
+			layer.open({
+				title: '添加链接',
+				type: 1,
+				area: ['580px', '240px'],
+				content: '<div class="px-4 pt-4"><div class="layui-input-inline mr-3">URL</div><div class="layui-input-inline" style="width:500px;"><input type="text" id="box_url" placeholder="请输入URL" value="'+url+'" class="layui-input" autocomplete="off" /></div></div><div class="px-4 pt-4"><div class="layui-input-inline mr-3">说明 </div><div class="layui-input-inline" style="width:500px;"><input type="text" id="box_desc" placeholder="请输入链接说明" value="'+desc+'" class="layui-input" autocomplete="off" /></div></div>',
+				btnAlign: 'c',
+				btn: ['提交发布'],
+				yes: function () {
+					let callback = function () {
+						layer.closeAll();
+						gougu.load('/'+module+'/index/view/id/'+topic_id);
+					}
+					let url = $('#box_url').val();
+					let desc = $('#box_desc').val();
+					if (url == '') {
+						layer.msg('请输入URL');
+						return false;
+					}
+					if (desc == '') {
+						layer.msg('请输入链接说明');
+						return false;
+					}
+					let postData = { id: id, topic_id: topic_id, module: module, url: url, desc: desc};
+					gougu.post("/api/appendix/add_link", postData, callback);
+				}
+			})
+		},
+		log: function (topic_id, module) {
+			let callback = function (res) {
+				if (res.code == 0 && res.data.length > 0) {
+					let itemLog = '';
 					$.each(res.data, function (index, item) {
-						if(item.field =='content'){
-							itemLog+= `
+						if (item.field == 'content') {
+							itemLog += `
 							<div class="log-item py-3 border-b">
 								<i class="iconfont ${item.icon}"></i>
 								<span class="log-name">${item.name}</span>
@@ -15,16 +44,16 @@ layui.define(['gougu'], function(exports){
 							</div>
 						`;
 						}
-						else if(item.field =='file'){
-							itemLog+= `
+						else if (item.field == 'file' || item.field == 'link') {
+							itemLog += `
 								<div class="log-item py-3 border-b">
 									<i class="iconfont ${item.icon}"></i>
 									<span class="log-name">${item.name}</span>
 									<span class="log-content font-gray"> ${item.action}了${item.title}<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 								</div>
 							`;
-						}else if(item.field =='new' || item.field =='delete'){
-							itemLog+= `
+						} else if (item.field == 'new' || item.field == 'delete') {
+							itemLog += `
 								<div class="log-item py-3 border-b">
 									<i class="iconfont ${item.icon}"></i>
 									<span class="log-name">${item.name}</span>
@@ -32,9 +61,9 @@ layui.define(['gougu'], function(exports){
 								</div>
 							`;
 						}
-						else if(item.field =='document'){
-							if(item.action =='修改'){
-								itemLog+= `
+						else if (item.field == 'document') {
+							if (item.action == '修改') {
+								itemLog += `
 									<div class="log-item py-3 border-b">
 										<i class="iconfont ${item.icon}"></i>
 										<span class="log-name">${item.name}</span>
@@ -42,8 +71,8 @@ layui.define(['gougu'], function(exports){
 									</div>
 								`;
 							}
-							else{
-								itemLog+= `
+							else {
+								itemLog += `
 									<div class="log-item py-3 border-b">
 										<i class="iconfont ${item.icon}"></i>
 										<span class="log-name">${item.name}</span>
@@ -52,8 +81,8 @@ layui.define(['gougu'], function(exports){
 								`;
 							}
 						}
-						else{
-						itemLog+= `
+						else {
+							itemLog += `
 							<div class="log-item py-3 border-b">
 								<i class="iconfont ${item.icon}"></i>
 								<span class="log-name">${item.name}</span>
@@ -62,24 +91,24 @@ layui.define(['gougu'], function(exports){
 						`;
 						}
 					});
-					$("#log_"+module+"_"+topic_id).html(itemLog);
+					$("#log_" + module + "_" + topic_id).html(itemLog);
 				}
 			}
-			gougu.get("/api/log/get_list",{tid:topic_id,m:module},callback);
+			gougu.get("/api/log/get_list", { tid: topic_id, m: module }, callback);
 		},
-		load:function(topic_id,module){
-			let callback = function(res){
-				if(res.code==0 && res.data.length>0){
-					let itemComment = '';					
+		load: function (topic_id, module) {
+			let callback = function (res) {
+				if (res.code == 0 && res.data.length > 0) {
+					let itemComment = '';
 					$.each(res.data, function (index, item) {
-						let pAdmin='',ops='';
-						if(item.padmin_id>0){
-							pAdmin = '<p class="pt-2"><span>@'+item.pname+'</span></p>';
+						let pAdmin = '', ops = '';
+						if (item.padmin_id > 0) {
+							pAdmin = '<p class="pt-2"><span>@' + item.pname + '</span></p>';
 						}
-						if(item.admin_id == GOUGU_DEV.uid){
-							ops='<a class="mr-4" data-event="edit" data-id="'+item.id+'">编辑</a><a class="mr-4" data-event="del" data-id="'+item.id+'">删除</a>';
+						if (item.admin_id == GOUGU_DEV.uid) {
+							ops = '<a class="mr-4" data-event="edit" data-id="' + item.id + '">编辑</a><a class="mr-4" data-event="del" data-id="' + item.id + '">删除</a>';
 						}
-						itemComment+= `
+						itemComment += `
 							<div id="comment_${item.id}" class="comment-item py-3 border-t" data-mdcontent="${item.md_content}">
 							<div class="comment-avatar" title="${item.name}">
 								<img class="comment-image" src="${item.thumb}">
@@ -98,63 +127,63 @@ layui.define(['gougu'], function(exports){
 						</div>
 						`;
 					});
-					$("#comment_"+module+"_"+topic_id).html(itemComment);
+					$("#comment_" + module + "_" + topic_id).html(itemComment);
 					layer.closeAll();
 				}
 			}
-			gougu.post("/api/comment/get_list",{tid:topic_id,m:module},callback);
+			gougu.post("/api/comment/get_list", { tid: topic_id, m: module }, callback);
 		},
-		add:function(id,topic_id,pid,padmin_id,module,content,md_content){
-			let that=this;
-			let callback = function(res){
-				that.load(topic_id,module);
+		add: function (id, topic_id, pid, padmin_id, module, content, md_content) {
+			let that = this;
+			let callback = function (res) {
+				that.load(topic_id, module);
 			}
-			if(content == ''){
+			if (content == '') {
 				layer.msg('请完善评论内容');
 				return false;
 			}
-			let postData={id:id,topic_id:topic_id,pid:pid,padmin_id:padmin_id,module:module,content:content,md_content:md_content};
-			gougu.post("/api/comment/add",postData,callback);			
+			let postData = { id: id, topic_id: topic_id, pid: pid, padmin_id: padmin_id, module: module, content: content, md_content: md_content };
+			gougu.post("/api/comment/add", postData, callback);
 		},
-		del:function(id,topic_id,module){
-			let that=this;
+		del: function (id, topic_id, module) {
+			let that = this;
 			layer.confirm('确定删除该评论吗？', {
 				icon: 3,
 				title: '提示'
-			}, function(index) {
+			}, function (index) {
 				let callback = function (e) {
 					layer.msg(e.msg);
 					if (e.code == 0) {
-						that.load(topic_id,module);
+						that.load(topic_id, module);
 					}
 				}
-				gougu.delete("/api/comment/delete",{ id: id },callback);
+				gougu.delete("/api/comment/delete", { id: id }, callback);
 				layer.close(index);
 			});
 		},
 		//编辑器
-		editor:function(id,topic_id,pid,padmin_id,module,txt){
-			if(typeof editormd=="undefined"){
+		editor: function (id, topic_id, pid, padmin_id, module, txt) {
+			if (typeof editormd == "undefined") {
 				alert('请引入editor.md.js');
 				return false;
 			}
-			let that=this;
+			let that = this;
 			layer.open({
 				closeBtn: 2,
 				title: false,
-				type:1,
+				type: 1,
 				area: ['720px', '360px'],
 				content: '<div style="padding-right:3px"><div id="editorBox" style="margin:0 auto!important;"></div></div>',
-				success: function() {
-					gougu.editor('editorBox',300,txt);
+				success: function () {
+					gougu.editor('editorBox', txt, 300);
 				},
 				btnAlign: 'c',
-				btn:['提交发布'],
-				yes: function() {
-					that.add(id,topic_id,pid,padmin_id,module,layui.Editor.getHTML(),layui.Editor.getMarkdown());
+				btn: ['提交发布'],
+				yes: function () {
+					that.add(id, topic_id, pid, padmin_id, module, layui.Editor.getHTML(), layui.Editor.getMarkdown());
 				}
-			})			
+			})
 		}
-    };
-    exports('gouguComment',obj);
+	};
+	exports('gouguComment', obj);
 });  

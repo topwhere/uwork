@@ -6,8 +6,8 @@
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a><cite>产品中心</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a><cite>产品中心</cite></a>
 </span>
 {/block}
 {block name="body"}
@@ -15,7 +15,7 @@
 	<div class="layui-form-bar border-t border-x">
 		<button class="layui-btn layui-btn-sm add-new">+ 新建产品</button>
 	</div>
-	<table class="layui-hide" id="test" lay-filter="test"></table>
+	<table class="layui-hide" id="product" lay-filter="product"></table>
 </div>
 {/block}
 <!-- /主体 -->
@@ -23,52 +23,63 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui){
-		var table = layui.table,form = layui.form,gougu = layui.gougu;		
-		
+	function init(layui) {
+		var table = layui.table, form = layui.form, gougu = layui.gougu;
+
 		layui.pageTable = table.render({
-			elem: '#test',
+			elem: '#product',
 			title: '产品列表',
-			cellMinWidth:200,
+			cellMinWidth: 200,
 			url: "/product/index/index", //数据接口
 			page: true, //开启分页
 			limit: 20,
-			cols:  [[
-				{field:'id', title: '产品编号',width: 80, align:'center',fixed:'left',rowspan: 2,templet:function(d){
-					return 'P'+d.id;
-				}}
-				,{field:'status',title: '状态',align:'center',width: 60,rowspan: 2,templet:function(d){
-					var html = '<span class="layui-btn layui-btn-xs bg-status-'+d.status+'">'+d.status_name+'</span>';
-					return html;
-				}}
-				,{field:'name',title: '产品名称',rowspan: 2,templet:function(d){
-					var html = '<a class="open-a" data-url="/product/index/view/id/'+d.id+'">'+d.name+'</a>';
-					return html;
-				}}
-				,{field:'director_name',title: '产品负责人', align:'center',width: 90,rowspan: 2}
-				,{field:'test_name',title: '测试负责人', align:'center',width: 90,rowspan: 2}
-				,{field:'projects',title: '关联项目', align:'center',width: 90,rowspan: 2}
-				,{align: 'center', title: '关联需求', colspan: 3}
-				,{align: 'center', title: '关联任务', colspan: 3}
-				,{align: 'center', title: '关联BUG', colspan: 3}
+			cols: [[
+				{
+					field: 'id', title: '产品编号', width: 80, align: 'center', fixed: 'left', rowspan: 2, templet: function (d) {
+						return 'P' + d.id;
+					}
+				}
+				, {
+					field: 'status', title: '状态', align: 'center', width: 60, rowspan: 2, templet: function (d) {
+						var html = '<span class="layui-btn layui-btn-xs bg-status-' + d.status + '">' + d.status_name + '</span>';
+						return html;
+					}
+				}
+				, {
+					field: 'name', title: '产品名称', rowspan: 2, templet: function (d) {
+						var html = '<a class="open-a" data-url="/product/index/view/id/' + d.id + '">' + d.name + '</a>';
+						return html;
+					}
+				}
+				, { field: 'director_name', title: '负责人', align: 'center', width: 80, rowspan: 2 }
+				, { field: 'admin_name', title: '创建人', align: 'center', width: 80, rowspan: 2 }
+				, { field: 'projects', title: '关联项目', align: 'center', width: 80, rowspan: 2 }
+				, { align: 'center', title: '需求任务', colspan: 3 }
+				, { align: 'center', title: '设计任务', colspan: 3 }
+				, { align: 'center', title: '研发任务', colspan: 3 }
+				, { align: 'center', title: 'BUG缺陷', colspan: 3 }
 			], [
-				{field:'requirements_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
-				,{field:'requirements_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
-				,{field:'requirements_c',align:'center', style:'color: #EE6666;', width:80,'title':'完成率'}
-				,{field:'tasks_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
-				,{field:'tasks_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
-				,{field:'tasks_c',align:'center', style:'color: #EE6666;', width:80,'title':'完成率'}
-				,{field:'bugs_a',align:'center', style:'color: #91CC75;', width:80,'title':'进行中'}
-				,{field:'bugs_b',align:'center', style:'color: #FAC858;', width:80,'title':'已完成'}
-				,{field:'bugs_c',align:'center', style:'color: #EE6666;', width:80,'title':'修复率'}
+				{ field: 'tasks_a_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+				, { field: 'tasks_a_finish', align: 'center', style: 'color: #FAC858;', width: 70, 'title': '已完成' }
+				, { field: 'tasks_a_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+				, { field: 'tasks_b_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+				, { field: 'tasks_b_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
+				, { field: 'tasks_b_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+				, { field: 'tasks_cb_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+				, { field: 'tasks_c_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
+				, { field: 'tasks_c_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+				, { field: 'tasks_d_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+				, { field: 'tasks_d_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
+				, { field: 'tasks_d_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '修复率' }
 			]]
 		});
-		
-		$('.add-new').on('click',function(){
+
+		$('.add-new').on('click', function () {
 			gougu.open('/product/index/add');
 		});
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','employeepicker']" callback="init" /}
+{include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','employeepicker']"
+callback="init" /}
 {/block}
 <!-- /脚本 -->

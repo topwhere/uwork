@@ -2,51 +2,44 @@
 	<h3 class="h3-title">新建产品</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray2">产品名称<font>*</font></td>
-			<td>
-				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称" class="layui-input" value="">
+			<td class="layui-td-gray">产品名称<font>*</font>
 			</td>
-			<td class="layui-td-gray2">产品负责人<font>*</font></td>
+			<td>
+				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称"
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">产品负责人<font>*</font>
+			</td>
 			<td>
 				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择产品负责人" value="">
 				<input type="text" name="director_name" placeholder="请选择产品负责人" readonly class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray2">测试负责人</td>
-			<td>
-				<input type="hidden" name="test_uid" readonly value="">
-				<input type="text" name="test_name" readonly placeholder="请选择测试负责人" class="layui-input" value="">
+		</tr>
+		<tr>
+			<td class="layui-td-gray">参与评审人</td>
+			<td colspan="4">
+				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required"
+					lay-reqText="请选择评审人" value="">
+				<input type="text" id="check_admin_names" name="check_admin_names" readonly class="layui-input"
+					placeholder="请选择评审人" value="">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">参与评审人<span style="color: red">*</span></td>
-			<td colspan="6">
-				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required" lay-reqText="请选择评审人" value="">
-				<input type="text" id="check_admin_names" name="check_admin_names" readonly class="layui-input" placeholder="请选择评审人" value="">
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray2">访问控制<span style="color: red">*</span></td>
-			<td colspan="6">
-				<input type="radio" name="is_open" lay-filter="checkopen" value="1" title="私有(可在白名单设置访问者)">
-				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">				
-			</td>			
-		</tr>
-		<tr id="viewAdmin" style="display:none">
-			<td class="layui-td-gray2">白名单<span style="color: red">*</span></td>
-			<td colspan="5">
-				<input type="hidden" name="view_admin_ids" class="layui-input" value="">
-				<input type="text" id="view_admin_names" name="view_admin_names"  placeholder="请选择可访问的员工" readonly class="layui-input" value="">
+			<td class="layui-td-gray">访问控制</td>
+			<td colspan="4">
+				<input type="radio" name="is_open" lay-filter="checkopen" value="1" checked title="内部(仅创建人、负责人、评审人可访问)">
+				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">
 			</td>
 		</tr>
 	</table>
 	<div>
-		<div style="padding:10px 0">产品描述<span style="color: red">*</span></div>
+		<div class="py-2">产品描述<span style="color: red">*</span></div>
 		<div>
 			<textarea id="mdContent" style="display:none;"></textarea>
 			<div id="docContent"></div>
 		</div>
 	</div>
-	<div style="padding: 10px 0">
+	<div class="pt-1">
 		<input type="hidden" name="id" value="0" />
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -54,115 +47,60 @@
 </form>
 
 <script>
-function openInit() {
-	var form = layui.form,layer = layui.layer,gougu = layui.gougu,employeepicker = layui.employeepicker;
-			
-	form.render();
-	gougu.editor('docContent',480,$('#mdContent').val());
-	//选择产品负责人弹窗	
-	$('.page-content').on('click','[name="director_name"]',function () {
-		var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
-		employeepicker.init({
-			ids:ids,
-			names:names,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:0,
-			callback:function(ids,names,dids,departments){
-				$('[name="director_uid"]').val(ids);
-				$('[name="director_name"]').val(names);
-			}
-		});
-	}); 
-	
-	//选择测试负责人弹窗	
-	$('.page-content').on('click','[name="test_name"]',function () {
-		var ids=$('[name="test_uid"]').val(),names=$('[name="test_name"]').val();
-		employeepicker.init({
-			ids:ids,
-			names:names,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:0,
-			callback:function(ids,names,dids,departments){
-				$('[name="test_uid"]').val(ids);
-				$('[name="test_name"]').val(names);
-			}
-		});
-	}); 
-	
-	//选择产品评审人弹窗	
-	$('.page-content').on('click','[name="check_admin_names"]',function () {
-		var ids=$('[name="check_admin_ids"]').val(),names=$('[name="check_admin_names"]').val(),check_admin_id_array=[],check_admin_name_array=[];
-		if(ids.length>0){
-			check_admin_id_array=ids.split(',');
-			check_admin_name_array=names.split(',');
-		}
-		employeepicker.init({
-			ids:check_admin_id_array,
-			names:check_admin_name_array,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:1,
-			callback:function(ids,names,dids,departments){
-				$('[name="check_admin_ids"]').val(ids);
-				$('[name="check_admin_names"]').val(names);
-			}
-		});
-	}); 
+	function openInit() {
+		var form = layui.form, layer = layui.layer, gougu = layui.gougu, employeepicker = layui.employeepicker;
 
-	//选择产品白名单弹窗	
-	$('.page-content').on('click','[name="view_admin_names"]',function () {
-		var vids=$('[name="view_admin_ids"]').val(),vnames=$('[name="view_admin_names"]').val(),view_admin_id_array=[],view_admin_name_array=[];
-		if(vids.length>0){
-			view_admin_id_array=vids.split(',');
-			view_admin_name_array=vnames.split(',');
-		}
-		employeepicker.init({
-			ids:view_admin_id_array,
-			names:view_admin_name_array,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:1,
-			callback:function(ids,names,dids,departments){
-				$('[name="view_admin_ids"]').val(ids);
-				$('[name="view_admin_names"]').val(names);
-			}
+		form.render();
+		gougu.editor('docContent', $('#mdContent').val(), 0, true);
+		//选择产品负责人弹窗	
+		$('.page-content').on('click', '[name="director_name"]', function () {
+			var ids = $('[name="director_uid"]').val(), names = $('[name="director_name"]').val();
+			employeepicker.init({
+				ids: ids,
+				names: names,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				type: 0,
+				callback: function (ids, names, dids, departments) {
+					$('[name="director_uid"]').val(ids);
+					$('[name="director_name"]').val(names);
+				}
+			});
 		});
-	}); 
 
-	form.on('radio(checkopen)', function(data){
-		if(data.value==1){
-			$('#viewAdmin').show();
-		}
-		else{
-			$('#viewAdmin').hide();
-		}
-	});
-		
-		
-    //监听提交
-    form.on('submit(webform)', function (data) {
-		if(!data.field.is_open || data.field.is_open==''){
-			layer.msg('请选择访问控制');
+		//选择产品评审人弹窗	
+		$('.page-content').on('click', '[name="check_admin_names"]', function () {
+			var ids = $('[name="check_admin_ids"]').val(), names = $('[name="check_admin_names"]').val(), check_admin_id_array = [], check_admin_name_array = [];
+			if (ids.length > 0) {
+				check_admin_id_array = ids.split(',');
+				check_admin_name_array = names.split(',');
+			}
+			employeepicker.init({
+				ids: check_admin_id_array,
+				names: check_admin_name_array,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				type: 1,
+				callback: function (ids, names, dids, departments) {
+					$('[name="check_admin_ids"]').val(ids);
+					$('[name="check_admin_names"]').val(names);
+				}
+			});
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					layui.pageTable.reload();
+					setTimeout(function () {
+						gougu.close();
+					}, 400);
+				}
+			}
+			gougu.post("/product/index/add", data.field, callback);
 			return false;
-		}
-		if(data.field.is_open == 1 && data.field.view_admin_ids == ''){
-			layer.msg('请完善白名单，选择可访问的员工');
-			return false;
-		}
-		let callback = function (e) {
-			layer.msg(e.msg);
-			if (e.code == 0) {
-				layui.pageTable.reload();
-				setTimeout(function(){
-					gougu.close();
-				},400);
-			}
-		}
-		gougu.post("/product/index/add",data.field,callback);
-		return false;
-    });
-}
-
+		});
+	}
 </script>

@@ -120,8 +120,8 @@ CREATE TABLE `dev_admin_rule`  (
 INSERT INTO `dev_admin_rule` VALUES (1, 0, 'admin/setting/index', '系统', '系统管理', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (2, 0, 'product/index/index', '产品', '产品管理', 'icon-xiaoshoupin', 1, 2, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (3, 0, 'project/index/index', '项目', '项目管理', 'icon-xiangmuguanli', 1, 3, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (4, 0, 'requirements/index/index', '需求', '项目管理', 'icon-renwuguanli', 1, 4, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (5, 0, 'task/index/index', '任务', '任务管理', 'icon-lunwenguanli', 1, 5, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (4, 0, 'task/index/index', '任务', '任务管理', 'icon-lunwenguanli', 1, 4, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (5, 0, 'schedule/index/index', '工时', '工时管理', 'icon-renwuguanli', 1, 5, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (6, 0, 'knowledge/index/index', '知识库', '知识库', 'icon-shujiguanli', 1, 6, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (7, 1, '', '系统设置', '系统设置', 'icon-jichupeizhi', 1, 1, 1, 0, 0);
@@ -141,15 +141,15 @@ INSERT INTO `dev_admin_rule` VALUES (17, 15, 'admin/role/delete', '删除', '权
 
 INSERT INTO `dev_admin_rule` VALUES (18, 7, 'admin/log/index', '操作日志', '操作日志', '', 1, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (19, 7, 'admin/database/database', '数据安全', '备份数据', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (20, 19, 'admin/database/backup', '备份数据表', '备份数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (21, 19, 'admin/database/optimize', '优化数据表', '优化数据表', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (22, 19, 'admin/database/repair', '修复数据表', '修复数据表', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (19, 7, 'admin/database/database', '数据安全', '数据备份', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (20, 19, 'admin/database/backup', '备份数据表', '数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (21, 19, 'admin/database/optimize', '优化数据表', '数据表', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (22, 19, 'admin/database/repair', '修复数据表', '数据表', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (23, 7, 'admin/database/backuplist', '还原数据', '还原数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (24, 23, 'admin/database/import', '还原数据表', '还原数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (25, 23, 'admin/database/downfile', '下载备份数据', '下载备份数据', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (26, 23, 'admin/database/del', '删除备份数据', '删除备份数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (23, 7, 'admin/database/backuplist', '还原数据', '数据还原', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (24, 23, 'admin/database/import', '还原数据表', '数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (25, 23, 'admin/database/downfile', '下载备份数据', '备份数据', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (26, 23, 'admin/database/del', '删除备份数据', '备份数据', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (27, 1, '', '基础数据', '基础数据', 'icon-jichushezhi', 1, 2, 1, 0, 0);
 
@@ -334,7 +334,7 @@ DROP TABLE IF EXISTS `dev_message`;
 CREATE TABLE `dev_message`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '消息主题',
-  `template` tinyint(2) NOT NULL DEFAULT 0 COMMENT '消息模板，用于前端拼接消息',
+  `template` tinyint(2) NOT NULL DEFAULT 0 COMMENT '消息模板，用于前端拼接消息，0普通消息，1产品，2项目，3任务',
   `content` text NULL COMMENT '消息内容',
   `from_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送人id',
   `to_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '接收人id',
@@ -590,14 +590,11 @@ CREATE TABLE `dev_knowledge_doc`  (
 DROP TABLE IF EXISTS `dev_product`;
 CREATE TABLE `dev_product`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '产品代号,预留字段',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '产品名称',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '产品负责人',
-  `test_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '测试负责人',
   `check_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '评审人，如:1,2,3',
   `is_open` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否公开：1是,2否',
-  `view_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '白名单,不公开的情况下可查看人ID，如:1,2,3',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0关闭,1开启',
   `content` text NULL COMMENT '产品描述',
   `md_content` text NULL COMMENT 'markdown产品描述',
@@ -614,7 +611,6 @@ CREATE TABLE `dev_product`  (
 DROP TABLE IF EXISTS `dev_project`;
 CREATE TABLE `dev_project`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) NOT NULL DEFAULT '' COMMENT '项目代号,预留字段',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
   `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
@@ -630,31 +626,6 @@ CREATE TABLE `dev_project`  (
   `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
-
--- ----------------------------
--- Table structure for dev_requirements
--- ----------------------------
-DROP TABLE IF EXISTS `dev_requirements`;
-CREATE TABLE `dev_requirements`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '需求主题',
-  `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
-  `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
-  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
-  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
-  `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计开始时间',
-  `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计结束时间',
-  `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
-  `content` text NULL COMMENT '需求描述',
-  `md_content` text NULL COMMENT 'markdown需求描述',
-  `story` text NULL COMMENT '用户故事',
-  `md_story` text NULL COMMENT 'markdown用户故事',
-  `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1需求中,2设计中,3排期中,4研发中,5测试中,6待发布,7已发布,8已完成,9挂起',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
-  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '需求表';
 
 -- ----------------------------
 -- Table structure for dev_task
@@ -673,10 +644,11 @@ CREATE TABLE `dev_task`  (
   `over_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '实际结束时间',
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
   `assist_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '协助人员，如:1,2,3',
-  `cate` tinyint(1) NOT NULL DEFAULT 0 COMMENT '任务类别:0其他,1UI设计,2产品原型,3技术开发,4测试,5编写文档,6沟通,7会议,8调研',
+  `cate` tinyint(1) NOT NULL DEFAULT 1 COMMENT '所属工作类型:其他工作、技术开发、UI设计、产品原型、撰写文档、需求调研、需求沟通、功能测试、BUG修复、会议讨论',
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型:1任务,2缺陷',
   `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1待办的,2进行中,3已完成,4已拒绝,5已关闭',
+  `done_ratio` int(2) NOT NULL DEFAULT 0 COMMENT '完成进度：0,10,20,30,40,50,60,70,80,90,100',
   `content` text NULL COMMENT '任务描述',
   `md_content` text NULL COMMENT 'markdown任务描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
@@ -714,8 +686,25 @@ CREATE TABLE `dev_file_interfix`  (
   `file_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '相关联附件id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '附件关联表';
+
+-- ----------------------------
+-- Table structure for dev_link_interfix
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_link_interfix`;
+CREATE TABLE `dev_link_interfix`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module` varchar(100) NOT NULL DEFAULT '' COMMENT '模块',
+  `topic_id` int(11) UNSIGNED NOT NULL COMMENT '关联主题id',
+  `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '说明',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '链接关联表';
 
 -- ----------------------------
 -- Table structure for dev_comment

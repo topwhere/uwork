@@ -48,10 +48,11 @@ class Index extends BaseController
                     $item->director_name = Db::name('Admin')->where(['id' => $item->director_uid])->value('name');
                     $item->admin_name = Db::name('Admin')->where(['id' => $item->admin_id])->value('name');
                     $item->status_name = ProductList::$Status[(int) $item->status];
-                    $item->projects = Db::name('Project')->where(['status' => 1, 'product_id' => $item->id])->count();
+                    $item->projects = Db::name('Project')->where(['delete_time' => 0, 'product_id' => $item->id])->count();
 
+                    $project_ids = Db::name('Project')->where(['delete_time' => 0, 'product_id' => $item->id])->column('id');
                     $task_map = [];
-                    $task_map[] = ['product_id', '=', $item->id];
+                    $task_map[] = ['project_id', 'in', $project_ids];
                     $task_map[] = ['delete_time', '=', 0];
 
                     //需求

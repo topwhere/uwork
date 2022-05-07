@@ -41,22 +41,22 @@ class Appendix extends BaseController
         if (request()->isDelete()) {
             $id = get_params("id");
             $detail = Db::name('FileInterfix')->where('id', $id)->find();
-			if (Db::name('FileInterfix')->where('id', $id)->delete() !== false) {
-				$file_name = Db::name('File')->where('id', $detail['file_id'])->value('name');
-				$log_data = array(
-					'module' => $detail['module'],
-					'field' => 'file',
-					'action' => 'del',
-					$detail['module'] . '_id' => $detail['topic_id'],
-					'admin_id' => $this->uid,
-					'new_content' => $file_name,
-					'create_time' => time(),
-				);
-				Db::name('Log')->strict(false)->field(true)->insert($log_data);
-				return to_assign(0, "删除成功");
-			} else {
-				return to_assign(0, "删除失败");
-			}
+            if (Db::name('FileInterfix')->where('id', $id)->delete() !== false) {
+                $file_name = Db::name('File')->where('id', $detail['file_id'])->value('name');
+                $log_data = array(
+                    'module' => $detail['module'],
+                    'field' => 'file',
+                    'action' => 'del',
+                    $detail['module'] . '_id' => $detail['topic_id'],
+                    'admin_id' => $this->uid,
+                    'new_content' => $file_name,
+                    'create_time' => time(),
+                );
+                Db::name('Log')->strict(false)->field(true)->insert($log_data);
+                return to_assign(0, "删除成功");
+            } else {
+                return to_assign(0, "删除失败");
+            }
         } else {
             return to_assign(1, "错误的请求");
         }
@@ -109,21 +109,21 @@ class Appendix extends BaseController
         if (request()->isDelete()) {
             $id = get_params("id");
             $detail = Db::name('LinkInterfix')->where('id', $id)->find();
-			if (Db::name('LinkInterfix')->where('id', $id)->update(['delete_time' => time()]) !== false) {
-				$log_data = array(
-					'module' => $detail['module'],
-					'field' => 'link',
-					'action' => 'del',
-					$detail['module'] . '_id' => $detail['topic_id'],
-					'admin_id' => $this->uid,
-					'new_content' => $detail['desc'],
-					'create_time' => time(),
-				);
-				Db::name('Log')->strict(false)->field(true)->insert($log_data);
-				return to_assign(0, "删除成功");
-			} else {
-				return to_assign(0, "删除失败");
-			}
+            if (Db::name('LinkInterfix')->where('id', $id)->update(['delete_time' => time()]) !== false) {
+                $log_data = array(
+                    'module' => $detail['module'],
+                    'field' => 'link',
+                    'action' => 'del',
+                    $detail['module'] . '_id' => $detail['topic_id'],
+                    'admin_id' => $this->uid,
+                    'new_content' => $detail['desc'],
+                    'create_time' => time(),
+                );
+                Db::name('Log')->strict(false)->field(true)->insert($log_data);
+                return to_assign(0, "删除成功");
+            } else {
+                return to_assign(0, "删除失败");
+            }
         } else {
             return to_assign(1, "错误的请求");
         }

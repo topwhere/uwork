@@ -29,7 +29,7 @@ layui.define(['layer'], function (exports) {
 			if (editorH < 320) {
 				editorH = 320;
 			}
-			if (editormdHeight && editormdHeight>0) {
+			if (editormdHeight && editormdHeight > 0) {
 				editorH = editormdHeight;
 			}
 			if (isWatch) {

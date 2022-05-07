@@ -618,7 +618,7 @@ CREATE TABLE `dev_project`  (
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
   `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0未设置,1开启,2暂停,3关闭',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：状态：0未设置,1未开始,2进行中,3已完成,4已关闭',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
@@ -627,6 +627,28 @@ CREATE TABLE `dev_project`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
 
+
+-- ----------------------------
+-- Table structure for dev_release
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_release`;
+CREATE TABLE `dev_release`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '迭代名称',
+  `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
+  `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '开始时间',
+  `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结束时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0未设置,1未开始,2进行中,3已完成,4已关闭',
+  `content` text NULL COMMENT '迭代目标',
+  `md_content` text NULL COMMENT 'markdown迭代目标',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '迭代表';
+
 -- ----------------------------
 -- Table structure for dev_task
 -- ----------------------------
@@ -634,21 +656,20 @@ DROP TABLE IF EXISTS `dev_task`;
 CREATE TABLE `dev_task`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '主题',
-  `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
   `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
-  `requirements_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联需求id',
+  `release_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联迭代id',
   `test_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联测试id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `plan_hours` decimal(10, 1) NOT NULL DEFAULT 0.00 COMMENT '预估工时',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计结束时间',
   `over_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '实际结束时间',
-  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
+  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '指派给(负责人)',
   `assist_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '协助人员，如:1,2,3',
-  `cate` tinyint(1) NOT NULL DEFAULT 1 COMMENT '所属工作类型:其他工作、技术开发、UI设计、产品原型、撰写文档、需求调研、需求沟通、功能测试、BUG修复、会议讨论',
-  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型:1任务,2缺陷',
+  `cate` tinyint(1) NOT NULL DEFAULT 1 COMMENT '所属工作类型',
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型:1需求,2设计,3研发,4缺陷',
   `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1待办的,2进行中,3已完成,4已拒绝,5已关闭',
-  `done_ratio` int(2) NOT NULL DEFAULT 0 COMMENT '完成进度：0,10,20,30,40,50,60,70,80,90,100',
+  `done_ratio` int(2) NOT NULL DEFAULT 0 COMMENT '完成进度：0,20,40,50,60,80,100',
   `content` text NULL COMMENT '任务描述',
   `md_content` text NULL COMMENT 'markdown任务描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',

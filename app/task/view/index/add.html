@@ -2,27 +2,32 @@
 	<h3 class="h3-title">新建任务</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">任务主题<font>*</font></td>
-			<td colspan="5">
-				<input type="text" name="title" lay-verify="required" lay-reqText="请输入任务主题" placeholder="请输入任务主题" class="layui-input" value="">
+			<td class="layui-td-gray">任务主题<font>*</font>
 			</td>
-			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>		
+			<td colspan="5">
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入任务主题" placeholder="请输入任务主题"
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>
 			<td>
 				<select name="priority" lay-verify="required" lay-reqText="请选择优先级">
 					<option value="1" selected>低</option>
 					<option value="2">中</option>
 					<option value="3">高</option>
-					<option value="4">紧急</option>			
-				</select>	
+					<option value="4">紧急</option>
+				</select>
 			</td>
 		</tr>
-		<tr>	
-			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>		
+		<tr>
+			<td class="layui-td-gray">任务类型<span style="color: red">*</span></td>
 			<td>
 				<select name="type" lay-verify="required" lay-reqText="请选择任务类型">
-					<option value="1">任务</option>
-					<option value="2">缺陷</option>	
-				</select>	
+					<option value="">请选择</option>
+					<option value="1">需求</option>
+					<option value="2">设计</option>
+					<option value="3">研发</option>
+					<option value="4">缺陷</option>
+				</select>
 			</td>
 			<td class="layui-td-gray">工作类型<span style="color: red">*</span></td>
 			<td>
@@ -30,28 +35,30 @@
 					<option value="">请选择</option>
 					{volist name="cate" id="vo"}
 					<option value="{$vo.id}">{$vo.title}</option>
-					{/volist}				
-				</select>		
-			</td>
-			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>
-			<td>
-				<input type="text" name="plan_hours" lay-verify="required" lay-reqText="请填写预估工时" placeholder="请填写预估工时" class="layui-input" value="">
+					{/volist}
+				</select>
 			</td>
 			<td class="layui-td-gray2">预计结束日期<span style="color: red">*</span></td>
 			<td>
-				<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择时间" class="layui-input" value="">
+				<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间"
+					placeholder="请选择时间" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">预估工时<span style="color: red">*</span></td>
+			<td>
+				<input type="text" name="plan_hours" lay-verify="required" lay-reqText="请填写预估工时" placeholder="请填写预估工时"
+					class="layui-input" value="">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">负 责 人</td>
+			<td class="layui-td-gray">指派给</td>
 			<td>
 				<input type="hidden" name="director_uid" readonly value="">
-				<input type="text" name="director_name" placeholder="请选择负责人" readonly class="layui-input" value="">
+				<input type="text" name="director_name" placeholder="请选择" readonly class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray">协 作 人</td>
+			<td class="layui-td-gray">协作人</td>
 			<td colspan="5">
 				<input type="hidden" name="assist_admin_ids" readonly value="">
-				<input type="text" name="assist_admin_names" placeholder="请选择协作人" readonly class="layui-input" value="">
+				<input type="text" name="assist_admin_names" placeholder="请选择" readonly class="layui-input" value="">
 			</td>
 		</tr>
 		{empty name="$project_id"}
@@ -65,7 +72,7 @@
 					{/volist}
 				</select>
 			</td>
-			<td class="layui-td-gray">关联需求</td>
+			<td class="layui-td-gray">关联迭代</td>
 			<td colspan="5">
 				<select id="requirementsId" name="requirements_id">
 					<option value="">请先选择关联的项目</option>
@@ -74,11 +81,11 @@
 		</tr>
 		{else/}
 		<tr>
-			<td class="layui-td-gray">关联需求</td>
+			<td class="layui-td-gray">关联迭代</td>
 			<td colspan="7">
 				<input type="hidden" name="project_id" value="{$project_id}">
 				<select id="requirementsId" name="requirements_id">
-				{volist name=":get_requirements($project_id)" id="v"}
+					{volist name=":get_requirements($project_id)" id="v"}
 					<option value="{$v.id}">{$v.title}</option>
 					{/volist}
 				</select>
@@ -101,89 +108,89 @@
 </form>
 
 <script>
-function openInit() {
-	const form = layui.form,layer = layui.layer,gougu = layui.gougu,laydate = layui.laydate,dropdown = layui.dropdown,employeepicker = layui.employeepicker;
-			
-	form.render();
-	gougu.editor('docContent',480,$('#mdContent').val());
-	
-	//日期范围
-	laydate.render({
-		elem: '#end_time'
-	});
-	
-	//关联需求
-	form.on('select(project)', function(data){
-		if(data.value==''){
-			$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
-			form.render("select");
-		}
-		else{
-			gougu.get("/api/index/get_requirements",{pid:data.value},function(res){
-				let data = res.data;
-				if(data.length>0){
-					let ops='<option value="">请选择需求</option>';
-					for(let i=0;i<data.length;i++){
-						ops+='<option value="'+data[i].id+'">'+data[i].title+'</option>';
+	function openInit() {
+		const form = layui.form, layer = layui.layer, gougu = layui.gougu, laydate = layui.laydate, dropdown = layui.dropdown, employeepicker = layui.employeepicker;
+
+		form.render();
+		gougu.editor('docContent', $('#mdContent').val(), 480, true);
+
+		//日期范围
+		laydate.render({
+			elem: '#end_time'
+		});
+
+		//关联迭代
+		form.on('select(project)', function (data) {
+			if (data.value == '') {
+				$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
+				form.render("select");
+			}
+			else {
+				gougu.get("/api/index/get_requirements", { pid: data.value }, function (res) {
+					let data = res.data;
+					if (data.length > 0) {
+						let ops = '<option value="">请选择需求</option>';
+						for (let i = 0; i < data.length; i++) {
+							ops += '<option value="' + data[i].id + '">' + data[i].title + '</option>';
+						}
+						$('#requirementsId').html(ops);
+						form.render("select");
 					}
-					$('#requirementsId').html(ops);
-					form.render("select");
+				});
+			}
+		});
+
+		//选择负责人弹窗	
+		$('.page-content').on('click', '[name="director_name"]', function () {
+			var ids = $('[name="director_uid"]').val(), names = $('[name="director_name"]').val();
+			employeepicker.init({
+				ids: ids,
+				names: names,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				type: 0,
+				callback: function (ids, names, dids, departments) {
+					$('[name="director_uid"]').val(ids);
+					$('[name="director_name"]').val(names);
 				}
 			});
-		}
-	});
-	
-	//选择负责人弹窗	
-	$('.page-content').on('click','[name="director_name"]',function () {
-		var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
-		employeepicker.init({
-			ids:ids,
-			names:names,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:0,
-			callback:function(ids,names,dids,departments){
-				$('[name="director_uid"]').val(ids);
-				$('[name="director_name"]').val(names);
-			}
 		});
-	}); 
-	
-	
-	//选择协作人人弹窗	
-	$('.page-content').on('click','[name="assist_admin_names"]',function () {
-		var ids=$('[name="assist_admin_ids"]').val(),names=$('[name="assist_admin_names"]').val(),assist_admin_id_array=[],assist_admin_name_array=[];
-		if(ids.length>0){
-			assist_admin_id_array=ids.split(',');
-			assist_admin_name_array.split(',');
-		}
-		employeepicker.init({
-			ids:assist_admin_id_array,
-			names:assist_admin_name_array,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
-			type:1,
-			callback:function(ids,names,dids,departments){
-				$('[name="assist_admin_ids"]').val(ids);
-				$('[name="assist_admin_names"]').val(names);
+
+
+		//选择协作人人弹窗	
+		$('.page-content').on('click', '[name="assist_admin_names"]', function () {
+			var ids = $('[name="assist_admin_ids"]').val(), names = $('[name="assist_admin_names"]').val(), assist_admin_id_array = [], assist_admin_name_array = [];
+			if (ids.length > 0) {
+				assist_admin_id_array = ids.split(',');
+				assist_admin_name_array.split(',');
 			}
+			employeepicker.init({
+				ids: assist_admin_id_array,
+				names: assist_admin_name_array,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				type: 1,
+				callback: function (ids, names, dids, departments) {
+					$('[name="assist_admin_ids"]').val(ids);
+					$('[name="assist_admin_names"]').val(names);
+				}
+			});
 		});
-	});
-		
-    //监听提交
-    form.on('submit(webform)', function (data) {
-		let callback = function (e) {
-			layer.msg(e.msg);
-			if (e.code == 0) {
-				layui.pageTable.reload();
-				setTimeout(function(){
-					gougu.close();
-				},500);
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					layui.pageTable.reload();
+					setTimeout(function () {
+						gougu.close();
+					}, 500);
+				}
 			}
-		}
-		gougu.post("/task/index/add",data.field,callback);
-		return false;
-    });
-}
+			gougu.post("/task/index/add", data.field, callback);
+			return false;
+		});
+	}
 
 </script>

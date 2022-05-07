@@ -9,11 +9,10 @@ namespace app\api\controller;
 
 use app\api\BaseController;
 use think\facade\Db;
-use think\facade\Session;
 
 class Index extends BaseController
 {
- //上传文件
+    //上传文件
     public function upload()
     {
         $param = get_params();
@@ -81,14 +80,14 @@ class Index extends BaseController
             $res['filepath'] = $data['filepath'];
             $res['name'] = $data['name'];
             $res['filename'] = $data['filename'];
-			$res['filesize'] = $data['filesize'];
+            $res['filesize'] = $data['filesize'];
             add_log('upload', $data['user_id'], $data);
             return to_assign(0, '上传成功', $res);
         } else {
             return to_assign(1, '上传失败，请重试');
         }
     }
-   //编辑器图片上传
+    //编辑器图片上传
     public function md_upload()
     {
         $param = get_params();
@@ -140,9 +139,9 @@ class Index extends BaseController
             $data['filename'] = $filename;
             $data['sha1'] = $sha1;
             $data['md5'] = $md5;
-            return json(['success'=>1,'message'=>'上传成功','url'=>$data['filepath']]);
+            return json(['success' => 1, 'message' => '上传成功', 'url' => $data['filepath']]);
         } else {
-            return json(['success'=>0,'message'=>'上传失败','url'=>'']);
+            return json(['success' => 0, 'message' => '上传失败', 'url' => '']);
         }
     }
     //清空缓存
@@ -160,30 +159,29 @@ class Index extends BaseController
         $data['trees'] = $list;
         return json($data);
     }
-	
+
     //获取部门树形节点列表2
     public function get_department_select()
     {
-		$keyword = get_params('keyword');
-		$selected = [];
-		if(!empty($keyword)){
-			$selected = explode(",",$keyword);
-		}		
+        $keyword = get_params('keyword');
+        $selected = [];
+        if (!empty($keyword)) {
+            $selected = explode(",", $keyword);
+        }
         $department = get_department();
-        $list = get_select_tree($department, 0,0,$selected);
-		return to_assign(0, '',$list);
+        $list = get_select_tree($department, 0, 0, $selected);
+        return to_assign(0, '', $list);
     }
 
     //获取子部门所有员工
     public function get_employee($did = 0)
     {
         $did = get_params('did');
-		if($did == 1){
-			$department = $did;
-		}
-		else{
-			$department = get_department_son($did);
-		}        
+        if ($did == 1) {
+            $department = $did;
+        } else {
+            $department = get_department_son($did);
+        }
         $employee = Db::name('admin')
             ->field('a.id,a.did,a.position_id,a.mobile,a.name,a.nickname,a.sex,a.status,a.thumb,a.username,d.title as department')
             ->alias('a')
@@ -194,7 +192,7 @@ class Index extends BaseController
             ->select();
         return to_assign(0, '', $employee);
     }
-	
+
     //获取部门所有员工
     public function get_employee_select()
     {
@@ -208,76 +206,72 @@ class Index extends BaseController
         $position = Db::name('Position')->field('id,title as name')->where([['status', '=', 1], ['id', '>', 1]])->select();
         return to_assign(0, '', $position);
     }
-	
+
     //获取工作类型列表
     public function get_work()
     {
         $cate = Db::name('WorkCate')->field('id,title')->where([['status', '=', 1]])->select();
         return to_assign(0, '', $cate);
     }
-	
-	
+
     //获取产品列表
     public function get_product()
     {
         $product = Db::name('Product')->field('id,name as title')->where([['delete_time', '=', 0]])->select();
         return to_assign(0, '', $product);
     }
-	
+
     //获取项目列表
-    public function get_project($pid=0)
+    public function get_project($pid = 0)
     {
-		$where = [];
-		$where[] = ['delete_time', '=', 0];
-		if($pid>0){
-			$where[] = ['product_id', '=', $pid];
-		}
+        $where = [];
+        $where[] = ['delete_time', '=', 0];
+        if ($pid > 0) {
+            $where[] = ['product_id', '=', $pid];
+        }
         $project = Db::name('Project')->field('id,name as title')->where($where)->select();
         return to_assign(0, '', $project);
     }
 
     //需求列表
-    public function get_requirements($pid=0)
+    public function get_release($pid = 0)
     {
-		$where = [];
-		$where[] = ['delete_time', '=', 0];
-		if($pid>0){
-			$where[] = ['project_id', '=', $pid];
-		}
-        $requirements = Db::name('Requirements')->field('id,title')->where($where)->select();
-        return to_assign(0, '', $requirements);
+        $where = [];
+        $where[] = ['delete_time', '=', 0];
+        if ($pid > 0) {
+            $where[] = ['project_id', '=', $pid];
+        }
+        $release = Db::name('Release')->field('id,title')->where($where)->select();
+        return to_assign(0, '', $release);
     }
-	
-	
+
     //文档列表
-    public function get_doc_list($kid = 0,$tree=0)
+    public function get_doc_list($kid = 0, $tree = 0)
     {
-		if($tree==2){
-			$list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid,'delete_time' => 0])
-					->field('id,pid as pId,title as name,type,link,knowledge_id,sort,read')
-					->order('sort asc,id asc')
-					->select();
-			return to_assign(0, '', $list);
-		}
-		else{
-			$list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid,'delete_time' => 0])
-					->field('id,pid,title,type,knowledge_id,sort,read')
-					->order('sort asc,id asc')
-					->select();
-			if($tree==1){
-				foreach($list as $k => &$v)
-				{
-					$v['title']=sub_str($v['title'],9);
-				}	
-				$tree = get_tree($list, 0, 4);
-				$data['trees'] = $tree;
-				return json($data);
-			}else{
-				return to_assign(0, '', $list);
-			}
-		}
+        if ($tree == 2) {
+            $list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid, 'delete_time' => 0])
+                ->field('id,pid as pId,title as name,type,link,knowledge_id,sort,read')
+                ->order('sort asc,id asc')
+                ->select();
+            return to_assign(0, '', $list);
+        } else {
+            $list = Db::name('knowledgeDoc')->where(['knowledge_id' => $kid, 'delete_time' => 0])
+                ->field('id,pid,title,type,knowledge_id,sort,read')
+                ->order('sort asc,id asc')
+                ->select();
+            if ($tree == 1) {
+                foreach ($list as $k => &$v) {
+                    $v['title'] = sub_str($v['title'], 9);
+                }
+                $tree = get_tree($list, 0, 4);
+                $data['trees'] = $tree;
+                return json($data);
+            } else {
+                return to_assign(0, '', $list);
+            }
+        }
     }
-	
+
     //删除消息附件
     public function del_message_interfix()
     {
@@ -285,8 +279,8 @@ class Index extends BaseController
         $detail = Db::name('MessageFileInterfix')->where('id', $id)->find();
         if ($detail['admin_id'] == $this->uid) {
             if (Db::name('MessageFileInterfix')->where('id', $id)->delete() !== false) {
-				$data = Db::name('MessageFileInterfix')->where('mid', $detail['mid'])->column('file_id');
-                return to_assign(0, "删除成功",$data);
+                $data = Db::name('MessageFileInterfix')->where('mid', $detail['mid'])->column('file_id');
+                return to_assign(0, "删除成功", $data);
             } else {
                 return to_assign(1, "删除失败");
             }
@@ -294,7 +288,7 @@ class Index extends BaseController
             return to_assign(1, "您没权限删除该消息附件");
         }
 
-    }	
+    }
 
     // 测试邮件发送
     public function email_test()

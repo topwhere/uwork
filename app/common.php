@@ -5,10 +5,10 @@
  * @link https://www.gougucms.com
  */
 // 应用公共文件,内置主要的数据处理方法
-use think\facade\Config;
-use think\facade\Request;
 use think\facade\Cache;
+use think\facade\Config;
 use think\facade\Db;
+use think\facade\Request;
 
 //设置缓存
 function set_cache($key, $value, $date = 86400)
@@ -50,7 +50,6 @@ function get_system_config($name, $key = '')
     }
 }
 
-
 //读取文件配置
 function get_config($key)
 {
@@ -66,7 +65,6 @@ function is_installed()
     }
     return $isInstalled;
 }
-
 
 //获取服务器信息
 function get_system_info($key)
@@ -85,30 +83,30 @@ function get_system_info($key)
 }
 
 //获取菜单
-function get_menus($pid = 0){
-	$admin = get_login_admin();
-	if (get_cache('menu' . $admin['id'])) {
-		$menu = get_cache('menu' . $admin['id']);
-	} else {
-		$adminGroup = Db::name('PositionGroup')->where(['pid' => $admin['position_id']])->column('group_id');
-		$adminMenu = Db::name('AdminGroup')->where('id', 'in', $adminGroup)->column('rules');
-		$adminMenus = [];
-		foreach ($adminMenu as $k => $v) {
-			$v = explode(',', $v);
-			$adminMenus = array_merge($adminMenus, $v);
-		}
-		$menu = Db::name('AdminRule')->field('id,pid,src,title,name,icon')->where(['menu' => 1,'status'=>1])->where('id', 'in', $adminMenus)->order('sort asc')->select()->toArray();
-		Cache::tag('adminMenu')->set('menu' . $admin['id'], $menu);
-	}
-	if($pid>0){
-		$menus = get_data_node($menu,$pid);
-		$list = list_to_tree($menus, 'id', 'pid', 'list', $pid);
-	}
-	else{
-		$menus = $menu;
-		$list = list_to_tree($menus);
-	}
-	return $list;
+function get_menus($pid = 0)
+{
+    $admin = get_login_admin();
+    if (get_cache('menu' . $admin['id'])) {
+        $menu = get_cache('menu' . $admin['id']);
+    } else {
+        $adminGroup = Db::name('PositionGroup')->where(['pid' => $admin['position_id']])->column('group_id');
+        $adminMenu = Db::name('AdminGroup')->where('id', 'in', $adminGroup)->column('rules');
+        $adminMenus = [];
+        foreach ($adminMenu as $k => $v) {
+            $v = explode(',', $v);
+            $adminMenus = array_merge($adminMenus, $v);
+        }
+        $menu = Db::name('AdminRule')->field('id,pid,src,title,name,icon')->where(['menu' => 1, 'status' => 1])->where('id', 'in', $adminMenus)->order('sort asc')->select()->toArray();
+        Cache::tag('adminMenu')->set('menu' . $admin['id'], $menu);
+    }
+    if ($pid > 0) {
+        $menus = get_data_node($menu, $pid);
+        $list = list_to_tree($menus, 'id', 'pid', 'list', $pid);
+    } else {
+        $menus = $menu;
+        $list = list_to_tree($menus);
+    }
+    return $list;
 }
 
 //获取url参数
@@ -142,13 +140,13 @@ function set_password($pwd, $salt)
 function get_admin($id)
 {
     $admin = Db::name('Admin')
-	->alias('a')
-	->field('a.*,d.title as department,p.title as position')
-	->leftJoin ('Department d ','d.id= a.did')
-	->leftJoin ('Position p ','p.id= a.position_id')
-	->where(['a.id' => $id])
-	->cache(true,60)
-	->find();
+        ->alias('a')
+        ->field('a.*,d.title as department,p.title as position')
+        ->leftJoin('Department d ', 'd.id= a.did')
+        ->leftJoin('Position p ', 'p.id= a.position_id')
+        ->where(['a.id' => $id])
+        ->cache(true, 60)
+        ->find();
     $admin['last_login_time'] = empty($admin['last_login_time']) ? '-' : date('Y-m-d H:i', $admin['last_login_time']);
     return $admin;
 }
@@ -209,21 +207,19 @@ function get_department_son($did = 0, $is_self = 1)
 }
 
 //读取员工所在部门的负责人
-function get_department_leader($uid=0,$pid=0)
+function get_department_leader($uid = 0, $pid = 0)
 {
-	$did = get_admin($uid)['did'];
-	if($pid==0){
-		$leader = Db::name('Department')->where(['id' => $did])->value('leader_id');
-	}
-	else{
-		$pdid = Db::name('Department')->where(['id' => $did])->value('pid');
-		if($pdid == 0){
-			$leader = 0;
-		}
-		else{
-			$leader = Db::name('Department')->where(['id' => $pdid])->value('leader_id');
-		}		
-	}    
+    $did = get_admin($uid)['did'];
+    if ($pid == 0) {
+        $leader = Db::name('Department')->where(['id' => $did])->value('leader_id');
+    } else {
+        $pdid = Db::name('Department')->where(['id' => $did])->value('pid');
+        if ($pdid == 0) {
+            $leader = 0;
+        } else {
+            $leader = Db::name('Department')->where(['id' => $pdid])->value('leader_id');
+        }
+    }
     return $leader;
 }
 
@@ -242,23 +238,41 @@ function get_product()
 }
 
 //读取项目
-function get_project()
+function get_project($uid=0)
 {
-    $project = Db::name('Project')->where(['delete_time' => 0])->select()->toArray();
+    if($uid > 0){
+        $map1 = [
+            ['admin_id', '=', $uid],
+        ];
+        $map2 = [
+            ['director_uid', '=', $uid],
+        ];
+        $map3 = [
+            ['', 'exp', Db::raw("FIND_IN_SET({$uid},team_admin_ids)")],
+        ];
+        $project = Db::name('Project')
+            ->where(function ($query) use ($map1, $map2, $map3) {
+                $query->where($map1)->whereor($map2)->whereor($map3);
+            })
+            ->where('delete_time', 0)->select()->toArray();
+    }
+    else{
+        $project = Db::name('Project')->where(['delete_time' => 0])->select()->toArray();
+    }
     return $project;
 }
 
-//读取需求
-function get_requirements($pid=0)
+//读取迭代版本
+function get_release()
 {
-    $requirements = Db::name('Requirements')->where(['delete_time' => 0,'Project_id' => $pid])->select()->toArray();
-    return $requirements;
+    $release = Db::name('Release')->where(['delete_time' => 0])->select()->toArray();
+    return $release;
 }
 
 //读取工作类型
 function get_work_cate()
 {
-    $cate = Db::name('WorkCate')->where('status',1)->select()->toArray();
+    $cate = Db::name('WorkCate')->where('status', 1)->select()->toArray();
     return $cate;
 }
 
@@ -292,22 +306,22 @@ function get_file($id)
  * @param int    $param_id 操作类型
  * @param array  $param 提交的参数
  */
-function add_log($type, $param_id = 0, $param = [],$old=[])
+function add_log($type, $param_id = 0, $param = [], $old = [])
 {
-	$action = '未知操作';
-	$type_action = get_config('log.type_action');
-	$data = [];
-	if($type_action[$type]){
-		$action = $type_action[$type];
-	}
+    $action = '未知操作';
+    $type_action = get_config('log.type_action');
+    $data = [];
+    if ($type_action[$type]) {
+        $action = $type_action[$type];
+    }
     if ($type == 'login') {
         $login_admin = Db::name('Admin')->where(array('id' => $param_id))->find();
     } else {
-		$session_admin = get_config('app.session_admin');
-		$login_admin = \think\facade\Session::get($session_admin);
+        $session_admin = get_config('app.session_admin');
+        $login_admin = \think\facade\Session::get($session_admin);
     }
-	$data['uid'] = $login_admin['id'];
-	$data['name'] = $login_admin['name'];
+    $data['uid'] = $login_admin['id'];
+    $data['name'] = $login_admin['name'];
     $data['type'] = $type;
     $data['action'] = $action;
     $data['param_id'] = $param_id;
@@ -317,37 +331,36 @@ function add_log($type, $param_id = 0, $param = [],$old=[])
     $data['function'] = strtolower(app('request')->action());
     $parameter = $data['module'] . '/' . $data['controller'] . '/' . $data['function'];
     $rule_menu = Db::name('AdminRule')->where(array('src' => $parameter))->find();
-	if($rule_menu){
-		$data['title'] = $rule_menu['title'];
-		$data['subject'] = $rule_menu['name'];
-	}
-	else{
-		$data['title'] = '';
-		$data['subject'] ='系统';
-	}
+    if ($rule_menu) {
+        $data['title'] = $rule_menu['title'];
+        $data['subject'] = $rule_menu['name'];
+    } else {
+        $data['title'] = '';
+        $data['subject'] = '系统';
+    }
     $content = $login_admin['name'] . '在' . date('Y-m-d H:i:s') . $data['action'] . '了' . $data['subject'];
     $data['content'] = $content;
     $data['ip'] = app('request')->ip();
     $data['create_time'] = time();
     Db::name('AdminLog')->strict(false)->field(true)->insert($data);
-	if(!empty($old)){
-		$log_data = [];
-		$key_array=['id','create_time','update_time','delete_time','over_time','md_content'];
-		foreach ($param as $key => $value) {
-			if(!in_array($key, $key_array)){
-				$log_data[] = array(
-					'module' => $data['module'],
-					'field' => $key,
-					$data['module'].'_id' => $param_id,
-					'admin_id' => $data['uid'],
-					'old_content' => $old[$key],
-					'new_content' => $value,
-					'create_time' => time()
-				);
-			}
-		}    
-		Db::name('Log')->strict(false)->field(true)->insertAll($log_data);
-	}
+    if (!empty($old)) {
+        $log_data = [];
+        $key_array = ['id', 'create_time', 'update_time', 'delete_time', 'over_time', 'md_content'];
+        foreach ($param as $key => $value) {
+            if (!in_array($key, $key_array)) {
+                $log_data[] = array(
+                    'module' => $data['module'],
+                    'field' => $key,
+                    $data['module'] . '_id' => $param_id,
+                    'admin_id' => $data['uid'],
+                    'old_content' => $old[$key],
+                    'new_content' => $value,
+                    'create_time' => time(),
+                );
+            }
+        }
+        Db::name('Log')->strict(false)->field(true)->insertAll($log_data);
+    }
 }
 
 /**
@@ -358,42 +371,48 @@ function add_log($type, $param_id = 0, $param = [],$old=[])
  * @param  $template 消息模板
  * @return
  */
-function sendMessage($user_id, $template, $data=[])
+function sendMessage($user_id, $template, $data = [])
 {
     $content = get_config('message.template')[$template]['template'];
-	foreach ($data as $key => $val) {
-		$content = str_replace('{' . $key . '}', $val, $content);
-	}
-	if(isSet($data['from_uid'])){
-		$content = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $content);
-	}
-	$content = str_replace('{date}', date('Y-m-d'), $content);
-		
-    if (!$user_id) return false;
-    if (!$content) return false;
+    foreach ($data as $key => $val) {
+        $content = str_replace('{' . $key . '}', $val, $content);
+    }
+    if (isset($data['from_uid'])) {
+        $content = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $content);
+    }
+    $content = str_replace('{date}', date('Y-m-d'), $content);
+
+    if (!$user_id) {
+        return false;
+    }
+
+    if (!$content) {
+        return false;
+    }
+
     if (!is_array($user_id)) {
         $users[] = $user_id;
     } else {
         $users = $user_id;
     }
     $users = array_unique(array_filter($users));
-	//组合要发的消息
-	$send_data = [];
-	foreach ($users as $key => $value) {
-		$send_data[] = array(
-			'to_uid' => $value,//接收人
-			'action_id' => $data['action_id'],
-			'title' => $data['title'],
-			'content' => $content,
-			'template' => $template,
-			'module_name' => strtolower(app('http')->getName()),
-			'controller_name' => strtolower(app('request')->controller()),
-			'action_name' => strtolower(app('request')->action()),
-			'send_time' => time(),
-			'create_time' => time()
-		);
-	}
-	$res = Db::name('Message')->strict(false)->field(true)->insertAll($send_data);
+    //组合要发的消息
+    $send_data = [];
+    foreach ($users as $key => $value) {
+        $send_data[] = array(
+            'to_uid' => $value, //接收人
+            'action_id' => $data['action_id'],
+            'title' => $data['title'],
+            'content' => $content,
+            'template' => $template,
+            'module_name' => strtolower(app('http')->getName()),
+            'controller_name' => strtolower(app('request')->controller()),
+            'action_name' => strtolower(app('request')->action()),
+            'send_time' => time(),
+            'create_time' => time(),
+        );
+    }
+    $res = Db::name('Message')->strict(false)->field(true)->insertAll($send_data);
     return $res;
 }
 
@@ -464,12 +483,11 @@ function plan_count($arrData)
     $documents = array();
     foreach ($arrData as $index => $value) {
         $planTime = date("Y-m-d", $value['end_time']);
-		if (empty($documents[$planTime])) {
-			$documents[$planTime]=1;
+        if (empty($documents[$planTime])) {
+            $documents[$planTime] = 1;
+        } else {
+            $documents[$planTime] += 1;
         }
-		else{
-			$documents[$planTime] += 1;
-		}
     }
     return $documents;
 }
@@ -480,13 +498,12 @@ function hour_count($arrData)
     $documents = array();
     foreach ($arrData as $index => $value) {
         $hourTime = date("Y-m-d", $value['start_time']);
-		if (empty($documents[$hourTime])) {
-			$documents[$hourTime]=$value['labor_time']+0;
+        if (empty($documents[$hourTime])) {
+            $documents[$hourTime] = $value['labor_time'] + 0;
+        } else {
+            $documents[$hourTime] += $value['labor_time'];
         }
-		else{
-			$documents[$hourTime] += $value['labor_time'];
-		}
-		$documents[$hourTime] = round($documents[$hourTime],2);
+        $documents[$hourTime] = round($documents[$hourTime], 2);
     }
     return $documents;
 }
@@ -497,12 +514,11 @@ function cross_count($arrData)
     $documents = array();
     foreach ($arrData as $index => $value) {
         $planTime = date("Y-m-d", $value['end_time']);
-		if (empty($documents[$planTime])) {
-			$documents[$planTime]=1;
+        if (empty($documents[$planTime])) {
+            $documents[$planTime] = 1;
+        } else {
+            $documents[$planTime] += 1;
         }
-		else{
-			$documents[$planTime] += 1;
-		}
     }
     return $documents;
 }
@@ -533,10 +549,11 @@ function get_desc_content($content, $count)
  * @param string $str 字符串
  * @return string     字符串
  */
-function trim_space($str=''){
-	$str = mb_ereg_replace('^(　| )+', '', $str);
-	$str = mb_ereg_replace('(　| )+$', '', $str);
-	return mb_ereg_replace('　　', "\n　　", $str);
+function trim_space($str = '')
+{
+    $str = mb_ereg_replace('^(　| )+', '', $str);
+    $str = mb_ereg_replace('(　| )+$', '', $str);
+    return mb_ereg_replace('　　', "\n　　", $str);
 }
 /**
  * PHP格式化字节大小
@@ -576,7 +593,10 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
         preg_match_all($re[$charset], $str, $match);
         $slice = join("", array_slice($match[0], $start, $length));
     }
-    if (utf8_strlen($str) < $length) $suffix = false;
+    if (utf8_strlen($str) < $length) {
+        $suffix = false;
+    }
+
     return $suffix ? $slice . '...' : $slice;
 }
 
@@ -590,13 +610,14 @@ function utf8_strlen($string = null)
  * PHP截取文字长度
  * @return string
  */
-function sub_str($str,$len=20){
-    $strlen=strlen($str)/3;#在编码utf8下计算字符串的长度，并把它交给变量$strlen
+function sub_str($str, $len = 20)
+{
+    $strlen = strlen($str) / 3; #在编码utf8下计算字符串的长度，并把它交给变量$strlen
     #echo $strlen;#输出字符串长度
-    if($strlen<$len){
+    if ($strlen < $len) {
         return $str;
-    }else{
-        return mb_substr($str,0,$len,"utf-8")."...";
+    } else {
+        return mb_substr($str, 0, $len, "utf-8") . "...";
     }
 }
 
@@ -656,14 +677,13 @@ function create_tree_list($pid, $arr, $group, &$tree = [])
     return $tree;
 }
 
-
 //递归排序，用于分类选择
-function set_recursion($result, $pid = 0, $level=-1)
+function set_recursion($result, $pid = 0, $level = -1)
 {
     /*记录排序后的类别数组*/
     static $list = array();
-    static $space = ['','├─','§§├─','§§§§├─','§§§§§§├─'];
-	$level++;
+    static $space = ['', '├─', '§§├─', '§§§§├─', '§§§§§§├─'];
+    $level++;
     foreach ($result as $k => $v) {
         if ($v['pid'] == $pid) {
             if ($pid != 0) {
@@ -671,58 +691,55 @@ function set_recursion($result, $pid = 0, $level=-1)
             }
             /*将该类别的数据放入list中*/
             $list[] = $v;
-            set_recursion($result, $v['id'],$level);
+            set_recursion($result, $v['id'], $level);
         }
     }
     return $list;
 }
 
-
 //递归返回树形菜单数据
-function get_tree($data, $pId ,$open=0,$deep=0)
+function get_tree($data, $pId, $open = 0, $deep = 0)
 {
-	$tree = [];		
-	foreach($data as $k => $v)
-	{
-		$v['checkArr']=array('type'=>0, 'isChecked'=>0);	
-		$v['spread']=true;	
-		$v['parentId']=$v['pid'];	
-		if($deep>=$open){
-			$v['spread']=false;	
-		}			
-		$v['name']=$v['title'];	
-		if($v['pid'] == $pId){ 
-		//父亲找到儿子
-		$deep++;
-		$v['children'] = get_tree($data, $v['id'],$open,$deep);
-		$tree[] = $v;
-		//unset($data[$k]);
-	   }
-	}
-	return array_values($tree);
+    $tree = [];
+    foreach ($data as $k => $v) {
+        $v['checkArr'] = array('type' => 0, 'isChecked' => 0);
+        $v['spread'] = true;
+        $v['parentId'] = $v['pid'];
+        if ($deep >= $open) {
+            $v['spread'] = false;
+        }
+        $v['name'] = $v['title'];
+        if ($v['pid'] == $pId) {
+            //父亲找到儿子
+            $deep++;
+            $v['children'] = get_tree($data, $v['id'], $open, $deep);
+            $tree[] = $v;
+            //unset($data[$k]);
+        }
+    }
+    return array_values($tree);
 }
 
 //递归返回树形菜单数据
-function get_select_tree($data, $pId ,$deep=0, $selected=[])
+function get_select_tree($data, $pId, $deep = 0, $selected = [])
 {
-	$tree = [];		
-	foreach($data as $k => $v)
-	{	
-		$vv=[];
-		$vv['name']=$v['title'];	
-		$vv['value']=$v['id'];
-		$vv['selected']='';
-		if(in_array($v['id'],$selected)){
-			$vv['selected'] = 'selected';
-		}
-		if($v['pid'] == $pId){ 
-		//父亲找到儿子
-		$deep++;
-		$vv['children'] = get_select_tree($data, $v['id'],$deep,$selected);
-		$tree[] = $vv;
-	   }
-	}
-	return array_values($tree);
+    $tree = [];
+    foreach ($data as $k => $v) {
+        $vv = [];
+        $vv['name'] = $v['title'];
+        $vv['value'] = $v['id'];
+        $vv['selected'] = '';
+        if (in_array($v['id'], $selected)) {
+            $vv['selected'] = 'selected';
+        }
+        if ($v['pid'] == $pId) {
+            //父亲找到儿子
+            $deep++;
+            $vv['children'] = get_select_tree($data, $v['id'], $deep, $selected);
+            $tree[] = $vv;
+        }
+    }
+    return array_values($tree);
 }
 
 /**
@@ -730,18 +747,19 @@ function get_select_tree($data, $pId ,$deep=0, $selected=[])
  * @param  $data 数据
  * @param  $pid 父节点id
  */
-function get_data_node($data=[],$pid=0){
-	$dep = [];		
-	foreach($data as $k => $v){			
-		if($v['pid'] == $pid){
-			$node=get_data_node($data, $v['id']);
-			array_push($dep,$v);
-			if(!empty($node)){					
-				$dep=array_merge($dep,$node);
-			}
-		}   	
-	}
-	return array_values($dep);
+function get_data_node($data = [], $pid = 0)
+{
+    $dep = [];
+    foreach ($data as $k => $v) {
+        if ($v['pid'] == $pid) {
+            $node = get_data_node($data, $v['id']);
+            array_push($dep, $v);
+            if (!empty($node)) {
+                $dep = array_merge($dep, $node);
+            }
+        }
+    }
+    return array_values($dep);
 }
 
 //访问按小时归档统计
@@ -773,7 +791,6 @@ function date_document($arrData)
     }
     return $documents;
 }
-
 
 /**
  * 返回json数据，用于接口
@@ -901,22 +918,24 @@ function sort_select($select = array(), $field, $order = 1)
 /**
  * fullcalendar日历控件方法1
  */
-function parseDateTime($string, $timeZone=null) {
-  $date = new DateTime(
-    $string,
-    $timeZone ? $timeZone : new DateTimeZone('UTC')
-  );
-  if ($timeZone) {
-    $date->setTimezone($timeZone);
-  }
-  return $date;
+function parseDateTime($string, $timeZone = null)
+{
+    $date = new DateTime(
+        $string,
+        $timeZone ? $timeZone : new DateTimeZone('UTC')
+    );
+    if ($timeZone) {
+        $date->setTimezone($timeZone);
+    }
+    return $date;
 }
 
 /**
  * fullcalendar日历控件方法2
  */
-function stripTime($datetime) {
-  return new DateTime($datetime->format('Y-m-d'));
+function stripTime($datetime)
+{
+    return new DateTime($datetime->format('Y-m-d'));
 }
 
 /**
@@ -935,10 +954,10 @@ function getTimeWeek($time, $i = 0)
  * @param string $format 默认'Y-m-d H:i'，x代表毫秒
  * @return string 完整的时间显示
  */
-function time_format($time = NULL, $format = 'Y-m-d H:i:s')
+function time_format($time = null, $format = 'Y-m-d H:i:s')
 {
     $usec = $time = $time === null ? '' : $time;
-    if (strpos($time, '.')!==false) {
+    if (strpos($time, '.') !== false) {
         list($usec, $sec) = explode(".", $time);
     } else {
         $sec = 0;
@@ -983,7 +1002,7 @@ function getTimeBySec($time)
         }
         return $t;
     } else {
-        return (bool)FALSE;
+        return (bool) false;
     }
 }
 
@@ -998,7 +1017,7 @@ function getmonthByYM($param)
         $days = '31';
     } elseif ($month == 2) {
         if ($year % 400 == 0 || ($year % 4 == 0 && $year % 100 !== 0)) {
-            //判断是否是闰年  
+            //判断是否是闰年
             $days = '29';
         } else {
             $days = '28';
@@ -1021,7 +1040,7 @@ function getmonthdays($time)
         $days = '31';
     } elseif ($month == 2) {
         if ($year % 400 == 0 || ($year % 4 == 0 && $year % 100 !== 0)) {
-            //判断是否是闰年  
+            //判断是否是闰年
             $days = '29';
         } else {
             $days = '28';
@@ -1040,7 +1059,10 @@ function getmonthdays($time)
  */
 function dateList($start, $end, $type = 0)
 {
-    if (!is_numeric($start) || !is_numeric($end) || ($end <= $start)) return '';
+    if (!is_numeric($start) || !is_numeric($end) || ($end <= $start)) {
+        return '';
+    }
+
     $i = 0;
     //从开始日期到结束日期的每日时间戳数组
     $d = array();
@@ -1086,7 +1108,10 @@ function getDateRange($timestamp)
  */
 function monthList($start, $end)
 {
-    if (!is_numeric($start) || !is_numeric($end) || ($end <= $start)) return '';
+    if (!is_numeric($start) || !is_numeric($end) || ($end <= $start)) {
+        return '';
+    }
+
     $start = date('Y-m', $start);
     $end = date('Y-m', $end);
     //转为时间戳
@@ -1279,7 +1304,7 @@ function advancedDate($type)
         $start_time = date('Y-m-d 00:00:00', strtotime(date('Y-m-d') . '+1 day'));
         $end_time = date('Y-m-d 23:59:59', strtotime(date('Y-m-d') . '+30 day'));
     }
-    return [$start_time,$end_time];
+    return [$start_time, $end_time];
 }
 
 /**
@@ -1288,22 +1313,22 @@ function advancedDate($type)
  * @param string $format 格式 【d：显示到天 i显示到分钟 s显示到秒】
  * @return string
  */
-function countDays($a,$b=0){
-	if($b==0){
-		$b=date("Y-m-d");
-	}	
-	$date_1=$a;
-	$date_2=$b;
-	$d1=strtotime($date_1);
-	$d2=strtotime($date_2);
-	$days=round(($d2-$d1)/3600/24);
-	if($days>0){
-		return $days;
-	}
-	else{
-		return 0;
-	}
-	
+function countDays($a, $b = 0)
+{
+    if ($b == 0) {
+        $b = date("Y-m-d");
+    }
+    $date_1 = $a;
+    $date_2 = $b;
+    $d1 = strtotime($date_1);
+    $d2 = strtotime($date_2);
+    $days = round(($d2 - $d1) / 3600 / 24);
+    if ($days > 0) {
+        return $days;
+    } else {
+        return 0;
+    }
+
 }
 
 /**
@@ -1374,13 +1399,12 @@ function time_trans($time, $format = 'd')
     return $show_time;
 }
 
-
 /**
  * 判断是否是手机浏览器
  *  @return bool
  */
 function is_mobile()
-{ 
+{
     if (isset($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], "wap")) {
         return true;
     } elseif (isset($_SERVER['HTTP_ACCEPT']) && strpos(strtoupper($_SERVER['HTTP_ACCEPT']), "VND.WAP.WML")) {
@@ -1516,7 +1540,7 @@ function download($file, $name = '', $del = false)
 
     // 导出数据时  csv office Excel 需要添加bom头
     if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
-        echo "\xEF\xBB\xBF";    // UTF-8 BOM
+        echo "\xEF\xBB\xBF"; // UTF-8 BOM
     }
 
     $fileCount = 0;
@@ -1529,7 +1553,10 @@ function download($file, $name = '', $del = false)
     fclose($fp);
 
     // 删除
-    if ($del) @unlink($file);
+    if ($del) {
+        @unlink($file);
+    }
+
     die();
 }
 
@@ -1567,7 +1594,6 @@ function exportexcel($data = array(), $title = array(), $filename = 'report')
     }
 }
 
-
 //根据数据库查询出来数组获取某个字段拼接字符串
 function getFieldArray($array = array(), $field = '')
 {
@@ -1595,8 +1621,8 @@ function curl_get($url)
     curl_setopt($ch, CURLOPT_URL, $url);
     //设置获取的信息以文件流的形式返回，而不是直接输出。
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // https请求 不验证hosts 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // https请求 不验证证书
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // https请求 不验证hosts
     //执行命令
     $output = curl_exec($ch);
     curl_close($ch); //释放curl句柄
@@ -1624,7 +1650,7 @@ function curl_post($url = '', $post = array())
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
     $res = curl_exec($curl); // 执行操作
     if (curl_errno($curl)) {
-        echo 'Errno' . curl_error($curl);//捕抓异常
+        echo 'Errno' . curl_error($curl); //捕抓异常
     }
     curl_close($curl); // 关闭CURL会话
     return $res; // 返回数据，json格式

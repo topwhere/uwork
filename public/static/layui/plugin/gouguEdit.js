@@ -180,7 +180,7 @@ layui.define(['employeepicker'], function (exports) {
 				area: ['1080px', '580px'],
 				content: '<div style="padding-right:3px"><div id="editorBox" style="margin:0 auto!important;"></div></div>',
 				success: function () {
-					gougu.editor('editorBox',real_txt,520,true);
+					gougu.editor('editorBox', real_txt, 520, true);
 				},
 				btnAlign: 'c',
 				btn: ['提交保存'],

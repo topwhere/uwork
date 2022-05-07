@@ -41,7 +41,7 @@
 						<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="is_open"></i>
 					</td>
 				</tr>
-				<tr>	
+				<tr>
 					<td class="layui-td-gray">参与评审人</td>
 					<td colspan="5" class="hover-{$role_edit}"><span id="check_admin_ids_{$detail.id}"
 							data-val="{$detail.check_admin_ids}">{$detail.check_admin_names}</span><i
@@ -144,7 +144,8 @@
 									<td>{$vo.desc}</td>
 									<td style="text-align: center;">{$vo.admin_name}</td>
 									<td style="text-align: center;">
-										<div class="layui-btn-group"><span class="layui-btn layui-btn-xs link-edit" data-id="{$vo.id}" data-url="{$vo.url}" data-desc="{$vo.desc}">编辑</span>
+										<div class="layui-btn-group"><span class="layui-btn layui-btn-xs link-edit"
+												data-id="{$vo.id}" data-url="{$vo.url}" data-desc="{$vo.desc}">编辑</span>
 											<span class="layui-btn layui-btn-xs layui-btn-danger link-delete"
 												data-uid="{$vo.admin_id}" data-id="{$vo.id}">删除</span>
 										</div>
@@ -166,7 +167,7 @@
 						<tbody id="linkList">
 							{volist name="link_array" id="vo"}
 							<tr>
-								<td>{$vo.url}</td>
+								<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
 								<td>{$vo.desc}</td>
 								<td style="text-align: center;">{$vo.admin_name}</td>
 							</tr>
@@ -286,13 +287,13 @@
 
 
 		$('#linkBtn').on('click', function () {
-			comment.addLink(0,detail_id, 'product','','');
+			comment.addLink(0, detail_id, 'product', '', '');
 		})
 		$('#linkList').on('click', '.link-edit', function () {
 			let id = $(this).data('id');
 			let url = $(this).data('url');
 			let desc = $(this).data('desc');
-			comment.addLink(id,detail_id, 'product',url,desc);
+			comment.addLink(id, detail_id, 'product', url, desc);
 		})
 		$('#linkList').on('click', '.link-delete', function () {
 			let id = $(this).data('id');

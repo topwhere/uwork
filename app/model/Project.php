@@ -1,46 +1,36 @@
 <?php
 namespace app\model;
-use think\Model;
+
 use think\facade\Db;
+use think\Model;
+
 class Project extends Model
 {
-	const ZERO = 0;
-	const ONE = 1;
-	const TWO = 2;
-	
-	public static $Status = [
-		self::ZERO => '关闭',
-		self::ONE => '开启',
-		self::TWO => '暂停'
-	];
-	//详情
+    const ZERO = 0;
+    const ONE = 1;
+    const TWO = 2;
+    const THREE = 3;
+    const FORE = 4;
+
+    public static $Status = [
+        self::ZERO => '未设置',
+        self::ONE => '未开始',
+        self::TWO => '进行中',
+        self::THREE => '已完成',
+        self::FORE => '已关闭',
+    ];
+    //详情
     public function detail($id)
     {
         $detail = Db::name('Project')->where(['id' => $id])->find();
         if (!empty($detail)) {
-			$detail['product_name'] = Db::name('Product')->where(['id' => $detail['product_id']])->value('name');
-			$detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
-			$detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
-			$team_admin_names = Db::name('Admin')->where('id','in',$detail['team_admin_ids'])->column('name');
-			$detail['team_admin_names'] = implode(',',$team_admin_names);
-			$detail['status_name'] = self::$Status[(int)$detail['status']];
-			$detail['times'] = time_trans($detail['create_time']);			
-			$detail['logs'] = Db::name('Log')->where(['module' => 'project','project_id' => $detail['id']])->count();
-			$detail['comments'] = Db::name('Comment')->where(['module' => 2,'delete_time'=>0,'topic_id' => $detail['id']])->count();
-			$detail['requirements'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->count();
-			$detail['requirementfixeds'] = Db::name('Requirements')->where(['delete_time'=>0,'project_id' => $detail['id']])->where([['flow_status','>',7]])->count();
-			$map1 =[];
-			$map1[] = ['delete_time','=',0];
-			$map1[] = ['project_id','=',$detail['id']];
-			$map2[] = $map1;
-			$map1[] = ['type','=',1];
-			$detail['tasks'] = Db::name('Task')->where($map1)->count();
-			$map1[] = ['flow_status','>',2];
-			$detail['taskfixeds'] = Db::name('Task')->where($map1)->count();
-			$map2[] = ['type','=',2];
-			$detail['bugs'] = Db::name('Task')->where($map2)->count();
-			$map2[] = ['flow_status','>',2];
-			$detail['bugfixeds'] = Db::name('Task')->where($map2)->count();
+            $detail['product_name'] = Db::name('Product')->where(['id' => $detail['product_id']])->value('name');
+            $detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
+            $detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
+            $team_admin_names = Db::name('Admin')->where('id', 'in', $detail['team_admin_ids'])->column('name');
+            $detail['team_admin_names'] = implode(',', $team_admin_names);
+            $detail['status_name'] = self::$Status[(int) $detail['status']];
+            $detail['times'] = time_trans($detail['create_time']);
         }
         return $detail;
     }

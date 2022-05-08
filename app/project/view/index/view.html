@@ -3,16 +3,28 @@
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <style>
-.layui-card-body dl{width: 50%; float:left; display: block;}
-.layui-card-tips{; color:#999;}
-.layui-card-value{padding:4px 0 16px; font-size: 20px; color:#1E9FFF;}
+	.layui-card-body dl {
+		width: 50%;
+		float: left;
+		display: block;
+	}
+
+	.layui-card-tips {
+		color: #999;
+	}
+
+	.layui-card-value {
+		padding: 4px 0 16px;
+		font-size: 20px;
+		color: #1E9FFF;
+	}
 </style>
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a href="/project/index/index">项目中心</a>
-  <a><cite>项目详情</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="/project/index/index">项目中心</a>
+	<a><cite>项目详情</cite></a>
 </span>
 {/block}
 <!-- 主体 -->
@@ -24,9 +36,17 @@
 		<div class="layui-row layui-col-space12">
 			<div class="layui-col-xs12">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>{$detail.name}</h5></div>
+					<div class="layui-card-header">
+						<h5>{$detail.name}</h5>
+					</div>
 					<div class="layui-card-body">
-						<p class="py-1"><span class="font-gray">项目编号：</span>M{$detail.id}<span class="font-gray" style="margin-left:36px">创建人：</span>{$detail.admin_name}<span class="font-gray"  style="margin-left:36px">负责人：</span>{$detail.director_name}<span class="font-gray" style="margin-left:36px">计划完成周期：</span>{$detail.start_time| date='Y-m-d'} &nbsp;&nbsp;至&nbsp;&nbsp; <span>{$detail.end_time| date='Y-m-d'}<span class="font-gray" style="margin-left:36px">项目状态：</span><span class="color-status-{$detail.status}">{$detail.status_name}</span></p>
+						<p class="py-1"><span class="font-gray">项目编号：</span>M{$detail.id}<span class="font-gray"
+								style="margin-left:36px">创建人：</span>{$detail.admin_name}<span class="font-gray"
+								style="margin-left:36px">负责人：</span>{$detail.director_name}<span class="font-gray"
+								style="margin-left:36px">计划完成周期：</span>{$detail.start_time| date='Y-m-d'}
+							&nbsp;&nbsp;至&nbsp;&nbsp; <span>{$detail.end_time| date='Y-m-d'}<span class="font-gray"
+									style="margin-left:36px">项目状态：</span><span
+									class="color-status-{$detail.status}">{$detail.status_name}</span></p>
 						<p class="py-1"><span class="font-gray">项目成员：</span>{$detail.team_admin_names}</p>
 						<p class="py-1"><span class="font-gray">项目简介：</span>{$detail.content}</p>
 					</div>
@@ -34,55 +54,61 @@
 			</div>
 			<div class="layui-col-xs6 layui-col-md3">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>项目概况</h5></div>
+					<div class="layui-card-header">
+						<h5>项目概况</h5>
+					</div>
 					<div class="layui-card-body">
 						<div style="width:100%; height:200px;">
 							<dl>
-								<dt class="layui-card-tips">项目需求</dt>
-								<dd class="layui-card-value">{$detail.requirementfixeds} / {$detail.requirements}</dd>
+								<dt class="layui-card-tips">需求任务</dt>
+								<dd class="layui-card-value">{$detail.tasks_a_unfinish} / {$detail.tasks_a_total}</dd>
 							</dl>
 							<dl>
-								<dt class="layui-card-tips">项目任务</dt>
-								<dd class="layui-card-value">{$detail.taskfixeds} / {$detail.tasks}</dd>
+								<dt class="layui-card-tips">设计任务</dt>
+								<dd class="layui-card-value">{$detail.tasks_b_unfinish} / {$detail.tasks_b_total}</dd>
 							</dl>
 							<dl>
-								<dt class="layui-card-tips">项目问题</dt>
-								<dd class="layui-card-value">{$detail.bugfixeds} / {$detail.bugs}</dd>
+								<dt class="layui-card-tips">研发任务</dt>
+								<dd class="layui-card-value">{$detail.tasks_c_unfinish} / {$detail.tasks_c_total}</dd>
 							</dl>
 							<dl>
-								<dt class="layui-card-tips">任务工时</dt>
-								<dd class="layui-card-value">{$detail.hours} / {$detail.plan_hours}</dd>
+								<dt class="layui-card-tips">问题缺陷</dt>
+								<dd class="layui-card-value">{$detail.tasks_d_unfinish} / {$detail.tasks_d_total}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">工作记录</dt>
 								<dd class="layui-card-value">{$detail.schedules}</dd>
 							</dl>
 							<dl>
-								<dt class="layui-card-tips">项目文档</dt>
-								<dd class="layui-card-value">{$detail.documents}</dd>
+								<dt class="layui-card-tips">项目工时</dt>
+								<dd class="layui-card-value">{$detail.hours} / {$detail.plan_hours}</dd>
 							</dl>
-						</div>						
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-xs6 layui-col-md4">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>项目进度</h5></div>
+					<div class="layui-card-header">
+						<h5>项目进度</h5>
+					</div>
 					<div class="layui-card-body">
 						<div class="layui-row">
-						  <div class="layui-col-md6">
-							<div id="progress" class="data-none" style="width:100%; height:200px;"></div>
-						  </div>
-						  <div class="layui-col-md6">
-							<div id="delay" class="data-none" style="width:100%; height:200px;"></div>
-						  </div>
-						</div>						
+							<div class="layui-col-md6">
+								<div id="progress" class="data-none" style="width:100%; height:200px;"></div>
+							</div>
+							<div class="layui-col-md6">
+								<div id="delay" class="data-none" style="width:100%; height:200px;"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-xs6 layui-col-md5">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>项目缺陷</h5></div>
+					<div class="layui-card-header">
+						<h5>项目缺陷</h5>
+					</div>
 					<div class="layui-card-body">
 						<div id="rose" class="data-none" style="width:100%; height:200px;"></div>
 					</div>
@@ -90,15 +116,21 @@
 			</div>
 			<div class="layui-col-xs6 layui-col-md12">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>项目燃尽图</h5></div>
+					<div class="layui-card-header">
+						<h5>项目燃尽图</h5>
+					</div>
 					<div class="layui-card-body">
-						<div id="cross" class="data-none" style="width:100%; height:360px;" data-tips="任务数：{$detail.task_total}，已完成：{$detail.task_finish}，未完成：{$detail.task_unfinish}"></div>
+						<div id="cross" class="data-none" style="width:100%; height:360px;"
+							data-tips="任务数：{$detail.tasks}，已完成：{$detail.tasks_finish}，未完成：{$detail.tasks_unfinish}">
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-xs6 layui-col-md6">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>任务分配情况</h5></div>
+					<div class="layui-card-header">
+						<h5>任务分配情况</h5>
+					</div>
 					<div class="layui-card-body">
 						<div id="plan" class="data-none" style="width:100%; height:150px;"></div>
 					</div>
@@ -106,7 +138,9 @@
 			</div>
 			<div class="layui-col-xs6 layui-col-md6">
 				<div class="layui-card">
-					<div class="layui-card-header"><h5>工时登记情况</h5></div>
+					<div class="layui-card-header">
+						<h5>工时登记情况</h5>
+					</div>
 					<div class="layui-card-body">
 						<div id="work" class="data-none" style="width:100%; height:150px;"></div>
 					</div>
@@ -128,585 +162,586 @@
 {block name="script"}
 <script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
 <script>
-var project_id = '{$detail.id}';
-var project_start_time = '{$detail.start_time| date="Y-m-d"}';
+	var project_id = '{$detail.id}';
+	var project_start_time = '{$detail.start_time| date="Y-m-d"}';
 
-var chartProgress = document.getElementById('progress');
-var progressChart = echarts.init(chartProgress);
-var optionA;
-optionA = {
-	backgroundColor: "#ffffff",
-	title: {
-      text:'67.45%',//主标题文本
-      subtext:'任务完成率',//副标题文本
-      x: 'center',
-      y: '39%',
-      textStyle:{
-        fontWeight: 'normal',
-        fontSize: 18,
-        color:'#FF974C',
-        align:'center'
-      },
-      subtextStyle:{
-        fontSize: 12,
-        color:'#6c7a89',
-      }
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: '{b}：<br/><strong>{c}</strong>',
-      show: true,
-    },
-	series: [
-    {
-      type: 'pie',
-      radius: ['60%', '80%'],
-	  center: ['50%', '50%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false
-      },
-      data: [
-        { value: 1048, name: '待处理' },
-        { value: 735, name: '已完成' }
-      ]
-    }
-  ]
-};
-
-var chartDelay = document.getElementById('delay');
-var delayChart = echarts.init(chartDelay);
-var optionB;
-optionB = {
-	backgroundColor: "#ffffff",
-	title: {
-      text:'40.25%',//主标题文本
-      subtext:'任务延迟率',//副标题文本
-      x: 'center',
-      y: '39%',
-      textStyle:{
-        fontWeight: 'normal',
-        fontSize: 18,
-        color:'#FF974C',
-        align:'center',
-        marginLeft:'-10px'
-      },
-      subtextStyle:{
-        fontSize: 12,
-        color:'#6c7a89',
-      }
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: '{b}：<br/><strong>{c}</strong>',
-      show: true,
-    },
-	series: [
-    {
-      type: 'pie',
-      radius: ['60%', '80%'],
-	  center: ['50%', '50%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false
-      },
-      data: [{
-			value: 1048,
-			name: '延误',
-			itemStyle: {
-              color: "#ED6666",
-            }
-		},
-        { 
-			value: 735, 
-			name: '按时完成',
-			itemStyle: {
-              color: "#91CC75",
-            }
-		}
-      ]
-    }
-  ]
-};
-
-
-var chartRose = document.getElementById('rose');
-var roseChart = echarts.init(chartRose);
-var optionC;
-
-optionC = {
-  backgroundColor: "#ffffff",
-  legend: {
-    orient: 'vertical',
-    left: 'left'
-  },
-  tooltip: {
-    trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)'
-  },
-  series: [
-    {
-      name: 'Bugfixed',
-      type: 'pie',
-      radius: ['25%', '75%'],
-      center: ['60%', '50%'],
-      data: [
-        { value: 40, name: '待解决'},
-        { value: 38, name: '进行中' },
-        { value: 32, name: '已解决' },
-        { value: 28, name: '不解决' },
-        { value: 26, name: '已关闭' }
-      ]
-    }
-  ]
-};
-
-
-var chartCross = document.getElementById('cross');
-var crossChart = echarts.init(chartCross);
-var optionD;
-var tips = $('#cross').data('tips');
-optionD = {
-  backgroundColor: "#ffffff",
-  color: ['#8C92A4','#2C7EF8'],
-  title: {
-    text: '',
-	subtext: tips,
-	top:-10,
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-      label: {
-        backgroundColor: '#6a7985'
-      }
-    }
-  },
-  legend: {
-    data: ['任务计划剩余', '任务实际剩余']
-  },
-  grid: {
-	top:36,
-    left: 8,
-    right: 36,
-    bottom: 0,
-    containLabel: true
-  },
-  xAxis: [
-    {
-		type: 'category',
-		boundaryGap: false,
-		splitLine: {
-		  show:true,
-		  lineStyle: {
-			type: 'dashed'
-		  }
-		}
-    }
-  ],
-  yAxis: [{
-		axisLine: {
-			show: true
-		},
-		boundaryGap: false,
-		splitLine: {
-			show:true,
-			lineStyle: {
-				type: 'dashed'
+	var chartProgress = document.getElementById('progress');
+	var progressChart = echarts.init(chartProgress);
+	var optionA;
+	optionA = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '67.45%',//主标题文本
+			subtext: '任务完成率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
 			}
 		},
-		type: 'value'
-    }
-  ]
-};
-
-
-var chartPlan = document.getElementById('plan');
-var planChart = echarts.init(chartPlan);
-var optionE;
-
-optionE = {
-    backgroundColor: "#ffffff",
-	title: {
-		top: 0,
-		left: 0,
-		text: ''
-	},
-	tooltip: {
-		padding: 6,
-		formatter: function (obj) {
-			var value = obj.value;
-			var tips='<div style="font-size: 12px;">' + value[0] + '<br>';
-				tips+='共 '+value[1] + ' 个工作任务';
-			tips+='</div>';
-			return tips;
-		}
-	},
-	visualMap: {
-		min: 0,
-		max: 10,
-		show: false,
-		inRange: {
-			color: ['#fafafa','#20BF3F']
-		}
-	},
-	calendar: {
-		top: 24,
-		left: 36,
-		right: 4,
-		cellSize: ['auto', 16],
-		range: ['2022-03-01','2022-08-01'],
-		splitLine: {
-			lineStyle: {
-				color: '#333',
-				type: 'dashed',
-			}
-		},
-		itemStyle: {
-			borderWidth: 0.5
-		},
-		yearLabel: {show: false},
-		monthLabel: {
-			nameMap: 'cn',
-			fontSize: 12
-		},
-		dayLabel: {
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
 			show: true,
-			formatter: '{start}  1st',
-			fontWeight: 'lighter',
-			nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-			fontSize: 12
-		}
-	},
-	series: {
-		type: 'heatmap',
-		coordinateSystem: 'calendar',
-		data: []
-	}
-};
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
+					show: false
+				},
+				data: [
+					{ value: 1048, name: '待处理' },
+					{ value: 735, name: '已完成' }
+				]
+			}
+		]
+	};
 
-
-var chartWork = document.getElementById('work');
-var workChart = echarts.init(chartWork);
-var optionF;
-
-optionF = {
-	backgroundColor: "#ffffff",
-	title: {
-		top: 0,
-		left: 0,
-		text: ''
-	},
-	tooltip: {
-		padding: 6,
-		formatter: function (obj) {
-			var value = obj.value;
-			var tips='<div style="font-size: 12px;">' + value[0] + '<br>';
-				tips+='共 '+value[1] + ' 个工时';
-			tips+='</div>';
-			return tips;
-		}
-	},
-	visualMap: {
-		min: 0,
-		max: 10,
-		show: false,
-		inRange: {
-			color: ['#fafafa','#359AEF']
-		}
-	},
-	calendar: {
-		top: 24,
-		left: 36,
-		right: 4,
-		cellSize: ['auto', 16],
-		range: ['2022-03-01','2022-08-01'],
-		splitLine: {
-			lineStyle: {
-				color: '#333',
-				type: 'dashed',
+	var chartDelay = document.getElementById('delay');
+	var delayChart = echarts.init(chartDelay);
+	var optionB;
+	optionB = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '40.25%',//主标题文本
+			subtext: '任务延迟率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center',
+				marginLeft: '-10px'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
 			}
 		},
-		itemStyle: {
-			borderWidth: 0.5
-		},
-		yearLabel: {show: false},
-		monthLabel: {
-			nameMap: 'cn',
-			fontSize: 12
-		},
-		dayLabel: {
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
 			show: true,
-			formatter: '{start}  1st',
-			fontWeight: 'lighter',
-			nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-			fontSize: 12
-		}
-	},
-	series: {
-		type: 'heatmap',
-		coordinateSystem: 'calendar',
-		data: []
-	}
-};
-
-
-function getCalendarData(arr) {	
-	var rangeArray = [];
-    for (var property in arr){
-		rangeArray.push(property);
-	}
-	var rangeArray = [rangeArray[0],rangeArray[rangeArray.length-1]];
-	var start = +echarts.number.parseDate(rangeArray[0]);
-	var end = +echarts.number.parseDate(rangeArray[1]);
-	if(start+7776000000>end){
-		end = start+8640000000;
-		rangeArray[1] = echarts.format.formatTime('yyyy-MM-dd', end);
-	}
-	var dayTime = 3600 * 24 * 1000;
-	var data = [];
-	for (var time = start; time < end; time += dayTime) {
-		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
-		if(arr[this_date]){
-			data.push([this_date,arr[this_date]]);
-		}else{
-			data.push([this_date,0]);
-		}
-	}
-	var res={'range':rangeArray,'data':data};
-	return res;
-}
-
-//燃尽图统计
-function cross_count(arr,arr2){
-	var planArray = [],doArray=[];
-	var today = new Date();
-	var todayStr=today.getFullYear() +'-'+ (today.getMonth()+1) +'-'+ today.getDate();
-    for (var a in arr){
-		planArray.push(a);
-	}
-	var rangeArray = [planArray[0],planArray[planArray.length-1]];
-	if(arr2 instanceof Array == false){
-		for (var b in arr2){
-			doArray.push(b);
-		}
-		if((+echarts.number.parseDate(doArray[doArray.length-1])) < (+echarts.number.parseDate(todayStr))){
-			doArray.push(todayStr);
-		}
-		if((+echarts.number.parseDate(planArray[planArray.length-1]))<(+echarts.number.parseDate(doArray[doArray.length-1]))){
-			rangeArray[1] = doArray[doArray.length-1];
-		}
-	}
-	var start = +echarts.number.parseDate(rangeArray[0]);
-	var end = +echarts.number.parseDate(rangeArray[1]);
-	var todayInt = +echarts.number.parseDate(todayStr);
-	var dayTime = 3600 * 24 * 1000;
-	var xArray=[],yArray=[],yArray2=[],done=0,doneArray=[];
-	for (var time = start; time <= end; time += dayTime) {
-		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
-		xArray.push(this_date);
-		var plan = cross_recursion(time,end,arr);
-		yArray.push(plan);
-		
-		if(arr2[this_date]){
-			done+=arr2[this_date];	
-		}
-		if(time<=todayInt){
-			doneArray.push(done);
-		}		
-	}
-	for(var i=0;i<doneArray.length;i++){
-		yArray2.push(yArray[0] - doneArray[i]);
-	}
-	var start_time = +echarts.number.parseDate(project_start_time),tem_x_array=[],tem_y_array=[];
-	if(start_time < start){
-		for (var tem_time = start_time; tem_time < start; tem_time += dayTime) {
-			var this_date = echarts.format.formatTime('yyyy-MM-dd', tem_time);
-			tem_x_array.push(this_date);
-			tem_y_array.push(yArray[0]);	
-		}
-		xArray= tem_x_array.concat(xArray);
-		yArray= tem_y_array.concat(yArray);
-		yArray2= tem_y_array.concat(yArray2);
-	}
-	return {'x':xArray,'y':yArray,'y2':yArray2};
-}
-
-function cross_recursion(start,end,arr){
-	var count = 0;
-	var dayTime = 3600 * 24 * 1000;
-	for (var time = start; time <= end; time += dayTime) {
-		var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
-		if(arr[this_date]){
-			count+=arr[this_date];
-		}		
-	}
-	return count;
-}
-	
-function init(layui) {
-	var gougu = layui.gougu;
-
-	$('#subMenu').on('click','[data-event="subpage"]',function(){
-		let page = $(this).data('page');
-		$('#subMenu').find('li').removeClass('active');
-		$(this).addClass('active');
-		gougu.page(page);
-	})
-	
-	$('#subMenu').on('click','[data-event="open"]',function(){
-		let url = $(this).data('url');
-		gougu.open(url);
-	})
-
-	let callback=function(res){	
-		if(res.data.date_tasks instanceof Array == false){			
-			optionA.title.text = res.data.task_pie.ok_lv+'%';
-			optionA.series = [
-				{
-				  type: 'pie',
-				  radius: ['60%', '80%'],
-				  center: ['50%', '50%'],
-				  avoidLabelOverlap: false,
-				  label: {
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
 					show: false
-				  },
-				  data: [
-					{ value: res.data.task_pie.count-res.data.task_pie.count_ok, name: '待处理' },
-					{ value: res.data.task_pie.count_ok, name: '已完成' }
-				  ]
-				}
-			];
-			optionA && progressChart.setOption(optionA);
-			
-			optionB.title.text = res.data.task_pie.delay_lv+'%';
-			optionB.series = [
-				{
-				  type: 'pie',
-				  radius: ['60%', '80%'],
-				  center: ['50%', '50%'],
-				  avoidLabelOverlap: false,
-				  label: {
-					show: false
-				  },
-				  data: [{
-						value: res.data.task_pie.delay,
-						name: '延误',
-						itemStyle: {
-						  color: "#ED6666",
-						}
-					},
-					{ 
-						value: res.data.task_pie.count-res.data.task_pie.delay, 
-						name: '按时完成',
-						itemStyle: {
-						  color: "#91CC75",
-						}
+				},
+				data: [{
+					value: 1048,
+					name: '延误',
+					itemStyle: {
+						color: "#ED6666",
 					}
-				  ]
-				}
-			];
-			optionB && delayChart.setOption(optionB);
-			
-			optionC.series = [
+				},
 				{
-				  name: 'Bugfixed',
-				  type: 'pie',
-				  radius: ['25%', '75%'],
-				  center: ['60%', '50%'],
-				  data: [
-					{ value: res.data.bug_status.status_a, name: '待解决'},
-					{ value: res.data.bug_status.status_b, name: '进行中' },
-					{ value: res.data.bug_status.status_c, name: '已解决' },
-					{ value: res.data.bug_status.status_d, name: '不解决' },
-					{ value: res.data.bug_status.status_e, name: '已关闭' }
-				  ]
+					value: 735,
+					name: '按时完成',
+					itemStyle: {
+						color: "#91CC75",
+					}
 				}
-			]
-			optionC && roseChart.setOption(optionC);
-		
-		
-			var dataD = cross_count(res.data.date_tasks,res.data.date_tasks_ok);
-			optionD.xAxis = {
+				]
+			}
+		]
+	};
+
+
+	var chartRose = document.getElementById('rose');
+	var roseChart = echarts.init(chartRose);
+	var optionC;
+
+	optionC = {
+		backgroundColor: "#ffffff",
+		legend: {
+			orient: 'vertical',
+			left: 'left'
+		},
+		tooltip: {
+			trigger: 'item',
+			formatter: '{a} <br/>{b} : {c} ({d}%)'
+		},
+		series: [
+			{
+				name: 'Bugfixed',
+				type: 'pie',
+				radius: ['25%', '75%'],
+				center: ['60%', '50%'],
+				data: [
+					{ value: 40, name: '待解决' },
+					{ value: 38, name: '进行中' },
+					{ value: 32, name: '已解决' },
+					{ value: 28, name: '不解决' },
+					{ value: 26, name: '已关闭' }
+				]
+			}
+		]
+	};
+
+
+	var chartCross = document.getElementById('cross');
+	var crossChart = echarts.init(chartCross);
+	var optionD;
+	var tips = $('#cross').data('tips');
+	optionD = {
+		backgroundColor: "#ffffff",
+		color: ['#8C92A4', '#2C7EF8'],
+		title: {
+			text: '',
+			subtext: tips,
+			top: -10,
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#6a7985'
+				}
+			}
+		},
+		legend: {
+			data: ['任务计划剩余', '任务实际剩余']
+		},
+		grid: {
+			top: 36,
+			left: 8,
+			right: 36,
+			bottom: 0,
+			containLabel: true
+		},
+		xAxis: [
+			{
 				type: 'category',
 				boundaryGap: false,
 				splitLine: {
-					show:true,
+					show: true,
 					lineStyle: {
 						type: 'dashed'
 					}
-				},
-				data: dataD.x,
-				axisLabel : {
-					rotate: 30,
-					formatter: function (value, index) {
-						return value.slice(5);
+				}
+			}
+		],
+		yAxis: [{
+			axisLine: {
+				show: true
+			},
+			boundaryGap: false,
+			splitLine: {
+				show: true,
+				lineStyle: {
+					type: 'dashed'
+				}
+			},
+			type: 'value'
+		}
+		]
+	};
+
+
+	var chartPlan = document.getElementById('plan');
+	var planChart = echarts.init(chartPlan);
+	var optionE;
+
+	optionE = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工作任务';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#20BF3F']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	var chartWork = document.getElementById('work');
+	var workChart = echarts.init(chartWork);
+	var optionF;
+
+	optionF = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工时';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#359AEF']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	function getCalendarData(arr) {
+		var rangeArray = [];
+		for (var property in arr) {
+			rangeArray.push(property);
+		}
+		var rangeArray = [rangeArray[0], rangeArray[rangeArray.length - 1]];
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		if (start + 7776000000 > end) {
+			end = start + 8640000000;
+			rangeArray[1] = echarts.format.formatTime('yyyy-MM-dd', end);
+		}
+		var dayTime = 3600 * 24 * 1000;
+		var data = [];
+		for (var time = start; time < end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				data.push([this_date, arr[this_date]]);
+			} else {
+				data.push([this_date, 0]);
+			}
+		}
+		var res = { 'range': rangeArray, 'data': data };
+		return res;
+	}
+
+	//燃尽图统计
+	function cross_count(arr, arr2) {
+		var planArray = [], doArray = [];
+		var today = new Date();
+		var todayStr = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		for (var a in arr) {
+			planArray.push(a);
+		}
+		var rangeArray = [planArray[0], planArray[planArray.length - 1]];
+		if (arr2 instanceof Array == false) {
+			for (var b in arr2) {
+				doArray.push(b);
+			}
+			if ((+echarts.number.parseDate(doArray[doArray.length - 1])) < (+echarts.number.parseDate(todayStr))) {
+				doArray.push(todayStr);
+			}
+			if ((+echarts.number.parseDate(planArray[planArray.length - 1])) < (+echarts.number.parseDate(doArray[doArray.length - 1]))) {
+				rangeArray[1] = doArray[doArray.length - 1];
+			}
+		}
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		var todayInt = +echarts.number.parseDate(todayStr);
+		var dayTime = 3600 * 24 * 1000;
+		var xArray = [], yArray = [], yArray2 = [], done = 0, doneArray = [];
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			xArray.push(this_date);
+			var plan = cross_recursion(time, end, arr);
+			yArray.push(plan);
+
+			if (arr2[this_date]) {
+				done += arr2[this_date];
+			}
+			if (time <= todayInt) {
+				doneArray.push(done);
+			}
+		}
+		for (var i = 0; i < doneArray.length; i++) {
+			yArray2.push(yArray[0] - doneArray[i]);
+		}
+		var start_time = +echarts.number.parseDate(project_start_time), tem_x_array = [], tem_y_array = [];
+		if (start_time < start) {
+			for (var tem_time = start_time; tem_time < start; tem_time += dayTime) {
+				var this_date = echarts.format.formatTime('yyyy-MM-dd', tem_time);
+				tem_x_array.push(this_date);
+				tem_y_array.push(yArray[0]);
+			}
+			xArray = tem_x_array.concat(xArray);
+			yArray = tem_y_array.concat(yArray);
+			yArray2 = tem_y_array.concat(yArray2);
+		}
+		return { 'x': xArray, 'y': yArray, 'y2': yArray2 };
+	}
+
+	function cross_recursion(start, end, arr) {
+		var count = 0;
+		var dayTime = 3600 * 24 * 1000;
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				count += arr[this_date];
+			}
+		}
+		return count;
+	}
+
+	function init(layui) {
+		var gougu = layui.gougu;
+
+		$('#subMenu').on('click', '[data-event="subpage"]', function () {
+			let page = $(this).data('page');
+			$('#subMenu').find('li').removeClass('active');
+			$(this).addClass('active');
+			gougu.page(page);
+		})
+
+		$('#subMenu').on('click', '[data-event="open"]', function () {
+			let url = $(this).data('url');
+			gougu.open(url);
+		})
+
+		let callback = function (res) {
+			if (res.data.date_tasks instanceof Array == false) {
+				optionA.title.text = res.data.task_pie.ok_lv + '%';
+				optionA.series = [
+					{
+						type: 'pie',
+						radius: ['60%', '80%'],
+						center: ['50%', '50%'],
+						avoidLabelOverlap: false,
+						label: {
+							show: false
+						},
+						data: [
+							{ value: res.data.task_pie.count - res.data.task_pie.count_ok, name: '待处理' },
+							{ value: res.data.task_pie.count_ok, name: '已完成' }
+						]
 					}
-				}
-			};
-			optionD.series = [
-				{
-				  name: '任务计划剩余',
-				  type: 'line',
-				  showSymbol: false,
-				  markLine: {
-					data: [{ type: 'average', name: 'Avg' }],
-				  },
-				  lineStyle: {
-					width: 2
-				  },
-				  data: dataD.y
-				},
-				{
-				  name: '任务实际剩余',
-				  type: 'line',
-				  showSymbol: false,
-				  areaStyle:{
-					opacity: 0.1
-				  },
-				  markLine: {
-					data: [{ type: 'average', name: 'Avg' }],
-				  },
-				  lineStyle: {
-					width: 2
-				  },
-				  data: dataD.y2
-				}
-			]
-			optionD && crossChart.setOption(optionD)
-		
-			var dataE = getCalendarData(res.data.date_tasks);
-			optionE.calendar.range = dataE.range,
-			optionE.series={
-				type: 'heatmap',
-				coordinateSystem: 'calendar',
-				data: dataE.data
+				];
+				optionA && progressChart.setOption(optionA);
+
+				optionB.title.text = res.data.task_pie.delay_lv + '%';
+				optionB.series = [
+					{
+						type: 'pie',
+						radius: ['60%', '80%'],
+						center: ['50%', '50%'],
+						avoidLabelOverlap: false,
+						label: {
+							show: false
+						},
+						data: [{
+							value: res.data.task_pie.delay,
+							name: '延误',
+							itemStyle: {
+								color: "#ED6666",
+							}
+						},
+						{
+							value: res.data.task_pie.count - res.data.task_pie.delay,
+							name: '按时完成',
+							itemStyle: {
+								color: "#91CC75",
+							}
+						}
+						]
+					}
+				];
+				optionB && delayChart.setOption(optionB);
+
+				optionC.series = [
+					{
+						name: 'Bugfixed',
+						type: 'pie',
+						radius: ['25%', '75%'],
+						center: ['60%', '50%'],
+						data: [
+							{ value: res.data.bug_status.status_a, name: '待解决' },
+							{ value: res.data.bug_status.status_b, name: '进行中' },
+							{ value: res.data.bug_status.status_c, name: '已解决' },
+							{ value: res.data.bug_status.status_d, name: '不解决' },
+							{ value: res.data.bug_status.status_e, name: '已关闭' }
+						]
+					}
+				]
+				optionC && roseChart.setOption(optionC);
+
+
+				var dataD = cross_count(res.data.date_tasks, res.data.date_tasks_ok);
+				optionD.xAxis = {
+					type: 'category',
+					boundaryGap: false,
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type: 'dashed'
+						}
+					},
+					data: dataD.x,
+					axisLabel: {
+						rotate: 30,
+						formatter: function (value, index) {
+							return value.slice(5);
+						}
+					}
+				};
+				optionD.series = [
+					{
+						name: '任务计划剩余',
+						type: 'line',
+						showSymbol: false,
+						markLine: {
+							data: [{ type: 'average', name: 'Avg' }],
+						},
+						lineStyle: {
+							width: 2
+						},
+						data: dataD.y
+					},
+					{
+						name: '任务实际剩余',
+						type: 'line',
+						showSymbol: false,
+						areaStyle: {
+							opacity: 0.1
+						},
+						markLine: {
+							data: [{ type: 'average', name: 'Avg' }],
+						},
+						lineStyle: {
+							width: 2
+						},
+						data: dataD.y2
+					}
+				]
+				optionD && crossChart.setOption(optionD)
+
+				var dataE = getCalendarData(res.data.date_tasks);
+				optionE.calendar.range = dataE.range,
+					optionE.series = {
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						data: dataE.data
+					}
+				optionE && planChart.setOption(optionE);
+
+				var dataF = getCalendarData(res.data.date_schedules);
+				optionF.calendar.range = dataF.range,
+					optionF.series = {
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						data: dataE.data
+					}
+				optionF && workChart.setOption(optionF);
 			}
-			optionE && planChart.setOption(optionE);
-			
-			var dataF = getCalendarData(res.data.date_schedules);
-			optionF.calendar.range = dataF.range,
-			optionF.series={
-				type: 'heatmap',
-				coordinateSystem: 'calendar',
-				data: dataE.data
-			}
-			optionF && workChart.setOption(optionF);
+		}
+		gougu.get('/api/project/get_chart_data', { 'project_id': project_id }, callback);
+
+		window.onresize = function () {
+			progressChart.resize();
+			delayChart.resize();
+			roseChart.resize();
+			crossChart.resize();
+			planChart.resize();
+			workChart.resize();
 		}
 	}
-	gougu.get('/api/project/get_chart_data',{'project_id':project_id},callback);	
-	
-	window.onresize = function() {
-		progressChart.resize();
-		delayChart.resize();
-		roseChart.resize();
-		crossChart.resize();
-		planChart.resize();
-		workChart.resize();
-	}	
-}
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
+{include file="../../base/view/common/layui" base='base'
+extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -44,48 +44,72 @@ class Index extends BaseController
 					$item->plan_time = date('Y-m-d', $item->start_time) . ' 至 ' .date('Y-m-d', $item->end_time);
 					$item->status_name = ProjectList::$Status[(int)$item->status];
 					
-					$requirements_map_a=[];
-					$requirements_map_a[]=['project_id','=',$item->id];
-					$requirements_map_a[]=['delete_time','=',0];
-					$requirements_map_b=$requirements_map_a;
-					$requirements_map_a[]=['flow_status','<',8];
-					$item->requirements_a = Db::name('Requirements')->where($requirements_map_a)->count();
-					$requirements_map_b[]=['flow_status','>',7];
-					$item->requirements_b = Db::name('Requirements')->where($requirements_map_b)->count();
-					if($item->requirements_a+$item->requirements_b>0){
-						$item->requirements_c = round($item->requirements_b /($item->requirements_a+$item->requirements_b) *100,2)."％";
-					}else{
-						$item->requirements_c = "100％";
-					}					
-					
-					$task_map_a =[];
-					$task_map_a[] = ['project_id','=',$item->id];
-					$task_map_a[] = ['type','=',1];
-					$task_map_a[] = ['delete_time','=',0];
-					$task_map_b = $task_map_a;
-					$task_map_a[]=['flow_status','<',3];
-					$item->tasks_a = Db::name('Task')->where($task_map_a)->count();
-					$task_map_b[]=['flow_status','>',2];
-					$item->tasks_b = Db::name('Task')->where($task_map_b)->count();
-					if($item->tasks_a+$item->tasks_b>0){
-						$item->tasks_c = round($item->tasks_b /($item->tasks_a+$item->tasks_b) *100,2)."％";
-					}else{
-						$item->tasks_c = "100％";
-					}					
-					
-					$bug_map_a =[];
-					$bug_map_a[] = ['project_id','=',$item->id];
-					$bug_map_a[] = ['type','=',2];
-					$bug_map_a[] = ['delete_time','=',0];
-					$bug_map_b = $bug_map_a;
-					$bug_map_a[]=['flow_status','<',3];
-					$item->bugs_a = Db::name('Task')->where($bug_map_a)->count();
-					$bug_map_b[]=['flow_status','>',2];
-					$item->bugs_b = Db::name('Task')->where($bug_map_b)->count();
-					if($item->bugs_a+$item->bugs_b>0){
-						$item->bugs_c = round($item->bugs_b /($item->bugs_a+$item->bugs_b) *100,2)."％";
-					}else{
-						$item->bugs_c = "100％";
+					$task_map = [];
+                    $task_map[] = ['project_id','=',$item->id];
+                    $task_map[] = ['delete_time', '=', 0];
+
+					//需求
+					$task_map_a = $task_map;
+					$task_map_a[] = ['type', '=', 1];
+					//需求任务总数
+					$item->tasks_a_total = Db::name('Task')->where($task_map_a)->count();
+					//已完成需求任务
+					$task_map_a[] = ['flow_status', '>', 2]; //已完成
+					$item->tasks_a_finish = Db::name('Task')->where($task_map_a)->count();
+					//未完成需求任务
+					$item->tasks_a_unfinish = $item->tasks_a_total - $item->tasks_a_finish;
+					if ($item->tasks_a_total > 0) {
+						$item->tasks_a_pensent = round($item->tasks_a_finish / $item->tasks_a_total * 100, 2) . "％";
+					} else {
+						$item->tasks_a_pensent = "100％";
+					}
+
+					//设计
+					$task_map_b = $task_map;
+					$task_map_b[] = ['type', '=', 2];
+					//设计任务总数
+					$item->tasks_b_total = Db::name('Task')->where($task_map_b)->count();
+					//已完成设计任务
+					$task_map_b[] = ['flow_status', '>', 2]; //已完成
+					$item->tasks_b_finish = Db::name('Task')->where($task_map_b)->count();
+					//未完成设计任务
+					$item->tasks_b_unfinish = $item->tasks_b_total - $item->tasks_b_finish;
+					if ($item->tasks_b_total > 0) {
+						$item->tasks_b_pensent = round($item->tasks_b_finish / $item->tasks_b_total * 100, 2) . "％";
+					} else {
+						$item->tasks_b_pensent = "100％";
+					}
+
+					//研发
+					$task_map_c = $task_map;
+					$task_map_c[] = ['type', '=', 3];
+					//研发任务总数
+					$item->tasks_c_total = Db::name('Task')->where($task_map_c)->count();
+					//已完成研发任务
+					$task_map_c[] = ['flow_status', '>', 2]; //已完成
+					$item->tasks_c_finish = Db::name('Task')->where($task_map_c)->count();
+					//未完成研发任务
+					$item->tasks_c_unfinish = $item->tasks_c_total - $item->tasks_c_finish;
+					if ($item->tasks_c_total > 0) {
+						$item->tasks_c_pensent = round($item->tasks_c_finish / $item->tasks_c_total * 100, 2) . "％";
+					} else {
+						$item->tasks_c_pensent = "100％";
+					}
+
+					//缺陷
+					$task_map_d = $task_map;
+					$task_map_d[] = ['type', '=', 4];
+					//缺陷任务总数
+					$item->tasks_d_total = Db::name('Task')->where($task_map_d)->count();
+					//已完成缺陷任务
+					$task_map_d[] = ['flow_status', '>', 2]; //已完成
+					$item->tasks_d_finish = Db::name('Task')->where($task_map_d)->count();
+					//未完成缺陷任务
+					$item->tasks_d_unfinish = $item->tasks_d_total - $item->tasks_d_finish;
+					if ($item->tasks_d_total > 0) {
+						$item->tasks_d_pensent = round($item->tasks_d_finish / $item->tasks_d_total * 100, 2) . "％";
+					} else {
+						$item->tasks_d_pensent = "100％";
 					}
                 });
             return table_assign(0, '', $list);
@@ -241,15 +265,61 @@ class Index extends BaseController
         }
 		else{
 			$tids = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->column('id');
-			$detail['requirements'] = Db::name('Requirements')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['schedules'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->count();
-			$detail['plan_hours'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->sum('plan_hours');
 			$detail['hours'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->sum('labor_time');
+
+			$detail['releases'] = Db::name('Release')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['plan_hours'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->sum('plan_hours');
 			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['comments'] = Db::name('Comment')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
-			$detail['task_total'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
-			$detail['task_finish'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0],['flow_status','>',2]])->count();
-			$detail['task_unfinish'] = $detail['task_total'] - $detail['task_finish'];
+
+            $detail['logs'] = Db::name('Log')->where(['module' => 'project', 'project_id' => $detail['id']])->count();
+            $detail['comments'] = Db::name('Comment')->where(['module' => 2, 'delete_time' => 0, 'topic_id' => $detail['id']])->count();
+			$detail['tasks'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['tasks_finish'] = Db::name('Task')->where([['project_id','=',$detail['id']],['flow_status', '>', 2],['delete_time','=',0]])->count();
+			$detail['tasks_unfinish'] = $detail['tasks'] - $detail['tasks_finish'];
+
+
+            $task_map = [];
+            $task_map[] = ['project_id','=',$detail['id']];
+            $task_map[] = ['delete_time', '=', 0];
+
+            //需求
+            $task_map_a = $task_map;
+            $task_map_a[] = ['type', '=', 1];
+            //需求任务总数
+            $detail['tasks_a_total'] = Db::name('Task')->where($task_map_a)->count();
+            //未完成需求任务
+            $task_map_a[] = ['flow_status', '<', 3]; 
+            $detail['tasks_a_unfinish'] = Db::name('Task')->where($task_map_a)->count();
+
+            //设计
+            $task_map_b = $task_map;
+            $task_map_b[] = ['type', '=', 2];
+            //设计任务总数
+            $detail['tasks_b_total'] = Db::name('Task')->where($task_map_b)->count();
+            //未完成设计任务
+            $task_map_b[] = ['flow_status', '<', 3]; 
+            $detail['tasks_b_unfinish'] = Db::name('Task')->where($task_map_b)->count();
+
+            //研发
+            $task_map_c = $task_map;
+            $task_map_c[] = ['type', '=', 3];
+            //研发任务总数
+            $detail['tasks_c_total'] = Db::name('Task')->where($task_map_c)->count();
+            //未完成研发任务
+            $task_map_c[] = ['flow_status', '<', 3]; 
+            $detail['tasks_c_unfinish'] = Db::name('Task')->where($task_map_c)->count();
+
+            //缺陷
+            $task_map_d = $task_map;
+            $task_map_d[] = ['type', '=', 4];
+            //缺陷任务总数
+            $detail['tasks_d_total'] = Db::name('Task')->where($task_map_d)->count();
+            //未完成缺陷任务
+            $task_map_d[] = ['flow_status', '<', 3]; 
+            $detail['tasks_d_unfinish'] = Db::name('Task')->where($task_map_d)->count();
+
 			//判断是否有编辑项目的权限
 			$role = 0;
 			if($detail['admin_id'] == $this->uid || $detail['director_uid'] == $this->uid){

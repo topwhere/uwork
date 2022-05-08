@@ -187,36 +187,41 @@ INSERT INTO `dev_admin_rule` VALUES (52, 51, 'admin/note/add', '新建/编辑', 
 INSERT INTO `dev_admin_rule` VALUES (53, 51, 'admin/note/delete', '删除', '公告', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (54, 51, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (55, 2, 'product/index/list', '列表', '产品', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (55, 2, 'product/index/list', '产品列表', '产品', '', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (56, 55, 'product/index/add', '新建', '产品', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (57, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (58, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (59, 3, 'project/index/list', '列表', '项目', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (59, 3, 'project/index/list', '项目列表', '项目', '', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (60, 59, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (61, 59, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (62, 59, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (63, 59, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (64, 4, 'requirements/index/list', '列表', '需求', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (65, 64, 'requirements/index/add', '新建', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (66, 64, 'requirements/index/delete', '删除', '需求', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (67, 64, 'requirements/index/view', '查看', '需求', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (64, 3, 'release/index/list', '迭代列表', '迭代', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (65, 64, 'release/index/add', '新建', '迭代', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (66, 64, 'release/index/delete', '删除', '迭代', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (67, 64, 'release/index/view', '查看', '迭代', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (68, 5, 'task/index/list', '列表', '任务', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (68, 4, 'task/index/list', '任务列表', '任务', '', 1, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (69, 68, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (70, 68, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (71, 68, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (72, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (73, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (74, 73, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (75, 73, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (76, 73, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (77, 73, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (78, 73, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (79, 73, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (80, 73, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (72, 4, 'schedule/index/list', '工时列表', '工时', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (73, 72, 'schedule/index/add', '新建', '工时', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (74, 72, 'schedule/index/delete', '删除', '工时', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (75, 72, 'schedule/index/view', '查看', '工时', '', 2, 1, 1, 0, 0);
+
+INSERT INTO `dev_admin_rule` VALUES (76, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (77, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (78, 76, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (81, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (83, 76, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (84, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_config

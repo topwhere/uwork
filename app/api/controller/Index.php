@@ -233,18 +233,6 @@ class Index extends BaseController
         return to_assign(0, '', $project);
     }
 
-    //需求列表
-    public function get_release($pid = 0)
-    {
-        $where = [];
-        $where[] = ['delete_time', '=', 0];
-        if ($pid > 0) {
-            $where[] = ['project_id', '=', $pid];
-        }
-        $release = Db::name('Release')->field('id,title')->where($where)->select();
-        return to_assign(0, '', $release);
-    }
-
     //文档列表
     public function get_doc_list($kid = 0, $tree = 0)
     {

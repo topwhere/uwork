@@ -129,7 +129,6 @@ class Task extends Model
 			$project = Db::name('Project')->where(['id' => $detail['project_id']])->field('product_id,name')->find();
             $detail['product_name'] = Db::name('Product')->where(['id' => $project['product_id']])->value('name');
             $detail['project_name'] = $project['name'];
-            $detail['release_title'] = Db::name('Release')->where(['id' => $detail['release_id']])->value('title');
             $detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
             $detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
             $detail['work_hours'] = Db::name('Schedule')->where(['delete_time' => 0, 'tid' => $detail['id']])->sum('labor_time');

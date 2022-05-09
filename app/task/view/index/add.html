@@ -64,29 +64,11 @@
 		{empty name="$project_id"}
 		<tr>
 			<td class="layui-td-gray">关联项目</td>
-			<td>
+			<td colspan="7">
 				<select id="projectId" name="project_id" lay-filter="project">
 					<option value="">请选择关联项目</option>
 					{volist name=":get_project()" id="v"}
 					<option value="{$v.id}">{$v.name}</option>
-					{/volist}
-				</select>
-			</td>
-			<td class="layui-td-gray">关联迭代</td>
-			<td colspan="5">
-				<select id="requirementsId" name="requirements_id">
-					<option value="">请先选择关联的项目</option>
-				</select>
-			</td>
-		</tr>
-		{else/}
-		<tr>
-			<td class="layui-td-gray">关联迭代</td>
-			<td colspan="7">
-				<input type="hidden" name="project_id" value="{$project_id}">
-				<select id="requirementsId" name="requirements_id">
-					{volist name=":get_requirements($project_id)" id="v"}
-					<option value="{$v.id}">{$v.title}</option>
 					{/volist}
 				</select>
 			</td>
@@ -117,27 +99,6 @@
 		//日期范围
 		laydate.render({
 			elem: '#end_time'
-		});
-
-		//关联迭代
-		form.on('select(project)', function (data) {
-			if (data.value == '') {
-				$('#requirementsId').html('<option value="">请先选择关联的项目</option>');
-				form.render("select");
-			}
-			else {
-				gougu.get("/api/index/get_requirements", { pid: data.value }, function (res) {
-					let data = res.data;
-					if (data.length > 0) {
-						let ops = '<option value="">请选择需求</option>';
-						for (let i = 0; i < data.length; i++) {
-							ops += '<option value="' + data[i].id + '">' + data[i].title + '</option>';
-						}
-						$('#requirementsId').html(ops);
-						form.render("select");
-					}
-				});
-			}
 		});
 
 		//选择负责人弹窗	

@@ -13,11 +13,10 @@ class Project extends Model
     const FORE = 4;
 
     public static $Status = [
-        self::ZERO => '未设置',
-        self::ONE => '未开始',
-        self::TWO => '进行中',
-        self::THREE => '已完成',
-        self::FORE => '已关闭',
+        self::ZERO => '未开始',
+        self::ONE => '进行中',
+        self::TWO => '已完成',
+        self::THREE => '已关闭',
     ];
     //详情
     public function detail($id)
@@ -31,6 +30,8 @@ class Project extends Model
             $detail['team_admin_names'] = implode(',', $team_admin_names);
             $detail['status_name'] = self::$Status[(int) $detail['status']];
             $detail['times'] = time_trans($detail['create_time']);
+            $detail['comments'] = Db::name('Comment')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
+			$detail['logs'] = Db::name('Log')->where(['module' => 'project', 'project_id' => $detail['id']])->count();
         }
         return $detail;
     }

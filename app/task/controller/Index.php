@@ -68,11 +68,6 @@ class Index extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
-                if (isset($param['project_id'])) {
-                    if ($param['project_id'] == 0 && $task['release_id'] > 0) {
-                        return to_assign(1, '请先取消关联的迭代');
-                    }
-                }
                 $param['update_time'] = time();
                 $res = TaskList::where('id', $param['id'])->strict(false)->field(true)->update($param);
                 if ($res) {

@@ -176,7 +176,6 @@ class Index extends BaseController
 					if ($res) {
 						//更新关联该项目的需求、任务的所属产品
 						if(isset($param['product_id'])){
-							Db::name('Requirements')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
 							Db::name('Task')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id'=>$param['product_id']]);
 						}
 						add_log('edit', $param['id'], $param);
@@ -267,14 +266,8 @@ class Index extends BaseController
 			$tids = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->column('id');
 			$detail['schedules'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->count();
 			$detail['hours'] = Db::name('Schedule')->where([['tid','in',$tids],['delete_time','=',0]])->sum('labor_time');
-
-			$detail['releases'] = Db::name('Release')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['plan_hours'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->sum('plan_hours');
-			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
-			$detail['comments'] = Db::name('Comment')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
-
-            $detail['logs'] = Db::name('Log')->where(['module' => 'project', 'project_id' => $detail['id']])->count();
-            $detail['comments'] = Db::name('Comment')->where(['module' => 2, 'delete_time' => 0, 'topic_id' => $detail['id']])->count();
+			$detail['documents'] = Db::name('Document')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();			
 			$detail['tasks'] = Db::name('Task')->where([['project_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['tasks_finish'] = Db::name('Task')->where([['project_id','=',$detail['id']],['flow_status', '>', 2],['delete_time','=',0]])->count();
 			$detail['tasks_unfinish'] = $detail['tasks'] - $detail['tasks_finish'];
@@ -337,12 +330,8 @@ class Index extends BaseController
     {
 		if (request()->isDelete()) {
 			$id = get_params("id");
-			$count_a = Db::name('Requirements')->where([['project_id','=',$id],['delete_time','=',0]])->count();
-			if($count_a>0){
-				return to_assign(1, "该项目下有关联的需求，无法删除");
-			}
-			$count_b = Db::name('Task')->where([['project_id','=',$id],['delete_time','=',0]])->count();
-			if($count_b>0){
+			$count_task = Db::name('Task')->where([['project_id','=',$id],['delete_time','=',0]])->count();
+			if($count_task>0){
 				return to_assign(1, "该项目下有关联的任务，无法删除");
 			}
 			$detail = Db::name('Project')->where('id',$id)->find();

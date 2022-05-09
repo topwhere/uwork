@@ -10,9 +10,8 @@ layui.define(['layer'], function (exports) {
 	const newData = [
 		{ id: 1, title: '新建产品', url: '/product/index/add' },
 		{ id: 2, title: '新建项目', url: '/project/index/add' },
-		{ id: 3, title: '新建需求', url: '/requirements/index/add' },
-		{ id: 4, title: '新建任务', url: '/task/index/add' },
-		{ id: 5, title: '新建知识库', url: '/knowledge/index/add' },
+		{ id: 3, title: '新建任务', url: '/task/index/add' },
+		{ id: 4, title: '新建知识库', url: '/knowledge/index/add' },
 	];
 	dropdown.render({
 		elem: '#add-new'

@@ -28,8 +28,9 @@ class Product extends Model
             $detail['comments'] = Db::name('Comment')->where(['module' => 1, 'delete_time' => 0, 'topic_id' => $detail['id']])->count();
             $detail['projects'] = Db::name('Project')->where(['delete_time' => 0, 'product_id' => $detail['id']])->count();
 
+            $project_ids = Db::name('Project')->where(['delete_time' => 0, 'product_id' =>$detail['id']])->column('id');
             $task_map = [];
-            $task_map[] = ['product_id', '=', $detail['id']];
+            $task_map[] = ['project_id', 'in', $project_ids];
             $task_map[] = ['delete_time', '=', 0];
 
             //需求

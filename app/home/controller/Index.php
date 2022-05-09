@@ -12,7 +12,6 @@ namespace app\home\controller;
 use app\base\BaseController;
 use app\model\AdminLog;
 use app\model\Project;
-use app\model\Requirements;
 use app\model\Task;
 use think\facade\Db;
 use think\facade\View;

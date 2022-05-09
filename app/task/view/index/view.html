@@ -167,14 +167,6 @@
 				</span>
 				<i class="iconfont icon-wodedianping" title="编辑" data-name="project_id"></i>
 			</div>
-			<div class="pb-4 hover-{$role_edit}">
-				<p class="font-gray mb-2">关联迭代：</p>
-				<span id="release_id_{$detail.id}" data-val="{$detail.release_id}">
-					{gt name="$detail.release_id" value="0"}{$detail.release_title}{else/}<span
-						class="font-gray">未设置</span>{/gt}
-				</span>
-				<i class="iconfont icon-wodedianping" title="编辑" data-name="release_id"></i>
-			</div>
 
 			<div class="pb-4 mt-3">
 				<h5 class="mb-1">工作记录<span class="layui-btn layui-btn-xs add-schedule right">+ 工作记录</span></h5>
@@ -428,23 +420,6 @@
 					});
 				} else {
 					layer.msg('您没权限修改，请联系创建人或负责人修改');
-				}
-			}
-			if (name == "release_id") {
-				if (admin_id == GOUGU_DEV.uid) {
-					let project_id = $('#project_id_' + id).data('val');
-					if (project_id == 0) {
-						layer.msg('请先关联项目');
-						return false;
-					}
-					loading = true;
-					gougu.get("/api/index/get_release", { pid: project_id }, function (res) {
-						let data = res.data;
-						loading = false;
-						edit.dropdown(id, name, real_txt, data, editPost, 1);
-					});
-				} else {
-					layer.msg('您没权限修改，请联系创建人修改');
 				}
 			}
 			if (name == "md_content") {

@@ -632,28 +632,6 @@ CREATE TABLE `dev_project`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
 
-
--- ----------------------------
--- Table structure for dev_release
--- ----------------------------
-DROP TABLE IF EXISTS `dev_release`;
-CREATE TABLE `dev_release`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '迭代名称',
-  `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
-  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
-  `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '负责人',
-  `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '开始时间',
-  `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结束时间',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：0未设置,1未开始,2进行中,3已完成,4已关闭',
-  `content` text NULL COMMENT '迭代目标',
-  `md_content` text NULL COMMENT 'markdown迭代目标',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
-  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '迭代表';
-
 -- ----------------------------
 -- Table structure for dev_task
 -- ----------------------------
@@ -762,7 +740,6 @@ CREATE TABLE `dev_log`  (
   `field` varchar(100) NOT NULL DEFAULT '' COMMENT '字段',
   `product_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联产品id',
   `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
-  `requirements_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联需求id',
   `task_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联任务id',
   `document_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联文档id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作人',

@@ -91,9 +91,10 @@ function openInit() {
 	const detail_id='{$detail.id}';
 	const opsData={
 		status:[
-			{'id':0,'title':'关闭'},
-			{'id':1,'title':'开启'},
-			{'id':2,'title':'暂停'}
+			{'id':0,'title':'未开始'},
+			{'id':1,'title':'进行中'},
+			{'id':2,'title':'已完成'},
+			{'id':3,'title':'已关闭'}
 		]
 	}
 	const layer = layui.layer,edit = layui.gouguEdit,comment = layui.gouguComment,upload = layui.upload,gougu = layui.gougu;

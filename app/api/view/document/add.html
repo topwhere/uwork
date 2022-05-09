@@ -3,9 +3,11 @@
 	<h3 class="h3-title">新建文档</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">文档名称<font>*</font></td>
+			<td class="layui-td-gray">文档名称<font>*</font>
+			</td>
 			<td>
-				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称" class="layui-input" value="">
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称"
+					class="layui-input" value="">
 			</td>
 		</tr>
 	</table>
@@ -23,9 +25,11 @@
 	<h3 class="h3-title">编辑文档</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">文档名称<font>*</font></td>
+			<td class="layui-td-gray">文档名称<font>*</font>
+			</td>
 			<td>
-				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称" class="layui-input" value="{$detail.title}">
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入文档名称" placeholder="请输入文档名称"
+					class="layui-input" value="{$detail.title}">
 			</td>
 		</tr>
 	</table>
@@ -46,26 +50,26 @@
 </form>
 
 <script>
-function openInit() {
-	var form = layui.form,layer = layui.layer,gougu = layui.gougu;
-			
-	form.render();
-	gougu.editor('docContent',600,$('#mdContent').val());
-		
-    //监听提交
-    form.on('submit(webform)', function (data) {
-		let callback = function (e) {
-			layer.msg(e.msg);
-			if (e.code == 0) {
-				layui.pageTable.reload();
-				setTimeout(function(){
-					gougu.close();
-				},500);
+	function openInit() {
+		var form = layui.form, layer = layui.layer, gougu = layui.gougu;
+
+		form.render();
+		gougu.editor('docContent',$('#mdContent').val(),600,true);
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					layui.pageTable.reload();
+					setTimeout(function () {
+						gougu.close();
+					}, 500);
+				}
 			}
-		}
-		gougu.post("/api/document/add",data.field,callback);
-		return false;
-    });
-}
+			gougu.post("/api/document/add", data.field, callback);
+			return false;
+		});
+	}
 
 </script>

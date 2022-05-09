@@ -35,7 +35,7 @@ class Log extends Model
                 'delete' => array('icon' => 'icon-shanchu', 'title' => '产品'),
             ]],
         'project' => [
-            'status' => ['未设置', '未开始', '进行中', '已完成', '已关闭'],
+            'status' => ['未开始', '进行中', '已完成', '已关闭'],
             'field_array' => [
                 'director_uid' => array('icon' => 'icon-xueshengzhuce', 'title' => '负责人'),
                 'team_admin_ids' => array('icon' => 'icon-xueshengzhuce', 'title' => '项目成员'),
@@ -68,7 +68,6 @@ class Log extends Model
                 'done_ratio' => array('icon' => 'icon-wodedianping', 'title' => '完成进度'),
                 'product_id' => array('icon' => 'icon-wodedianping', 'title' => '关联产品'),
                 'project_id' => array('icon' => 'icon-wodedianping', 'title' => '关联项目'),
-                'requirements_id' => array('icon' => 'icon-wodedianping', 'title' => '关联需求'),
                 'content' => array('icon' => 'icon-wodedianping', 'title' => '描述'),
                 'file' => array('icon' => 'icon-sucaiziyuan', 'title' => '文件'),
                 'link' => array('icon' => 'icon-sucaiziyuan', 'title' => '链接'),
@@ -126,10 +125,6 @@ class Log extends Model
                 $v['old_content'] = Db::name('Project')->where(['id' => $v['old_content']])->value('name');
                 $v['new_content'] = Db::name('Project')->where(['id' => $v['new_content']])->value('name');
             }
-            if ($v['field'] == 'requirements_id') {
-                $v['old_content'] = Db::name('Requirements')->where(['id' => $v['old_content']])->value('title');
-                $v['new_content'] = Db::name('Requirements')->where(['id' => $v['new_content']])->value('title');
-            }
             if ($v['field'] == 'cate') {
                 $v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');
                 $v['new_content'] = Db::name('WorkCate')->where(['id' => $v['new_content']])->value('title');
@@ -162,26 +157,21 @@ class Log extends Model
 
     public function log_list($param = [])
     {
-        $requirement_ids = Db::name('Requirements')->where(['project_id' => $param['topic_id'], 'delete_time' => 0])->column('id');
         $task_ids = Db::name('Task')->where(['project_id' => $param['topic_id'], 'delete_time' => 0])->column('id');
         $document_ids = Db::name('Document')->where(['module' => 'project', 'topic_id' => $param['topic_id'], 'delete_time' => 0])->column('id');
 
         $where1 = [];
         $where2 = [];
         $where3 = [];
-        $where4 = [];
 
         $where1[] = ['a.module', '=', 'project'];
         $where1[] = ['a.project_id', '=', $param['topic_id']];
 
-        $where2[] = ['a.module', '=', 'requirements'];
-        $where2[] = ['a.requirements_id', 'in', $requirement_ids];
+        $where2[] = ['a.module', '=', 'task'];
+        $where2[] = ['a.task_id', 'in', $task_ids];
 
-        $where3[] = ['a.module', '=', 'task'];
-        $where3[] = ['a.task_id', 'in', $task_ids];
-
-        $where4[] = ['a.module', '=', 'document'];
-        $where4[] = ['a.document_id', 'in', $document_ids];
+        $where3[] = ['a.module', '=', 'document'];
+        $where3[] = ['a.document_id', 'in', $document_ids];
         $page = intval($param['page']);
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $content = Db::name('Log')
@@ -189,16 +179,12 @@ class Log extends Model
             ->alias('a')
             ->join('Admin u', 'u.id = a.admin_id')
             ->order('a.create_time desc')
-            ->whereOr([$where1, $where2, $where3, $where4])
+            ->whereOr([$where1, $where2, $where3])
             ->page($page, $rows)
             ->select()->toArray();
 
-        //$content = array_merge($project,$requirements,$task);//数组合并
-        // array_multisort(array_column($content,'create_time'),SORT_DESC,$content);//数组排序
-
         $module = [
             'project' => '的',
-            'requirements' => '需求',
             'task' => '任务',
             'document' => '文档',
         ];
@@ -233,9 +219,9 @@ class Log extends Model
                 $v['old_content'] = Db::name('Project')->where(['id' => $v['old_content']])->value('name');
                 $v['new_content'] = Db::name('Project')->where(['id' => $v['new_content']])->value('name');
             }
-            if ($v['field'] == 'requirements_id') {
-                $v['old_content'] = Db::name('Requirements')->where(['id' => $v['old_content']])->value('title');
-                $v['new_content'] = Db::name('Requirements')->where(['id' => $v['new_content']])->value('title');
+            if ($v['field'] == 'cate') {
+                $v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');
+                $v['new_content'] = Db::name('WorkCate')->where(['id' => $v['new_content']])->value('title');
             }
             if ($v['field'] == 'done_ratio') {
                 $v['old_content'] = $v['old_content'] . '%';
@@ -258,11 +244,6 @@ class Log extends Model
             $v['topic'] = '';
             $v['topic_title'] = '';
             $v['url'] = '';
-            if ($v['module'] == 'requirements') {
-                $v['topic'] = 'R' . $v['requirements_id'];
-                $v['topic_title'] = Db::name('Requirements')->where('id', $v['requirements_id'])->value('title');
-                $v['url'] = '/requirements/index/view/id/' . $v['requirements_id'];
-            }
             if ($v['module'] == 'task') {
                 $v['topic'] = 'T' . $v['task_id'];
                 $v['topic_title'] = Db::name('Task')->where('id', $v['task_id'])->value('title');

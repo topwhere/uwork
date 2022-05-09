@@ -262,13 +262,6 @@ function get_project($uid=0)
     return $project;
 }
 
-//读取迭代版本
-function get_release()
-{
-    $release = Db::name('Release')->where(['delete_time' => 0])->select()->toArray();
-    return $release;
-}
-
 //读取工作类型
 function get_work_cate()
 {

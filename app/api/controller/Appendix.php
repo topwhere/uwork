@@ -46,7 +46,7 @@ class Appendix extends BaseController
                 $log_data = array(
                     'module' => $detail['module'],
                     'field' => 'file',
-                    'action' => 'del',
+                    'action' => 'delete',
                     $detail['module'] . '_id' => $detail['topic_id'],
                     'admin_id' => $this->uid,
                     'new_content' => $file_name,
@@ -113,7 +113,7 @@ class Appendix extends BaseController
                 $log_data = array(
                     'module' => $detail['module'],
                     'field' => 'link',
-                    'action' => 'del',
+                    'action' => 'delete',
                     $detail['module'] . '_id' => $detail['topic_id'],
                     'admin_id' => $this->uid,
                     'new_content' => $detail['desc'],

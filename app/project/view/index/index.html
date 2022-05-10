@@ -13,9 +13,9 @@
 {block name="body"}
 <div class="table-content p-3">
 	<div class="layui-form-bar border-t border-x">
-		<button class="layui-btn layui-btn-sm add-new">+ 新建项目</button>
+		<button class="layui-btn layui-btn-sm add-project">+ 新建项目</button>
 	</div>
-	<table class="layui-hide" id="test" lay-filter="test"></table>
+	<table class="layui-hide" id="projectList" lay-filter="project"></table>
 </div>
 {/block}
 <!-- /主体 -->
@@ -26,7 +26,7 @@
 	function init(layui) {
 		var table = layui.table, form = layui.form, gougu = layui.gougu;
 		layui.pageTable = table.render({
-			elem: '#test',
+			elem: '#projectList',
 			title: '项目列表',
 			cellMinWidth: 300,
 			page: true, //开启分页
@@ -72,7 +72,7 @@
 			]]
 		});
 
-		$('.add-new').on('click', function () {
+		$('.layui-form-bar').on('click','.add-project', function () {
 			gougu.open('/project/index/add');
 		});
 	}		

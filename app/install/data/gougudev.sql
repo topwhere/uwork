@@ -609,7 +609,6 @@ CREATE TABLE `dev_product`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '产品表';
 
-
 -- ----------------------------
 -- Table structure for dev_project
 -- ----------------------------
@@ -631,6 +630,20 @@ CREATE TABLE `dev_project`  (
   `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COMMENT = '项目表';
+
+-- ----------------------------
+-- Table structure for dev_project_user
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_project_user`;
+CREATE TABLE `dev_project_user`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目成员id',
+  `project_id` int(11) UNSIGNED NOT NULL COMMENT '关联项目id',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '移除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '项目成员表';
 
 -- ----------------------------
 -- Table structure for dev_task

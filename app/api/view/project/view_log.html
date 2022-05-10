@@ -33,12 +33,12 @@ function pageInit(){
 				}
 				else if(item.field =='content'){
 					detail= `
-						<span class="log-content font-gray">项目${item.module_name}${link}${item.action}了<strong>${item.title}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+						<span class="log-content font-gray">${item.action}了<strong>${item.title}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 					`;
 				}
-				else if(item.field =='file'){
+				else if(item.field =='file' || item.field =='user'){
 					detail= `
-						<span class="log-content font-gray">项目${item.module_name}${link}${item.action}了${item.title}<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
+						<span class="log-content font-gray">${item.action}了${item.title}<strong>${item.new_content}</strong><span class="font-gray" title="${item.create_time}">${item.times}</span></span>
 					`;
 				}
 				else if(item.field =='document'){

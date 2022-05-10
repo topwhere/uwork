@@ -17,7 +17,8 @@ use think\facade\View;
 
 class Schedule extends BaseController
 {
-    function index() {
+    public function index()
+    {
         if (request()->isAjax()) {
             $param = get_params();
             //按时间检索
@@ -53,16 +54,16 @@ class Schedule extends BaseController
             return view();
         }
     }
-	
-	//获取工作记录列表
+
+    //获取工作记录列表
     public function get_list()
     {
-		$param = get_params();
-		$where = array();
-		$where['a.tid'] = $param['tid'];
+        $param = get_params();
+        $where = array();
+        $where['a.tid'] = $param['tid'];
         $where['a.delete_time'] = 0;
-		$list = Db::name('Schedule')
-			->field('a.*,u.name')
+        $list = Db::name('Schedule')
+            ->field('a.*,u.name')
             ->alias('a')
             ->join('Admin u', 'u.id = a.admin_id')
             ->order('a.create_time desc')
@@ -72,7 +73,7 @@ class Schedule extends BaseController
             $list[$k]['start_time'] = empty($v['start_time']) ? '' : date('Y-m-d H:i', $v['start_time']);
             $list[$k]['end_time'] = empty($v['end_time']) ? '' : date('H:i', $v['end_time']);
         }
-		return to_assign(0, '', $list);
+        return to_assign(0, '', $list);
     }
 
     //工作记录
@@ -147,73 +148,73 @@ class Schedule extends BaseController
     {
         $param = get_params();
         $admin_id = $this->uid;
-		if (request()->isPost()) {
-			if ($param['id'] == 0) {
-				if (isset($param['start_time_a'])) {
-					$param['start_time'] = strtotime($param['start_time_a'] . '' . $param['start_time_b']);
-				}
-				if (isset($param['end_time_a'])) {
-					$param['end_time'] = strtotime($param['end_time_a'] . '' . $param['end_time_b']);
-				}
-				if($param['start_time']>time()){
-					return to_assign(1, "开始时间不能大于现在时间");			
-				}
-				if ($param['end_time'] <= $param['start_time']) {
-					return to_assign(1, "结束时间需要大于开始时间");
-				}
-				$where1[] = ['delete_time', '=', 0];
-				$where1[] = ['admin_id', '=', $admin_id];
-				$where1[] = ['start_time', 'between', [$param['start_time'], $param['end_time'] - 1]];
+        if (request()->isPost()) {
+            if ($param['id'] == 0) {
+                if (isset($param['start_time_a'])) {
+                    $param['start_time'] = strtotime($param['start_time_a'] . '' . $param['start_time_b']);
+                }
+                if (isset($param['end_time_a'])) {
+                    $param['end_time'] = strtotime($param['end_time_a'] . '' . $param['end_time_b']);
+                }
+                if ($param['start_time'] > time()) {
+                    return to_assign(1, "开始时间不能大于现在时间");
+                }
+                if ($param['end_time'] <= $param['start_time']) {
+                    return to_assign(1, "结束时间需要大于开始时间");
+                }
+                $where1[] = ['delete_time', '=', 0];
+                $where1[] = ['admin_id', '=', $admin_id];
+                $where1[] = ['start_time', 'between', [$param['start_time'], $param['end_time'] - 1]];
 
-				$where2[] = ['delete_time', '=', 0];
-				$where2[] = ['admin_id', '=', $admin_id];
-				$where2[] = ['start_time', '<=', $param['start_time']];
-				$where2[] = ['start_time', '>=', $param['end_time']];
+                $where2[] = ['delete_time', '=', 0];
+                $where2[] = ['admin_id', '=', $admin_id];
+                $where2[] = ['start_time', '<=', $param['start_time']];
+                $where2[] = ['start_time', '>=', $param['end_time']];
 
-				$where3[] = ['delete_time', '=', 0];
-				$where3[] = ['admin_id', '=', $admin_id];
-				$where3[] = ['end_time', 'between', [$param['start_time'] + 1, $param['end_time']]];
+                $where3[] = ['delete_time', '=', 0];
+                $where3[] = ['admin_id', '=', $admin_id];
+                $where3[] = ['end_time', 'between', [$param['start_time'] + 1, $param['end_time']]];
 
-				$record = Db::name('Schedule')
-					->where(function ($query) use ($where1) {
-						$query->where($where1);
-					})
-					->whereOr(function ($query) use ($where2) {
-						$query->where($where2);
-					})
-					->whereOr(function ($query) use ($where3) {
-						$query->where($where3);
-					})
-					->count();
-				if ($record > 0) {
-					return to_assign(1, "您所选的时间区间已有工作记录，请重新选时间");
-				}
-				
-				//$task_detail = Db::name('Task')->where(['id',$param['tid']])->find();
-				$param['labor_time'] = ($param['end_time'] - $param['start_time']) / 3600;
-				$param['admin_id'] = $admin_id;
-				$param['did'] = get_admin($admin_id)['did'];
-				$param['create_time'] = time();
-				$sid = Db::name('Schedule')->strict(false)->field(true)->insertGetId($param);
-				if ($sid > 0) {
-					add_log('add', $sid, $param);
-					return to_assign();
-				} else {
-					return to_assign(1, '操作失败');
-				}
-			} else {
-				$param['update_time'] = time();
-				$res = Db::name('Schedule')->strict(false)->field(true)->update($param);
-				if ($res !== false) {
-					add_log('edit', $param['id'], $param);
-					return to_assign();
-				} else {
-					return to_assign(1, '操作失败');
-				}
-			}
-		}else{
-			return to_assign(1, "错误的请求");
-		}
+                $record = Db::name('Schedule')
+                    ->where(function ($query) use ($where1) {
+                        $query->where($where1);
+                    })
+                    ->whereOr(function ($query) use ($where2) {
+                        $query->where($where2);
+                    })
+                    ->whereOr(function ($query) use ($where3) {
+                        $query->where($where3);
+                    })
+                    ->count();
+                if ($record > 0) {
+                    return to_assign(1, "您所选的时间区间已有工作记录，请重新选时间");
+                }
+
+                //$task_detail = Db::name('Task')->where(['id',$param['tid']])->find();
+                $param['labor_time'] = ($param['end_time'] - $param['start_time']) / 3600;
+                $param['admin_id'] = $admin_id;
+                $param['did'] = get_admin($admin_id)['did'];
+                $param['create_time'] = time();
+                $sid = Db::name('Schedule')->strict(false)->field(true)->insertGetId($param);
+                if ($sid > 0) {
+                    add_log('add', $sid, $param);
+                    return to_assign();
+                } else {
+                    return to_assign(1, '操作失败');
+                }
+            } else {
+                $param['update_time'] = time();
+                $res = Db::name('Schedule')->strict(false)->field(true)->update($param);
+                if ($res !== false) {
+                    add_log('edit', $param['id'], $param);
+                    return to_assign();
+                } else {
+                    return to_assign(1, '操作失败');
+                }
+            }
+        } else {
+            return to_assign(1, "错误的请求");
+        }
     }
 
     //更改工时
@@ -226,9 +227,9 @@ class Schedule extends BaseController
         if (isset($param['end_time_a'])) {
             $param['end_time'] = strtotime($param['end_time_a'] . '' . $param['end_time_b']);
         }
-		if($param['start_time']>time()){
-			return to_assign(1, "开始时间不能大于当前时间");		
-		}
+        if ($param['start_time'] > time()) {
+            return to_assign(1, "开始时间不能大于当前时间");
+        }
         if ($param['end_time'] <= $param['start_time']) {
             return to_assign(1, "结束时间需要大于开始时间");
         }
@@ -275,18 +276,22 @@ class Schedule extends BaseController
     //删除工作记录
     public function delete()
     {
-        $id = get_params("id");
-        $data['status'] = '-1';
-        $data['id'] = $id;
-        $data['update_time'] = time();
-        if (Db::name('schedule')->update($data) !== false) {
-            add_log('delete', $data['id'], $data);
-            return to_assign(0, "删除成功");
-        } else {
-            return to_assign(1, "删除失败");
+        if (request()->isDelete()) {
+            $id = get_params("id");
+            $data['id'] = $id;
+            $data['delete_time'] = time();
+            if (Db::name('schedule')->update($data) !== false) {
+                add_log('delete', $data['id'], $data);
+                return to_assign(0, "删除成功");
+            } else {
+                return to_assign(1, "删除失败");
+            }
+        }else{
+            return to_assign(1, "错误的请求");
         }
     }
 
+    //查看工作记录详情
     public function detail($id)
     {
         $id = get_params('id');
@@ -305,5 +310,4 @@ class Schedule extends BaseController
             return $schedule;
         }
     }
-
 }

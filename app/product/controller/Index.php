@@ -268,7 +268,7 @@ class Index extends BaseController
                 $log_data = array(
                     'module' => 'product',
                     'field' => 'delete',
-                    'action' => 'del',
+                    'action' => 'delete',
                     'product_id' => $detail['id'],
                     'admin_id' => $this->uid,
                     'old_content' => '',

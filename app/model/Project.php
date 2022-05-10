@@ -26,10 +26,12 @@ class Project extends Model
             $detail['product_name'] = Db::name('Product')->where(['id' => $detail['product_id']])->value('name');
             $detail['admin_name'] = Db::name('Admin')->where(['id' => $detail['admin_id']])->value('name');
             $detail['director_name'] = Db::name('Admin')->where(['id' => $detail['director_uid']])->value('name');
-            $team_admin_names = Db::name('Admin')->where('id', 'in', $detail['team_admin_ids'])->column('name');
+            $team_admin_ids = Db::name('ProjectUser')->where(['delete_time' => 0,'project_id'=>$id])->column('uid');
+            $team_admin_names = Db::name('Admin')->where('id', 'in', $team_admin_ids)->column('name');
             $detail['team_admin_names'] = implode(',', $team_admin_names);
             $detail['status_name'] = self::$Status[(int) $detail['status']];
             $detail['times'] = time_trans($detail['create_time']);
+            $detail['users'] = Db::name('ProjectUser')->where(['delete_time' => 0,'project_id'=>$id])->count();
             $detail['comments'] = Db::name('Comment')->where([['module','=','project'],['topic_id','=',$detail['id']],['delete_time','=',0]])->count();
 			$detail['logs'] = Db::name('Log')->where(['module' => 'project', 'project_id' => $detail['id']])->count();
         }

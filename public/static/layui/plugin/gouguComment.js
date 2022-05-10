@@ -44,7 +44,7 @@ layui.define(['gougu'], function (exports) {
 							</div>
 						`;
 						}
-						else if (item.field == 'file' || item.field == 'link') {
+						else if (item.field == 'file' || item.field == 'link' || item.field == 'user') {
 							itemLog += `
 								<div class="log-item py-3 border-b">
 									<i class="iconfont ${item.icon}"></i>

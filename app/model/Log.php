@@ -20,8 +20,6 @@ class Log extends Model
             'field_array' => [
                 'director_uid' => array('icon' => 'icon-xueshengzhuce', 'title' => '负责人'),
                 'check_admin_ids' => array('icon' => 'icon-xueshengzhuce', 'title' => '产品评审人'),
-                'view_admin_ids' => array('icon' => 'icon-xueshengzhuce', 'title' => '白名单'),
-                'test_uid' => array('icon' => 'icon-xueshengzhuce', 'title' => '测试负责人'),
                 'start_time' => array('icon' => 'icon-kaoshijihua', 'title' => '预计开始时间'),
                 'end_time' => array('icon' => 'icon-kaoshijihua', 'title' => '预计结束时间'),
                 'name' => array('icon' => 'icon-wodedianping', 'title' => '标题'),
@@ -38,18 +36,18 @@ class Log extends Model
             'status' => ['未开始', '进行中', '已完成', '已关闭'],
             'field_array' => [
                 'director_uid' => array('icon' => 'icon-xueshengzhuce', 'title' => '负责人'),
-                'team_admin_ids' => array('icon' => 'icon-xueshengzhuce', 'title' => '项目成员'),
                 'start_time' => array('icon' => 'icon-kaoshijihua', 'title' => '预计开始时间'),
                 'end_time' => array('icon' => 'icon-kaoshijihua', 'title' => '预计结束时间'),
                 'name' => array('icon' => 'icon-wodedianping', 'title' => '标题'),
                 'status' => array('icon' => 'icon-wodedianping', 'title' => '状态'),
                 'product_id' => array('icon' => 'icon-wodedianping', 'title' => '关联产品'),
-                'content' => array('icon' => 'icon-wodedianping', 'title' => '描述'),
-                'file' => array('icon' => 'icon-sucaiziyuan', 'title' => '文件'),
-                'link' => array('icon' => 'icon-sucaiziyuan', 'title' => '链接'),
-                'document' => array('icon' => 'icon-jichushezhi', 'title' => '文档'),
+                'content' => array('icon' => 'icon-wodedianping', 'title' => '项目描述'),
+                'file' => array('icon' => 'icon-sucaiziyuan', 'title' => '项目文件'),
+                'link' => array('icon' => 'icon-sucaiziyuan', 'title' => '项目链接'),
+                'document' => array('icon' => 'icon-jichushezhi', 'title' => '项目文档'),
                 'new' => array('icon' => 'icon-zidingyishezhi', 'title' => '项目'),
                 'delete' => array('icon' => 'icon-shanchu', 'title' => '项目'),
+                'user' => array('icon' => 'icon-xueshengzhuce', 'title' => '项目成员'),
             ]],
         'task' => [
             'priority' => ['', '低', '中', '高', '紧急'],
@@ -96,12 +94,7 @@ class Log extends Model
             ->where($where)
             ->select()->toArray();
         $sourse = self::$Sourse[$param['m']];
-        $action = [
-            'add' => '创建',
-            'edit' => '修改',
-            'del' => '删除',
-            'upload' => '上传',
-        ];
+        $action = get_config('log.type_action');
         $field_array = $sourse['field_array'];
         $data = [];
         foreach ($content as $k => $v) {
@@ -110,11 +103,16 @@ class Log extends Model
                 $v['new_content'] = $sourse[$v['field']][$v['new_content']];
             }
             if (strpos($v['field'], '_time') !== false) {
-                $v['old_content'] = date('Y-m-d', (int) $v['old_content']);
+                if($v['old_content'] == ''){
+                    $v['old_content'] = '未设置';
+                }
                 $v['new_content'] = date('Y-m-d', (int) $v['new_content']);
             }
             if (strpos($v['field'], '_uid') !== false) {
                 $v['old_content'] = Db::name('Admin')->where(['id' => $v['old_content']])->value('name');
+                $v['new_content'] = Db::name('Admin')->where(['id' => $v['new_content']])->value('name');
+            }
+            if ($v['field'] == 'user') {
                 $v['new_content'] = Db::name('Admin')->where(['id' => $v['new_content']])->value('name');
             }
             if ($v['field'] == 'product_id') {
@@ -188,13 +186,7 @@ class Log extends Model
             'task' => '任务',
             'document' => '文档',
         ];
-        $action = [
-            'delete' => '删除',
-            'add' => '创建',
-            'edit' => '修改',
-            'del' => '删除',
-            'upload' => '上传',
-        ];
+        $action = get_config('log.type_action');
         $data = [];
         foreach ($content as $k => $v) {
             $sourse = self::$Sourse[$v['module']];
@@ -204,11 +196,16 @@ class Log extends Model
                 $v['new_content'] = $sourse[$v['field']][$v['new_content']];
             }
             if (strpos($v['field'], '_time') !== false) {
-                $v['old_content'] = date('Y-m-d', (int) $v['old_content']);
-                $v['new_content'] = date('Y-m-d', (int) $v['new_content']);
+                if($v['old_content'] == ''){
+                    $v['old_content'] = '未设置';
+                }
+                $v['new_content'] = date('Y-m-d', (int) $v['new_content']);           
             }
             if (strpos($v['field'], '_uid') !== false) {
                 $v['old_content'] = Db::name('Admin')->where(['id' => $v['old_content']])->value('name');
+                $v['new_content'] = Db::name('Admin')->where(['id' => $v['new_content']])->value('name');
+            }
+            if ($v['field'] == 'user') {
                 $v['new_content'] = Db::name('Admin')->where(['id' => $v['new_content']])->value('name');
             }
             if ($v['field'] == 'product_id') {

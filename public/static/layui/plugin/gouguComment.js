@@ -11,9 +11,17 @@ layui.define(['gougu'], function (exports) {
 				btnAlign: 'c',
 				btn: ['提交发布'],
 				yes: function () {
-					let callback = function () {
+					let callback = function (e) {
 						layer.closeAll();
-						gougu.load('/' + module + '/index/view/id/' + topic_id);
+						layer.msg(e.msg);
+						if(module == 'project'){
+							setTimeout(function(){
+								location.reload();
+							},2000)	
+						}
+						else{
+							gougu.load('/' + module + '/index/view/id/' + topic_id);
+						}						
 					}
 					let url = $('#box_url').val();
 					let desc = $('#box_desc').val();

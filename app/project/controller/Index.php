@@ -313,11 +313,33 @@ class Index extends BaseController
             $task_map_d[] = ['flow_status', '<', 3]; 
             $detail['tasks_d_unfinish'] = Db::name('Task')->where($task_map_d)->count();
 
-			//判断是否有编辑项目的权限
+			//判断是否是创建者或者负责人
 			$role = 0;
-			if($detail['admin_id'] == $this->uid || $detail['director_uid'] == $this->uid){
-				$role = 1;
+			if($detail['director_uid'] == $this->uid){
+				$role = 1;//负责人
 			}
+			if($detail['admin_id'] == $this->uid){
+				$role = 2;//创建人
+			}
+
+			$file_array = Db::name('FileInterfix')
+                ->field('mf.id,mf.topic_id,mf.admin_id,f.name,f.filesize,f.filepath,a.name as admin_name')
+                ->alias('mf')
+                ->join('File f', 'mf.file_id = f.id', 'LEFT')
+                ->join('Admin a', 'mf.admin_id = a.id', 'LEFT')
+                ->order('mf.create_time desc')
+                ->where(array('mf.topic_id' => $id,'mf.module' => 'project'))
+                ->select()->toArray();
+
+			$link_array = Db::name('LinkInterfix')
+                ->field('i.id,i.topic_id,i.admin_id,i.desc,i.url,a.name as admin_name')
+                ->alias('i')
+                ->join('Admin a', 'i.admin_id = a.id', 'LEFT')
+                ->order('i.create_time desc')
+                ->where(array('i.topic_id' => $id, 'i.module' => 'project', 'delete_time' => 0))
+                ->select()->toArray();	
+			View::assign('file_array', $file_array);
+			View::assign('link_array', $link_array);
 			View::assign('detail', $detail);
 			View::assign('role', $role);
 			View::assign('id', $id);

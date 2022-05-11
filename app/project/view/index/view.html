@@ -2,23 +2,6 @@
 {block name="style"}
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
 <link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-<style>
-	.layui-card-body dl {
-		width: 50%;
-		float: left;
-		display: block;
-	}
-
-	.layui-card-tips {
-		color: #999;
-	}
-
-	.layui-card-value {
-		padding: 4px 0 16px;
-		font-size: 20px;
-		color: #1E9FFF;
-	}
-</style>
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
@@ -35,19 +18,106 @@
 		<div class="layui-row">
 			<div class="layui-col-xs12">
 				<div class="layui-card">
-					<div class="layui-card-header">
-						<h5>{$detail.name}</h5>
+					<div class="layui-card-header" style="height:45px;">
+						<div class="layui-row">
+							<div class="layui-col-md9">
+								<h5>{$detail.name}</h5>
+							</div>
+							<div class="layui-col-md3" style="text-align:right">
+								{eq name="$role" value="2"}
+								<button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="delProject"><i class="layui-icon layui-icon-delete"></i>删除项目</button>
+								{/eq}
+							</div>
+						</div>
 					</div>
 					<div class="layui-card-body">
 						<p class="py-1"><span class="font-gray">项目编号：</span>M{$detail.id}<span class="font-gray"
-								style="margin-left:36px">创建人：</span>{$detail.admin_name}<span class="font-gray"
-								style="margin-left:36px">负责人：</span>{$detail.director_name}<span class="font-gray"
-								style="margin-left:36px">计划完成周期：</span>{$detail.start_time| date='Y-m-d'}
-							&nbsp;&nbsp;至&nbsp;&nbsp; <span>{$detail.end_time| date='Y-m-d'}<span class="font-gray"
-									style="margin-left:36px">项目状态：</span><span
+								style="margin-left:32px">创建人：</span>{$detail.admin_name}<span class="font-gray"
+								style="margin-left:32px">负责人：</span>{$detail.director_name}<span class="font-gray"
+								style="margin-left:32px">计划完成周期：</span>{$detail.start_time| date='Y-m-d'}
+							&nbsp;至&nbsp; <span>{$detail.end_time| date='Y-m-d'}<span class="font-gray"
+									style="margin-left:32px">项目状态：</span><span
 									class="color-status-{$detail.status}">{$detail.status_name}</span></p>
-						<p class="py-1"><span class="font-gray">项目成员：</span>{$detail.team_admin_names}</p>
+						<p class="py-1"><span class="font-gray">关联产品：</span>{$detail.product_name}<span class="font-gray" style="margin-left:32px">项目成员：</span>{$detail.team_admin_names}</p>
 						<p class="py-1"><span class="font-gray">项目简介：</span>{$detail.content}</p>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-xs12">
+				<div class="layui-card">
+					<div class="layui-card-header" style="height:45px;">
+						<div class="layui-row">
+							<div class="layui-col-md6">
+								<h5>项目附件</h5>
+							</div>
+							<div class="layui-col-md6" style="text-align:right">
+								<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn"><i class="layui-icon layui-icon-add-circle"></i>上传附件</button>
+							</div>
+						</div>
+					</div>
+					<div class="layui-row p-2" id="fileList">
+						{volist name="file_array" id="vo"}
+							<div class="layui-col-md4">
+								<div class="file-card">
+									<i class="file-icon iconfont icon-ziyuan"></i>
+									<div class="file-title" title="上传人：{$vo.admin_name}">
+										{$vo.name}
+									</div>
+									<div class="file-tool">
+										<a href="{$vo.filepath}" download="{$vo.name}" data-id="{$vo.id}" target="_blank" title="大小：{$vo.filesize/1048576|round=2}MB">
+											<i class="iconfont icon-shujudaoru" style="color: #12bb37;"></i>
+										</a>
+										<i class="btn-delete iconfont icon-shanchu" data-id="{$vo.id}" style="color: #FF5722;"></i>
+									</div>
+								</div>
+							</div>
+						{/volist}
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-xs12">
+				<div class="layui-card">
+					<div class="layui-card-header" style="height:45px;">
+						<div class="layui-row">
+							<div class="layui-col-md6">
+								<h5>关联链接</h5>
+							</div>
+							<div class="layui-col-md6" style="text-align:right">
+								<button type="button" class="layui-btn layui-btn-sm layui-btn-sm2" id="linkBtn"><i class="layui-icon layui-icon-add-circle"></i>新增链接</button>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card-body">
+						<table class="layui-table">
+							<thead>
+								<tr>
+									<th width="50%">链接URL</th>
+									<th width="30%" style="text-align:center">链接说明</th>
+									<th width="10%" style="text-align:center">添加人</th>
+									<th width="10%" style="text-align:center">操作</th>
+								</tr>
+							</thead>
+							<tbody id="linkList">
+								{volist name="link_array" id="vo"}
+								<tr>
+									<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+									<td>{$vo.desc}</td>
+									<td style="text-align: center;">{$vo.admin_name}</td>
+									<td style="text-align: center;">
+										<div class="layui-btn-group" style="width:66px">
+											<button type="button" class="layui-btn layui-btn-xs link-edit" data-id="{$vo.id}" data-url="{$vo.url}" data-desc="{$vo.desc}"><i class="layui-icon"></i></button>
+											<button type="button" class="layui-btn layui-btn-danger layui-btn-xs link-delete" data-id="{$vo.id}"><i class="layui-icon"></i></button>
+										</div>
+									</td>
+								</tr>
+								{/volist}
+								{empty name="$link_array" }
+								<tr>
+									<td colspan="4" class="content-none">暂无链接</td>
+								</tr>
+								{/empty}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -148,12 +218,6 @@
 		</div>
 	</div>
 </div>
-<script type="text/html" id="status">
-	<i class="layui-icon {{#  if(d.status == 1){ }}layui-icon-ok{{#  } else { }}layui-icon-close{{#  } }}"></i>
-</script>
-<script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
-</script>
 {/block}
 <!-- /主体 -->
 
@@ -579,7 +643,13 @@
 	}
 
 	function init(layui) {
-		var gougu = layui.gougu;
+		const opsData = {
+			status: [
+				{ 'id': 0, 'title': '关闭' },
+				{ 'id': 1, 'title': '开启' }
+			]
+		}
+		const layer = layui.layer, edit = layui.gouguEdit, comment = layui.gouguComment, upload = layui.upload, gougu = layui.gougu;
 
 		$('#subMenu').on('click', '[data-event="subpage"]', function () {
 			let page = $(this).data('page');
@@ -591,6 +661,99 @@
 		$('#subMenu').on('click', '[data-event="open"]', function () {
 			let url = $(this).data('url');
 			gougu.open(url);
+		})
+
+		$('.hover-edit').hover(function () {
+			$(this).addClass('hover-on');
+		}, function () {
+			$(this).removeClass('hover-on');
+		})
+
+		$('.hover-edit').on('click', 'i', function () {
+			let name = $(this).data('name');
+			let show_txt = $('#' + name + '_' + project_id).text().replace(/[\r\n\t]/g, "");
+			let real_txt = $('#' + name + '_' + project_id).data('val');
+			if (real_txt === '') {
+				real_txt = show_txt;
+			}
+			editShow(project_id, name, show_txt, real_txt);
+		})
+		
+
+		$('#delProject').on('click', function () {
+			layer.confirm('确定要删除该项目吗？请慎重', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.closeAll();
+					layer.msg(e.msg);
+					setTimeout(function () {
+						location.href='/project/index/index';
+					}, 1000)
+				}
+				let postData = { "id": project_id };
+				gougu.delete("/project/index/delete", postData, callback);
+			});
+		})
+
+		upload.render({
+			elem: '#fileBtn'
+			, url: '/api/index/upload'
+			, accept: 'file' //普通文件
+			, exts: 'jpeg|jpg|png|gif|doc|docx|ppt|pptx|xls|xlsx|pdf|zip|rar|7z' //只允许上传文件
+			, before: function (obj) {
+				layer.msg('上传中...', { time: 3600000 });
+			}
+			, done: function (res, index, upload) {
+				let callback = function (e) {
+					layer.msg('上传成功');
+					setTimeout(function(){
+						location.reload();
+					},2000)	
+				}
+				let postData = { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' };
+				gougu.post("/api/appendix/add", postData, callback);
+			}
+			, error: function (index, upload) {
+				layer.msg('上传失败');
+			}
+		});
+
+		$('#fileList').on('click', '.btn-delete', function () {
+			let id = $(this).data('id');
+			layer.confirm('确定要删除该附件吗?', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.closeAll();
+					layer.msg(e.msg);
+					setTimeout(function(){
+						location.reload();
+					},2000)					
+				}
+				let postData = { "id": id };
+				gougu.delete("/api/appendix/delete", postData, callback);
+			});
+		})
+
+		$('#linkBtn').on('click', function () {
+			comment.addLink(0, project_id, 'project', '', '');
+		})
+		$('#linkList').on('click', '.link-edit', function () {
+			let id = $(this).data('id');
+			let url = $(this).data('url');
+			let desc = $(this).data('desc');
+			comment.addLink(id, project_id, 'project', url, desc);
+		})
+		$('#linkList').on('click', '.link-delete', function () {
+			let id = $(this).data('id');
+			layer.confirm('确定要删除该链接吗?', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.closeAll();
+					layer.msg(e.msg);
+					setTimeout(function(){
+						location.reload();
+					},2000)	
+				}
+				let postData = { "id": id };
+				gougu.delete("/api/appendix/delete_link", postData, callback);
+			});
 		})
 
 		let callback = function (res) {

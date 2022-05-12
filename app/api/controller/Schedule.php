@@ -13,26 +13,26 @@ use think\facade\Db;
 use think\facade\View;
 
 class Schedule extends BaseController
-{	
+{
     //获取工作记录列表
     public function index()
     {
         if (request()->isAjax()) {
             $param = get_params();
-			$task_ids = Db::name('Task')->where(['delete_time'=>0,'project_id'=>$param['tid']])->column('id');
+            $task_ids = Db::name('Task')->where(['delete_time' => 0, 'project_id' => $param['tid']])->column('id');
             $where = array();
             if (!empty($param['keywords'])) {
                 $where[] = ['a.title', 'like', '%' . $param['keywords'] . '%'];
             }
-			if (!empty($param['uid'])) {
+            if (!empty($param['uid'])) {
                 $where[] = ['a.admin_id', '=', $param['uid']];
             }
-			if (!empty($task_ids)) {
+            if (!empty($task_ids)) {
                 $where[] = ['a.tid', 'in', $task_ids];
             }
             $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $note = ScheduleList::where($where)
+            $list = ScheduleList::where($where)
                 ->field('a.*,u.name,d.title as department')
                 ->alias('a')
                 ->join('Department d', 'a.did = d.id', 'LEFT')
@@ -43,14 +43,14 @@ class Schedule extends BaseController
                     $item->start_time = empty($item->start_time) ? '' : date('Y-m-d H:i', $item->start_time);
                     $item->end_time = empty($item->end_time) ? '' : date('H:i', $item->end_time);
                 });
-            return table_assign(0, '', $note);
+            return table_assign(0, '', $list);
         } else {
             return view();
         }
     }
-	
-	//查看
-	public function view($id)
+
+    //查看
+    public function view($id)
     {
         $id = get_params('id');
         $schedule = ScheduleList::where(['id' => $id])->find();
@@ -59,7 +59,7 @@ class Schedule extends BaseController
             $schedule['end_time_1'] = date('H:i', $schedule['end_time']);
             $schedule['start_time'] = date('Y-m-d', $schedule['start_time']);
             $schedule['end_time'] = date('Y-m-d', $schedule['end_time']);
-           // $schedule['create_time'] = date('Y-m-d H:i:s', $schedule['create_time']);
+            // $schedule['create_time'] = date('Y-m-d H:i:s', $schedule['create_time']);
             $schedule['user'] = Db::name('Admin')->where(['id' => $schedule['admin_id']])->value('name');
             $schedule['department'] = Db::name('Department')->where(['id' => $schedule['did']])->value('title');
         }

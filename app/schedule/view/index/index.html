@@ -1,0 +1,151 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="style"}
+<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
+<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
+<style>
+	.layui-unselect dl {
+		max-height: 188px;
+	}
+</style>
+{/block}
+{block name="breadcrumb"}
+<span class="layui-breadcrumb">
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a><cite>工作记录</cite></a>
+</span>
+{/block}
+{block name="body"}
+<div id="scheduleList" class="table-content p-3">
+	<div class="layui-form-bar border-t border-x">
+		<form class="layui-form">
+			<div class="layui-input-inline" style="width:100px;">
+				<select name="cate_id" lay-filter="cate">
+					<option value="">工作类型</option>
+					{volist name="cate" id="vo"}
+					<option value="{$vo.id}">{$vo.title}</option>
+					{/volist}
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:180px;">
+				<select name="project_id" lay-filter="project">
+					<option value="">所属项目</option>
+					{volist name="project" id="vo"}
+					<option value="{$vo.id}">{$vo.name}</option>
+					{/volist}
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:220px;">
+				<input name="uid" style="display: none;" value="" />
+				<input type="text" name="user" placeholder="执行员工，可多选，默认是自己" readonly class="layui-input employeepicker"
+					autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="keywords" placeholder="工作内容" class="layui-input" autocomplete="off" />
+			</div>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">搜索</button>
+			<button type="reset" class="gougu-clear" lay-filter="clear">清空</button>
+		</form>
+	</div>
+	<table class="layui-hide" id="scheduleTable" lay-filter="schedule"></table>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	function init(layui) {
+		var table = layui.table, form = layui.form, gougu = layui.gougu, employeepicker = layui.employeepicker;
+
+		layui.pageTable = table.render({
+			elem: '#scheduleTable',
+			title: '工作记录列表',
+			cellMinWidth: 200,
+			url: "/schedule/index/index", //数据接口
+			page: true, //开启分页
+			limit: 20,
+			where:{'uid':0},
+			page: true, //开启分页
+			limit: 20,
+			cols: [[ //表头
+				{field: 'id', title: '序号',width:80, align:'center'}
+				,{field: 'start_time', title: '工作时间范围', align:'center',width:186,templet:function(d){
+					var html=d.start_time+'至'+d.end_time;
+					return html;
+				}}
+				,{field: 'labor_time', title: '工时', style: 'color: #91CC75;', align:'center',width:60}
+				,{field:'work_cate',title: '工作类型', align:'center',width: 100}
+				,{field: 'title', title: '工作内容'}
+				,{field:'name',title: '执行员工', align:'center',width: 80}
+				,{field:'department',title: '所在部门', align:'center',width: 100}
+				,{field: 'create_time', title: '记录时间', align:'center',width:150}
+				,{title: '操作',align:'center',width: 100,templet:function(d){		
+					return '<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="view">修改</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>';
+				}}
+			]]
+		});
+
+		//选择人弹窗	
+		$('#scheduleList').on('click', '.employeepicker', function () {
+			let that = $(this);
+			var ids = $('[name="uid"]').val(), names = that.val(), id_array = [], name_array = [];
+			if (ids.length > 0) {
+				id_array = ids.split(',');
+				name_array = names.split(',');
+			}
+			employeepicker.init({
+				ids: id_array,
+				names: name_array,
+				callback: function (ids, names, dids, departments) {
+					$('[name="uid"]').val(ids);
+					that.val(names);
+					tableReload();
+				}
+			});
+		});
+
+		//新增
+		$('#scheduleList').on('click', '.add-new', function () {
+			gougu.open('/task/index/add');
+		});
+
+		form.on('select(type)', function (data) {
+			tableReload();
+		});
+		form.on('select(cate)', function (data) {
+			tableReload();
+		});
+		form.on('select(project)', function (data) {
+			tableReload();
+		});
+		//监听搜索提交
+		form.on('submit(webform)', function (data) {
+			if (data.field.keywords == '') {
+				return false;
+			}
+			tableReload();
+			return false;
+		});
+		$('#scheduleList').on('click', '[lay-filter="clear"]', function () {
+			setTimeout(function () {
+				tableReload();
+			}, 10)
+		})
+
+		function tableReload() {
+			let postData = {
+				type: $('#scheduleList').find('[name="type"]').val(),
+				cate: $('#scheduleList').find('[name="cate_id"]').val(),
+				uid: $('#scheduleList').find('[name="uid"]').val(),
+				project_id: $('#scheduleList').find('[name="project_id"]').val(),
+				keywords: $('#scheduleList').find('[name="keywords"]').val()
+			}
+			layui.pageTable.reload({ where: postData });
+		}
+	}		
+</script>
+{include file="../../base/view/common/layui" base='base'
+extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
+{/block}
+<!-- /脚本 -->

@@ -7,7 +7,7 @@
 
 declare (strict_types = 1);
 
-namespace app\home\controller;
+namespace app\schedule\controller;
 
 use app\base\BaseController;
 use app\model\Schedule as ScheduleList;
@@ -15,42 +15,49 @@ use schedule\Schedule as ScheduleIndex;
 use think\facade\Db;
 use think\facade\View;
 
-class Schedule extends BaseController
+class Index extends BaseController
 {
     public function index()
     {
         if (request()->isAjax()) {
             $param = get_params();
-            //按时间检索
-            $start_time = isset($param['start_time']) ? strtotime($param['start_time']) : 0;
-            $end_time = isset($param['end_time']) ? strtotime($param['end_time']) : 0;
-            $where = [];
-            if ($start_time > 0 && $end_time > 0) {
-                $where[] = ['a.start_time', 'between', [$start_time, $end_time]];
-            }
+            $where = array();
             if (!empty($param['keywords'])) {
-                $where[] = ['a.title', 'like', '%' . trim($param['keywords']) . '%'];
+                $where[] = ['a.title', 'like', '%' . $param['keywords'] . '%'];
             }
-            if (!empty($param['uid'])) {
-                $where[] = ['a.admin_id', '=', $param['uid']];
-            } else {
-                $where[] = ['a.admin_id', '=', $this->uid];
+            if (empty($param['uid'])) {
+                $param['uid'] = $this->uid;
+            }
+            $where[] = ['a.admin_id', 'in', $param['uid']];
+            if (!empty($param['project_id'])) {
+                $task_ids = Db::name('Task')->where(['delete_time' => 0, 'project_id' => $param['project_id']])->column('id');
+                $where[] = ['a.tid', 'in', $task_ids];
+            }
+            if (!empty($param['cate'])) {
+                $where[] = ['t.cate', '=', $param['cate']];
+            }
+            if (!empty($param['type'])) {
+                $where[] = ['t.type', '=', $param['type']];
             }
             $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-            $schedule = ScheduleList::where($where)
-                ->field('a.*,u.name as create_admin')
+            $list = ScheduleList::where($where)
+                ->field('a.*,u.name,d.title as department,w.title as work_cate')
                 ->alias('a')
-                ->join('admin u', 'u.id = a.admin_id', 'LEFT')
-                ->order('a.id desc')
-                ->paginate($rows, false)
+                ->join('Admin u', 'a.admin_id = u.id', 'LEFT')
+                ->join('Department d', 'u.did = d.id', 'LEFT')
+                ->join('Task t', 't.id = a.tid', 'LEFT')
+                ->join('WorkCate w', 'w.id = t.cate', 'LEFT')
+                ->order('a.create_time asc')
+                ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
                     $item->start_time = empty($item->start_time) ? '' : date('Y-m-d H:i', $item->start_time);
-                    //$item->end_time = empty($item->end_time) ? '': date('Y-m-d H:i', $item->end_time);
                     $item->end_time = empty($item->end_time) ? '' : date('H:i', $item->end_time);
                 });
-            return table_assign(0, '', $schedule);
+            return table_assign(0, '', $list);
         } else {
+            View::assign('cate', get_work_cate());
+            View::assign('project', get_project($this->uid));
             return view();
         }
     }
@@ -286,7 +293,7 @@ class Schedule extends BaseController
             } else {
                 return to_assign(1, "删除失败");
             }
-        }else{
+        } else {
             return to_assign(1, "错误的请求");
         }
     }

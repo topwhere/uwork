@@ -66,8 +66,8 @@ CREATE TABLE `dev_admin_group`  (
 -- ----------------------------
 -- Records of cms_admin_group
 -- ----------------------------
-INSERT INTO `dev_admin_group` VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100',  '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
-INSERT INTO `dev_admin_group` VALUES (2, '人事总监权限', 1, '2,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,4,78,79,80,81,82,83,84,85,86,87,5,88,89,90,91,6,92,93,94,95,96,7,97,99,100', '人力资源部门领导的最高管理权限', 0, 0);
+INSERT INTO `dev_admin_group` VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86',  '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
+INSERT INTO `dev_admin_group` VALUES (2, '总监权限', 1, '2,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,4,78,79,80,81,82,83,84,85,86', '部门领导的最高管理权限', 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_admin_log
@@ -158,70 +158,74 @@ INSERT INTO `dev_admin_rule` VALUES (29, 28, 'admin/ncate/add', '新建/编辑',
 INSERT INTO `dev_admin_rule` VALUES (30, 28, 'admin/ncate/delete', '删除', '公告类型', '', 2, 1, 1, 0, 0);
 
 INSERT INTO `dev_admin_rule` VALUES (31, 27, 'admin/wcate/index', '工作类型', '工作类型', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (32, 31, 'admin/wcate/add', '新建/编辑', '报销类型', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (33, 31, 'admin/wcate/check', '设置', '报销类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (32, 31, 'admin/wcate/add', '新建/编辑', '工作类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (33, 31, 'admin/wcate/check', '设置', '工作类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (34, 27, 'admin/kcate/index', '知识类型', '知识类型', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (35, 34, 'admin/kcate/add', '新建/编辑', '知识类型', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (36, 34, 'admin/kcate/delete', '删除', '知识类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (34, 27, 'admin/tcate/index', '任务类型', '任务类型', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (35, 34, 'admin/tcate/add', '新建/编辑', '任务类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (36, 34, 'admin/tcate/check', '设置', '任务类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (37, 1, '', '企业管理', '企业管理', 'icon-qiyeguanli', 1, 3, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (37, 27, 'admin/kcate/index', '知识类型', '知识类型', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (38, 37, 'admin/kcate/add', '新建/编辑', '知识类型', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (39, 37, 'admin/kcate/delete', '删除', '知识类型', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (38, 37, 'admin/department/index', '部门架构', '部门', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (39, 38, 'admin/department/add', '新建/编辑', '部门', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (40, 38, 'admin/department/delete', '删除', '部门', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (40, 1, '', '企业管理', '企业管理', 'icon-qiyeguanli', 1, 3, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (41, 37, 'admin/position/index', '岗位职称', '岗位职称', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (42, 41, 'admin/position/add', '新建/编辑', '岗位职称', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (43, 41, 'admin/position/delete', '删除', '岗位职称', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (44, 41, 'admin/position/view', '查看', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (41, 40, 'admin/department/index', '部门架构', '部门', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (42, 41, 'admin/department/add', '新建/编辑', '部门', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (43, 41, 'admin/department/delete', '删除', '部门', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (45, 37, 'admin/user/index', '企业员工', '员工', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (46, 45, 'admin/user/add', '新建/编辑', '员工', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (48, 45, 'admin/user/view', '查看', '员工信息', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (49, 45, 'admin/user/set', '设置', '员工状态', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (50, 45, 'admin/user/reset', '重设密码', '员工密码', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (44, 40, 'admin/position/index', '岗位职称', '岗位职称', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (45, 44, 'admin/position/add', '新建/编辑', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (46, 44, 'admin/position/delete', '删除', '岗位职称', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (47, 44, 'admin/position/view', '查看', '岗位职称', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (51, 37, 'admin/note/index', '企业公告', '公告', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (52, 51, 'admin/note/add', '新建/编辑', '公告', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (53, 51, 'admin/note/delete', '删除', '公告', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (54, 51, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (48, 40, 'admin/user/index', '企业员工', '员工', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (49, 48, 'admin/user/add', '新建/编辑', '员工', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (50, 48, 'admin/user/view', '查看', '员工信息', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (51, 48, 'admin/user/set', '设置', '员工状态', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (52, 48, 'admin/user/reset', '重设密码', '员工密码', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (55, 2, 'product/index/list', '产品列表', '产品', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (56, 55, 'product/index/add', '新建', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (57, 55, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (58, 55, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (53, 40, 'admin/note/index', '企业公告', '公告', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (54, 54, 'admin/note/add', '新建/编辑', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (55, 54, 'admin/note/delete', '删除', '公告', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (56, 54, 'admin/note/view', '查看', '公告', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (59, 3, 'project/index/list', '项目列表', '项目', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (60, 59, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (61, 59, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (62, 59, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (63, 59, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (57, 2, 'product/index/list', '产品列表', '产品', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (58, 57, 'product/index/add', '新建', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (59, 57, 'product/index/view', '查看', '产品', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (60, 57, 'product/index/delete', '删除', '产品', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (64, 3, 'release/index/list', '迭代列表', '迭代', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (65, 64, 'release/index/add', '新建', '迭代', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (66, 64, 'release/index/delete', '删除', '迭代', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (67, 64, 'release/index/view', '查看', '迭代', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (61, 3, 'project/index/list', '项目列表', '项目', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (62, 61, 'project/index/add', '新建', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (63, 61, 'project/index/edit', '编辑', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (64, 61, 'project/index/view', '查看', '项目', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (65, 61, 'project/index/delete', '删除', '项目', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (68, 4, 'task/index/list', '任务列表', '任务', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (69, 68, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (70, 68, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (71, 68, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (66, 3, 'release/index/list', '迭代列表', '迭代', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (67, 66, 'release/index/add', '新建', '迭代', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (68, 66, 'release/index/delete', '删除', '迭代', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (69, 66, 'release/index/view', '查看', '迭代', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (72, 4, 'schedule/index/list', '工时列表', '工时', '', 1, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (73, 72, 'schedule/index/add', '新建', '工时', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (74, 72, 'schedule/index/delete', '删除', '工时', '', 2, 1, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (75, 72, 'schedule/index/view', '查看', '工时', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (70, 4, 'task/index/list', '任务列表', '任务', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (71, 70, 'task/index/add', '新建', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (72, 70, 'task/index/delete', '删除', '任务', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (73, 70, 'task/index/view', '查看', '任务', '', 2, 1, 1, 0, 0);
 
-INSERT INTO `dev_admin_rule` VALUES (76, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (77, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (78, 76, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (79, 76, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (80, 76, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (81, 76, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (82, 76, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (83, 76, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (84, 76, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (74, 4, 'schedule/index/list', '工作记录列表', '工作记录', '', 1, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (75, 74, 'schedule/index/add', '新建/编辑', '工作记录', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (76, 74, 'schedule/index/delete', '删除', '工作记录', '', 2, 1, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (77, 74, 'schedule/index/view', '查看', '工作记录', '', 2, 1, 1, 0, 0);
+
+INSERT INTO `dev_admin_rule` VALUES (78, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (79, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 78, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (81, 78, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (82, 78, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (83, 78, 'knowledge/index/view', '详情', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (84, 82, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (85, 82, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (86, 82, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_config
@@ -268,15 +272,11 @@ CREATE TABLE `dev_department`  (
 -- Records of dev_department
 -- ----------------------------
 INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (1, '董事会', 0, 0, '13688888888');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (2, '人事部', 1, 0, '13688888889');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (3, '财务部', 1, 0, '13688888898');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (4, '市场部', 1, 0, '13688888978');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (5, '销售部', 1, 0, '13688889868');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (6, '技术部', 1, 0, '13688898858');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (7, '产品部', 6, 0, '13688888886');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (8, '设计部', 6, 0, '13688888876');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (9, '研发部', 6, 0, '13688888666');
-INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (10, '测试部', 6, 0, '13688888666');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (2, '人事部', 1, 0, '13688888887');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (3, '产品部', 1, 0, '13688888886');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (4, '设计部', 1, 0, '13688888885');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (5, '研发部', 1, 0, '13688888884');
+INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (6, '测试部', 1, 0, '13688888883');
 
 
 -- ----------------------------
@@ -299,11 +299,33 @@ INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
 INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
 INSERT INTO `dev_work_cate` VALUES (3, 'UI设计', 1, 1638088518, 0);
 INSERT INTO `dev_work_cate` VALUES (4, '技术开发', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (5, '测试', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (6, '撰写文档', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (7, '需求调研', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (8, '需求沟通', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (9, '会议', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (5, '测试相关', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (6, '运维相关', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (7, '撰写文档', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (8, '需求调研', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (9, '需求沟通', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (10, '参加会议', 1, 1637987199, 0);
+
+-- ----------------------------
+-- Table structure for dev_task_cate
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_task_cate`;
+CREATE TABLE `dev_task_cate`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '任务类型名称',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '任务类型';
+
+-- ----------------------------
+-- Records of dev_task_cate
+-- ----------------------------
+INSERT INTO `dev_task_cate` VALUES (1, '需求', 1, 1637987189, 0);
+INSERT INTO `dev_task_cate` VALUES (2, '设计', 1, 1637987199, 0);
+INSERT INTO `dev_task_cate` VALUES (3, '研发', 1, 1638088518, 0);
+INSERT INTO `dev_task_cate` VALUES (4, '缺陷', 1, 1637987199, 0);
 
 -- ----------------------------
 -- Table structure for dev_file
@@ -339,7 +361,7 @@ DROP TABLE IF EXISTS `dev_message`;
 CREATE TABLE `dev_message`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '消息主题',
-  `template` tinyint(2) NOT NULL DEFAULT 0 COMMENT '消息模板，用于前端拼接消息，0普通消息，1产品，2项目，3任务',
+  `template` tinyint(2) NOT NULL DEFAULT 0 COMMENT '消息模板,用于前端拼接消息,0普通消息,1产品,2项目,3任务,4公告',
   `content` text NULL COMMENT '消息内容',
   `from_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送人id',
   `to_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '接收人id',
@@ -375,6 +397,27 @@ CREATE TABLE `dev_message_file_interfix`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '消息关联的附件表';
 
 -- ----------------------------
+-- Table structure for dev_note_cate
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_note_cate`;
+CREATE TABLE `dev_note_cate`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父类ID',
+  `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告分类';
+
+-- ----------------------------
+-- Records of dev_note_cate
+-- ----------------------------
+INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299,1);
+INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310,1);
+
+-- ----------------------------
 -- Table structure for dev_note
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_note`;
@@ -400,27 +443,6 @@ CREATE TABLE `dev_note`  (
 INSERT INTO `dev_note` VALUES (1, 1, '欢迎使用勾股OA办公系统', '<p>欢迎使用勾股OA办公系统，勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>', 'https://oa.gougucms.com', 1, 2, 1635696000, 1924876800, 1637984962, 1637984975);
 
 -- ----------------------------
--- Table structure for dev_note_cate
--- ----------------------------
-DROP TABLE IF EXISTS `dev_note_cate`;
-CREATE TABLE `dev_note_cate`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父类ID',
-  `sort` int(5) NOT NULL DEFAULT 0 COMMENT '排序',
-  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
-  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
-  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '公告分类';
-
--- ----------------------------
--- Records of dev_note_cate
--- ----------------------------
-INSERT INTO `dev_note_cate` VALUES (1, 0, 1, '普通公告', 1637984265, 1637984299,1);
-INSERT INTO `dev_note_cate` VALUES (2, 0, 2, '紧急公告', 1637984283, 1637984310,1);
-
--- ----------------------------
 -- Table structure for dev_position
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_position`;
@@ -439,7 +461,7 @@ CREATE TABLE `dev_position`  (
 -- Records of dev_position
 -- ----------------------------
 INSERT INTO `dev_position` VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
-INSERT INTO `dev_position` VALUES (2, '人事总监', 1000, '人事部的最大领导', 1, 0, 0);
+INSERT INTO `dev_position` VALUES (2, '部门总监', 1000, '部门的最大领导', 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_position_group
@@ -468,7 +490,6 @@ CREATE TABLE `dev_schedule`  (
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '工作记录主题',
   `tid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联任务ID',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建员工ID',
-  `did` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属部门',
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结束时间',
   `labor_time` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '工时',
@@ -621,7 +642,6 @@ CREATE TABLE `dev_project`  (
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目负责人',
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
-  `team_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '团队成员，如:1,2,3',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：状态：0未设置,1未开始,2进行中,3已完成,4已关闭',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
@@ -662,7 +682,7 @@ CREATE TABLE `dev_task`  (
   `director_uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '指派给(负责人)',
   `assist_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '协助人员，如:1,2,3',
   `cate` tinyint(1) NOT NULL DEFAULT 1 COMMENT '所属工作类型',
-  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型:1需求,2设计,3研发,4缺陷',
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型',
   `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1待办的,2进行中,3已完成,4已拒绝,5已关闭',
   `done_ratio` int(2) NOT NULL DEFAULT 0 COMMENT '完成进度：0,20,40,50,60,80,100',

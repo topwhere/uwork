@@ -37,10 +37,10 @@ class Index extends BaseController
                     $task_map[] = ['project_id', '=', $item->id];
                     $task_map[] = ['delete_time', '=', 0];
 
-                    //需求
+                    //任务
                     $task_map_a = $task_map;
-                    $task_map_a[] = ['is_bug', '=', 1];
-                    //需求总数
+                    $task_map_a[] = ['is_bug', '=', 0];
+                    //任务总数
                     $item->tasks_a_total = Db::name('Task')->where($task_map_a)->count();
                     //已完成任务
                     $task_map_a[] = ['flow_status', '>', 2]; //已完成

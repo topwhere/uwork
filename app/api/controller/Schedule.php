@@ -35,8 +35,8 @@ class Schedule extends BaseController
             $list = ScheduleList::where($where)
                 ->field('a.*,u.name,d.title as department')
                 ->alias('a')
-                ->join('Department d', 'a.did = d.id', 'LEFT')
                 ->join('Admin u', 'a.admin_id = u.id', 'LEFT')
+                ->join('Department d', 'u.did = d.id', 'LEFT')
                 ->order('a.create_time asc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {

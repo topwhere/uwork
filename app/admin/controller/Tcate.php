@@ -10,50 +10,50 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\base\BaseController;
-use app\admin\validate\WorkCateCheck;
+use app\admin\validate\TaskCateCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;
 
-class Wcate extends BaseController
+class Tcate extends BaseController
 {
-	//工作类别
+	//任务类别
     public function index()
     {
         if (request()->isAjax()) {
-            $cate = Db::name('WorkCate')->order('id asc')->select();
+            $cate = Db::name('TaskCate')->order('id asc')->select();
             return to_assign(0, '', $cate);
         } else {
             return view();
         }
     }
-    //工作类别添加
+    //任务类别添加
     public function add()
     {
 		if (request()->isPost()) {
             $param = get_params();
             if (!empty($param['id']) && $param['id'] > 0) {
                 try {
-                    validate(WorkCateCheck::class)->scene('edit')->check($param);
+                    validate(TaskCateCheck::class)->scene('edit')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
                 $data['update_time'] = time();
-                $res = Db::name('WorkCate')->strict(false)->field(true)->update($param);
+                $res = Db::name('TaskCate')->strict(false)->field(true)->update($param);
                 if ($res) {
                     add_log('edit', $param['id'], $param);
                 }
                 return to_assign();
             } else {
                 try {
-                    validate(WorkCateCheck::class)->scene('add')->check($param);
+                    validate(TaskCateCheck::class)->scene('add')->check($param);
                 } catch (ValidateException $e) {
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
                 $param['create_time'] = time();
-                $insertId = Db::name('WorkCate')->strict(false)->field(true)->insertGetId($param);
+                $insertId = Db::name('TaskCate')->strict(false)->field(true)->insertGetId($param);
                 if ($insertId) {
                     add_log('add', $insertId, $param);
                 }
@@ -62,12 +62,12 @@ class Wcate extends BaseController
         }
     }
 	
-    //工作类别设置
+    //任务类别设置
     public function check()
     {
 		if (request()->isPost()) {
 			$param = get_params();
-			$res = Db::name('WorkCate')->strict(false)->field('id,status')->update($param);
+			$res = Db::name('TaskCate')->strict(false)->field('id,status')->update($param);
 			if ($res) {
 				if($param['status'] == 0){
 					add_log('disable', $param['id'], $param);

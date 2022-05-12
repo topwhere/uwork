@@ -185,10 +185,9 @@
 		</div>
 		<div class="layui-col-md3 p-4">
 			<div class="pb-4"><span class="font-gray">关联项目：</span>{$detail.projects}</div>
-			<div class="pb-4"><span class="font-gray">需求任务：</span>{$detail.tasks_a}</div>
-			<div class="pb-4"><span class="font-gray">设计任务：</span>{$detail.tasks_b}</div>
-			<div class="pb-4"><span class="font-gray">研发任务：</span>{$detail.tasks_c}</div>
-			<div class="pb-4"><span class="font-gray">BUG缺陷：</span>{$detail.tasks_d}</div>
+			{volist name="$detail.task_cate" id="vo"}
+			<div class="pb-4"><span class="font-gray">{$vo.title}任务：</span>{$vo.count}</div>
+			{/volist}
 		</div>
 	</div>
 	<div class="layui-tab layui-tab-brief px-4" lay-filter="docDemoTabBrief">

@@ -55,15 +55,15 @@ class Index extends BaseController
                     $task_map[] = ['project_id', 'in', $project_ids];
                     $task_map[] = ['delete_time', '=', 0];
 
-                    //需求
+                    //任务
                     $task_map_a = $task_map;
-                    $task_map_a[] = ['type', '=', 1];
-                    //需求任务总数
+                    $task_map_a[] = ['is_bug', '=', 0];
+                    //任务总数
                     $item->tasks_a_total = Db::name('Task')->where($task_map_a)->count();
-                    //已完成需求任务
+                    //已完成任务
                     $task_map_a[] = ['flow_status', '>', 2]; //已完成
                     $item->tasks_a_finish = Db::name('Task')->where($task_map_a)->count();
-                    //未完成需求任务
+                    //未完成任务
                     $item->tasks_a_unfinish = $item->tasks_a_total - $item->tasks_a_finish;
                     if ($item->tasks_a_total > 0) {
                         $item->tasks_a_pensent = round($item->tasks_a_finish / $item->tasks_a_total * 100, 2) . "％";
@@ -71,52 +71,20 @@ class Index extends BaseController
                         $item->tasks_a_pensent = "100％";
                     }
 
-                    //设计
+                    //缺陷
                     $task_map_b = $task_map;
-                    $task_map_b[] = ['type', '=', 2];
-                    //设计任务总数
+                    $task_map_b[] = ['is_bug', '=', 1];
+                    //缺陷总数
                     $item->tasks_b_total = Db::name('Task')->where($task_map_b)->count();
-                    //已完成设计任务
+                    //已完成缺陷
                     $task_map_b[] = ['flow_status', '>', 2]; //已完成
                     $item->tasks_b_finish = Db::name('Task')->where($task_map_b)->count();
-                    //未完成设计任务
+                    //未完成缺陷
                     $item->tasks_b_unfinish = $item->tasks_b_total - $item->tasks_b_finish;
                     if ($item->tasks_b_total > 0) {
                         $item->tasks_b_pensent = round($item->tasks_b_finish / $item->tasks_b_total * 100, 2) . "％";
                     } else {
                         $item->tasks_b_pensent = "100％";
-                    }
-
-                    //研发
-                    $task_map_c = $task_map;
-                    $task_map_c[] = ['type', '=', 3];
-                    //研发任务总数
-                    $item->tasks_c_total = Db::name('Task')->where($task_map_c)->count();
-                    //已完成研发任务
-                    $task_map_c[] = ['flow_status', '>', 2]; //已完成
-                    $item->tasks_c_finish = Db::name('Task')->where($task_map_c)->count();
-                    //未完成研发任务
-                    $item->tasks_c_unfinish = $item->tasks_c_total - $item->tasks_c_finish;
-                    if ($item->tasks_c_total > 0) {
-                        $item->tasks_c_pensent = round($item->tasks_c_finish / $item->tasks_c_total * 100, 2) . "％";
-                    } else {
-                        $item->tasks_c_pensent = "100％";
-                    }
-
-                    //缺陷
-                    $task_map_d = $task_map;
-                    $task_map_d[] = ['type', '=', 4];
-                    //缺陷任务总数
-                    $item->tasks_d_total = Db::name('Task')->where($task_map_d)->count();
-                    //已完成缺陷任务
-                    $task_map_d[] = ['flow_status', '>', 2]; //已完成
-                    $item->tasks_d_finish = Db::name('Task')->where($task_map_d)->count();
-                    //未完成缺陷任务
-                    $item->tasks_d_unfinish = $item->tasks_d_total - $item->tasks_d_finish;
-                    if ($item->tasks_d_total > 0) {
-                        $item->tasks_d_pensent = round($item->tasks_d_finish / $item->tasks_d_total * 100, 2) . "％";
-                    } else {
-                        $item->tasks_d_pensent = "100％";
                     }
                 });
             return table_assign(0, '', $list);

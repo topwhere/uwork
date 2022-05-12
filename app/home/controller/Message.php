@@ -539,7 +539,7 @@ class Message extends BaseController
                 } else if ($type = 2) {
                     add_log('delete', $v['id']);
                 } else if ($type = 3) {
-                    add_log('recovery', $v['id']);
+                    add_log('recover', $v['id']);
                 }
                 else if ($type = 4) {
                     add_log('clear', $v['id']);

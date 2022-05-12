@@ -33,28 +33,13 @@ class Product extends Model
             $task_map[] = ['project_id', 'in', $project_ids];
             $task_map[] = ['delete_time', '=', 0];
 
-            //需求
-            $task_map_a = $task_map;
-            $task_map_a[] = ['type', '=', 1];
-            $detail['tasks_a'] = Db::name('Task')->where($task_map_a)->count();
-
-            //设计
-            $task_map_b = $task_map;
-            $task_map_b[] = ['type', '=', 2];
-            //设计任务总数
-            $detail['tasks_b'] = Db::name('Task')->where($task_map_b)->count();
-
-            //研发
-            $task_map_c = $task_map;
-            $task_map_c[] = ['type', '=', 3];
-            //研发任务总数
-            $detail['tasks_c'] = Db::name('Task')->where($task_map_c)->count();
-
-            //缺陷
-            $task_map_d = $task_map;
-            $task_map_d[] = ['type', '=', 4];
-            //缺陷任务总数
-            $detail['tasks_d'] = Db::name('Task')->where($task_map_d)->count();
+            //任务
+            $task_cate = Db::name('TaskCate')->where(['status' => 1])->select()->toArray();
+            foreach ($task_cate as $k => $v) {
+                $task_map[] = ['type', '=', $v['id']];
+                $task_cate[$k]['count'] = Db::name('Task')->where($task_map)->count();
+            }
+            $detail['task_cate'] = $task_cate;
         }
         return $detail;
     }

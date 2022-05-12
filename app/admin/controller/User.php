@@ -222,7 +222,7 @@ class User extends BaseController
 					if ($type == 0) {
 						add_log('disable', $v['id']);
 					} else if ($type == 1) {
-						add_log('recovery', $v['id']);
+						add_log('recover', $v['id']);
 					}
 				}
 			}

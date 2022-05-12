@@ -128,22 +128,12 @@
 					</div>
 					<div class="layui-card-body">
 						<div style="width:100%; height:200px;">
+							{volist name="$detail.task_cate" id="vo"}
 							<dl>
-								<dt class="layui-card-tips">需求任务</dt>
-								<dd class="layui-card-value">{$detail.tasks_a_unfinish} / {$detail.tasks_a_total}</dd>
+								<dt class="layui-card-tips">{$vo.title}任务</dt>
+								<dd class="layui-card-value">{$vo.unfinish} / {$vo.count}</dd>
 							</dl>
-							<dl>
-								<dt class="layui-card-tips">设计任务</dt>
-								<dd class="layui-card-value">{$detail.tasks_b_unfinish} / {$detail.tasks_b_total}</dd>
-							</dl>
-							<dl>
-								<dt class="layui-card-tips">研发任务</dt>
-								<dd class="layui-card-value">{$detail.tasks_c_unfinish} / {$detail.tasks_c_total}</dd>
-							</dl>
-							<dl>
-								<dt class="layui-card-tips">问题缺陷</dt>
-								<dd class="layui-card-value">{$detail.tasks_d_unfinish} / {$detail.tasks_d_total}</dd>
-							</dl>
+							{/volist}
 							<dl>
 								<dt class="layui-card-tips">工作记录</dt>
 								<dd class="layui-card-value">{$detail.schedules}</dd>

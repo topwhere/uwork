@@ -673,7 +673,6 @@ CREATE TABLE `dev_task`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '主题',
   `project_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联项目id',
-  `release_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联迭代id',
   `test_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关联测试id',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `plan_hours` decimal(10, 1) NOT NULL DEFAULT 0.00 COMMENT '预估工时',
@@ -683,6 +682,7 @@ CREATE TABLE `dev_task`  (
   `assist_admin_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '协助人员，如:1,2,3',
   `cate` tinyint(1) NOT NULL DEFAULT 1 COMMENT '所属工作类型',
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '任务类型',
+  `is_bug` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是问题缺陷,1是,0否',
   `priority` tinyint(1) NOT NULL DEFAULT 1 COMMENT '优先级:1低,2中,3高,4紧急',
   `flow_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '流转状态：1待办的,2进行中,3已完成,4已拒绝,5已关闭',
   `done_ratio` int(2) NOT NULL DEFAULT 0 COMMENT '完成进度：0,20,40,50,60,80,100',
@@ -740,6 +740,7 @@ CREATE TABLE `dev_link_interfix`  (
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
   `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建人',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `delete_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '链接关联表';
 

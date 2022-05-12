@@ -51,8 +51,6 @@ function pageInit(){
 			ids: ids,
 			names: names,
 			type: 0,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
 			callback: function (ids, names, dids, departments) {
 				$('[name="uid"]').val(ids);
 				that.val(names);

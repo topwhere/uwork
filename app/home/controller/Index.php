@@ -33,7 +33,7 @@ class Index extends BaseController
                 $install = true;
             }
 
-			//公告相关
+            //公告相关
             $now_time = time();
             $note_list = Db::name('Note')
                 ->field('a.*,c.title as cate_title')
@@ -47,21 +47,9 @@ class Index extends BaseController
                 $note_list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
             }
 
-			//项目相关
-            $project_map1 = [
-                ['admin_id', '=', $this->uid],
-            ];
-            $project_map2 = [
-                ['director_uid', '=', $this->uid],
-            ];
-            $project_map3 = [
-                ['', 'exp', Db::raw("FIND_IN_SET('{$this->uid}',team_admin_ids)")],
-            ];
-            $project_list = Db::name('Project')
-                ->where(function ($query) use ($project_map1, $project_map2, $project_map3) {
-                    $query->where($project_map1)->whereor($project_map2)->whereor($project_map3);
-                })
-                ->where('delete_time', 0)->limit(10)->select()->toArray();
+            //项目相关
+            $project_ids = Db::name('ProjectUser')->where(['uid' => $this->uid, 'delete_time' => 0])->column('project_id');
+            $project_list = Db::name('Project')->where([['delete_time', '=', 0], ['id', 'in', $project_ids]])->limit(10)->select()->toArray();
             foreach ($project_list as $k => &$v) {
                 $v['director_name'] = Db::name('Admin')->where(['id' => $v['director_uid']])->value('name');
                 $v['status_name'] = Project::$Status[(int) $v['status']];
@@ -72,17 +60,9 @@ class Index extends BaseController
                 $task_map[] = ['delete_time', '=', 0];
                 $v['tasks'] = Db::name('Task')->where($task_map)->count();
             }
-			
-            $project_count = Db::name('Project')
-                ->where(function ($query) use ($project_map1, $project_map2, $project_map3) {
-                    $query->where($project_map1)->whereor($project_map2)->whereor($project_map3);
-                })
-                ->where('delete_time', 0)->count();
-            $project_count_ok = Db::name('Project')
-                ->where(function ($query) use ($project_map1, $project_map2, $project_map3) {
-                    $query->where($project_map1)->whereor($project_map2)->whereor($project_map3);
-                })
-                ->where([['delete_time', '=', 0], ['status', '=', 3]])->count();
+
+            $project_count = Db::name('Project')->where([['delete_time', '=', 0], ['id', 'in', $project_ids]])->count();
+            $project_count_ok = Db::name('Project')->where([['delete_time', '=', 0], ['id', 'in', $project_ids], ['status', '=', 3]])->count();
 
             $project = [
                 'list' => $project_list,
@@ -92,7 +72,7 @@ class Index extends BaseController
                 'count_lv' => $project_count == 0 ? 100 : round($project_count_ok * 100 / $project_count, 2),
             ];
 
-			//任务相关
+            //任务相关
             $task_map1 = [
                 ['admin_id', '=', $this->uid],
             ];
@@ -103,7 +83,7 @@ class Index extends BaseController
                 ['', 'exp', Db::raw("FIND_IN_SET('{$this->uid}',assist_admin_ids)")],
             ];
             $task_list = Db::name('Task')
-				->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
+                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
                     $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
                 })
                 ->where([['delete_time', '=', 0], ['flow_status', '<', 3]])->limit(10)->select()->toArray();
@@ -111,7 +91,7 @@ class Index extends BaseController
                 $v['end_time'] = date('Y-m-d', $v['end_time']);
                 $v['priority_name'] = Task::$Priority[(int) $v['priority']];
                 $v['flow_name'] = Task::$FlowStatus[(int) $v['flow_status']];
-                $v['type_name'] = Task::$Type[(int) $v['type']];
+                $v['type_name'] = Db::name('TaskCate')->where(['id' => $v['type']])->value('title');
             }
 
             $task_count = Db::name('Task')
@@ -121,15 +101,15 @@ class Index extends BaseController
                 ->where([['delete_time', '=', 0]])->count();
 
             $task_count_ok = Db::name('Task')
-				->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-					$query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-				})
-				->where([['delete_time', '=', 0], ['flow_status', '>', 2]])->count();
+                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
+                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
+                })
+                ->where([['delete_time', '=', 0], ['flow_status', '>', 2]])->count();
 
             $task_delay = Db::name('Task')
-				->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-					$query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-				})
+                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
+                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
+                })
                 ->where(function ($query) {
                     $query->where([['flow_status', '<', 3], ['end_time', '<', time()]])->whereor([['flow_status', '=', 3], ['end_time', '<', 'over_time']]);
                 })
@@ -139,12 +119,12 @@ class Index extends BaseController
                 'count' => $task_count,
                 'count_ok' => $task_count_ok,
                 'count_no' => $task_count - $task_count_ok,
-				'count_lv' => $task_count == 0 ? 100 : round($task_count_ok * 100 / $task_count, 2),
+                'count_lv' => $task_count == 0 ? 100 : round($task_count_ok * 100 / $task_count, 2),
                 'delay' => $task_delay,
-				'delay_lv' => $task_count == 0 ? 100 : round($task_delay * 100 / $task_count, 2),
+                'delay_lv' => $task_count == 0 ? 100 : round($task_delay * 100 / $task_count, 2),
             ];
 
-			//知识相关
+            //知识相关
             $knowledge_map1 = [
                 ['admin_id', '=', $this->uid],
                 ['is_share', '=', 2],
@@ -163,7 +143,7 @@ class Index extends BaseController
                 $v['cate_name'] = Db::name('KnowledgeCate')->where(['id' => $v['cate_id']])->value('title');
             }
 
-			//工时相关
+            //工时相关
             $work_count = Db::name('Schedule')->where(['delete_time' => 0])->count();
             $work_hours = Db::name('Schedule')->where(['delete_time' => 0])->sum('labor_time');
             $work = [
@@ -175,7 +155,7 @@ class Index extends BaseController
                 'product' => Db::name('Product')->where(['delete_time' => 0])->count(),
                 'projects' => Db::name('Project')->where(['delete_time' => 0])->count(),
                 'tasks' => Db::name('Task')->where(['delete_time' => 0])->count(),
-				'knowledges' => Db::name('Knowledge')->where(['delete_time' => 0])->count(),
+                'knowledges' => Db::name('Knowledge')->where(['delete_time' => 0])->count(),
             ];
 
             View::assign([

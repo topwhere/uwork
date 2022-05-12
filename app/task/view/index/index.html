@@ -22,10 +22,9 @@
 			<div class="layui-col-md6 gougu-tab">
 				<ul class="gougu-tab-title big" id="taskTab">
 					<li class="tab-this" data-type="0">全部</li>
-					<li data-type="1">需求</li>
-					<li data-type="2">设计</li>
-					<li data-type="3">研发</li>
-					<li data-type="4">缺陷</li>
+					{volist name="$task_cate" id="vo"}
+					<li data-type="{$vo.id}">{$vo.title}</li>
+					{/volist}
 				</ul>
 			</div>
 			<div class="layui-col-md6 py-2 px-3" style="text-align:right">
@@ -161,9 +160,6 @@
 			employeepicker.init({
 				ids: id_array,
 				names: name_array,
-				department_url: "/api/index/get_department_tree",
-				employee_url: "/api/index/get_employee",
-				type: 1,
 				callback: function (ids, names, dids, departments) {
 					$('[name="' + ids_name + '"]').val(ids);
 					that.val(names);

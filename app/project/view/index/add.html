@@ -77,8 +77,6 @@ function openInit() {
 		employeepicker.init({
 			ids:ids,
 			names:names,
-			department_url: "/api/index/get_department_tree",
-			employee_url: "/api/index/get_employee",
 			type:0,
 			callback:function(ids,names,dids,departments){
 				$('[name="director_uid"]').val(ids);

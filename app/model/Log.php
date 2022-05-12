@@ -52,7 +52,6 @@ class Log extends Model
         'task' => [
             'priority' => ['', '低', '中', '高', '紧急'],
             'flow_status' => ['', '未开始', '进行中', '已完成', '已拒绝', '已关闭'],
-            'type' => ['其他', '需求','设计','研发','缺陷'],
             'field_array' => [
                 'director_uid' => array('icon' => 'icon-xueshengzhuce', 'title' => '负责人'),
                 'assist_admin_ids' => array('icon' => 'icon-xueshengbaoming', 'title' => '协作人'),
@@ -122,6 +121,10 @@ class Log extends Model
             if ($v['field'] == 'project_id') {
                 $v['old_content'] = Db::name('Project')->where(['id' => $v['old_content']])->value('name');
                 $v['new_content'] = Db::name('Project')->where(['id' => $v['new_content']])->value('name');
+            }
+            if ($v['field'] == 'type') {
+                $v['old_content'] = Db::name('TaskCate')->where(['id' => $v['old_content']])->value('title');
+                $v['new_content'] = Db::name('TaskCate')->where(['id' => $v['new_content']])->value('title');
             }
             if ($v['field'] == 'cate') {
                 $v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');

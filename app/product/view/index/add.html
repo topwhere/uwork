@@ -58,8 +58,6 @@
 			employeepicker.init({
 				ids: ids,
 				names: names,
-				department_url: "/api/index/get_department_tree",
-				employee_url: "/api/index/get_employee",
 				type: 0,
 				callback: function (ids, names, dids, departments) {
 					$('[name="director_uid"]').val(ids);
@@ -78,9 +76,6 @@
 			employeepicker.init({
 				ids: check_admin_id_array,
 				names: check_admin_name_array,
-				department_url: "/api/index/get_department_tree",
-				employee_url: "/api/index/get_employee",
-				type: 1,
 				callback: function (ids, names, dids, departments) {
 					$('[name="check_admin_ids"]').val(ids);
 					$('[name="check_admin_names"]').val(names);

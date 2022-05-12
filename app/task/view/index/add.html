@@ -4,9 +4,16 @@
 		<tr>
 			<td class="layui-td-gray">任务主题<font>*</font>
 			</td>
-			<td colspan="5">
-				<input type="text" name="title" lay-verify="required" lay-reqText="请输入任务主题" placeholder="请输入任务主题"
-					class="layui-input" value="">
+			<td colspan="3">
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入任务主题" placeholder="请输入任务主题" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">任务性质<span style="color: red">*</span></td>
+			<td>
+				<select name="is_bug" lay-verify="required" lay-reqText="请选择任务性质">
+					<option value="">请选择</option>
+					<option value="0">普通任务(TASK)</option>
+					<option value="1">问题缺陷(BUG)</option>
+				</select>
 			</td>
 			<td class="layui-td-gray">优先级<span style="color: red">*</span></td>
 			<td>
@@ -107,8 +114,6 @@
 			employeepicker.init({
 				ids: ids,
 				names: names,
-				department_url: "/api/index/get_department_tree",
-				employee_url: "/api/index/get_employee",
 				type: 0,
 				callback: function (ids, names, dids, departments) {
 					$('[name="director_uid"]').val(ids);

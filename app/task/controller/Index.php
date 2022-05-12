@@ -22,11 +22,12 @@ class Index extends BaseController
     {
         if (request()->isAjax()) {
             $param = get_params();
-			$param['uid'] = $this->uid;
-			$list = (new TaskList())->list($param);
+            $param['uid'] = $this->uid;
+            $list = (new TaskList())->list($param);
             return table_assign(0, '', $list);
         } else {
             View::assign('cate', get_work_cate());
+            View::assign('task_cate', get_task_cate());
             View::assign('project', get_project($this->uid));
             return view();
         }
@@ -128,16 +129,14 @@ class Index extends BaseController
         if (empty($detail)) {
             return to_assign(1, '任务不存在');
         } else {
-			$role_uid = [$detail['admin_id'], $detail['director_uid']];
+            $role_uid = [$detail['admin_id'], $detail['director_uid']];
             $role_edit = 'view';
             if (in_array($this->uid, $role_uid)) {
                 $role_edit = 'edit';
             }
-            $project_ids = (new TaskList())->get_project($this->uid);
-            if (!in_array($detail['project_id'], $project_ids)) {
-                return to_assign(1, '您没权限查看该产品');
-            }
-            $file_array = Db::name('FileInterfix')
+            $project_ids = Db::name('ProjectUser')->where(['uid' => $this->uid, 'delete_time' => 0])->column('project_id');
+            if (in_array($detail['project_id'], $project_ids) || in_array($this->uid, $role_uid) || in_array($this->uid, explode(",",$detail['assist_admin_ids']))) {
+                $file_array = Db::name('FileInterfix')
                 ->field('mf.id,mf.topic_id,mf.admin_id,f.name,f.filesize,f.filepath,a.name as admin_name')
                 ->alias('mf')
                 ->join('File f', 'mf.file_id = f.id', 'LEFT')
@@ -145,21 +144,25 @@ class Index extends BaseController
                 ->order('mf.create_time desc')
                 ->where(array('mf.topic_id' => $id, 'mf.module' => 'task'))
                 ->select()->toArray();
-				
-			$link_array = Db::name('LinkInterfix')
-                ->field('i.id,i.topic_id,i.admin_id,i.desc,i.url,a.name as admin_name')
-                ->alias('i')
-                ->join('Admin a', 'i.admin_id = a.id', 'LEFT')
-                ->order('i.create_time desc')
-                ->where(array('i.topic_id' => $id, 'i.module' => 'task', 'delete_time' => 0))
-                ->select()->toArray();
 
-			View::assign('detail', $detail);
-			View::assign('file_array', $file_array);
-			View::assign('link_array', $link_array);
-			View::assign('role_edit', $role_edit);
-			View::assign('id', $id);
-            return view();
+                $link_array = Db::name('LinkInterfix')
+                    ->field('i.id,i.topic_id,i.admin_id,i.desc,i.url,a.name as admin_name')
+                    ->alias('i')
+                    ->join('Admin a', 'i.admin_id = a.id', 'LEFT')
+                    ->order('i.create_time desc')
+                    ->where(array('i.topic_id' => $id, 'i.module' => 'task', 'delete_time' => 0))
+                    ->select()->toArray();
+
+                View::assign('detail', $detail);
+                View::assign('file_array', $file_array);
+                View::assign('link_array', $link_array);
+                View::assign('role_edit', $role_edit);
+                View::assign('id', $id);
+                return view();
+            }
+            else{
+                return to_assign(1, '您没权限查看该任务');
+            }
         }
     }
 

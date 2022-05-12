@@ -238,27 +238,15 @@ function get_product()
 }
 
 //读取项目
-function get_project($uid=0)
+function get_project($uid = 0)
 {
-    if($uid > 0){
-        $map1 = [
-            ['admin_id', '=', $uid],
-        ];
-        $map2 = [
-            ['director_uid', '=', $uid],
-        ];
-        $map3 = [
-            ['', 'exp', Db::raw("FIND_IN_SET({$uid},team_admin_ids)")],
-        ];
-        $project = Db::name('Project')
-            ->where(function ($query) use ($map1, $map2, $map3) {
-                $query->where($map1)->whereor($map2)->whereor($map3);
-            })
-            ->where('delete_time', 0)->select()->toArray();
+    $map = [];
+    $map[] = ['delete_time', '=', 0];
+    if ($uid > 0) {
+        $project_ids = Db::name('ProjectUser')->where(['uid' => $uid, 'delete_time' => 0])->column('project_id');
+        $map[] = ['id', 'in', $project_ids];
     }
-    else{
-        $project = Db::name('Project')->where(['delete_time' => 0])->select()->toArray();
-    }
+    $project = Db::name('Project')->where($map)->select()->toArray();
     return $project;
 }
 
@@ -266,6 +254,13 @@ function get_project($uid=0)
 function get_work_cate()
 {
     $cate = Db::name('WorkCate')->where('status', 1)->select()->toArray();
+    return $cate;
+}
+
+//读取任务类型
+function get_task_cate()
+{
+    $cate = Db::name('TaskCate')->where('status', 1)->select()->toArray();
     return $cate;
 }
 

@@ -155,10 +155,11 @@ class Index extends BaseController
                     if (!empty($param['director_uid'])){
                         $project_users.=",".$param['director_uid'];
                     }
-                    if (!empty($param['assist_admin_ids'])){
-                        $project_users.=",".$param['assist_admin_ids'];
+                    if (!empty($param['team_admin_ids'])){
+                        $project_users.=",".$param['team_admin_ids'];
                     }
                     $project_array = explode(",",(string)$project_users);
+                    $project_array = array_unique($project_array);
                     $project_user_array=[];
                     foreach ($project_array as $k => $v) {
                         if (is_numeric($v)) {

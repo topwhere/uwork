@@ -66,6 +66,12 @@ class Appendix extends BaseController
     public function add_link()
     {
         $param = get_params();
+        $validate = \think\facade\Validate::rule([
+            'url' => 'url',
+        ]);
+        if (!$validate->check($param)) {
+            return to_assign(1, $validate->getError());
+        }
         if (!empty($param['id']) && $param['id'] > 0) {
             $param['update_time'] = time();
             $res = Db::name('LinkInterfix')->where('id', $param['id'])->strict(false)->field(true)->update($param);
@@ -81,7 +87,7 @@ class Appendix extends BaseController
                     'create_time' => time(),
                 );
                 Db::name('Log')->strict(false)->field(true)->insert($log_data);
-                return to_assign();
+                return to_assign(0, '编辑成功');
             }
         } else {
             $param['create_time'] = time();
@@ -98,7 +104,7 @@ class Appendix extends BaseController
                     'create_time' => time(),
                 );
                 Db::name('Log')->strict(false)->field(true)->insert($log_data);
-                return to_assign(0, '', $lid);
+                return to_assign(0, '添加成功', $lid);
             }
         }
     }

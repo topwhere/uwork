@@ -12,16 +12,21 @@ layui.define(['gougu'], function (exports) {
 				btn: ['提交发布'],
 				yes: function () {
 					let callback = function (e) {
-						layer.closeAll();
-						layer.msg(e.msg);
-						if(module == 'project'){
-							setTimeout(function(){
-								location.reload();
-							},2000)	
+						if(e.code==0){
+							layer.closeAll();
+							layer.msg(e.msg);
+							if(module == 'project'){
+								setTimeout(function(){
+									location.reload();
+								},2000)	
+							}
+							else{
+								gougu.load('/' + module + '/index/view/id/' + topic_id);
+							}
 						}
 						else{
-							gougu.load('/' + module + '/index/view/id/' + topic_id);
-						}						
+							layer.msg(e.msg);
+						}				
 					}
 					let url = $('#box_url').val();
 					let desc = $('#box_desc').val();

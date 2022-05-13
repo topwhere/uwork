@@ -14,6 +14,7 @@ use think\facade\View;
 
 class Schedule extends BaseController
 {
+    
     //获取工作记录列表
     public function index()
     {
@@ -33,13 +34,21 @@ class Schedule extends BaseController
             $where[] = ['a.delete_time', '=', 0];
             $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
             $list = ScheduleList::where($where)
-                ->field('a.*,u.name,d.title as department')
+                ->field('a.*,u.name,d.title as department,t.title as task,p.name as project,w.title as work_cate')
                 ->alias('a')
                 ->join('Admin u', 'a.admin_id = u.id', 'LEFT')
                 ->join('Department d', 'u.did = d.id', 'LEFT')
-                ->order('a.create_time asc')
+                ->join('Task t', 'a.tid = t.id', 'LEFT')
+                ->join('WorkCate w', 'w.id = t.cate', 'LEFT')
+                ->join('Project p', 't.project_id = p.id', 'LEFT')
+                ->order('a.end_time desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
+                    $item->start_time_a = empty($item->start_time) ? '' : date('Y-m-d', $item->start_time);
+                    $item->start_time_b = empty($item->start_time) ? '' : date('H:i', $item->start_time);
+                    $item->end_time_a = empty($item->end_time) ? '' : date('Y-m-d', $item->end_time);
+                    $item->end_time_b = empty($item->end_time) ? '' : date('H:i', $item->end_time);
+
                     $item->start_time = empty($item->start_time) ? '' : date('Y-m-d H:i', $item->start_time);
                     $item->end_time = empty($item->end_time) ? '' : date('H:i', $item->end_time);
                 });
@@ -47,6 +56,27 @@ class Schedule extends BaseController
         } else {
             return view();
         }
+    }
+
+    //获取任务工作记录列表
+    public function get_list()
+    {
+        $param = get_params();
+        $where = array();
+        $where['a.tid'] = $param['tid'];
+        $where['a.delete_time'] = 0;
+        $list = Db::name('Schedule')
+            ->field('a.*,u.name')
+            ->alias('a')
+            ->join('Admin u', 'u.id = a.admin_id')
+            ->order('a.create_time desc')
+            ->where($where)
+            ->select()->toArray();
+        foreach ($list as $k => $v) {
+            $list[$k]['start_time'] = empty($v['start_time']) ? '' : date('Y-m-d H:i', $v['start_time']);
+            $list[$k]['end_time'] = empty($v['end_time']) ? '' : date('H:i', $v['end_time']);
+        }
+        return to_assign(0, '', $list);
     }
 
     //查看

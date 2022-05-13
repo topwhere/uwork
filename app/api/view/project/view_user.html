@@ -12,13 +12,13 @@
 		layui.pageTable = table.render({
 			elem: '#user',
 			title: '项目成员列表',
-			cellMinWidth: 200,
+			cellMinWidth: 120,
 			url: "/api/project/user", //数据接口
 			where: { 'tid': project_id },
 			page: false, //开启分页
 			limit: 20,
 			cols: [[ //表头
-				{ field: 'name', fixed: 'left', title: '成员', width: 80, rowspan: 2 }
+				{ field: 'name', fixed: 'left', title: '成员姓名', width: 90, rowspan: 2 }
 				, { field: 'create_time', title: '进入项目日期', width: 110, align: 'center', rowspan: 2 }
 				, { field: 'role', title: '角色', align: 'center', width: 90, rowspan: 2, templet: function (d) {
 					var html='<span style="color: #4285F4;">普通成员</span>';
@@ -33,10 +33,9 @@
 				, { field: 'position', title: '职位', align: 'center', width: 100, rowspan: 2 }
 				, { field: 'department', title: '所在部门', align: 'center', width: 120, rowspan: 2 }
 				, { field: 'mobile', title: '手机号码', align: 'center', width: 110, rowspan: 2 }
+				, { field: 'email', title: '电子邮箱', align: 'center', rowspan: 2 }
 				, { align: 'center', title: '工作记录', colspan: 2 }
-				, { align: 'center', title: '需求任务', colspan: 3 }
-				, { align: 'center', title: '设计任务', colspan: 3 }
-				, { align: 'center', title: '研发任务', colspan: 3 }
+				, { align: 'center', title: '项目任务', colspan: 3 }
 				, { align: 'center', title: 'BUG缺陷', colspan: 3 }
 				, { field: 'delete_time', title: '移除日期', align: 'center', width: 110, rowspan: 2 }
 				, { field: 'status',fixed: 'right', title: '状态', align: 'center', width: 60, rowspan: 2, templet: function (d) {
@@ -60,13 +59,7 @@
 				, { field: 'tasks_a_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
 				, { field: 'tasks_b_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
 				, { field: 'tasks_b_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
-				, { field: 'tasks_b_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
-				, { field: 'tasks_c_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
-				, { field: 'tasks_c_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
-				, { field: 'tasks_c_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
-				, { field: 'tasks_d_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
-				, { field: 'tasks_d_finish', align: 'center', style: 'color: #FAC858;', width: 72, 'title': '已完成' }
-				, { field: 'tasks_d_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '修复率' }
+				, { field: 'tasks_b_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '修复率' }
 			]]
 		});
 

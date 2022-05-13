@@ -1,9 +1,9 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a href="/home/user/setting">信息设置</a>
-  <a><cite>权限角色</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="/home/user/setting">信息设置</a>
+	<a><cite>权限角色</cite></a>
 </span>
 {/block}
 <!-- 主体 -->
@@ -37,7 +37,7 @@
 	function init(layui) {
 		var table = layui.table,
 			gougu = layui.gougu;
-			form = layui.form;
+		form = layui.form;
 
 		layui.pageTable = table.render({
 			elem: '#test',
@@ -45,21 +45,23 @@
 			url: "/admin/role/index", //数据接口
 			page: true, //开启分页
 			limit: 20,
+			defaultToolbar: false,
 			cols: [[ //表头
 				{ field: 'id', title: 'ID号', align: 'center', width: 80 }
 				, { field: 'title', title: '权限组名称', width: 200 }
 				, { field: 'desc', title: '备注' }
 				, { field: 'status', title: '状态', toolbar: '#status', align: 'center', width: 80 }
-				, {	width: 100,title: '操作',align: 'center',templet: function (d) {
+				, {
+					width: 100, title: '操作', align: 'center', templet: function (d) {
 						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
 						return html;
 					}
 				}
 			]]
 		});
-		
+
 		//表头工具栏事件
-		table.on('toolbar(test)', function(obj){
+		table.on('toolbar(test)', function (obj) {
 			if (obj.event === "add") {
 				gougu.open("/admin/role/add");
 				return;
@@ -69,7 +71,7 @@
 		table.on('tool(test)', function (obj) {
 			var data = obj.data;
 			if (obj.event === "edit") {
-				gougu.open("/admin/role/add?id="+obj.data.id);
+				gougu.open("/admin/role/add?id=" + obj.data.id);
 				return;
 			}
 			if (obj.event === 'del') {
@@ -80,7 +82,7 @@
 							obj.del();
 						}
 					}
-					gougu.delete("/admin/role/delete",{ id: obj.data.id },callback);
+					gougu.delete("/admin/role/delete", { id: obj.data.id }, callback);
 					layer.close(index);
 				});
 			}

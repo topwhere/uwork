@@ -9,9 +9,9 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\admin\validate\NoteCheck;
 use app\base\BaseController;
 use app\model\Note as NoteList;
-use app\admin\validate\NoteCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;
@@ -32,7 +32,7 @@ class Note extends BaseController
                 ->field('a.*,c.title as cate_title')
                 ->alias('a')
                 ->join('NoteCate c', 'a.cate_id = c.id', 'LEFT')
-                ->order('a.create_time asc')
+                ->order('a.create_time desc')
                 ->paginate($rows, false, ['query' => $param])
                 ->each(function ($item, $key) {
                     $item->start_time = empty($item->start_time) ? '-' : date('Y-m-d', $item->start_time);
@@ -49,21 +49,21 @@ class Note extends BaseController
     {
         $param = get_params();
         if (request()->isPost()) {
-			//markdown数据处理
-			if (isset($param['table-align'])) {
-				unset($param['table-align']);
-			}
-			if (isset($param['docContent-html-code'])) {
-				$param['content'] = $param['docContent-html-code'];
-				$param['md_content'] = $param['docContent-markdown-doc'];
-				unset($param['docContent-html-code']);
-				unset($param['docContent-markdown-doc']);
-			}
-			if (isset($param['ueditorcontent'])) {
-				$param['content'] = $param['ueditorcontent'];
-				$param['md_content'] = '';
-			}
-			
+            //markdown数据处理
+            if (isset($param['table-align'])) {
+                unset($param['table-align']);
+            }
+            if (isset($param['docContent-html-code'])) {
+                $param['content'] = $param['docContent-html-code'];
+                $param['md_content'] = $param['docContent-markdown-doc'];
+                unset($param['docContent-html-code']);
+                unset($param['docContent-markdown-doc']);
+            }
+            if (isset($param['ueditorcontent'])) {
+                $param['content'] = $param['ueditorcontent'];
+                $param['md_content'] = '';
+            }
+
             $param['start_time'] = isset($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
             $param['end_time'] = isset($param['end_time']) ? strtotime(urldecode($param['end_time'])) : 0;
             if (!empty($param['id']) && $param['id'] > 0) {
@@ -91,8 +91,8 @@ class Note extends BaseController
                 $sid = NoteList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     add_log('add', $sid, $param);
-					$users= Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
-					sendMessage($users,1,['title'=>$param['title'],'action_id'=>$sid]);
+                    $users = Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
+                    sendMessage($users, 1, ['title' => $param['title'], 'action_id' => $sid]);
                 }
 
                 return to_assign();
@@ -120,18 +120,18 @@ class Note extends BaseController
     //删除
     public function delete()
     {
-		if (request()->isDelete()) {
-			$id = get_params("id");
-			$data['delete_time'] = time();
-			$data['id'] = $id;
-			if (Db::name('Note')->update($data) !== false) {
-				add_log('delete', $id);
-				return to_assign(0, "删除成功");
-			} else {
-				return to_assign(0, "删除失败");
-			}
-		}else{
-			return to_assign(1, "错误的请求");
-		}
+        if (request()->isDelete()) {
+            $id = get_params("id");
+            $data['delete_time'] = time();
+            $data['id'] = $id;
+            if (Db::name('Note')->update($data) !== false) {
+                add_log('delete', $id);
+                return to_assign(0, "删除成功");
+            } else {
+                return to_assign(0, "删除失败");
+            }
+        } else {
+            return to_assign(1, "错误的请求");
+        }
     }
 }

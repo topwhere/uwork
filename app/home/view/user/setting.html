@@ -1,8 +1,8 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a><cite>信息设置</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a><cite>信息设置</cite></a>
 </span>
 {/block}
 <!-- 主体 -->
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-bg-content pb-4">		
+	<div class="main-bg-content pb-4">
 		<div class="layui-card">
 			<div class="table-title">个人信息</div>
 			<div class="layui-card-body">
@@ -26,18 +26,24 @@
 						<td>{$admin.username}</td>
 						<td class="layui-td-gray">姓名</td>
 						<td>{$admin.name}</td>
-						<td class="layui-td-gray" rowspan="4">头像</td>
-						<td rowspan="4">
-							<img src="{$admin.thumb}" width="100" />
+						<td class="layui-td-gray">性别</td>
+						<td>
+							{eq name="$admin.sex" value="1"}男{/eq}
+							{eq name="$admin.sex" value="2"}女{/eq}
+						</td>
+						<td class="layui-td-gray" rowspan="3">头像</td>
+						<td rowspan="3">
+							<img src="{$admin.thumb}" width="90" />
 						</td>
 					</tr>
 					<tr>
 						<td class="layui-td-gray">手机号码</td>
 						<td>{$admin.mobile}</td>
-						<td class="layui-td-gray">性别</td>
+						<td class="layui-td-gray">手机号码</td>
+						<td>{$admin.email}</td>
+						<td class="layui-td-gray">入职日期</td>
 						<td>
-							{eq name="$admin.sex" value="1"}男{/eq}
-							{eq name="$admin.sex" value="2"}女{/eq}
+							{$admin.entry_time | date='Y-m-d'}
 						</td>
 					</tr>
 					<tr>
@@ -45,29 +51,24 @@
 						<td>{$admin.department}</td>
 						<td class="layui-td-gray">岗位职称</td>
 						<td>{$admin.position}</td>
-					</tr>
-					<tr>
 						<td class="layui-td-gray">员工类型</td>
 						<td>
 							{eq name="$admin.type" value="3"}<span style="color:#5FB878">实 习 生</span>{/eq}
 							{eq name="$admin.type" value="2"}<span style="color:#01AAED">试用员工</span>{/eq}
 							{eq name="$admin.type" value="1"}<span style="color:#393D49">正式员工</span>{/eq}
 						</td>
-						<td class="layui-td-gray">入职日期</td>
-						<td>
-							{$admin.entry_time | date='Y-m-d'}
-						</td>
+						
 					</tr>
 					<tr>
 						<td class="layui-td-gray">个人简介</td>
-						<td colspan="5">
+						<td colspan="7">
 							{$admin.desc}
 						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		
+
 		<div class="layui-card">
 			<div class="table-title">系统信息</div>
 			<div class="layui-card-body">
@@ -80,7 +81,8 @@
 						<td rowspan="3" class="layui-td-gray2">LOGO</td>
 						<td rowspan="3" style="width: 240px;">
 							<div class="layui-upload" style="width: 240px;">
-								<img src='{notempty name="$config.logo"}{$config.logo}{/notempty}' style="max-width: 100%; width: 100%;" />
+								<img src='{notempty name="$config.logo"}{$config.logo}{/notempty}'
+									style="max-width: 100%; width: 100%;" />
 							</div>
 						</td>
 					</tr>
@@ -132,7 +134,8 @@
 				<table class="layui-table" lay-skin="" lay-size="sm">
 					{if condition="($install == true)"}
 					<tr>
-						<td colspan="4" style="color: #E94335; background-color:#f5f5f5">提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+						<td colspan="4" style="color: #E94335; background-color:#f5f5f5">
+							提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
 					</tr>
 					{/if}
 					<tr>
@@ -149,18 +152,15 @@
 					</tr>
 					<tr>
 						<td class="layui-td-gray2">ThinkPHP</td>
-						<td colspan="3">{$TP_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
-								href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
-					</tr>
-					<tr>
+						<td>{$TP_VERSION}</td>
 						<td class="layui-td-gray2">Layui</td>
-						<td colspan="3">{:LAYUI_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
-								href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
+						<td>{:LAYUI_VERSION}</td>
 					</tr>
 					<tr>
 						<td class="layui-td-gray2">勾股DEV</td>
 						<td colspan="3">{:CMS_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:10px"
-							href="https://blog.gougucms.com/home/book/detail/bid/7.html" target="_blank">勾股DEV文档</a></td>
+								href="https://blog.gougucms.com/home/book/detail/bid/7.html" target="_blank">勾股DEV文档</a>
+						</td>
 					</tr>
 					<tr>
 						<td class="layui-td-gray2">BUG反馈</td>
@@ -168,11 +168,19 @@
 					</tr>
 					<tr>
 						<td class="layui-td-gray2">QQ交流群</td>
-						<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I" target="_blank" rel="nofollow"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群" title="gougucms交流群" style="vertical-align:middle"></a></td>
+						<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I"
+								target="_blank" rel="nofollow"><img border="0"
+									src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群" title="gougucms交流群"
+									style="vertical-align:middle"></a></td>
 					</tr>
 					<tr>
 						<td class="layui-td-gray2">同系开源软件</td>
-						<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/blog" target="_blank">勾股BLOG</a><a class="layui-badge layui-bg-blue" style="margin-right:16px" href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
+						<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:16px"
+								href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a
+								class="layui-badge layui-bg-blue" style="margin-right:16px"
+								href="https://gitee.com/gougucms/blog" target="_blank">勾股BLOG</a><a
+								class="layui-badge layui-bg-blue" style="margin-right:16px"
+								href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
 					</tr>
 				</table>
 			</div>
@@ -183,9 +191,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-function init(layui){
-	console.log('加载完毕...');
-}
+	function init(layui) {
+		console.log('加载完毕...');
+	}
 </script>
 {include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
 {/block}

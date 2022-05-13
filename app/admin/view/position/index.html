@@ -1,9 +1,9 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a href="/home/user/setting">信息设置</a>
-  <a><cite>岗位职称</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="/home/user/setting">信息设置</a>
+	<a><cite>岗位职称</cite></a>
 </span>
 {/block}
 <!-- 主体 -->
@@ -34,7 +34,7 @@
 		var layer = layui.layer,
 			gougu = layui.gougu,
 			table = layui.table;
-		layui.pageTable= table.render({
+		layui.pageTable = table.render({
 			elem: '#test',
 			title: '岗位列表',
 			url: "/admin/position/index", //数据接口				
@@ -51,13 +51,14 @@
 						title: '岗位名称',
 						align: 'center',
 						width: 120
-					},{
+					}, {
 						field: 'groupName',
-						title: '权限角色'
-					},{
+						title: '权限角色',
+						width: 200
+					}, {
 						field: 'remark',
 						title: '备注'
-					},{
+					}, {
 						field: 'work_price',
 						title: '岗位工时单价(元)',
 						align: 'center',
@@ -80,18 +81,18 @@
 		});
 
 		//表头工具栏事件
-		$('.add').on('click', function(){
+		$('.add').on('click', function () {
 			gougu.open('/admin/position/add');
 		});
 		//监听行工具事件
 		table.on('tool(test)', function (obj) {
 			var data = obj.data;
-			if(obj.event === 'view'){
-				gougu.open('/admin/position/view?id='+data.id);
+			if (obj.event === 'view') {
+				gougu.open('/admin/position/view?id=' + data.id);
 				return;
 			}
-			if(obj.event === 'edit'){
-				gougu.open('/admin/position/add?id='+data.id);
+			if (obj.event === 'edit') {
+				gougu.open('/admin/position/add?id=' + data.id);
 				return;
 			}
 			if (obj.event === 'del') {
@@ -109,7 +110,7 @@
 							obj.del();
 						}
 					}
-					gougu.delete("/admin/position/delete",{ id: obj.data.id },callback);
+					gougu.delete("/admin/position/delete", { id: obj.data.id }, callback);
 					layer.close(index);
 				});
 			}

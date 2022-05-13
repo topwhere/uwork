@@ -102,12 +102,13 @@
 			url: "/admin/user/index", //数据接口				
 			page: true, //开启分页
 			limit: 20,
+			defaultToolbar: false,
 			cols: [
 				[
 					{type:'checkbox',fixed:'left'},
 					{
 						field: 'id',
-						title: 'ID号',
+						title: '员工号',
 						align: 'center',
 						width: 80
 					}, {
@@ -143,7 +144,7 @@
 					}, {
 						field: 'username',
 						title: '登录账号',
-						width: 136
+						width: 120
 					}, {
 						field: 'thumb',
 						title: '头像',
@@ -164,7 +165,7 @@
 						field: 'sex',
 						title: '性别',
 						align: 'center',
-						width: 60,
+						width: 50,
 						templet: function (d) {
 							var html = '未知';
 							if(d.sex == 1){
@@ -199,7 +200,7 @@
 						field: 'last_login_time',
 						title: '最后登录时间',
 						align: 'center',
-						minWidth: 142
+						minWidth: 136
 					},{
 						field: 'right',
 						fixed:'right',

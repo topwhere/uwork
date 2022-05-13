@@ -84,8 +84,8 @@
 	<table class="layui-table layui-table-form">
 		{volist name="role_rule" id="vo"}
 		<tr>
-			<td style="font-weight:800">
-			  <input type="checkbox" disabled value="{$vo.id}" title="{$vo.title}" {eq name="$vo.checked" value="true" }checked{/eq}>
+			<td style="font-weight:800;">
+				<input type="checkbox" disabled name="rule[]" value="{$vo.id}" title="{$vo.title}" {eq name="$vo.checked" value="true" }checked{/eq}>
 			</td>
 			{notempty name="vo.children"}
 				<td>
@@ -100,6 +100,15 @@
 								<div class="layui-input-inline" style="margin-right:10px;">
 									<input type="checkbox" disabled data-rule="{$voo.id}" name="rule[]" value="{$vooo.id}" lay-skin="primary" title="{$vooo.title}" {eq name="$vooo.checked" value="true" }checked{/eq}>
 								</div>
+								{notempty name="vooo.children"}
+									<div style="padding:8px 0 3px 24px; {if condition='$k != count($vo.children)'}margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;{/if}">
+									{volist name="vooo.children" id="voooo"}
+										<div class="layui-input-inline" style="margin-right:10px;">
+											<input type="checkbox" disabled data-rule="{$vooo.id}" name="rule[]" value="{$voooo.id}" lay-skin="primary" title="{$voooo.title}" {eq name="$voooo.checked" value="true" }checked{/eq}>
+										</div>
+									{/volist}
+									</div>
+								{/notempty}
 							{/volist}
 							</div>
 						{/notempty}

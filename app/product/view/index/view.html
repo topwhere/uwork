@@ -140,7 +140,7 @@
 							<tbody id="linkList">
 								{volist name="link_array" id="vo"}
 								<tr data-id="{$vo.id}" id="link_{$vo.id}">
-									<td>{$vo.url}</td>
+									<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
 									<td>{$vo.desc}</td>
 									<td style="text-align: center;">{$vo.admin_name}</td>
 									<td style="text-align: center;">

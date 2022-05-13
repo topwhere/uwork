@@ -1,9 +1,9 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
-  <a href="/home/user/setting">信息设置</a>
-  <a><cite>数据备份</cite></a>
+	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="/home/user/setting">信息设置</a>
+	<a><cite>数据备份</cite></a>
 </span>
 {/block}
 <!-- 主体 -->
@@ -16,7 +16,7 @@
 				<li class="layui-this"><a href="/admin/database/database">数据备份</a></li>
 				<li><a href="/admin/database/backuplist">数据还原</a></li>
 			</ul>
-		</div> 
+		</div>
 		<table class="layui-hide" id="backup" lay-filter="test"></table>
 	</div>
 </div>
@@ -42,9 +42,10 @@
 			toolbar: '#toolbarDemo',
 			url: "/admin/database/database", //数据接口
 			page: false,
+			defaultToolbar: false,
 			cols: [
 				[ //表头
-					{type: 'checkbox'},
+					{ type: 'checkbox' },
 					{
 						field: 'name',
 						title: '数据表',
@@ -54,8 +55,8 @@
 						field: 'status',
 						title: '状态',
 						width: 120,
-						templet:function(d){
-							return '<span id="table_'+d.name+'">-</span>';
+						templet: function (d) {
+							return '<span id="table_' + d.name + '">-</span>';
 						}
 					},
 					{
@@ -94,61 +95,61 @@
 					}
 				]
 			],
-			done:function(res, curr, count){
+			done: function (res, curr, count) {
 				$('#dataTips').html(res.msg);
 			}
 		});
 
-     	//递归备份表
-      	function backup(tab,status,table){
+		//递归备份表
+		function backup(tab, status, table) {
 			layer.closeAll();
-			layer.msg("备份中...，请勿关闭本页面",{time: 200000});
-       		$.get("/admin/database/backup", tab, function(data){
-	          	// console.log(data)
-				if(data.code==0){
-	            	showmsg(data.data.tab.table, data.msg);
-	             	if(data.data.tab.start=='ok'){
+			layer.msg("备份中...，请勿关闭本页面", { time: 200000 });
+			$.get("/admin/database/backup", tab, function (data) {
+				// console.log(data)
+				if (data.code == 0) {
+					showmsg(data.data.tab.table, data.msg);
+					if (data.data.tab.start == 'ok') {
 						layer.msg('备份完成');
-	                    window.onbeforeunload = function(){ return null }
-	                    return;
-	                } 
-	                backup(data.data.tab, tab.id != data.data.tab.id);
-	            } else {
+						window.onbeforeunload = function () { return null }
+						return;
+					}
+					backup(data.data.tab, tab.id != data.data.tab.id);
+				} else {
 					layer.msg('立即备份');
-	            }
-       		}, "json"); 
-      	}
+				}
+			}, "json");
+		}
 
-	    //修改备份状态
-	    function showmsg(table, msg){
+		//修改备份状态
+		function showmsg(table, msg) {
 			console.log(table);
-	    	$("#table_"+table).addClass('span-color-2').html(msg);
-	    }
+			$("#table_" + table).addClass('span-color-2').html(msg);
+		}
 		//监听行工具事件
 		table.on('toolbar(test)', function (obj) {
 			var checkData = table.checkStatus(obj.config.id).data;
 			var len = checkData.length;
-			var tables=[];
-			if(len==0){
+			var tables = [];
+			if (len == 0) {
 				layer.msg('请先选择表');
 				return false;
 			}
-			for(var i=0;i<len;i++){
-				tables.push(checkData[i].name);		   
+			for (var i = 0; i < len; i++) {
+				tables.push(checkData[i].name);
 			}
 			if (obj.event === 'backup') {
-				layer.confirm('确认要备份选中的'+len+'个数据表吗?', {
+				layer.confirm('确认要备份选中的' + len + '个数据表吗?', {
 					icon: 3,
 					title: '提示'
 				}, function (index) {
 					$.ajax({
 						url: "/admin/database/backup",
-						type:'post',
-						data: {'tables':tables},
+						type: 'post',
+						data: { 'tables': tables },
 						success: function (res) {
 							if (res.code == 0) {
-								layer.msg( "开始备份，请不要关闭本页面！");
-               					window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+								layer.msg("开始备份，请不要关闭本页面！");
+								window.onbeforeunload = function () { return "正在备份数据库，请不要关闭！" }
 								backup(res.data.tab);
 							}
 							if (res.code == 2) {
@@ -158,53 +159,53 @@
 								}, function (index) {
 									$.ajax({
 										url: "/admin/database/del",
-										data: {'lock':1},
+										data: { 'lock': 1 },
 										success: function (res) {
 											layer.msg(res.msg);
 										}
-									})							
+									})
 								})
 							}
-							else{
+							else {
 								layer.msg(res.msg);
 							}
 						}
 					})
 					layer.close(index);
 				});
-			}else if (obj.event === 'optimize') {
-				layer.confirm('确认要优化选中的'+len+'个数据表吗?', {
+			} else if (obj.event === 'optimize') {
+				layer.confirm('确认要优化选中的' + len + '个数据表吗?', {
 					icon: 3,
 					title: '提示'
 				}, function (index) {
 					$.ajax({
 						url: "/admin/database/optimize",
-						data: {'tables':tables},
+						data: { 'tables': tables },
 						success: function (res) {
 							layer.msg(res.msg);
 							if (res.code == 0) {
-								setTimeout(function(){
+								setTimeout(function () {
 									location.reload();
-								},2000)								
+								}, 2000)
 							}
 						}
 					})
 					layer.close(index);
 				});
-			}else if (obj.event === 'repair') {
-				layer.confirm('确认要修复选中的'+len+'个数据表吗?', {
+			} else if (obj.event === 'repair') {
+				layer.confirm('确认要修复选中的' + len + '个数据表吗?', {
 					icon: 3,
 					title: '提示'
 				}, function (index) {
 					$.ajax({
 						url: "/admin/database/repair",
-						data: {'tables':tables},
+						data: { 'tables': tables },
 						success: function (res) {
 							layer.msg(res.msg);
 							if (res.code == 0) {
-								setTimeout(function(){
+								setTimeout(function () {
 									location.reload();
-								},2000)
+								}, 2000)
 							}
 						}
 					})

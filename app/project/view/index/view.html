@@ -161,16 +161,16 @@
 							{volist name="$detail.task_cate" id="vo"}
 							<dl>
 								<dt class="layui-card-tips">{$vo.title}任务</dt>
-								<dd class="layui-card-value">{$vo.unfinish} / {$vo.count}</dd>
+								<dd class="layui-card-value" title="未完成/总任务数">{$vo.unfinish} / {$vo.count}</dd>
 							</dl>
 							{/volist}
 							<dl>
 								<dt class="layui-card-tips">工作记录</dt>
-								<dd class="layui-card-value">{$detail.schedules}</dd>
+								<dd class="layui-card-value" title="工作记录数">{$detail.schedules}</dd>
 							</dl>
 							<dl>
 								<dt class="layui-card-tips">项目工时</dt>
-								<dd class="layui-card-value">{$detail.hours} / {$detail.plan_hours}</dd>
+								<dd class="layui-card-value" title="实际工时/计划工时">{$detail.hours} / {$detail.plan_hours}</dd>
 							</dl>
 						</div>
 					</div>
@@ -752,9 +752,11 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					setTimeout(function () {
-						location.href='/project/index/index';
-					}, 1000)
+					if(e.code==0){
+						setTimeout(function () {
+							location.href='/project/index/index';
+						}, 1000)
+					}
 				}
 				let postData = { "id": project_id };
 				gougu.delete("/project/index/delete", postData, callback);

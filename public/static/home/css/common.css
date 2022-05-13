@@ -407,6 +407,10 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-tab-big .layui-tab-title .layui-this:after{height:51px;}
 .layui-tab-big li a{padding:0 10px; font-size:15px;}
 .is_open_son2{display:none;}
+.home-desc{clear:both;line-height:36px; font-size:14px;}
+.home-desc dt{width:72px;float:left;}
+.home-desc dd{margin-left:88px;}
+.home-desc img{width:72px; height:72px; border-radius:50%}
 /*图标*/
 @font-face {
   font-family: "iconfont"; /* Project id 2936988 */

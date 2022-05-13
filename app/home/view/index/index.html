@@ -11,6 +11,13 @@
 			<div class="layui-row layui-col-space12">
 				<div class="layui-col-md12">
 					<div class="layui-card">
+						<dl class="home-desc p-4">
+							<dt><img src="{$params.thumb}" onerror="javascript:this.src='{__IMG__}/icon.png';this.onerror=null;"></dt>
+							<dd class="h5">Hi {$params.name}，我是{:get_system_config('web','admin_title')}，是您工作中必不可少的伙伴！</dd>
+							<dd>{:get_system_config('web','admin_title')}是一款敏捷研发协作系统工具，帮助研发团队透明化工作进展，提升协作效率，推动项目进度。</dd>
+						</dl>
+					</div>
+					<div class="layui-card">
 						<div class="table-title">最新企业公告</div>
 						<div style="padding:8px 12px 12px;">
 							<table class="layui-table">
@@ -246,20 +253,16 @@
 							<td>{:get_system_info('max_execution_time')}</td>
 						</tr>
 						<tr>
+							<td class="info-td">ThinkPHP版本</td>
+							<td>{$TP_VERSION}</td>
+							<td class="info-td">Layui版本</td>
+							<td>{:LAYUI_VERSION}</td>
+						</tr>
+						<tr>
 							<td class="info-td">勾股DEV</td>
 							<td colspan="3">{:CMS_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:8px"
 									href="https://blog.gougucms.com/home/book/detail/bid/7.html"
 									target="_blank">勾股DEV文档</a></td>
-						</tr>
-						<tr>
-							<td class="info-td">ThinkPHP版本</td>
-							<td colspan="3">{$TP_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:8px"
-									href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
-						</tr>
-						<tr>
-							<td class="info-td">Layui版本</td>
-							<td colspan="3">{:LAYUI_VERSION}<a class="layui-badge layui-bg-blue" style="margin-left:8px"
-									href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
 						</tr>
 						<tr>
 							<td class="info-td">BUG反馈</td>

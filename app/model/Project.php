@@ -13,10 +13,11 @@ class Project extends Model
     const FORE = 4;
 
     public static $Status = [
-        self::ZERO => '未开始',
-        self::ONE => '进行中',
-        self::TWO => '已完成',
-        self::THREE => '已关闭',
+        self::ZERO => '未设置',
+        self::ONE => '未开始',
+        self::TWO => '进行中',
+        self::THREE => '已完成',
+        self::FORE => '已关闭',
     ];
     //详情
     public function detail($id)

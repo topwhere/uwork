@@ -250,6 +250,13 @@ function get_project($uid = 0)
     return $project;
 }
 
+//读取公告类型
+function get_note_cate()
+{
+    $cate = Db::name('NoteCate')->order('id desc')->select()->toArray();
+    return $cate;
+}
+
 //读取工作类型
 function get_work_cate()
 {

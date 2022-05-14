@@ -47,8 +47,7 @@
 									<tr>
 										<td align="center">N{$vo.id}</td>
 										<td align="center">{$vo.cate_title}</td>
-										<td><a class="open-a" data-url="/admin/note/view/id/{$vo.id}">{$vo.title}</a>
-										</td>
+										<td><a class="open-a" data-url="/home/index/note_detail/id/{$vo.id}">{$vo.title}</a></td>
 										<td align="center">{$vo.create_time}</td>
 									</tr>
 									{/volist}
@@ -104,7 +103,7 @@
 					</div>
 
 					<div class="layui-card">
-						<div class="table-title">我的待办任务</div>
+						<div class="table-title">我参与的任务</div>
 						<div style="padding:8px 12px 12px;">
 							<table class="layui-table">
 								<colgroup>
@@ -161,14 +160,16 @@
 									<col width="80">
 									<col width="90">
 									<col>
+									<col width="60">
 									<col width="80">
-									<col width="150">
+									<col width="136">
 								</colgroup>
 								<thead>
 									<tr>
 										<th style="text-align:center">编号ID</th>
 										<th style="text-align:center">所属分类</th>
 										<th>知识主题</th>
+										<th style="text-align:center">阅览数</th>
 										<th style="text-align:center">创建员工</th>
 										<th style="text-align:center">创建时间</th>
 									</tr>
@@ -187,6 +188,7 @@
 										<td align="center">{$vo.cate_name}</td>
 										<td><a class="open-link"
 												href="/knowledge/index/doc_detail/kid/{$vo.id}">{$vo.title}</a></td>
+										<td align="center">{$vo.views}</td>
 										<td align="center">{$vo.admin_name}</td>
 										<td align="center">{$vo.create_time}</td>
 									</tr>

@@ -49,7 +49,7 @@ class Index extends BaseController
 
             //项目相关
             $project_ids = Db::name('ProjectUser')->where(['uid' => $this->uid, 'delete_time' => 0])->column('project_id');
-            $project_list = Db::name('Project')->where([['delete_time', '=', 0], ['id', 'in', $project_ids]])->limit(10)->select()->toArray();
+            $project_list = Db::name('Project')->where([['delete_time', '=', 0], ['id', 'in', $project_ids]])->order('id desc')->limit(10)->select()->toArray();
             foreach ($project_list as $k => &$v) {
                 $v['director_name'] = Db::name('Admin')->where(['id' => $v['director_uid']])->value('name');
                 $v['status_name'] = Project::$Status[(int) $v['status']];
@@ -86,7 +86,10 @@ class Index extends BaseController
                 ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
                     $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
                 })
-                ->where([['delete_time', '=', 0], ['flow_status', '<', 3]])->limit(10)->select()->toArray();
+                ->where([['delete_time', '=', 0]])
+                ->order('flow_status asc')
+                ->order('id desc')
+                ->limit(10)->select()->toArray();
             foreach ($task_list as $k => &$v) {
                 $v['end_time'] = date('Y-m-d', $v['end_time']);
                 $v['priority_name'] = Task::$Priority[(int) $v['priority']];
@@ -136,11 +139,15 @@ class Index extends BaseController
                 ->where(function ($query) use ($knowledge_map1, $knowledge_map2) {
                     $query->where($knowledge_map1)->whereor($knowledge_map2);
                 })
-                ->where('delete_time', 0)->limit(10)->select()->toArray();
+                ->where('delete_time', 0)
+                ->order('id desc')
+                ->limit(10)->select()->toArray();
             foreach ($knowledge_list as $k => &$v) {
                 $v['create_time'] = date('Y-m-d H:i', $v['create_time']);
                 $v['admin_name'] = Db::name('Admin')->where(['id' => $v['admin_id']])->value('name');
                 $v['cate_name'] = Db::name('KnowledgeCate')->where(['id' => $v['cate_id']])->value('title');
+                $v['views'] = Db::name('KnowledgeDoc')->where([['delete_time','=',0],['knowledge_id','=',$v['id']]])->sum('read');
+				$v['sections'] = Db::name('KnowledgeDoc')->where([['delete_time','=',0],['knowledge_id','=',$v['id']]])->count();
             }
 
             //工时相关
@@ -170,6 +177,15 @@ class Index extends BaseController
             ]);
             return View();
         }
+    }
+
+    //查看公告
+    public function note_detail()
+    {
+        $id = empty(get_params('id')) ? 0 : get_params('id');
+        $note = Db::name('Note')->where(['id' => $id])->find();
+        View::assign('note', $note);
+        return view();
     }
 
     //系统操作日志

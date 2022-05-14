@@ -51,7 +51,7 @@ return [
         'reduction' => '还原',
         'import' => '导入',
         'export' => '导出',
-        'add' => '新增',
+        'add' => '创建',
         'edit' => '编辑',
         'view' => '查看',
         'save' => '保存',

@@ -177,17 +177,19 @@ class Index extends BaseController
     public function get_employee($did = 0)
     {
         $did = get_params('did');
+        /*
         if ($did == 1) {
             $department = $did;
         } else {
             $department = get_department_son($did);
         }
+        */
+        $department = get_department_son($did);
         $employee = Db::name('admin')
             ->field('a.id,a.did,a.position_id,a.mobile,a.name,a.nickname,a.sex,a.status,a.thumb,a.username,d.title as department')
             ->alias('a')
             ->join('Department d', 'a.did = d.id')
             ->where(['a.status' => 1])
-            ->where('a.id', ">", 1)
             ->where('a.did', "in", $department)
             ->select();
         return to_assign(0, '', $employee);

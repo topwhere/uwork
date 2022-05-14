@@ -185,7 +185,7 @@ class Log extends Model
             ->select()->toArray();
 
         $module = [
-            'project' => '的',
+            'project' => '',
             'task' => '任务',
             'document' => '文档',
         ];

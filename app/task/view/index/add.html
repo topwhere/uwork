@@ -72,7 +72,7 @@
 		<tr>
 			<td class="layui-td-gray">关联项目</td>
 			<td colspan="7">
-				<select id="projectId" name="project_id" lay-filter="project">
+				<select id="projectId" name="project_id" lay-filter="project_id">
 					<option value="">请选择关联项目</option>
 					{volist name=":get_project()" id="v"}
 					<option value="{$v.id}">{$v.name}</option>

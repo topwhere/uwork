@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="layui-form-bar border-t border-x">
-		<form class="layui-form">
+		<form id="taskForm" class="layui-form">
 			<div class="layui-input-inline" style="width:100px;">
 				<select name="flow_status" lay-filter="status">
 					<option value="">任务状态</option>
@@ -133,7 +133,7 @@
 					}
 				}
 				, { field: 'director_name', title: '负责人', align: 'center', width: 80 }
-				, { field: 'assist_admin_names', title: '协作人', width: 160 }
+				, { field: 'assist_admin_names', title: '协作人', width: 200 }
 				, { field: 'cate_name', title: '工作类型', width: 90, align: 'center' }
 				, { field: 'plan_hours', title: '预估工时', align: 'center', width: 80 }
 				, {
@@ -206,7 +206,7 @@
 			tableReload();
 			return false;
 		});
-		$('#taskList').on('click', '[lay-filter="clear"]', function () {
+		$('#taskForm').on('click', '[lay-filter="clear"]', function () {
 			setTimeout(function () {
 				tableReload();
 			}, 10)
@@ -214,14 +214,14 @@
 
 		function tableReload() {
 			let postData = {
-				type: $('#taskList').find('[name="type"]').val(),
-				flow_status: $('#taskList').find('[name="flow_status"]').val(),
-				priority: $('#taskList').find('[name="priority"]').val(),
-				cate: $('#taskList').find('[name="cate"]').val(),
-				delay: $('#taskList').find('[name="delay"]').val(),
-				director_uid: $('#taskList').find('[name="director_uid"]').val(),
-				project_id: $('#taskList').find('[name="project_id"]').val(),
-				keywords: $('#taskList').find('[name="keywords"]').val()
+				type: $('#taskForm').find('[name="type"]').val(),
+				flow_status: $('#taskForm').find('[name="flow_status"]').val(),
+				priority: $('#taskForm').find('[name="priority"]').val(),
+				cate: $('#taskForm').find('[name="cate"]').val(),
+				delay: $('#taskForm').find('[name="delay"]').val(),
+				director_uid: $('#taskForm').find('[name="director_uid"]').val(),
+				project_id: $('#taskForm').find('[name="project_id"]').val(),
+				keywords: $('#taskForm').find('[name="keywords"]').val()
 			}
 			layui.pageTable.reload({ where: postData });
 		}

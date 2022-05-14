@@ -79,7 +79,7 @@ function init(layui) {
 	var knowledge_id = '{$detail.knowledge_id}';
 
 	if($('#docContent').length>0){
-		gougu.editor('docContent',window.innerHeight-240,$('#mdContent').val());
+		gougu.editor('docContent',$('#mdContent').val(),window.innerHeight-240);
 	}
 	
 	var treeRender = function(res){

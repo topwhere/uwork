@@ -112,9 +112,6 @@ class Index extends BaseController
                 $param['content'] = $param['ueditorcontent'];
                 $param['md_content'] = '';
             }
-            if (isset($param['is_open']) && $param['is_open'] == 2) {
-                $param['view_admin_ids'] = '';
-            }
             if (!empty($param['id']) && $param['id'] > 0) {
                 $product = (new ProductList())->detail($param['id']);
                 if ($this->uid == $product['admin_id'] || $this->uid == $product['director_uid']) {

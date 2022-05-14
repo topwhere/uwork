@@ -6,13 +6,16 @@
 			<td>
 				{$detail.username}
 			</td>
-			<td class="layui-td-gray">登录密码</td>
+			<td class="layui-td-gray">员工状态</td>
 			<td>
+				{eq name="$detail.status" value="0"}<span style="color:#FF5722">禁止登录</span>{/eq}
+				{eq name="$detail.status" value="1"}<span style="color:#009688">正常</span>{/eq}
+				{eq name="$detail.status" value="2"}<span style="color:#FFB800">已离职</span>{/eq}
 				{empty name="$detail.reg_pwd"}
-					密码已重置
+					，密码已重置
 					<span class="layui-btn layui-btn-normal layui-btn-xs" data-note="rest" data-val="{$detail.id}">重设新密码</span>
 				{else/}
-					{$detail.reg_pwd}
+					，默认密码：{$detail.reg_pwd}
 					<span class="layui-btn layui-btn-normal layui-btn-xs" data-note="copy" data-val="{$detail.reg_pwd}">复制初始密码</span>
 				{/empty}
 			</td>
@@ -28,11 +31,11 @@
 			<td>
 				{$detail.name}
 			</td>
-			<td class="layui-td-gray">员工状态</td>
+			<td class="layui-td-gray">性别</td>
 			<td>
-				{eq name="$detail.status" value="0"}<span style="color:#FF5722">禁止登录</span>{/eq}
-				{eq name="$detail.status" value="1"}<span style="color:#009688">正常</span>{/eq}
-				{eq name="$detail.status" value="2"}<span style="color:#FFB800">已离职</span>{/eq}
+				{eq name="$detail.sex" value="0"}未知{/eq}
+				{eq name="$detail.sex" value="1"}男{/eq}
+				{eq name="$detail.sex" value="2"}女{/eq}
 			</td>
 		</tr>
 		<tr>
@@ -40,11 +43,9 @@
 			<td>
 				{$detail.mobile}
 			</td>
-			<td class="layui-td-gray">性别</td>
+			<td class="layui-td-gray">电子邮箱</td>
 			<td>
-				{eq name="$detail.sex" value="0"}未知{/eq}
-				{eq name="$detail.sex" value="1"}男{/eq}
-				{eq name="$detail.sex" value="2"}女{/eq}
+				{$detail.email}
 			</td>
 		</tr>
 		<tr>

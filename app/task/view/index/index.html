@@ -36,7 +36,6 @@
 					<button type="button" data-event="show" class="layui-btn layui-btn-sm layui-btn-primary"><i
 							class="layui-icon">&#xe637;</i>日历</button>
 				</div>
-				<input type="hidden" name="type" />
 				<button class="layui-btn layui-btn-sm add-new">+ 新建任务</button>
 			</div>
 		</div>
@@ -79,6 +78,7 @@
 				</select>
 			</div>
 			<div class="layui-input-inline" style="width:180px;">
+				<input type="hidden" name="type" />
 				<input name="director_uid" style="display: none;" value="" />
 				<input type="text" name="director" placeholder="负责人，可多选" readonly class="layui-input employeepicker"
 					autocomplete="off" />
@@ -182,7 +182,7 @@
 		$('#taskTab').on('click', 'li', function () {
 			$(this).addClass('tab-this').siblings().removeClass('tab-this');
 			let type = $(this).data('type');
-			$('#taskList').find('[name="type"]').val(type);
+			$('#taskForm').find('[name="type"]').val(type);
 			tableReload();
 		});
 

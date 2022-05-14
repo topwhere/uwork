@@ -49,56 +49,6 @@ CREATE TABLE `dev_admin`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工表';
 
 -- ----------------------------
--- Table structure for dev_admin_group
--- ----------------------------
-DROP TABLE IF EXISTS `dev_admin_group`;
-CREATE TABLE `dev_admin_group`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `status` int(1) NOT NULL DEFAULT 1,
-  `rules` varchar(1000) NULL DEFAULT '' COMMENT '用户组拥有的规则id， 多个规则\",\"隔开',
-  `desc` text NULL COMMENT '备注',
-  `create_time` int(11) NOT NULL DEFAULT 0,
-  `update_time` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工权限分组表';
-
--- ----------------------------
--- Records of cms_admin_group
--- ----------------------------
-INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82', '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
-INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (2, '人事角色权限', 1, '1,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,6,74,76,77,78,79,80,81,82,75', '人事部管理权限', 0, 0);
-INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (3, '产品角色权限', 1, '2,57,58,59,60,3,61,62,63,64,65,4,66,67,68,69,5,70,71,72,73,6,74,76,77,78,79,80,81,82,75', '产品经理职位权限', 0, 0);
-INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (4, '技术角色权限', 1, '2,57,58,59,60,3,61,62,63,64,65,4,66,67,68,69,5,70,71,72,73,6,74,76,77,78,79,80,81,82,75', '技术角色权限', 0, 0);
-
-
--- ----------------------------
--- Table structure for dev_admin_log
--- ----------------------------
-DROP TABLE IF EXISTS `dev_admin_log`;
-CREATE TABLE `dev_admin_log`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
-  `type` varchar(80) NOT NULL DEFAULT '' COMMENT '操作类型',
-  `action` varchar(80) NOT NULL DEFAULT '' COMMENT '操作动作',
-  `subject` varchar(80) NOT NULL DEFAULT '' COMMENT '操作主体',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '操作标题',
-  `content` text NULL COMMENT '操作描述',
-  `module` varchar(32) NOT NULL DEFAULT '' COMMENT '模块',
-  `controller` varchar(32) NOT NULL DEFAULT '' COMMENT '控制器',
-  `function` varchar(32) NOT NULL DEFAULT '' COMMENT '方法',
-  `rule_menu` varchar(255) NOT NULL DEFAULT '' COMMENT '节点权限路径',
-  `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
-  `param_id` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作数据id',
-  `param` text NULL COMMENT '参数json格式',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0删除 1正常',
-  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工操作日志表';
-
--- ----------------------------
 -- Table structure for dev_admin_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_admin_rule`;
@@ -226,29 +176,30 @@ INSERT INTO `dev_admin_rule` VALUES (80, 79, 'knowledge/index/doc_add', '新建/
 INSERT INTO `dev_admin_rule` VALUES (81, 79, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (82, 79, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
 
+
 -- ----------------------------
--- Table structure for dev_config
+-- Table structure for dev_admin_group
 -- ----------------------------
-DROP TABLE IF EXISTS `dev_config`;
-CREATE TABLE `dev_config`  (
+DROP TABLE IF EXISTS `dev_admin_group`;
+CREATE TABLE `dev_admin_group`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '配置名称',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '配置标识',
-  `content` text NULL COMMENT '配置内容',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
-  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COMMENT = '系统配置表';
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `status` int(1) NOT NULL DEFAULT 1,
+  `rules` varchar(1000) NULL DEFAULT '' COMMENT '用户组拥有的规则id， 多个规则\",\"隔开',
+  `desc` text NULL COMMENT '备注',
+  `create_time` int(11) NOT NULL DEFAULT 0,
+  `update_time` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `id`(`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工权限分组表';
 
 -- ----------------------------
--- Records of dev_config
+-- Records of cms_admin_group
 -- ----------------------------
-INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (1, '网站配置', 'web', 'a:13:{s:11:\"admin_title\";s:9:\"勾股DEV\";s:4:\"logo\";s:34:\"/static/home/images/login_logo.png\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://dev.gougucms.com\";s:5:\"title\";s:9:\"勾股DEV\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:9:\"copyright\";s:36:\"© 2022 gougucms.com GPL-3.0 license\";s:7:\"version\";s:6:\"2.5.15\";s:8:\"keywords\";s:9:\"勾股DEV\";s:4:\"desc\";s:574:\"勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。  \";s:4:\"code\";s:0:\"\";s:2:\"id\";s:1:\"1\";}', 1, 1612514630, 1652436221);
-INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (2, '邮箱配置', 'email', 'a:8:{s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:574:\"勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。  \";s:2:\"id\";s:1:\"2\";}', 1, 1612521657, 1652436255);
-INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (3, 'Api Token配置', 'token', 'a:5:{s:3:\"iss\";s:16:\"dev.gougucms.com\";s:3:\"aud\";s:8:\"gougudev\";s:7:\"secrect\";s:8:\"GOUGUDEV\";s:7:\"exptime\";s:4:\"3600\";s:2:\"id\";s:1:\"3\";}', 1, 1627313142, 1650254285);
-INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (4, '其他配置', 'other', 'a:3:{s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:13:\"v2.2022.05.15\";s:2:\"id\";s:1:\"4\";}', 1, 1613725791, 1652436278);
-
+INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (1, '超级员工权限', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82', '超级员工权限，拥有系统的最高权限，不可修改', 0, 0);
+INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (2, '人事角色权限', 1, '1,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,6,74,76,77,78,79,80,81,82,75', '人事部管理权限', 0, 0);
+INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (3, '产品角色权限', 1, '2,57,58,59,60,3,61,62,63,64,65,4,66,67,68,69,5,70,71,72,73,6,74,76,77,78,79,80,81,82,75', '产品经理职位权限', 0, 0);
+INSERT INTO `dev_admin_group`(`id`, `title`, `status`, `rules`, `desc`, `create_time`, `update_time`) VALUES (4, '技术角色权限', 1, '2,57,58,59,60,3,61,62,63,64,65,4,66,67,68,69,5,70,71,72,73,6,74,76,77,78,79,80,81,82,75', '技术角色权限', 0, 0);
 
 -- ----------------------------
 -- Table structure for dev_department
@@ -277,54 +228,105 @@ INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES 
 INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (5, '研发部', 1, 0, '13688888884');
 INSERT INTO `dev_department`(`id`, `title`, `pid`, `leader_id`, `phone`) VALUES (6, '测试部', 1, 0, '13688888883');
 
-
 -- ----------------------------
--- Table structure for dev_work_cate
+-- Table structure for dev_position
 -- ----------------------------
-DROP TABLE IF EXISTS `dev_work_cate`;
-CREATE TABLE `dev_work_cate`  (
+DROP TABLE IF EXISTS `dev_position`;
+CREATE TABLE `dev_position`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '工作类型名称',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '岗位名称',
+  `work_price` int(10) NOT NULL DEFAULT 0 COMMENT '工时单价',
+  `remark` varchar(1000) NULL DEFAULT '' COMMENT '备注',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作类型';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '岗位职称';
 
 -- ----------------------------
--- Records of dev_work_cate
+-- Records of dev_position
 -- ----------------------------
-INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
-INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (3, 'UI设计', 1, 1638088518, 0);
-INSERT INTO `dev_work_cate` VALUES (4, '技术开发', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (5, '测试相关', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (6, '运维相关', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (7, '撰写文档', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (8, '需求调研', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (9, '需求沟通', 1, 1637987199, 0);
-INSERT INTO `dev_work_cate` VALUES (10, '参加会议', 1, 1637987199, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (2, '人事总监', 1000, '根据公司经营战略，制定公司发展战略规划并负责规划公司人力资源的整体发展，制订与公司经营战略相匹配的人力资源政策，实施公司日常运营及管理。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (3, '产品总监', 1000, '整体研究、策划、设计和完善公司的各个产品，主要产品线策略制定、实施及产品生命周期管理，负责产品部日常管理工作。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (4, '技术总监', 1000, '领导技术团队开发各类产品，解决技术问题，管理不同的项目，排期交付。负责技术部日常管理工作。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (5, '后端工程师', 800, '参与软件开发和维护过程中重大技术问题的解决，参与软件首次安装调试、数据割接、用户培训和项目推广。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (6, '前端工程师', 800, '将产品UI设计稿实现成网站产品，涵盖用户PC端、移动端网页，处理视觉和交互问题。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (7, 'UI设计师', 600, '对软件的人机交互、操作逻辑、界面美观的整体设计工作，包括高级网页设计、移动应用界面设计等。', 1, 0, 0);
+INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (8, '产品专员', 600, '需求收集，需求分析，需求落地，项目跟踪，项目上线，数据跟踪以及对业务人员进行培训，协助运营、销售、客服等开展工作。', 1, 0, 0);
 
 -- ----------------------------
--- Table structure for dev_task_cate
+-- Table structure for dev_position_group
 -- ----------------------------
-DROP TABLE IF EXISTS `dev_task_cate`;
-CREATE TABLE `dev_task_cate`  (
+DROP TABLE IF EXISTS `dev_position_group`;
+CREATE TABLE `dev_position_group`  (
+  `pid` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '岗位id',
+  `group_id` int(11) NULL DEFAULT NULL COMMENT '权限id',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
+  UNIQUE INDEX `pid_group_id`(`pid`, `group_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COMMENT = '权限分组和岗位的关联表';
+
+-- ----------------------------
+-- Records of dev_position_group
+-- ----------------------------
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (1, 1, 1652439152, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (3, 3, 1652439665, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (4, 4, 1652439679, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (2, 2, 1652439719, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (5, 4, 1652454970, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (6, 4, 1652455036, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (7, 4, 1652455100, 0);
+INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (8, 3, 1652455195, 0);
+
+-- ----------------------------
+-- Table structure for dev_config
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_config`;
+CREATE TABLE `dev_config`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '任务类型名称',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '配置名称',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '配置标识',
+  `content` text NULL COMMENT '配置内容',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '任务类型';
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COMMENT = '系统配置表';
 
 -- ----------------------------
--- Records of dev_task_cate
+-- Records of dev_config
 -- ----------------------------
-INSERT INTO `dev_task_cate` VALUES (1, '需求', 1, 1637987189, 0);
-INSERT INTO `dev_task_cate` VALUES (2, '设计', 1, 1637987199, 0);
-INSERT INTO `dev_task_cate` VALUES (3, '研发', 1, 1638088518, 0);
-INSERT INTO `dev_task_cate` VALUES (4, '缺陷', 1, 1637987199, 0);
+INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (1, '网站配置', 'web', 'a:13:{s:11:\"admin_title\";s:9:\"勾股DEV\";s:4:\"logo\";s:34:\"/static/home/images/login_logo.png\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://dev.gougucms.com\";s:5:\"title\";s:9:\"勾股DEV\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:9:\"copyright\";s:36:\"© 2022 gougucms.com GPL-3.0 license\";s:7:\"version\";s:6:\"2.5.15\";s:8:\"keywords\";s:9:\"勾股DEV\";s:4:\"desc\";s:574:\"勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。  \";s:4:\"code\";s:0:\"\";s:2:\"id\";s:1:\"1\";}', 1, 1612514630, 1652436221);
+INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (2, '邮箱配置', 'email', 'a:8:{s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:574:\"勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。  \";s:2:\"id\";s:1:\"2\";}', 1, 1612521657, 1652436255);
+INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (3, 'Api Token配置', 'token', 'a:5:{s:3:\"iss\";s:16:\"dev.gougucms.com\";s:3:\"aud\";s:8:\"gougudev\";s:7:\"secrect\";s:8:\"GOUGUDEV\";s:7:\"exptime\";s:4:\"3600\";s:2:\"id\";s:1:\"3\";}', 1, 1627313142, 1650254285);
+INSERT INTO `dev_config`(`id`, `title`, `name`, `content`, `status`, `create_time`, `update_time`) VALUES (4, '其他配置', 'other', 'a:3:{s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:13:\"v2.2022.05.15\";s:2:\"id\";s:1:\"4\";}', 1, 1613725791, 1652436278);
+
+
+-- ----------------------------
+-- Table structure for dev_admin_log
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_admin_log`;
+CREATE TABLE `dev_admin_log`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uid` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
+  `type` varchar(80) NOT NULL DEFAULT '' COMMENT '操作类型',
+  `action` varchar(80) NOT NULL DEFAULT '' COMMENT '操作动作',
+  `subject` varchar(80) NOT NULL DEFAULT '' COMMENT '操作主体',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '操作标题',
+  `content` text NULL COMMENT '操作描述',
+  `module` varchar(32) NOT NULL DEFAULT '' COMMENT '模块',
+  `controller` varchar(32) NOT NULL DEFAULT '' COMMENT '控制器',
+  `function` varchar(32) NOT NULL DEFAULT '' COMMENT '方法',
+  `rule_menu` varchar(255) NOT NULL DEFAULT '' COMMENT '节点权限路径',
+  `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
+  `param_id` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作数据id',
+  `param` text NULL COMMENT '参数json格式',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0删除 1正常',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '员工操作日志表';
 
 -- ----------------------------
 -- Table structure for dev_file
@@ -395,6 +397,55 @@ CREATE TABLE `dev_message_file_interfix`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '消息关联的附件表';
 
+
+-- ----------------------------
+-- Table structure for dev_work_cate
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_work_cate`;
+CREATE TABLE `dev_work_cate`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '工作类型名称',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '工作类型';
+
+-- ----------------------------
+-- Records of dev_work_cate
+-- ----------------------------
+INSERT INTO `dev_work_cate` VALUES (1, '其他', 1, 1637987189, 0);
+INSERT INTO `dev_work_cate` VALUES (2, '产品原型', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (3, 'UI设计', 1, 1638088518, 0);
+INSERT INTO `dev_work_cate` VALUES (4, '技术开发', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (5, '测试相关', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (6, '运维相关', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (7, '撰写文档', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (8, '需求调研', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (9, '需求沟通', 1, 1637987199, 0);
+INSERT INTO `dev_work_cate` VALUES (10, '参加会议', 1, 1637987199, 0);
+
+-- ----------------------------
+-- Table structure for dev_task_cate
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_task_cate`;
+CREATE TABLE `dev_task_cate`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '任务类型名称',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '任务类型';
+
+-- ----------------------------
+-- Records of dev_task_cate
+-- ----------------------------
+INSERT INTO `dev_task_cate` VALUES (1, '需求', 1, 1637987189, 0);
+INSERT INTO `dev_task_cate` VALUES (2, '设计', 1, 1637987199, 0);
+INSERT INTO `dev_task_cate` VALUES (3, '研发', 1, 1638088518, 0);
+INSERT INTO `dev_task_cate` VALUES (4, '缺陷', 1, 1637987199, 0);
+
 -- ----------------------------
 -- Table structure for dev_note_cate
 -- ----------------------------
@@ -441,60 +492,6 @@ CREATE TABLE `dev_note`  (
 -- ----------------------------
 INSERT INTO `dev_note`(`id`, `cate_id`, `title`, `content`, `md_content`, `src`, `sort`, `start_time`, `end_time`, `create_time`, `update_time`, `delete_time`) VALUES (1000, 1, '公司内部从5月份开始使用勾股DEV进行项目研发管理通知', '<p>经过公司开会讨论决定，公司技术部门从5月份开始使用勾股DEV进行项目研发管理。</p>\n<p>勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。</p>\n<p><strong>勾股DEV的产品理念：</strong><br>通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。</p>\n', '经过公司开会讨论决定，公司技术部门从5月份开始使用勾股DEV进行项目研发管理。\n\n勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。\n\n**勾股DEV的产品理念：**\n通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。', '', 0, 1651334400, 1654012800, 1652455674, 1652455991, 0);
 INSERT INTO `dev_note`(`id`, `cate_id`, `title`, `content`, `md_content`, `src`, `sort`, `start_time`, `end_time`, `create_time`, `update_time`, `delete_time`) VALUES (1001, 1, '勾股DEV2.0于2022年5月15日正式对外开源发布', '<p>从勾股1.0版本到勾股DEV2.0版本，历时20多天的开发，终于2022年5月15日正式对外开源发布。</p>\n<p><strong>产品简介：</strong><br>勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。</p>\n<p><strong>产品理念：</strong><br>通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。</p>\n<p><strong>系统特点：</strong></p>\n<ul>\n<li>多产品支持，可添加多产品管理</li><li>多项目支持，可以多项目同时进行管理</li><li>可配置的用户角色控制，不同的角色可配置不同的操作权限</li><li>Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷</li><li>每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块</li><li>任务时间跟踪机制，项目任务多状态流转，任务成果可见可控。</li><li>工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间</li><li>任务安排，任务分配指定人，可设置负责人、多协同人员</li><li>员工的操作记录全覆盖跟踪</li></ul>\n', '从勾股1.0版本到勾股DEV2.0版本，历时20多天的开发，终于2022年5月15日正式对外开源发布。\n\n**产品简介：**\n勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。\n\n**产品理念：**\n通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。\n\n**系统特点：**\n- 多产品支持，可添加多产品管理\n- 多项目支持，可以多项目同时进行管理\n- 可配置的用户角色控制，不同的角色可配置不同的操作权限\n- Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷\n- 每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块\n- 任务时间跟踪机制，项目任务多状态流转，任务成果可见可控。\n- 工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间\n- 任务安排，任务分配指定人，可设置负责人、多协同人员\n- 员工的操作记录全覆盖跟踪', '', 0, 1652544000, 1656518400, 1652455899, 0, 0);
-
-
--- ----------------------------
--- Table structure for dev_position
--- ----------------------------
-DROP TABLE IF EXISTS `dev_position`;
-CREATE TABLE `dev_position`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '岗位名称',
-  `work_price` int(10) NOT NULL DEFAULT 0 COMMENT '工时单价',
-  `remark` varchar(1000) NULL DEFAULT '' COMMENT '备注',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
-  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '岗位职称';
-
--- ----------------------------
--- Records of dev_position
--- ----------------------------
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (1, '超级岗位', 1000, '超级岗位，不能轻易修改权限', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (2, '人事总监', 1000, '根据公司经营战略，制定公司发展战略规划并负责规划公司人力资源的整体发展，制订与公司经营战略相匹配的人力资源政策，实施公司日常运营及管理。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (3, '产品总监', 1000, '整体研究、策划、设计和完善公司的各个产品，主要产品线策略制定、实施及产品生命周期管理，负责产品部日常管理工作。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (4, '技术总监', 1000, '领导技术团队开发各类产品，解决技术问题，管理不同的项目，排期交付。负责技术部日常管理工作。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (5, '后端工程师', 800, '参与软件开发和维护过程中重大技术问题的解决，参与软件首次安装调试、数据割接、用户培训和项目推广。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (6, '前端工程师', 800, '将产品UI设计稿实现成网站产品，涵盖用户PC端、移动端网页，处理视觉和交互问题。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (7, 'UI设计师', 600, '对软件的人机交互、操作逻辑、界面美观的整体设计工作，包括高级网页设计、移动应用界面设计等。', 1, 0, 0);
-INSERT INTO `dev_position`(`id`, `title`, `work_price`, `remark`, `status`, `create_time`, `update_time`) VALUES (8, '产品专员', 600, '需求收集，需求分析，需求落地，项目跟踪，项目上线，数据跟踪以及对业务人员进行培训，协助运营、销售、客服等开展工作。', 1, 0, 0);
-
-
--- ----------------------------
--- Table structure for dev_position_group
--- ----------------------------
-DROP TABLE IF EXISTS `dev_position_group`;
-CREATE TABLE `dev_position_group`  (
-  `pid` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '岗位id',
-  `group_id` int(11) NULL DEFAULT NULL COMMENT '权限id',
-  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
-  UNIQUE INDEX `pid_group_id`(`pid`, `group_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COMMENT = '权限分组和岗位的关联表';
-
--- ----------------------------
--- Records of dev_position_group
--- ----------------------------
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (1, 1, 1652439152, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (3, 3, 1652439665, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (4, 4, 1652439679, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (2, 2, 1652439719, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (5, 4, 1652454970, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (6, 4, 1652455036, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (7, 4, 1652455100, 0);
-INSERT INTO `dev_position_group`(`pid`, `group_id`, `create_time`, `update_time`) VALUES (8, 3, 1652455195, 0);
-
 
 -- ----------------------------
 -- Table structure for dev_schedule
@@ -670,7 +667,6 @@ INSERT INTO `dev_product`(`id`, `name`, `admin_id`, `director_uid`, `check_admin
 INSERT INTO `dev_product`(`id`, `name`, `admin_id`, `director_uid`, `check_admin_ids`, `is_open`, `status`, `content`, `md_content`, `create_time`, `update_time`, `delete_time`) VALUES (1002, '勾股OA', 1, 1, '1', 2, 1, '<p>勾股OA是一款基于ThinkPHP6 + Layui + MySql打造的简单实用的开源免费的企业办公系统框架。可以帮助解决企业办公项目60%的重复工作，让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。使用勾股OA可以简单快速地开发出企业级的Web应用系统。</p>\n<p><strong>系统特点</strong><br>系统各功能模块，一目了然，操作简单；通用型的后台权限管理框架，员工的操作记录全覆盖跟踪，紧随潮流、极低门槛、开箱即用。<br>系统集成了十大办公基本的功能模块：系统管理、基础数据、员工管理、消息通知、企业公告、知识文章、办公审批、日常办公、财务管理、商业智能等基础模块。<br>系统方便二次开发，易于功能扩展，代码维护，满足专注业务深度开发的需求。<br>开发人员可以快速基于此系统进行二次开发，免去写一次系统架构的痛苦，帮助开发者高效降低开发的成本，通过二次开发之后可以用来做CRM，ERP，项目管理等企业办公系统。</p>\n<p><strong>功能矩阵</strong></p>\n<p>系统后台集成了主流的通用功能，如：登录验证、系统配置、操作日志管理、角色权限、职位职称、功能菜单、模块管理、关键字管理、文件上传、数据备份/还原、基础数据、审批流程、员工管理、消息通知、企业公告、知识文章、办公审批、日常办公、财务管理、商业智能、 API接口等。更多的个性化功能可以基于当前系统便捷做二次开发。</p>\n', '勾股OA是一款基于ThinkPHP6 + Layui + MySql打造的简单实用的开源免费的企业办公系统框架。可以帮助解决企业办公项目60%的重复工作，让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。使用勾股OA可以简单快速地开发出企业级的Web应用系统。\n\n**系统特点**\n系统各功能模块，一目了然，操作简单；通用型的后台权限管理框架，员工的操作记录全覆盖跟踪，紧随潮流、极低门槛、开箱即用。\n系统集成了十大办公基本的功能模块：系统管理、基础数据、员工管理、消息通知、企业公告、知识文章、办公审批、日常办公、财务管理、商业智能等基础模块。\n系统方便二次开发，易于功能扩展，代码维护，满足专注业务深度开发的需求。\n开发人员可以快速基于此系统进行二次开发，免去写一次系统架构的痛苦，帮助开发者高效降低开发的成本，通过二次开发之后可以用来做CRM，ERP，项目管理等企业办公系统。\n\n**功能矩阵**\n\n系统后台集成了主流的通用功能，如：登录验证、系统配置、操作日志管理、角色权限、职位职称、功能菜单、模块管理、关键字管理、文件上传、数据备份/还原、基础数据、审批流程、员工管理、消息通知、企业公告、知识文章、办公审批、日常办公、财务管理、商业智能、 API接口等。更多的个性化功能可以基于当前系统便捷做二次开发。', 1652456965, 1652494118, 0);
 INSERT INTO `dev_product`(`id`, `name`, `admin_id`, `director_uid`, `check_admin_ids`, `is_open`, `status`, `content`, `md_content`, `create_time`, `update_time`, `delete_time`) VALUES (1003, '勾股DEV', 1, 1, '1', 2, 1, '<p>勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。</p>\n<p><strong>产品理念：</strong><br>通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。</p>\n<p><strong>系统特点</strong></p>\n<ul>\n<li>多产品支持，可添加多产品管理</li><li>多项目支持，可以多项目同时进行管理</li><li>可配置的用户角色控制，不同的角色可配置不同的操作权限</li><li>Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷</li><li>每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块</li><li>任务时间跟踪机制，项目任务多状态流转，任务成果可见可控。</li><li>工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间</li><li>任务安排，任务分配指定人，可设置负责人、多协同人员</li><li>员工的操作记录全覆盖跟踪</li></ul>\n', '勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。\n\n**产品理念：**\n通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。\n\n**系统特点**\n- 多产品支持，可添加多产品管理\n- 多项目支持，可以多项目同时进行管理\n- 可配置的用户角色控制，不同的角色可配置不同的操作权限\n- Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷\n- 每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块\n- 任务时间跟踪机制，项目任务多状态流转，任务成果可见可控。\n- 工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间\n- 任务安排，任务分配指定人，可设置负责人、多协同人员\n- 员工的操作记录全覆盖跟踪', 1652457166, 1652494101, 0);
 
-
 -- ----------------------------
 -- Table structure for dev_project
 -- ----------------------------
@@ -699,7 +695,6 @@ INSERT INTO `dev_project`(`id`, `name`, `product_id`, `admin_id`, `director_uid`
 INSERT INTO `dev_project`(`id`, `name`, `product_id`, `admin_id`, `director_uid`, `start_time`, `end_time`, `status`, `content`, `md_content`, `create_time`, `update_time`, `delete_time`) VALUES (1001, '勾股博客', 1001, 1, 1, 1646064000, 1656518400, 1, '系统后台集成了主流的通用功能，如：登录验证、系统配置、操作日志管理、角色权限、功能管理（后台菜单管理）、导航设置、网站地图、轮播广告、TAG关键字管理、友情链接、文件上传、数据备份/还原、博客文章功能、语雀文档功能、用户管理、用户操作日志、用户注册/登录、 博客归档、博客动态、访问统计等。更多的个性化功能可以基于当前博客系统便捷做二次开发。', NULL, 1652493248, 0, 0);
 INSERT INTO `dev_project`(`id`, `name`, `product_id`, `admin_id`, `director_uid`, `start_time`, `end_time`, `status`, `content`, `md_content`, `create_time`, `update_time`, `delete_time`) VALUES (1002, '勾股OA', 1002, 1, 1, 1651334400, 1656518400, 1, '勾股OA是一款基于ThinkPHP6 + Layui + MySql打造的简单实用的开源免费的企业办公系统框架。可以帮助解决企业办公项目60%的重复工作，让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。使用勾股OA可以简单快速地开发出企业级的Web应用系统。', NULL, 1652494341, 0, 0);
 INSERT INTO `dev_project`(`id`, `name`, `product_id`, `admin_id`, `director_uid`, `start_time`, `end_time`, `status`, `content`, `md_content`, `create_time`, `update_time`, `delete_time`) VALUES (1003, '勾股DEV', 1003, 1, 1, 1651680000, 1659196800, 1, '勾股DEV是一款专为IT研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。', NULL, 1652494403, 0, 0);
-
 
 -- ----------------------------
 -- Table structure for dev_project_user
@@ -823,7 +818,6 @@ INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admi
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (6, 'product', 1000, '勾股CMS开源地址', 'https://gitee.com/gouguopen/gougucms', 1, 1652457099, 0, 0);
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (7, 'product', 1003, '勾股DEV体验站', 'https://dev.gougucms.com', 1, 1652457200, 0, 0);
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (8, 'product', 1003, '勾股DEV开源地址', 'https://gitee.com/gouguopen/dev', 1, 1652457220, 0, 0);
-
 
 -- ----------------------------
 -- Table structure for dev_comment

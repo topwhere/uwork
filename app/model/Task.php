@@ -44,19 +44,10 @@ class Task extends Model
             $where[] = ['project_id', '=', $param['project_id']];
         } else {
             $project_ids = Db::name('ProjectUser')->where(['uid' => $param['uid'], 'delete_time' => 0])->column('project_id');
-            $task_ids = Db::name('ProjectUser')->where(['uid' => $param['uid'], 'delete_time' => 0])->column('id');
-            $map1 = [
-                ['admin_id', '=', $param['uid']],
-            ];
-            $map2 = [
-                ['director_uid', '=', $param['uid']],
-            ];
-            $map3 = [
-                ['', 'exp', Db::raw("FIND_IN_SET({$param['uid']},assist_admin_ids)")],
-            ];
-            $map4 = [
-                ['id', 'in', $task_ids],
-            ];
+            $map1[] = ['admin_id', '=', $param['uid']];
+            $map2[] = ['director_uid', '=', $param['uid']];
+            $map3[] = ['', 'exp', Db::raw("FIND_IN_SET({$param['uid']},assist_admin_ids)")];
+            $map4[] = ['project_id', 'in', $project_ids];
         }
         if (!empty($param['type'])) {
             $where[] = ['type', '=', $param['type']];

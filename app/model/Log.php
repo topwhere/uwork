@@ -57,11 +57,12 @@ class Log extends Model
                 'assist_admin_ids' => array('icon' => 'icon-xueshengbaoming', 'title' => '协作人'),
                 'end_time' => array('icon' => 'icon-kaoshijihua', 'title' => '预计结束时间'),
                 'title' => array('icon' => 'icon-wodedianping', 'title' => '标题'),
-                'flow_status' => array('icon' => 'icon-wodedianping', 'title' => '状态'),
+                'flow_status' => array('icon' => 'icon-wodedianping', 'title' => '任务状态'),
                 'plan_hours' => array('icon' => 'icon-wodedianping', 'title' => '工时'),
                 'priority' => array('icon' => 'icon-wodedianping', 'title' => '等级'),
-                'type' => array('icon' => 'icon-wodedianping', 'title' => '类型'),
-                'cate' => array('icon' => 'icon-wodedianping', 'title' => '类别'),
+                'type' => array('icon' => 'icon-wodedianping', 'title' => '任务类型'),
+                'cate' => array('icon' => 'icon-wodedianping', 'title' => '任务类别'),
+                'is_bug' => array('icon' => 'icon-wodedianping', 'title' => '任务性质'),
                 'done_ratio' => array('icon' => 'icon-wodedianping', 'title' => '完成进度'),
                 'product_id' => array('icon' => 'icon-wodedianping', 'title' => '关联产品'),
                 'project_id' => array('icon' => 'icon-wodedianping', 'title' => '关联项目'),
@@ -102,7 +103,7 @@ class Log extends Model
                 $v['new_content'] = $sourse[$v['field']][$v['new_content']];
             }
             if (strpos($v['field'], '_time') !== false) {
-                if($v['old_content'] == ''){
+                if ($v['old_content'] == '') {
                     $v['old_content'] = '未设置';
                 }
                 $v['new_content'] = date('Y-m-d', (int) $v['new_content']);
@@ -129,6 +130,10 @@ class Log extends Model
             if ($v['field'] == 'cate') {
                 $v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');
                 $v['new_content'] = Db::name('WorkCate')->where(['id' => $v['new_content']])->value('title');
+            }
+            if ($v['field'] == 'is_bug') {
+                $v['old_content'] = $v['old_content'] == 0 ? '普通任务' : '问题缺陷';
+                $v['new_content'] = $v['new_content'] == 0 ? '普通任务' : '问题缺陷';
             }
             if ($v['field'] == 'done_ratio') {
                 $v['old_content'] = $v['old_content'] . '%';
@@ -199,10 +204,10 @@ class Log extends Model
                 $v['new_content'] = $sourse[$v['field']][$v['new_content']];
             }
             if (strpos($v['field'], '_time') !== false) {
-                if($v['old_content'] == ''){
+                if ($v['old_content'] == '') {
                     $v['old_content'] = '未设置';
                 }
-                $v['new_content'] = date('Y-m-d', (int) $v['new_content']);           
+                $v['new_content'] = date('Y-m-d', (int) $v['new_content']);
             }
             if (strpos($v['field'], '_uid') !== false) {
                 $v['old_content'] = Db::name('Admin')->where(['id' => $v['old_content']])->value('name');
@@ -219,9 +224,17 @@ class Log extends Model
                 $v['old_content'] = Db::name('Project')->where(['id' => $v['old_content']])->value('name');
                 $v['new_content'] = Db::name('Project')->where(['id' => $v['new_content']])->value('name');
             }
+            if ($v['field'] == 'type') {
+                $v['old_content'] = Db::name('TaskCate')->where(['id' => $v['old_content']])->value('title');
+                $v['new_content'] = Db::name('TaskCate')->where(['id' => $v['new_content']])->value('title');
+            }
             if ($v['field'] == 'cate') {
                 $v['old_content'] = Db::name('WorkCate')->where(['id' => $v['old_content']])->value('title');
                 $v['new_content'] = Db::name('WorkCate')->where(['id' => $v['new_content']])->value('title');
+            }
+            if ($v['field'] == 'is_bug') {
+                $v['old_content'] = $v['old_content'] == 0 ? '普通任务' : '问题缺陷';
+                $v['new_content'] = $v['new_content'] == 0 ? '普通任务' : '问题缺陷';
             }
             if ($v['field'] == 'done_ratio') {
                 $v['old_content'] = $v['old_content'] . '%';

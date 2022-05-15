@@ -156,10 +156,10 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-tags-all{float: right; font-weight: 200px; background-color:#4285f4; color:#fff; border-radius: 3px; padding: 2px 6px; cursor: pointer; display: none;}
 .layui-table-form{margin-top: 0;}
 .layui-table-form tbody tr:hover{background-color: #fff;}
-.layui-td-gray{color:#8c95a8; width:80px; text-align:right; background-color:#fafafa;}
-.layui-td-gray2{color:#8c95a8; width:104px; text-align:right; background-color:#fafafa;}
-.layui-td-gray3{color:#8c95a8; width:130px; text-align:right; background-color:#fafafa;}
-.layui-td-gray4{color:#8c95a8; width:156px; text-align:right; background-color:#fafafa;}
+.layui-td-gray{color:#8c95a8; width:64px; text-align:right; background-color:#fafafa;}
+.layui-td-gray2{color:#8c95a8; width:94px; text-align:right; background-color:#fafafa;}
+.layui-td-gray3{color:#8c95a8; width:124px; text-align:right; background-color:#fafafa;}
+.layui-td-gray4{color:#8c95a8; width:154px; text-align:right; background-color:#fafafa;}
 .layui-td-gray font,.layui-td-gray2 font,.layui-td-gray3 font{color:#FF6347; margin-left: 2px;}
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{border-color:#f1f1f1;}
 
@@ -308,7 +308,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .table-content .layui-table-page{background-color:#fff;border-bottom:1px solid #f1f1f1;}
 
 
-.md-content-content{font-size:14px; line-height:1.6;}
+.md-content-content{font-size:16px; line-height:1.6;}
 .md-content-content code, .md-content-content code {padding:2px; border-radius:2px; font-size:14px; font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
 .md-content-content h1,.md-content-content h2,.md-content-content h3,.md-content-content h4,.md-content-content h5{padding:12px 0}
 .md-content-content p{padding:6px 0}

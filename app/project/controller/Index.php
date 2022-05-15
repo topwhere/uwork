@@ -249,7 +249,6 @@ class Index extends BaseController
             $task_map[] = ['project_id', '=', $detail['id']];
             $task_map[] = ['delete_time', '=', 0];
 
-
 			//任务
 			$task_cate = Db::name('TaskCate')->where(['status' => 1])->select()->toArray();
 			foreach ($task_cate as $k => $v) {

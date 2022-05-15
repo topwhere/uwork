@@ -215,6 +215,13 @@ class Index extends BaseController
         $cate = Db::name('WorkCate')->field('id,title')->where([['status', '=', 1]])->select();
         return to_assign(0, '', $cate);
     }
+	
+    //获取任务类型列表
+    public function get_task_cate()
+    {
+        $cate = Db::name('TaskCate')->field('id,title')->where([['status', '=', 1]])->select();
+        return to_assign(0, '', $cate);
+    }
 
     //获取产品列表
     public function get_product()

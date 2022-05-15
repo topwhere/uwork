@@ -2,13 +2,13 @@
 	<h3 class="h3-title">新建产品</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">产品名称<font>*</font>
+			<td class="layui-td-gray2">产品名称<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="name" lay-verify="required" lay-reqText="请输入产品名称" placeholder="请输入产品名称"
 					class="layui-input" value="">
 			</td>
-			<td class="layui-td-gray">产品负责人<font>*</font>
+			<td class="layui-td-gray2">产品负责人<font>*</font>
 			</td>
 			<td>
 				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择产品负责人" value="">
@@ -16,7 +16,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">参与评审人</td>
+			<td class="layui-td-gray2">参与评审人</td>
 			<td colspan="4">
 				<input type="hidden" id="check_admin_ids" name="check_admin_ids" readonly lay-verify="required"
 					lay-reqText="请选择评审人" value="">
@@ -25,7 +25,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">访问控制</td>
+			<td class="layui-td-gray2">访问控制</td>
 			<td colspan="4">
 				<input type="radio" name="is_open" lay-filter="checkopen" value="1" checked title="内部(仅创建人、负责人、评审人可访问)">
 				<input type="radio" name="is_open" lay-filter="checkopen" value="2" title="公开(有产品视图权限员工均可访问)">

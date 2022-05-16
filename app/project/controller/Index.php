@@ -254,7 +254,7 @@ class Index extends BaseController
 			foreach ($task_cate as $k => $v) {
 				$task_map[] = ['type', '=', $v['id']];
 				$task_cate[$k]['count'] = Db::name('Task')->where($task_map)->count();
-				$task_map[] = ['flow_status', '<', 3];
+				$task_map[] = ['flow_status', '>', 2];
 				$task_cate[$k]['unfinish'] = Db::name('Task')->where($task_map)->count();
 			}
 			$detail['task_cate'] = $task_cate;

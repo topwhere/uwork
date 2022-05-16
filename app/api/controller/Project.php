@@ -22,10 +22,10 @@ class Project extends BaseController
     public function get_chart_data()
     {
         $param = get_params();
-        $tasks = Db::name('Task')->field('id,plan_hours,end_time,flow_status,over_time')->order('end_time asc')->where([['project_id', '=', $param['project_id']], ['delete_time', '=', 0],['type','<',4]])->select()->toArray();
+        $tasks = Db::name('Task')->field('id,plan_hours,end_time,flow_status,over_time')->order('end_time asc')->where([['project_id', '=', $param['project_id']], ['delete_time', '=', 0],['is_bug','=',0]])->select()->toArray();
 
         $task_count = count($tasks);
-        $task_count_ok = Db::name('Task')->where([['project_id', '=', $param['project_id']], ['delete_time', '=', 0],['type','<',4],['flow_status', '<', 2]])->count();
+        $task_count_ok = Db::name('Task')->where([['project_id', '=', $param['project_id']], ['delete_time', '=', 0],['is_bug','=',0],['flow_status', '>', 2]])->count();
         $task_delay = 0;
         if ($task_count > 0) {
             foreach ($tasks as $k => $v) {
@@ -45,7 +45,7 @@ class Project extends BaseController
             'delay_lv' => $task_count == 0 ? 100 : round($task_delay * 100 / $task_count, 2),
         ];
 
-        $bugs = Db::name('Task')->field('id,flow_status')->order('end_time asc')->where(['delete_time' => 0, 'type' => 4, 'project_id' => $param['project_id']])->select()->toArray();
+        $bugs = Db::name('Task')->field('id,flow_status')->order('end_time asc')->where(['delete_time' => 0, 'is_bug' => 1, 'project_id' => $param['project_id']])->select()->toArray();
         $status_a = $status_b = $status_c = $status_d = $status_e = 0;
         foreach ($bugs as $k => $v) {
             if ($v['flow_status'] == 1) {

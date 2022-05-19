@@ -284,7 +284,19 @@
 				return;
 			}
 			else if (obj.event === 'psw') {
-				resetPsw(data.id);
+				layer.confirm('确定要重设该用户的密码？', {
+				icon: 3,
+				title: '提示'
+				}, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+						}
+					}
+					gougu.post("/admin/user/reset",{id: data.id},callback);
+					layer.close(index);
+				});
 				return;
 			}
 		});
@@ -302,27 +314,10 @@
 				}
 			});
 			return false;
-		});
+		});	
 	}
-	
-	
-	//重设密码
-	function resetPsw(id){
-		layer.confirm('确定要重设该用户的密码？', {
-			icon: 3,
-			title: '提示'
-		}, function (index) {
-			let callback = function (e) {
-				layer.msg(e.msg);
-				if (e.code == 0) {
-					layui.pageTable.reload();
-				}
-			}
-			gougu.post("/admin/user/reset",data.field,callback);
-			layer.close(index);
-		});
-	}
-	
+
+		
 	//拷贝密码
 	function copyToClip(content) {
 		var save = function(e){

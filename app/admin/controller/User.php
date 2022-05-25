@@ -67,7 +67,7 @@ class User extends BaseController
             $username = $pinyin->name($param['name'], PINYIN_UMLAUT_V);
             $param['username'] = implode('', $username);
             if (!empty($param['id']) && $param['id'] > 0) {
-				$count = Db::name('Admin')->where([['username', '=', $param['username']], ['id', '<>', $param['id']]])->count();
+				$count = Db::name('Admin')->where([['username', 'like', $param['username'].'%'], ['id', '<>', $param['id']]])->count();
 				if ($count > 0) {
 					$param['username'] = implode('', $username) . $count;
 				}
@@ -96,7 +96,7 @@ class User extends BaseController
                     return to_assign(1, '提交失败:' . $e->getMessage());
                 }
             } else {
-                $count = Db::name('Admin')->where('username', $param['username'])->count();
+                $count = Db::name('Admin')->where([['username', 'like', $param['username'].'%']])->count();
                 if ($count > 0) {
                     $param['username'] = implode('', $username) . $count;
                 }

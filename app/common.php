@@ -1323,7 +1323,6 @@ function countDays($a, $b = 0)
     } else {
         return 0;
     }
-
 }
 
 /**

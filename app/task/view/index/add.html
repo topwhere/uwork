@@ -62,16 +62,14 @@
 				<input type="hidden" name="director_uid" readonly value="">
 				<input type="text" name="director_name" placeholder="请选择" readonly class="layui-input" value="">
 			</td>
+			{empty name="$project_id"}
 			<td class="layui-td-gray">协作人</td>
-			<td colspan="5">
+			<td colspan="3">
 				<input type="hidden" name="assist_admin_ids" readonly value="">
 				<input type="text" name="assist_admin_names" placeholder="请选择" readonly class="layui-input" value="">
 			</td>
-		</tr>
-		{empty name="$project_id"}
-		<tr>
 			<td class="layui-td-gray">关联项目</td>
-			<td colspan="7">
+			<td>
 				<select id="projectId" name="project_id" lay-filter="project_id">
 					<option value="">请选择关联项目</option>
 					{volist name=":get_project()" id="v"}
@@ -79,8 +77,15 @@
 					{/volist}
 				</select>
 			</td>
+			{else/}
+			<td class="layui-td-gray">协作人</td>
+			<td colspan="5">
+				<input type="hidden" name="project_id" readonly value="{$project_id}">
+				<input type="hidden" name="assist_admin_ids" readonly value="">
+				<input type="text" name="assist_admin_names" placeholder="请选择" readonly class="layui-input" value="">
+			</td>
+			{/empty}
 		</tr>
-		{/empty}
 	</table>
 	<div>
 		<div style="padding:10px 0">详细描述<span style="color: red">*</span></div>

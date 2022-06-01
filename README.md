@@ -1,4 +1,4 @@
-## 📐 勾股DEV
+## 📐 勾股DEV2.0
 ![输入图片说明](https://dev.gougucms.com/storage/202204/banner.jpg)
 
 ### ✅ 相关链接
@@ -7,10 +7,11 @@
 - 项目会不定时进行更新，**建议⭐star⭐和👁️watch👁️一份**。
 
 ### ⭕ 开源项目
-1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.0.9-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
-2. [![勾股CMS](https://img.shields.io/badge/GouguCMS-2.0.18-brightgreen.svg)](https://gitee.com/gougucms/gougucms) [开源项目系列：勾股CMS —— CMS内容管理系统框架](https://gitee.com/gougucms/gougucms)
-3. [![勾股BLOG](https://img.shields.io/badge/GouguBLOG-2.0.16-brightgreen.svg)](https://gitee.com/gougucms/blog) [开源项目系列：勾股BLOG —— 个人&工作室博客系统](https://gitee.com/gougucms/blog)
-4. [![勾股DEV](https://img.shields.io/badge/GouguDEV-1.4.18-brightgreen.svg)](https://gitee.com/gougucms/dev) [开源项目系列：勾股DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
+1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.5.8-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
+2. [![勾股CMS](https://img.shields.io/badge/GouguCMS-3.0.64-brightgreen.svg)](https://gitee.com/gougucms/gougucms) [开源项目系列：勾股CMS —— CMS内容管理系统框架](https://gitee.com/gougucms/gougucms)
+3. [![勾股BLOG](https://img.shields.io/badge/GouguBLOG-2.5.9-brightgreen.svg)](https://gitee.com/gougucms/blog) [开源项目系列：勾股BLOG —— 个人&工作室博客系统](https://gitee.com/gougucms/blog)
+4. [![勾股DEV](https://img.shields.io/badge/GouguDEV-2.6.01-brightgreen.svg)](https://gitee.com/gougucms/dev) [开源项目系列：勾股DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
+5. [![勾股Admin](https://img.shields.io/badge/GouguADMIN-1.6.01-brightgreen.svg)](https://gitee.com/gouguopen/guoguadmin.git) [开源项目系列：勾股Admin —— 基于Layui的Web UI解决方案。](https://gitee.com/gouguopen/guoguadmin.gitv)
 
 ### 📋 系统介绍
 勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
@@ -39,7 +40,7 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 - 多产品支持，可添加多产品管理
 - 多项目支持，可以多项目同时进行管理
 - 可配置的用户角色控制，不同的角色可配置不同的操作权限
-- Wiki 形式的文档撰写，Mardown编辑器，工程师使用高效便捷
+- Wiki 形式的文档撰写，Mardown编辑器，程序员使用高效便捷
 - 每个项目配置有需求、任务、Wiki文档、动态记录、互动评论、工作记录模块
 - 任务时间跟踪机制，项目任务多状态流转，任务成果可见可控。
 - 工时登记，团队精细化管理，可统计每个人每天在每个项目做了多少时间
@@ -136,8 +137,10 @@ composer install
 7.  如果遇到无法解决的问题请到QQ群：24641076 反馈交流。
 
 ### 🖼️ 截图预览
-![输入图片说明](https://dev.gougucms.com/storage/202204/dev1.png)
-![输入图片说明](https://dev.gougucms.com/storage/202204/dev2.png)
+|页面截图      |    部分截图|
+| :--------: | :--------:|
+| ![功能导图](https://dev.gougucms.com/storage/202204/dev1.png "功能导图")|![功能导图](https://dev.gougucms.com/storage/202204/dev2.png "功能导图")|
+|![功能导图](https://dev.gougucms.com/storage/202204/dev3.png "功能导图")|![功能导图](https://dev.gougucms.com/storage/202204/dev4.png "功能导图")|
 
 ### ⭐ 开源助力
 - 勾股DEV遵循GPL-3.0开源协议发布。 

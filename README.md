@@ -2,7 +2,7 @@
 ![输入图片说明](https://dev.gougucms.com/storage/202204/banner.jpg)
 
 ### ✅ 相关链接
-- gitee：https://gitee.com/gougucms/dev.git
+- 系统网站：https://www.gougucms.com/home/pages/detail/s/gougudev.html
 - 文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
 - 项目会不定时进行更新，**建议⭐star⭐和👁️watch👁️一份**。
 
@@ -24,8 +24,6 @@
 ### ✳️ 演示地址
 
 勾股DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
-   
-勾股DEV文档地址：[https://blog.gougucms.com/home/book/detail/bid/7.html](https://blog.gougucms.com/home/book/detail/bid/7.html)
 
 PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 

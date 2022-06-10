@@ -7,11 +7,11 @@
 - 项目会不定时进行更新，**建议⭐star⭐和👁️watch👁️一份**。
 
 ### ⭕ 开源项目
-1. [![勾股OA](https://img.shields.io/badge/GouguOA-2.5.8-brightgreen.svg)](https://gitee.com/gougucms/office) [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
-2. [![勾股CMS](https://img.shields.io/badge/GouguCMS-3.0.64-brightgreen.svg)](https://gitee.com/gougucms/gougucms) [开源项目系列：勾股CMS —— CMS内容管理系统框架](https://gitee.com/gougucms/gougucms)
-3. [![勾股BLOG](https://img.shields.io/badge/GouguBLOG-2.5.9-brightgreen.svg)](https://gitee.com/gougucms/blog) [开源项目系列：勾股BLOG —— 个人&工作室博客系统](https://gitee.com/gougucms/blog)
-4. [![勾股DEV](https://img.shields.io/badge/GouguDEV-2.6.01-brightgreen.svg)](https://gitee.com/gougucms/dev) [开源项目系列：勾股DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
-5. [![勾股Admin](https://img.shields.io/badge/GouguADMIN-1.6.01-brightgreen.svg)](https://gitee.com/gouguopen/guoguadmin.git) [开源项目系列：勾股Admin —— 基于Layui的Web UI解决方案。](https://gitee.com/gouguopen/guoguadmin.gitv)
+1. [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
+2. [开源项目系列：勾股CMS —— CMS内容管理系统框架](https://gitee.com/gougucms/gougucms)
+3. [开源项目系列：勾股BLOG —— 个人&工作室博客系统](https://gitee.com/gougucms/blog)
+4. [开源项目系列：勾股DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
+5. [开源项目系列：勾股Admin —— 基于Layui的Web UI解决方案。](https://gitee.com/gouguopen/guoguadmin.gitv)
 
 ### 📋 系统介绍
 勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
@@ -91,7 +91,11 @@ composer install
     
 第五步：访问 http://www.yoursite.com/install/index 进行安装
 
-**PS：如需要重新安装，请删除目录里面 config/install.lock 的文件，即可重新安装。**
+⚠️⚠️ **注意：安装过程中，请先手动创建空的数据库，然后填写刚创建的数据库名称和用户名也可完成安装。** ⚠️⚠️
+
+🔺🔺 **提醒：安装过程中，如果进度条卡住，一般都是数据库写入权限或者安装环境配置问题，请注意检查。遇到问题请到QQ群：24641076 反馈** 🔺🔺
+
+✅✅ **PS：如需要重新安装，请删除目录里面 config/install.lock 的文件，即可重新安装。** ✅✅
 
 **三、伪静态配置**
 

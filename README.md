@@ -81,11 +81,9 @@ Linux下，勾股DEV的安装请使用以下命令进行安装。
 第二步：进入目录  
     cd gougudev  
     
-第三步：下载PHP依赖包 
+第三步：下载PHP依赖包 【php8.0的环境用根目录的composer.php8.json替换覆盖composer.json后再安装】
     
 composer install  
-	
-注意：composer的版本最好是2.0.8版本，否则可能下载PHP依赖包失败，composer降级：composer self-update 2.0.8
     
 第四步：添加虚拟主机并绑定到项目的public目录  
     
@@ -132,11 +130,9 @@ composer install
 
 4.  如果composer install失败，请尝试在命令行进行切换配置到国内源，命令如下composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/。
 
-5.  如果composer install失败，请尝试composer降级：composer self-update 2.0.8。
+5.  访问 http://www.yoursite.com/install/index ，请注意查看伪静态请配置是否设置了thinkphp规则。
 
-6.  访问 http://www.yoursite.com/install/index ，请注意查看伪静态请配置是否设置了thinkphp规则。
-
-7.  如果遇到无法解决的问题请到QQ群：24641076 反馈交流。
+6.  如果遇到无法解决的问题请到QQ群：24641076 反馈交流。
 
 ### 🖼️ 截图预览
 |页面截图      |    部分截图|

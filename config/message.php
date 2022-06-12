@@ -1,47 +1,26 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | 缓存设置
+// | 消息模板
 // +----------------------------------------------------------------------
 
 return [
     // 系统消息模板
     'template'  => [
         1 => [
-			'name'       => '公告',
-            'template' => '您有一个新公告：{title} ，请及时查看。',
+			'title'       => '{from_user}发了一个新『公告』，请及时查看',
+            'content' => '您有一个新公告：{title}。',
+            'link' => '<a class="link-a" data-href="/note/index/view/id/{action_id}">查看详情</a>',
         ],
-        2 => [
-			'type'       => '报销审批',
-            'template' => '{from_user} 提交 {title} 报销审批，请及时处理。',
+        21 => [
+			'title'       => '{user}分配了一个新任务给你，请及时处理',
+            'content' => '{user}在{create_time}给你分配了一个新任务『{title}』，请及时跟进处理。',
+			'link' => '<a class="link-a" data-href="/task/index/detail/id/{action_id}">去审批</a>',
         ],
-        3 => [
-			'type'       => '报销审批',
-            'template' => '{from_user} 拒绝您的 {title} 报销审批，拒绝理由：{remark}，请及时处理。',
-        ],
-        4 => [
-			'type'       => '报销审批',
-            'template' => '您的 {title} 报销已经审批通过，请及时查看。',
-        ],
-        5 => [
-			'type'       => '报销发放',
-            'template' => '您的 {title} 报销已经发放，请查看是否到账。',
-        ],
-        6 => [
-			'type'       => '发票审批',
-            'template' => '{from_user} 提交 {title} 发票审批待您处理，请及时查看。',
-        ],
-        7 => [
-			'type'       => '发票审批',
-            'template' => '{from_user} 拒绝您的 {title} 发票审批，请及时处理。',
-        ],
-        8 => [
-			'type'       => '发票审批',
-            'template' => '您的 {title} 发票已经审批通过，请及时查看。',
-        ],
-        9 => [
-			'type'       => '发票审批',
-            'template' => '您的 {title} 发票已经开票成功，请及时查看。',
-        ],
-    ],
+        22 => [
+			'title'       => '{user}转了一个任务给你，请及时处理',
+            'content' => '{user}在{create_time}给你转了一个任务『{title}』，请及时跟进处理。',
+			'link' => '<a class="link-a" data-href="/task/index/detail/id/{action_id}">查看详情</a>',
+        ]
+	]
 ];

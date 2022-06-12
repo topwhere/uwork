@@ -360,55 +360,60 @@ function add_log($type, $param_id = 0, $param = [], $old = [])
 
 /**
  * 发送站内信
- * @param  $user_id 接收人user_id
- * @param  $data 操作内容
- * @param  $sysMessage 1为系统消息
+ * @param  $user_id 接收人
  * @param  $template 消息模板
+ * @param  $data 操作内容
  * @return
  */
-function sendMessage($user_id, $template, $data = [])
+function sendMessage($user_id, $template, $data=[])
 {
-    $content = get_config('message.template')[$template]['template'];
-    foreach ($data as $key => $val) {
-        $content = str_replace('{' . $key . '}', $val, $content);
-    }
-    if (isset($data['from_uid'])) {
-        $content = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $content);
-    }
-    $content = str_replace('{date}', date('Y-m-d'), $content);
-
-    if (!$user_id) {
-        return false;
-    }
-
-    if (!$content) {
-        return false;
-    }
-
+    $title = get_config('message.template')[$template]['title'];
+    $content = get_config('message.template')[$template]['content'];
+	foreach ($data as $key => $val) {
+		$title = str_replace('{' . $key . '}', $val, $title);
+		$content = str_replace('{' . $key . '}', $val, $content);
+	}
+	if(isSet($data['from_uid'])){
+		$title = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $title);
+		$content = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $content);
+	}
+	$content = str_replace('{date}', date('Y-m-d'), $content);
+		
+    if (!$user_id) return false;
+    if (!$content) return false;
     if (!is_array($user_id)) {
-        $users[] = $user_id;
+        $users = explode(",", strval($user_id));
     } else {
         $users = $user_id;
     }
     $users = array_unique(array_filter($users));
-    //组合要发的消息
-    $send_data = [];
-    foreach ($users as $key => $value) {
-        $send_data[] = array(
-            'to_uid' => $value, //接收人
-            'action_id' => $data['action_id'],
-            'title' => $data['title'],
-            'content' => $content,
-            'template' => $template,
-            'module_name' => strtolower(app('http')->getName()),
-            'controller_name' => strtolower(app('request')->controller()),
-            'action_name' => strtolower(app('request')->action()),
-            'send_time' => time(),
-            'create_time' => time(),
-        );
-    }
-    $res = Db::name('Message')->strict(false)->field(true)->insertAll($send_data);
+	//组合要发的消息
+	$send_data = [];
+	foreach ($users as $key => $value) {
+		$send_data[] = array(
+			'to_uid' => $value,//接收人
+			'action_id' => $data['action_id'],
+			'title' => $title,
+			'content' => $content,
+			'template' => $template,
+			'module_name' => strtolower(app('http')->getName()),
+			'controller_name' => strtolower(app('request')->controller()),
+			'action_name' => strtolower(app('request')->action()),
+			'send_time' => time(),
+			'create_time' => time()
+		);
+	}
+	$res = Db::name('Message')->strict(false)->field(true)->insertAll($send_data);
     return $res;
+}
+
+function getMessageLink($template,$action_id){
+	$content='';
+	if(isset(get_config('message.template')[$template]['link'])){
+		$link = get_config('message.template')[$template]['link'];
+		$content = str_replace('{action_id}', $action_id, $link);
+	}	
+	return $content;
 }
 
 /**

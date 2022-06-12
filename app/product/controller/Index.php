@@ -152,8 +152,6 @@ class Index extends BaseController
                         'create_time' => time(),
                     );
                     Db::name('Log')->strict(false)->field(true)->insert($log_data);
-                    $users = Db::name('Admin')->where(['status' => 1])->column('id');
-                    sendMessage($users, 1, ['title' => $param['name'], 'action_id' => $sid]);
                 }
                 return to_assign();
             }

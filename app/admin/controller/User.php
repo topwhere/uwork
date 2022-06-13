@@ -29,7 +29,7 @@ class User extends BaseController
                 $where[] = ['id|username|name|nickname|mobile|desc', 'like', '%' . $param['keywords'] . '%'];
             }
             $where[] = ['status', '<', 2];
-            if (isset($param['status'])) {
+            if (isset($param['status']) && $param['status']!='') {
                 $where[] = ['status', '=', $param['status']];
             }
             if (!empty($param['type'])) {

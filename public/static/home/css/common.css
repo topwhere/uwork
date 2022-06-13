@@ -395,6 +395,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .knowledge-list .card-actions{padding: 12px 0; border-top: 1px solid #f0f0f0;}
 .knowledge-list .card-actions li{width: 24%; height:24px; line-height: 24px; font-size: 14px; display:inline-block; text-align: center; box-sizing: border-box; border-right: 1px solid #f0f0f0;color:#8c95a8}
 .knowledge-list .card-actions li:last-child{border-right: none;}
+.knowledge-list .card-actions li a.action-del{color:#FF5722}
 .knowledge-list .card-actions li a.action-edit{color:#26AB3A}
 .knowledge-list .card-actions li a.action-view{color:#3582fb}
 .knowledge-list .card-actions li a:hover{color:#1E9FFF}

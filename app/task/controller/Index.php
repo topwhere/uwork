@@ -98,7 +98,7 @@ class Index extends BaseController
                     );
                     Db::name('Log')->strict(false)->field(true)->insert($log_data);
                     $users = $param['director_uid'];
-                    sendMessage($users, 21, ['title' => $param['title'], 'action_id' => $sid]);
+                    sendMessage($users, 21, ['title' => $param['title'],'from_uid' => $this->uid, 'create_time'=>date('Y-m-d H:i:s',time()), 'action_id' => $sid]);
                 }
                 return to_assign();
             }

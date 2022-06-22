@@ -133,7 +133,7 @@
 			var ids = $('[name="assist_admin_ids"]').val(), names = $('[name="assist_admin_names"]').val(), assist_admin_id_array = [], assist_admin_name_array = [];
 			if (ids.length > 0) {
 				assist_admin_id_array = ids.split(',');
-				assist_admin_name_array.split(',');
+				assist_admin_name_array = names.split(',');
 			}
 			employeepicker.init({
 				ids: assist_admin_id_array,

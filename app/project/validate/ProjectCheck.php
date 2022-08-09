@@ -4,18 +4,21 @@ use think\Validate;
 
 class ProjectCheck extends Validate
 {
+	// 自定义验证规则
+	protected function checkOne($value,$rule,$data=[])
+	{
+		$count = Db::name('Project')->where(['name'=>$data['name'],'delete_time'=>0])->count();
+		return $count == 0 ? true : false;
+	}
     protected $rule = [
-        'name'       => 'require|unique:project',
-        'code'       => 'alphaNum|length:5,10|unique:project',
+        'name'       => 'require|checkOne',
+        'code'       => 'alphaNum|length:5,10',
         'id'         => 'require'
     ];
 
     protected $message = [
         'name.require'           => '项目名称不能为空',
-        'name.unique'            => '同样的项目名称已经存在',
-        'code.alphaNum'          => '项目代码只能为5至10为字母和数字',
-        'code.length'            => '项目代码只能为5至10为字母和数字',
-        'code.unique'            => '同样的项目代码已经存在',
+        'name.checkOne'            => '同样的项目名称已经存在',
         'id.require'             => '缺少更新条件',
     ];
 

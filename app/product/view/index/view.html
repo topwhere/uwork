@@ -49,7 +49,7 @@
 							data-name="check_admin_ids"></i></td>
 				</tr>
 			</table>
-			<div class="md-content hover-{$role_edit}">
+			<div class="md-content-content hover-{$role_edit}">
 				<h5 class="py-4">产品描述<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}"
 						data-name="md_content"></i></h5>
 				<div id="md_content_{$detail.id}" data-val="{$detail.md_content}">{$detail.content|raw}</div>
@@ -241,9 +241,11 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					setTimeout(function () {
-						location.reload();
-					}, 1000)
+					if(e.code==0){
+						setTimeout(function () {
+							location.reload();
+						}, 1000)
+					}
 				}
 				let postData = { "id": detail_id };
 				gougu.delete("/product/index/delete", postData, callback);
@@ -375,8 +377,8 @@
 			}
 			if (name == "is_open") {
 				let data = [
-					{ 'id': 1, 'title': '内部<span class="font-gray">(仅创建人、负责人、评审人可访问)</span>' },
-					{ 'id': 2, 'title': '公开<span class="font-gray">(有产品视图权限员工均可访问)</span>' }
+					{ 'id': 1, 'title': '内部(仅创建人、负责人、评审人可访问)' },
+					{ 'id': 2, 'title': '公开(有产品视图权限员工均可访问)' }
 				];
 				edit.select_type(id, name, real_txt, data, editPost);
 			}

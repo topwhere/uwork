@@ -373,7 +373,7 @@ function sendMessage($user_id, $template, $data=[])
 		$title = str_replace('{' . $key . '}', $val, $title);
 		$content = str_replace('{' . $key . '}', $val, $content);
 	}
-	if(isSet($data['from_uid'])){
+	if(isset($data['from_uid'])){
 		$title = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $title);
 		$content = str_replace('{from_user}', get_admin($data['from_uid'])['name'], $content);
 	}

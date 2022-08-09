@@ -137,7 +137,7 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .layui-card-value {padding: 4px 0 16px;font-size: 18px;color: #1E9FFF;}
 .layui-table, .layui-table-view{margin:0}
 .layui-table td,.layui-table th{padding:8px;}
-.layui-table-cell{padding:0 10px;}
+.layui-table-cell{padding-left:10px;padding-right:10px;}
 .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th {padding: 5px;}
 .layui-table-body .layui-none{background-color:#fff;}
 .auth-single .auth-icon{font-size:24px; float:left;}

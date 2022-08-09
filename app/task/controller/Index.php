@@ -115,6 +115,7 @@ class Index extends BaseController
                 View::assign('project_id', $param['project_id']);
             }
             View::assign('cate', get_work_cate());
+            View::assign('type', get_task_cate());
             View::assign('id', $id);
             return view();
         }

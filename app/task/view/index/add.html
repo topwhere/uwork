@@ -30,10 +30,9 @@
 			<td>
 				<select name="type" lay-verify="required" lay-reqText="请选择任务类型">
 					<option value="">请选择</option>
-					<option value="1">需求</option>
-					<option value="2">设计</option>
-					<option value="3">研发</option>
-					<option value="4">缺陷</option>
+					{volist name="type" id="vo"}
+						<option value="{$vo.id}">{$vo.title}</option>
+					{/volist}
 				</select>
 			</td>
 			<td class="layui-td-gray">工作类型<span style="color: red">*</span></td>

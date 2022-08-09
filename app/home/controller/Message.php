@@ -17,7 +17,7 @@ use think\facade\View;
 class Message extends BaseController
 {
     //获取消息列表
-    public function getList($map = [], $param = [],$uid)
+    public function getList($map = [], $param = [],$uid=0)
     {
         $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
         //垃圾箱列表特殊处理

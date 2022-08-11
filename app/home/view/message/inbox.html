@@ -1,8 +1,4 @@
 {extend name="../../base/view/common/base" /}
-{block name="style"}
-<link rel="stylesheet" href="{__LAYUI__}/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__LAYUI__}/plugin/dtree/font/dtreefont.css">
-{/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
   <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
@@ -82,7 +78,7 @@
 			  }},
 			  {field: 'from_name', title: '发件人', width:90,align:'center'},
 			  {field: 'title', title: '消息主题',templet:function(d){
-				var html = '<a class="open-a" data-url="/home/message/read/id/'+d.id+'">'+d.title+'</a>';
+				var html = '<a class="open-a" data-href="/home/message/read/id/'+d.id+'">'+d.title+'</a>';
 				return html;
 			}},
 			  {field: 'send_time', title: '发件时间', align:'center',width:160},

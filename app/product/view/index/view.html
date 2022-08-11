@@ -218,7 +218,7 @@
 				{ 'id': 1, 'title': '开启' }
 			]
 		}
-		const layer = layui.layer, edit = layui.gouguEdit, comment = layui.gouguComment, upload = layui.upload, gougu = layui.gougu;
+		var layer = layui.layer, tool = layui.tool, edit = layui.gouguEdit, comment = layui.gouguComment, upload = layui.upload;
 
 		$('.hover-edit').hover(function () {
 			$(this).addClass('hover-on');
@@ -248,7 +248,7 @@
 					}
 				}
 				let postData = { "id": detail_id };
-				gougu.delete("/product/index/delete", postData, callback);
+				tool.delete("/product/index/delete", postData, callback);
 			});
 		})
 
@@ -263,10 +263,10 @@
 			, done: function (res, index, upload) {
 				let callback = function (e) {
 					layer.msg('上传成功');
-					gougu.load("/product/index/view?id=" + detail_id);
+					tool.load("/product/index/view?id=" + detail_id);
 				}
 				let postData = { 'topic_id': detail_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'product' };
-				gougu.post("/api/appendix/add", postData, callback);
+				tool.post("/api/appendix/add", postData, callback);
 			}
 			, error: function (index, upload) {
 				layer.msg('上传失败');
@@ -279,10 +279,10 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					gougu.load("/product/index/view?id=" + detail_id);
+					tool.load("/product/index/view?id=" + detail_id);
 				}
 				let postData = { "id": id };
-				gougu.delete("/api/appendix/delete", postData, callback);
+				tool.delete("/api/appendix/delete", postData, callback);
 			});
 		})
 
@@ -302,10 +302,10 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					gougu.load("/product/index/view?id=" + detail_id);
+					tool.load("/product/index/view?id=" + detail_id);
 				}
 				let postData = { "id": id };
-				gougu.delete("/api/appendix/delete_link", postData, callback);
+				tool.delete("/api/appendix/delete_link", postData, callback);
 			});
 		})
 
@@ -341,7 +341,7 @@
 			let callback = function (e) {
 				if (e.code == 0) {
 					layer.closeAll();
-					gougu.load('/product/index/view/id/' + id);
+					tool.load('/product/index/view/id/' + id);
 					if (layui.pageTable) {
 						setTimeout(function () {
 							layui.pageTable.reload();
@@ -356,7 +356,7 @@
 			if (name == 'md_content') {
 				postData['content'] = show_val;
 			}
-			gougu.post("/product/index/add", postData, callback);
+			tool.post("/product/index/add", postData, callback);
 		}
 
 		function editShow(id, name, show_txt, real_txt) {

@@ -6,7 +6,7 @@
 function pageInit(){
 	var project_id = {$id};
 	var project_page = 1;
-	var table = gougu = layui.gougu;	
+	var tool = layui.tool;	
 	let callback = function(res){
 		$('.log-more').remove();
 		if(res.code==0 && res.data.length>0){
@@ -69,10 +69,10 @@ function pageInit(){
 			$("#logList").append(itemLog);
 		}
 	}
-	gougu.get("/api/log/log_list",{topic_id:project_id,page:project_page},callback);
+	tool.get("/api/log/log_list",{topic_id:project_id,page:project_page},callback);
 	$('#logList').on('click','.log-more',function(){
 		project_page++;
-		gougu.get("/api/log/log_list",{topic_id:project_id,page:project_page},callback);
+		tool.get("/api/log/log_list",{topic_id:project_id,page:project_page},callback);
 	});
 }		
 </script>

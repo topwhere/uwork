@@ -24,8 +24,8 @@
 					</td>
 					<td style="text-align:right;">
 					  <input type="hidden" name="knowledge_id" value="{$detail.id}">
-						<button class="layui-btn layui-btn-sm edit-doc">编辑</button>
-						<button class="layui-btn layui-btn-normal layui-btn-sm add-doc" title="添加一级目录">+ 添加一级目录</button>
+						<button class="layui-btn layui-btn-normal layui-btn-sm edit-doc">编辑</button>
+						<button class="layui-btn layui-btn-sm add-doc" title="添加一级目录">+ 添加一级目录</button>
 					</td>
 				</tr>
 			</table>
@@ -74,8 +74,8 @@
 				,{field: 'read',title: '阅览数',align: 'center',width: 80}
 				,{width:166,title: '操作', align:'center',templet: function(d){
 						var html='<span class="layui-btn-group">';
-						html+='<a class="layui-btn layui-btn-normal layui-btn-xs" title="新建子节点" lay-event="add">新建子节点</a>';
-						html+='<a class="layui-btn layui-btn-xs" title="编辑" href="/knowledge/index/doc_add/id/'+d.id+'">编辑</a>';
+						html+='<a class="layui-btn layui-btn-xs" title="新建子节点" lay-event="add">新建子节点</a>';
+						html+='<a class="layui-btn layui-btn-normal layui-btn-xs" title="编辑" href="/knowledge/index/doc_add/id/'+d.id+'">编辑</a>';
 						html+='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
 						html+='</span>';
 						return html;
@@ -99,7 +99,7 @@
 						},1000)						  
 					}
 				}
-				gougu.post('/knowledge/index/doc_add',editData,callback);				
+				tool.post('/knowledge/index/doc_add',editData,callback);				
 			})
 		});
 		
@@ -116,7 +116,7 @@
 							},1000)						  
 						}
 					}
-					gougu.post('/knowledge/index/doc_delete',{id:obj.data.id},callback);
+					tool.post('/knowledge/index/doc_delete',{id:obj.data.id},callback);
 				});
 			}else if(obj.event==="add"){
 				add(obj.data.id);
@@ -125,7 +125,7 @@
 			
 		$('.edit-doc').on('click',function(){
 			let kid = $('[name="knowledge_id"]').val();
-			gougu.load('/knowledge/index/add/id/'+kid+'.html');
+			tool.load('/knowledge/index/add/id/'+kid+'.html');
 		})
 		//新增
 		$('.add-doc').on('click',function(){
@@ -173,7 +173,7 @@
 										},1000)						  
 									}
 								}
-								gougu.post('/knowledge/index/doc_add',postData,callback);									
+								tool.post('/knowledge/index/doc_add',postData,callback);									
 							})
 						}else if(data[0].id==3){
 							var content='<div style="padding:0 15px;"><table class="layui-table">\
@@ -214,7 +214,7 @@
 											},1000)						  
 										}
 									}
-									gougu.post('/knowledge/index/doc_add',postData,callback);			
+									tool.post('/knowledge/index/doc_add',postData,callback);			
 								}
 							})	
 						}

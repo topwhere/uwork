@@ -32,7 +32,8 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
+const moduleInit = ['tool'];
+	function gouguInit() {
 		var table = layui.table,
 			form = layui.form;
 
@@ -215,6 +216,5 @@
 		});
 	}
 </script>
-{include file="../../base/view/common/layui" base="base" extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

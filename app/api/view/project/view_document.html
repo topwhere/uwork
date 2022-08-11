@@ -12,9 +12,9 @@
 <script>
 function pageInit(){
 	var project_id = {$id};
-	var table = layui.table,form = layui.form,gougu = layui.gougu;	
+	var table = layui.table,tool = layui.tool;	
 	
-	layui.pageTable = table.render({
+	layui.documentTable = table.render({
 		elem: '#test',
 		title: '文档列表',
 		cellMinWidth:200,
@@ -34,18 +34,18 @@ function pageInit(){
 	
 	//新增
 	$('.add-new').on('click',function(){
-		gougu.open('/api/document/add?project_id='+project_id);
+		tool.open('/api/document/add?project_id='+project_id);
 	});
 	
 	//监听行工具事件
 	table.on('tool(test)', function(obj) {
 		var data = obj.data;
 		if (obj.event === 'view') {
-			gougu.open('/api/document/view?id='+data.id);
+			tool.open('/api/document/view?id='+data.id);
 			return;
 		}
 		if (obj.event === 'edit') {
-			gougu.open('/api/document/add?id='+data.id);
+			tool.open('/api/document/add?id='+data.id);
 			return;
 		}
 		if (obj.event === 'del') {
@@ -59,7 +59,7 @@ function pageInit(){
 						obj.del();
 					}
 				}
-				gougu.delete("/api/document/delete",{ id: obj.data.id,'module':'project'},callback);
+				tool.delete("/api/document/delete",{ id: obj.data.id,'module':'project'},callback);
 				layer.close(index);
 			});
 		}

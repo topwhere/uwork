@@ -42,7 +42,7 @@
 			<td class="layui-td-gray3">左侧图标</td>
 			<td colspan="3">
 				<input type="text" name="icon" style="width:150px; display:inline" placeholder="请输入图标，可空" autocomplete="off" class="layui-input">	
-				如：icon-jichuguanli<a href="{__LAYUI__}/font/extend/demo_index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+				如：icon-jichuguanli<a href="{__GOUGU__}/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
 			</td>
 		</tr>
 	</table>
@@ -88,7 +88,7 @@
 			<td class="layui-td-gray3">左侧图标</td>
 			<td colspan="3">
 				<input style="width:150px; display:inline" type="text" name="icon" value="{$detail.icon}" placeholder="请输入图标，可空" autocomplete="off" class="layui-input">			
-				如：icon-jichuguanli<a href="{__LAYUI__}/font/extend/demo_index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+				如：icon-jichuguanli<a href="{__GOUGU__}/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
 			</td>
 		</tr>
 	</table>
@@ -104,7 +104,7 @@
 	function openInit() {
 		let form = layui.form,
 			layer = layui.layer,
-			gougu = layui.gougu;
+			tool = layui.tool;
 		form.render();
 		//监听提交
 		form.on('submit(webform)', function (data) {
@@ -114,7 +114,7 @@
 						location.reload();
 					}
 				}
-			gougu.post("/admin/rule/add",data.field,callback);
+			tool.post("/admin/rule/add",data.field,callback);
 			return false;
 		});
 	}

@@ -80,7 +80,7 @@
 	function openInit() {
 		var form = layui.form,
 			layer = layui.layer,
-			gougu = layui.gougu;
+			tool = layui.tool;
 		form.render();
 
 		//监听提交
@@ -88,13 +88,10 @@
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
-					layui.pageTable.reload();
-					setTimeout(function(){
-						gougu.close();
-					},500);
+					tool.close(1000);
 				}
 			}
-			gougu.post("/admin/position/add",data.field,callback);
+			tool.post("/admin/position/add",data.field,callback);
 			return false;
 		});
 	}

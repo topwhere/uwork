@@ -12,7 +12,7 @@
 	{include file="../../base/view/common/submenu" /}
 	<div class="main-page-content">
 		<div class="layui-form-bar">
-			<button class="layui-btn layui-btn-normal layui-btn-sm add-new">+ 添加类别</button>
+			<button class="layui-btn layui-btn-sm add-new">+ 添加类别</button>
 		</div>
 		<table class="layui-hide" id="test" lay-filter="test"></table>
 	</div>
@@ -23,9 +23,10 @@
 <!-- 脚本 -->
 {block name="script"}
 	<script>
-		function init(layui){
+	const moduleInit = ['tool'];
+	function gouguInit() {
 			var table=layui.table,
-			gougu=layui.gougu,
+			tool=layui.tool,
 			layer=layui.layer;
 			
 		layui.pageTable = table.render({
@@ -33,7 +34,7 @@
 			,title:'工作类别列表'
 			,url: "/admin/wcate/index"
 			,method :"get"
-			,page: true //开启分页
+			,page: false //开启分页
 			,limit: 20
 			,cellMinWidth: 200
 			,cols: [[
@@ -51,9 +52,9 @@
 					}}
 					,{width:100,title: '操作', align:'center',templet: function(d){
 						var html='';
-						var btn='<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>';
+						var btn='<a class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>';
 						var btn1='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">禁用</a>';
-						var btn2='<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="open">启用</a>';
+						var btn2='<a class="layui-btn layui-btn-xs" lay-event="open">启用</a>';
 						if(d.status==1){
 							html = '<div class="layui-btn-group">'+btn+btn1+'</div>';
 						}
@@ -77,7 +78,7 @@
 								layui.pageTable.reload();
 							}
 						}
-						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 0 },callback);
+						tool.post("/admin/wcate/check",{ id: obj.data.id, status: 0 },callback);
 						layer.close(index);
 					});
 				}
@@ -89,7 +90,7 @@
 								layui.pageTable.reload();
 							}
 						}
-						gougu.post("/admin/wcate/check",{ id: obj.data.id, status: 1 },callback);
+						tool.post("/admin/wcate/check",{ id: obj.data.id, status: 1 },callback);
 						layer.close(index);
 					});
 				}
@@ -118,7 +119,7 @@
 								}
 								layer.close(index);
 							}
-							gougu.post("/admin/wcate/add",{id: id, title: value,},callback);
+							tool.post("/admin/wcate/add",{id: id, title: value,},callback);
 						} else {
 							layer.msg('请填写类别标题');
 						}
@@ -127,6 +128,5 @@
 			}
 		}
 	</script>
-	{include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

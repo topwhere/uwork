@@ -58,7 +58,7 @@
 function openInit() {
 		var form = layui.form,
 			layer = layui.layer,
-			gougu = layui.gougu,
+			tool = layui.tool,
 			laydate = layui.laydate,
 			employeepicker = layui.employeepicker;
 			
@@ -70,7 +70,6 @@ function openInit() {
 		range: ['#start_time', '#end_time']
 	});
 	
-	//gougu.editor('docContent',480,$('#mdContent').val());
 	//选择产品负责人弹窗	
 	$('.page-content').on('click','[name="director_name"]',function () {
 		var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
@@ -78,6 +77,8 @@ function openInit() {
 			ids:ids,
 			names:names,
 			type:0,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
 			callback:function(ids,names,dids,departments){
 				$('[name="director_uid"]').val(ids);
 				$('[name="director_name"]').val(names);
@@ -111,13 +112,10 @@ function openInit() {
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				layui.pageTable.reload();
-				setTimeout(function(){
-					gougu.close();
-				},500);
+				tool.close(1000);
 			}
 		}
-		gougu.post("/project/index/add",data.field,callback);
+		tool.post("/project/index/add",data.field,callback);
 		return false;
     });
 }

@@ -1,8 +1,6 @@
 {extend name="../../base/view/common/base" /}
 <!-- 主体 -->
 {block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <style>
 	.layui-unselect dl {
 		max-height: 188px;
@@ -98,8 +96,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
-		var table = layui.table, form = layui.form, gougu = layui.gougu, employeepicker = layui.employeepicker;
+	const moduleInit = ['tool','gouguEdit','gouguComment','gouguSchedule','employeepicker','editormd'];
+	function gouguInit() {
+		var table = layui.table, form = layui.form, tool = layui.tool, employeepicker = layui.employeepicker;
 
 		layui.pageTable = table.render({
 			elem: '#test',
@@ -128,7 +127,7 @@
 				}
 				, {
 					field: 'title', title: '任务主题', rowspan: 2, templet: function (d) {
-						var html = '<span class="layui-badge bg-priority-' + d.priority + '">' + d.priority_name + '</span> <a class="open-a" data-url="/task/index/view/id/' + d.id + '">' + d.title + '</a>';
+						var html = '<span class="layui-badge bg-priority-' + d.priority + '">' + d.priority_name + '</span> <a class="open-a" data-href="/task/index/view/id/' + d.id + '">' + d.title + '</a>';
 						return html;
 					}
 				}
@@ -160,6 +159,8 @@
 			employeepicker.init({
 				ids: id_array,
 				names: name_array,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="' + ids_name + '"]').val(ids);
 					that.val(names);
@@ -170,7 +171,7 @@
 
 		//新增
 		$('#taskList').on('click', '.add-new', function () {
-			gougu.open('/task/index/add');
+			tool.open('/task/index/add');
 		});
 
 		//查看模式
@@ -227,7 +228,5 @@
 		}
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base'
-extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -68,7 +68,7 @@
 	function openInit() {
 		var form = layui.form,
 			layer = layui.layer,
-			gougu = layui.gougu;
+			tool = layui.tool;
 		form.render();
 
 		//监听提交
@@ -79,7 +79,7 @@
 					location.reload();
 				}
 			}
-			gougu.post("/admin/department/add",data.field,callback);
+			tool.post("/admin/department/add",data.field,callback);
 			return false;
 		});
 	}

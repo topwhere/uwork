@@ -17,9 +17,9 @@
 </div>
 <script>
 	function pageInit() {
-		var table = layui.table, form = layui.form, gougu = layui.gougu, employeepicker = layui.employeepicker, schedule = layui.gouguSchedule;
+		var table = layui.table, form = layui.form, tool = layui.tool, employeepicker = layui.employeepicker, schedule = layui.gouguSchedule;
 
-		layui.pageTable = table.render({
+		layui.scheduleTable = table.render({
 			elem: '#scheduleApi',
 			title: '工作记录列表',
 			cellMinWidth: 200,
@@ -56,6 +56,8 @@
 				ids: ids,
 				names: names,
 				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="uid"]').val(ids);
 					that.val(names);
@@ -67,7 +69,7 @@
 		//监听搜索提交
 		form.on('submit(webform)', function (data) {
 			let f = data.field;
-			layui.pageTable.reload({ where: { keywords: f.keywords, uid: f.uid, tid: project_id }, page: { curr: 1 } });
+			layui.scheduleTable.reload({ where: { keywords: f.keywords, uid: f.uid, tid: project_id }, page: { curr: 1 } });
 			return false;
 		});
 		$('#scheduleList').on('click', '[lay-filter="clear"]', function () {

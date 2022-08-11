@@ -1,8 +1,6 @@
 {extend name="../../base/view/common/base" /}
 {block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/fullcalendar/main.min.css"/>
-<link rel="stylesheet" href="{__LAYUI__}/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__LAYUI__}/plugin/dtree/font/dtreefont.css">
+<link rel="stylesheet" href="{__GOUGU__}/third_party/fullcalendar/main.min.css"/>
 <style>
 #calendar {width: 100%;margin: 0 auto;
 -moz-user-select: none; /*火狐*/
@@ -47,7 +45,7 @@ user-select: none;}
 {/block}
 <!-- 主体 -->
 {block name="body"}
-<script src="{__STATIC__}/fullcalendar/main.min.js"></script>
+<script src="{__GOUGU__}/third_party/fullcalendar/main.min.js"></script>
 <div class="body-table">
 	<div id="calendar"></div>
 	<div class="calendar-select">
@@ -66,7 +64,8 @@ user-select: none;}
 		}
 		return num;
 	}
-	function init(layui){
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
 		var layer = layui.layer
 		,employeepicker = layui.employeepicker
 		,dropdown = layui.dropdown
@@ -81,6 +80,8 @@ user-select: none;}
 				ids: ids,
 				names: names,
 				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					uid = ids;
 					that.val(names);
@@ -550,6 +551,5 @@ user-select: none;}
 		calendar.render();
 	}
 	</script>
-	{include file="../../base/view/common/layui" base='base' extend="['employeepicker','dtree']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -48,10 +48,21 @@
 
 <script>
 	function openInit() {
-		var form = layui.form, layer = layui.layer, gougu = layui.gougu, employeepicker = layui.employeepicker;
+		var form = layui.form, layer = layui.layer, tool = layui.tool, employeepicker = layui.employeepicker,editor = layui.editormd;
 
 		form.render();
-		gougu.editor('docContent', $('#mdContent').val(), 0, true);
+		var edit = editor.render('docContent', {
+			markdown: $('#mdContent').val(),
+			imageUploadURL: "/api/index/md_upload",
+			lineNumbers: false,
+			toolbarIcons: function () {
+				return [
+					"undo", "redo","bold", "del", "italic", "quote","h1", "h2", "h3", "h4", "h5",
+					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "code-block", "table","watch", "fullscreen"
+				];
+			},
+			height: window.innerHeight - 120,
+		});
 		//选择产品负责人弹窗	
 		$('.page-content').on('click', '[name="director_name"]', function () {
 			var ids = $('[name="director_uid"]').val(), names = $('[name="director_name"]').val();
@@ -59,6 +70,8 @@
 				ids: ids,
 				names: names,
 				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="director_uid"]').val(ids);
 					$('[name="director_name"]').val(names);
@@ -76,6 +89,8 @@
 			employeepicker.init({
 				ids: check_admin_id_array,
 				names: check_admin_name_array,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="check_admin_ids"]').val(ids);
 					$('[name="check_admin_names"]').val(names);
@@ -88,13 +103,10 @@
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
-					layui.pageTable.reload();
-					setTimeout(function () {
-						gougu.close();
-					}, 400);
+					tool.close(1000);
 				}
 			}
-			gougu.post("/product/index/add", data.field, callback);
+			tool.post("/product/index/add", data.field, callback);
 			return false;
 		});
 	}

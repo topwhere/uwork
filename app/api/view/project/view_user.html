@@ -7,9 +7,9 @@
 <script>
 	function pageInit() {
 		var project_id = '{$id}';
-		var table = layui.table, gougu = layui.gougu, employeepicker = layui.employeepicker;
+		var table = layui.table, tool = layui.tool, employeepicker = layui.employeepicker;
 
-		layui.pageTable = table.render({
+		layui.userTable = table.render({
 			elem: '#user',
 			title: '项目成员列表',
 			cellMinWidth: 120,
@@ -67,14 +67,16 @@
 		$('.layui-form-bar').on('click', '.add-user', function () {
 			employeepicker.init({
 				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					let callback = function (e) {
 						layer.msg(e.msg);
 						if(e.code == 0){
-							gougu.page('/api/project/view/id/'+project_id+'?page=user');
+							tool.page('/api/project/view/id/'+project_id+'?page=user');
 						}						
 					}
-					gougu.post("/api/project/add_user", {uid: ids,project_id: project_id}, callback);
+					tool.post("/api/project/add_user", {uid: ids,project_id: project_id}, callback);
 				}
 			})
 		});
@@ -86,17 +88,17 @@
 					layer.closeAll();
 					layer.msg(e.msg);
 					if(e.code == 0){
-						gougu.page('/api/project/view/id/'+project_id+'?page=user');
+						tool.page('/api/project/view/id/'+project_id+'?page=user');
 					}
 				}
 			if (obj.event === 'remove') {
 				layer.confirm('确定要移除该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
-					gougu.delete("/api/project/remove_user", postData, callback);
+					tool.delete("/api/project/remove_user", postData, callback);
 				});
 			}
 			if (obj.event === 'recover') {
 				layer.confirm('确定要恢复该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
-					gougu.post("/api/project/recover_user", postData, callback);
+					tool.post("/api/project/recover_user", postData, callback);
 				});
 			}
 			return;

@@ -12,7 +12,7 @@
 	{include file="../../base/view/common/submenu" /}
 	<div class="main-page-content">
 		<div class="layui-form-bar">
-			<button class="layui-btn layui-btn-normal layui-btn-sm add">+ 添加公告</button>
+			<button class="layui-btn layui-btn-sm add">+ 添加公告</button>
 		</div>
 		<table class="layui-hide" id="test" lay-filter="test"></table>
 	</div>
@@ -26,9 +26,10 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
+const moduleInit = ['tool','editormd'];
+	function gouguInit() {
 		var table = layui.table,
-			gougu = layui.gougu,
+			tool = layui.tool,
 			form = layui.form;
 
 		layui.pageTable = table.render({
@@ -81,18 +82,18 @@
 
 		//表头工具栏事件
 		$('.add').on('click', function () {
-			gougu.open('/admin/note/add');
+			tool.open('/admin/note/add');
 		});
 
 		//监听行工具事件
 		table.on('tool(test)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'view') {
-				gougu.open('/admin/note/view?id=' + data.id);
+				tool.open('/admin/note/view?id=' + data.id);
 				return;
 			}
 			if (obj.event === 'edit') {
-				gougu.open('/admin/note/add?id=' + data.id);
+				tool.open('/admin/note/add?id=' + data.id);
 				return;
 			}
 			if (obj.event === 'del') {
@@ -106,13 +107,12 @@
 							obj.del();
 						}
 					}
-					gougu.delete("/admin/note/delete", { id: obj.data.id }, callback);
+					tool.delete("/admin/note/delete", { id: obj.data.id }, callback);
 					layer.close(index);
 				});
 			}
 		});
 	}
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

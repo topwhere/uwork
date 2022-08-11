@@ -1,9 +1,5 @@
 {extend name="../../base/view/common/base" /}
 <!-- 主体 -->
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-{/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
 	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
@@ -23,8 +19,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
-		var table = layui.table, form = layui.form, gougu = layui.gougu;
+	const moduleInit = ['tool','gouguEdit','gouguComment'];
+		function gouguInit() {
+		var table = layui.table, tool = layui.tool;
 
 		layui.pageTable = table.render({
 			elem: '#product',
@@ -47,7 +44,7 @@
 				}
 				, {
 					field: 'name', title: '产品名称', rowspan: 2, templet: function (d) {
-						var html = '<a class="open-a" data-url="/product/index/view/id/' + d.id + '">' + d.name + '</a>';
+						var html = '<a class="open-a" data-href="/product/index/view/id/' + d.id + '">' + d.name + '</a>';
 						return html;
 					}
 				}
@@ -67,11 +64,9 @@
 		});
 
 		$('.add-new').on('click', function () {
-			gougu.open('/product/index/add');
+			tool.open('/product/index/add');
 		});
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','gouguEdit','gouguComment','employeepicker']"
-callback="init" /}
 {/block}
 <!-- /脚本 -->

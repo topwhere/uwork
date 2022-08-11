@@ -1,9 +1,4 @@
 {extend name="../../base/view/common/base" /}
-<!-- 主体 -->
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-{/block}
 {block name="body"}
 <div class="card-content">
 	<div class="layui-row layui-col-space12">
@@ -47,7 +42,7 @@
 									<tr>
 										<td align="center">N{$vo.id}</td>
 										<td align="center">{$vo.cate_title}</td>
-										<td><a class="open-a" data-url="/home/index/note_detail/id/{$vo.id}">{$vo.title}</a></td>
+										<td><a class="open-a" data-href="/home/index/note_detail/id/{$vo.id}">{$vo.title}</a></td>
 										<td align="center">{$vo.create_time}</td>
 									</tr>
 									{/volist}
@@ -140,7 +135,7 @@
 										</td>
 										<td><span
 												class="layui-badge bg-priority-{$vo.priority}">{$vo.priority_name}</span>
-											<a class="open-a" data-url="/task/index/view/id/{$vo.id}">{$vo.title}</a>
+											<a class="open-a" data-href="/task/index/view/id/{$vo.id}">{$vo.title}</a>
 										</td>
 										<td align="center">{$vo.type_name}</td>
 										<td align="center">{$vo.plan_hours}</td>
@@ -398,7 +393,8 @@
 	{block name="script"}
 	<script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
 	<script>
-		function init(layui) {
+		const moduleInit = ['tool','gouguEdit','gouguComment','gouguSchedule','employeepicker'];
+		function gouguInit() {	
 			get_logs();
 			get_view_data();
 		}
@@ -709,7 +705,5 @@
 			})
 		}
 	</script>
-	{include file="../../base/view/common/layui" base='base'
-	extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
-	{/block}
 	<!-- /脚本 -->
+	{/block}

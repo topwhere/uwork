@@ -168,7 +168,7 @@
 		,table = layui.table
 		,dtree = layui.dtree
 		,upload = layui.upload
-		,gougu = layui.gougu
+		,tool = layui.tool
 		,employeepicker = layui.employeepicker;
 
 		form.render();
@@ -193,17 +193,14 @@
 						data:{'id':e.data},
 						success: function (e) {
 							layer.msg(e.msg);
-							layui.pageTable.reload();
-							setTimeout(function(){
-								gougu.close();
-							},500);
+							tool.close(1000);
 						}
 					})
 				}else{
 				  layer.msg(e.msg);
 				}
 			}
-			gougu.post("/home/message/save",data.field,callback);
+			tool.post("/home/message/save",data.field,callback);
 			return false;
 		});
 		  
@@ -223,13 +220,10 @@
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
-					layui.pageTable.reload();
-					setTimeout(function(){
-						gougu.close();
-					},500);
+					tool.close(1000);
 				}
 			}
-			gougu.post("/home/message/save",data.field,callback);
+			tool.post("/home/message/save",data.field,callback);
 			return false;
 		});
 
@@ -304,6 +298,8 @@
 			employeepicker.init({
 				ids:idsArray,
 				names:namesArray,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback:function(ids,names){
 					$('[name="uids"]').val(ids.join(',')),
 					$('[name="person_name"]').val(names.join(','));

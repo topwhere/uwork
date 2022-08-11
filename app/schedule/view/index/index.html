@@ -1,8 +1,6 @@
 {extend name="../../base/view/common/base" /}
 <!-- 主体 -->
 {block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
 <style>
 	.layui-unselect dl {
 		max-height: 188px;
@@ -55,8 +53,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
-		var table = layui.table, form = layui.form, gougu = layui.gougu, employeepicker = layui.employeepicker, schedule = layui.gouguSchedule;
+	const moduleInit = ['tool','gouguEdit','gouguComment','gouguSchedule','employeepicker'];
+	function gouguInit() {
+		var table = layui.table, form = layui.form, tool = layui.tool, employeepicker = layui.employeepicker, schedule = layui.gouguSchedule;
 
 		layui.pageTable = table.render({
 			elem: '#scheduleTable',
@@ -111,6 +110,8 @@
 			employeepicker.init({
 				ids: id_array,
 				names: name_array,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="uid"]').val(ids);
 					that.val(names);
@@ -121,7 +122,7 @@
 
 		//新增
 		$('#scheduleList').on('click', '.add-new', function () {
-			gougu.open('/task/index/add');
+			tool.open('/task/index/add');
 		});
 
 		form.on('select(type)', function (data) {
@@ -159,7 +160,5 @@
 		}
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base'
-extend="['gougu','employeepicker','gouguEdit','gouguComment','gouguSchedule']" callback="init" /}
 {/block}
 <!-- /脚本 -->

@@ -124,9 +124,10 @@ fieldset.layui-field-title {
 <!-- 脚本 -->
 {block name="script"}
 <script src="https://cdn.staticfile.org/echarts/5.3.0/echarts.min.js"></script>
-<script src="{__STATIC__}/chart/china.js"></script>
+<script src="{__GOUGU__}/third_party/echart/china.js"></script>
 <script>
-	function init(layui) {
+	const moduleInit = ['tool'];
+	function gouguInit() {
 		var layer = layui.layer, table = layui.table;
 	}
 
@@ -425,6 +426,5 @@ fieldset.layui-field-title {
       };
 
 </script>
-{include file="../../base/view/common/layui" base='base' extend="[]" callback="init" /}
 {/block}
 <!-- /脚本 -->

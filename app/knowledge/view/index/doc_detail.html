@@ -1,6 +1,6 @@
 {extend name="../../base/view/common/base" /}
 {block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/prism/prism.css?v=1"/>
+<link rel="stylesheet" href="{__GOUGU__}/third_party/prism/prism.css?v=1"/>
 <link rel="stylesheet" href="{__STATIC__}/viewer/viewer.min.css?v=1"/>
 <link rel="stylesheet" href="{__STATIC__}/ztree/css/metroStyle/metroStyle.css" >
 <style>
@@ -56,7 +56,7 @@
 {block name="script"}
 <script src="{__STATIC__}/ztree/js/jquery.ztree.all.min.js?v=1"></script>
 <script src="{__STATIC__}/viewer/viewer.min.js?v=1"></script>
-<script src="{__STATIC__}/prism/prism.js?v=1"></script>
+<script src="{__GOUGU__}/third_party/prism/prism.js?v=1"></script>
 <script>
 var kid='{$kid}';
 var did='{$id}';
@@ -65,9 +65,10 @@ var zNodes =[
 	{ id:1, pId:0, name:"文档", open:true}
 ];
 
-function init(layui){
+const moduleInit = ['tool'];
+function gouguInit() {
 	var layer = layui.layer;
-	var gougu = layui.gougu;
+	var tool = layui.tool;
 	
 	var viewer = new Viewer(document.getElementById('infoContent'));
 	var $codepre = $("code[class]");
@@ -115,7 +116,7 @@ function init(layui){
 			layer.msg(e.msg);
 		}
 	}
-	gougu.get("/api/index/get_doc_list",{kid:kid,tree:2},treeback);
+	tool.get("/api/index/get_doc_list",{kid:kid,tree:2},treeback);
 
 	function detail(id){
 		viewer.destroy();
@@ -138,10 +139,9 @@ function init(layui){
 				layer.msg(e.msg);
 			}
 		}
-		gougu.get("/knowledge/index/doc_detail",{id:id},detailback);
+		tool.get("/knowledge/index/doc_detail",{id:id},detailback);
 	}
 }
 </script>
-{include file="../../base/view/common/layui" base="base" extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

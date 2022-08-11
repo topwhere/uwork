@@ -231,7 +231,7 @@
 				{ 'id': 100, 'title': '100%' }
 			]
 		}
-		const layer = layui.layer, edit = layui.gouguEdit, comment = layui.gouguComment, schedule = layui.gouguSchedule, upload = layui.upload, gougu = layui.gougu;
+		const layer = layui.layer, edit = layui.gouguEdit, comment = layui.gouguComment, schedule = layui.gouguSchedule, upload = layui.upload, tool = layui.tool;
 
 		$('.hover-edit').hover(function () {
 			$(this).addClass('hover-on');
@@ -259,7 +259,7 @@
 					}, 1000)
 				}
 				let postData = { "id": detail_id };
-				gougu.delete("/task/index/delete", postData, callback);
+				tool.delete("/task/index/delete", postData, callback);
 			});
 		})
 
@@ -274,10 +274,10 @@
 			, done: function (res, index, upload) {
 				let callback = function (e) {
 					layer.msg('上传成功');
-					gougu.load('/task/index/view?id=' + detail_id);
+					tool.load('/task/index/view?id=' + detail_id);
 				}
 				let postData = { 'topic_id': detail_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'task' };
-				gougu.post("/api/appendix/add", postData, callback);
+				tool.post("/api/appendix/add", postData, callback);
 			}
 			, error: function (index, upload) {
 				layer.msg('上传失败');
@@ -295,10 +295,10 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					gougu.load('/task/index/view?id=' + detail_id);
+					tool.load('/task/index/view?id=' + detail_id);
 				}
 				let postData = { 'id': id };
-				gougu.delete("/api/appendix/delete", postData, callback);
+				tool.delete("/api/appendix/delete", postData, callback);
 			});
 		})
 
@@ -317,10 +317,10 @@
 				let callback = function (e) {
 					layer.closeAll();
 					layer.msg(e.msg);
-					gougu.load("/task/index/view?id=" + detail_id);
+					tool.load("/task/index/view?id=" + detail_id);
 				}
 				let postData = { "id": id };
-				gougu.delete("/api/appendix/delete_link", postData, callback);
+				tool.delete("/api/appendix/delete_link", postData, callback);
 			});
 		})
 
@@ -362,7 +362,7 @@
 			let callback = function (e) {
 				layer.closeAll();
 				if (e.code == 0) {
-					gougu.load('/task/index/view/id/' + id);
+					tool.load('/task/index/view/id/' + id);
 					if (layui.pageTable) {
 						setTimeout(function () {
 							layui.pageTable.reload();
@@ -378,7 +378,7 @@
 			if (name == 'md_content') {
 				postData['content'] = show_val;
 			}
-			gougu.post("/task/index/add", postData, callback);
+			tool.post("/task/index/add", postData, callback);
 		}
 
 		function editShow(id, name, show_txt, real_txt) {
@@ -406,7 +406,7 @@
 			}
 			if (name == "type") {
 				loading = true;
-				gougu.get("/api/index/get_task_cate", {}, function (res) {
+				tool.get("/api/index/get_task_cate", {}, function (res) {
 					let data = res.data;
 					loading = false;
 					edit.dropdown(id, name, real_txt, data, editPost, 0);
@@ -414,7 +414,7 @@
 			}
 			if (name == "cate") {
 				loading = true;
-				gougu.get("/api/index/get_work", {}, function (res) {
+				tool.get("/api/index/get_work", {}, function (res) {
 					let data = res.data;
 					loading = false;
 					edit.dropdown(id, name, real_txt, data, editPost, 0);
@@ -423,7 +423,7 @@
 			if (name == "project_id") {
 				if (admin_id == GOUGU_DEV.uid) {
 					loading = true;
-					gougu.get("/api/index/get_project", {}, function (res) {
+					tool.get("/api/index/get_project", {}, function (res) {
 						let data = res.data;
 						loading = false;
 						edit.dropdown(id, name, real_txt, data, editPost, 1);

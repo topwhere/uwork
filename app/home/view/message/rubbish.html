@@ -49,8 +49,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui){
-		var table = layui.table,form = layui.form,gougu = layui.gougu;
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var table = layui.table,form = layui.form,gougu = layui.tool;
 
 		layui.pageTable = table.render({
 			elem: '#rubbish',
@@ -92,7 +93,7 @@
 							layui.pageTable.reload();
 						}
 					}
-					gougu.post("/home/message/check",{
+					tool.post("/home/message/check",{
 						ids: data.id,
 						type:4
 					},callback);
@@ -107,7 +108,7 @@
 							layui.pageTable.reload();
 						}
 					}
-					gougu.post("/home/message/check",{
+					tool.post("/home/message/check",{
 						ids: data.id,
 						type:3,
 					},callback);
@@ -121,7 +122,7 @@
 			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
 			var data = checkStatus.data;
 			if (obj.event === 'add') {
-				gougu.open("/home/message/add");
+				tool.open("/home/message/add");
 				return;
 			}
 			if(data.length==0){
@@ -153,7 +154,7 @@
 						layui.pageTable.reload();
 					}
 				}
-				gougu.post("/home/message/check",{
+				tool.post("/home/message/check",{
 					ids: idArray.join(','),
 					type:type
 				},callback);
@@ -162,6 +163,5 @@
 		});
 	}		
 </script>
-{include file="../../base/view/common/layui" base='base' extend="['gougu','employeepicker','dtree']" callback="init" /}
 {/block}
 <!-- /脚本 -->

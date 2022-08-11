@@ -60,10 +60,10 @@
 </form>
 
 <script>
-	function openInit() {
-		var form = layui.form,
-			layer = layui.layer,
-			gougu = layui.gougu;
+function openInit() {
+	var form = layui.form,
+		layer = layui.layer,
+		tool = layui.tool;
 			
 	form.render();
 
@@ -74,10 +74,10 @@
 			if (e.code == 0) {
 				getData.page=1;
 				getKnowledge();
-				gougu.load('/knowledge/index/view/id/'+e.data+'.html');
+				tool.load('/knowledge/index/view/id/'+e.data+'.html');
 			}
 		}
-		gougu.post("/knowledge/index/add",data.field,callback);
+		tool.post("/knowledge/index/add",data.field,callback);
 		return false;
     });
 }

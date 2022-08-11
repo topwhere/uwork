@@ -45,13 +45,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray" style="vertical-align:top;">公告内容<span style="color: red">*</span></td>
-			<td colspan="3">
+			<td class="layui-td-gray" style="vertical-align:top; text-align:left;" colspan="4">公告内容<span style="color: red">*</span></td>
+		</tr>
+		<tr>
+			<td colspan="4">
 			<div style="margin-top:-2px; margin-right:2px">
 				<textarea id="mdContent" style="display:none;">{notempty name="$note.md_content" }{$note.md_content|raw}{/notempty}</textarea>
 				<div id="docContent"></div>
 			</div>
-			{include file="../../base/view/common/mdeditor" id="docContent" markdown="mdContent" height="500" watch="false" toolbar="[]" /}
 			</td>
 		
 		<tr>
@@ -63,7 +64,7 @@
 		</tr>
 	</table>
 
-	<div style="padding: 10px 0">
+	<div class="pt-3">
 		<input type="hidden" name="id" value="{$id}" />
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -74,11 +75,23 @@
 	function openInit() {
 		var form = layui.form,
 			layer = layui.layer,
-			gougu = layui.gougu,
+			tool = layui.tool,
+			editor = layui.editormd,
 			laydate = layui.laydate;
 			
 	form.render();
-
+	var edit = editor.render('docContent', {
+		markdown: $('#mdContent').val(),
+		imageUploadURL: "/api/index/md_upload",
+		lineNumbers: false,
+		toolbarIcons: function () {
+			return [
+				"undo", "redo","bold", "del", "italic", "quote","h1", "h2", "h3", "h4", "h5",
+				"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "code-block", "table","watch", "fullscreen"
+			];
+		},
+		height:window.innerHeight - 350
+	});
 	//日期范围
 	laydate.render({
 		elem: '#date',
@@ -89,13 +102,10 @@
 		let callback = function (e) {
 			layer.msg(e.msg);
 			if (e.code == 0) {
-				layui.pageTable.reload();
-				setTimeout(function(){
-					gougu.close();
-				},500);
+				tool.close(1000);
 			}
 		}
-		gougu.post("/admin/note/add",data.field,callback);
+		tool.post("/admin/note/add",data.field,callback);
 		return false;
     });
 }

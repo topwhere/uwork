@@ -102,10 +102,21 @@
 
 <script>
 	function openInit() {
-		const form = layui.form, layer = layui.layer, gougu = layui.gougu, laydate = layui.laydate, dropdown = layui.dropdown, employeepicker = layui.employeepicker;
+		const form = layui.form, layer = layui.layer,editor = layui.editormd, tool = layui.tool, laydate = layui.laydate, dropdown = layui.dropdown, employeepicker = layui.employeepicker;
 
 		form.render();
-		gougu.editor('docContent', $('#mdContent').val(), 480, true);
+		var edit = editor.render('docContent', {
+			markdown: $('#mdContent').val(),
+			imageUploadURL: "/api/index/md_upload",
+			lineNumbers: false,
+			toolbarIcons: function () {
+				return [
+					"undo", "redo","bold", "del", "italic", "quote","h1", "h2", "h3", "h4", "h5",
+					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "code-block", "table","watch", "fullscreen"
+				];
+			},
+			height: window.innerHeight - 120,
+		});
 
 		//日期范围
 		laydate.render({
@@ -119,6 +130,8 @@
 				ids: ids,
 				names: names,
 				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
 				callback: function (ids, names, dids, departments) {
 					$('[name="director_uid"]').val(ids);
 					$('[name="director_name"]').val(names);
@@ -152,13 +165,10 @@
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
-					layui.pageTable.reload();
-					setTimeout(function () {
-						gougu.close();
-					}, 500);
+					tool.close(1000);
 				}
 			}
-			gougu.post("/task/index/add", data.field, callback);
+			tool.post("/task/index/add", data.field, callback);
 			return false;
 		});
 	}

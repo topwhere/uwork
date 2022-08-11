@@ -184,6 +184,8 @@ class Index extends BaseController
     {
         $id = empty(get_params('id')) ? 0 : get_params('id');
         $note = Db::name('Note')->where(['id' => $id])->find();
+        $note['admin_name'] = Db::name('Admin')->where(['id' => $note['admin_id']])->value('name');
+		Db::name('Note')->where(['id' => $id])->inc('read')->update();
         View::assign('note', $note);
         return view();
     }

@@ -7,8 +7,8 @@
 <script>
 function pageInit(){
 	var project_id = {$id};
-	var table = layui.table,form = layui.form,gougu = layui.gougu;	
-	layui.pageTable = table.render({
+	var table = layui.table,tool = layui.tool;	
+	layui.taskTable = table.render({
 		elem: '#test',
 		title: '任务列表',
 		cellMinWidth:200,
@@ -27,7 +27,7 @@ function pageInit(){
 				return html;
 			}}
 			,{field:'title',title: '任务主题',rowspan: 2,templet:function(d){
-				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span> <a class="open-a" data-url="/task/index/view/id/'+d.id+'">'+d.title+'</a>';
+				var html = '<span class="layui-badge bg-priority-'+d.priority+'">'+d.priority_name+'</span> <a class="open-a" data-href="/task/index/view/id/'+d.id+'">'+d.title+'</a>';
 				return html;
 			}}
 			,{field:'director_name',title: '负责人', align:'center',width: 80}
@@ -45,7 +45,7 @@ function pageInit(){
 	
 	//新增
 	$('.add-new').on('click',function(){
-		gougu.open('/task/index/add?project_id='+project_id);
+		tool.open('/task/index/add?project_id='+project_id);
 	});
 }		
 </script>

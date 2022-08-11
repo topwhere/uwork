@@ -1,8 +1,4 @@
 {extend name="../../base/view/common/base" /}
-{block name="style"}
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/dtree.css">
-<link rel="stylesheet" href="{__STATIC__}/layui/plugin/dtree/font/dtreefont.css">
-{/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
 	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
@@ -25,7 +21,7 @@
 							</div>
 							<div class="layui-col-md3" style="text-align:right">
 								{eq name="$role" value="2"}
-								<button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="delProject"><i class="layui-icon layui-icon-delete"></i>删除项目</button>
+								<button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="delProject">删除项目</button>
 								{/eq}
 							</div>
 						</div>
@@ -78,7 +74,7 @@
 								<h5>项目附件</h5>
 							</div>
 							<div class="layui-col-md6" style="text-align:right">
-								<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn"><i class="layui-icon layui-icon-add-circle"></i>上传附件</button>
+								<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn">上传附件</button>
 							</div>
 						</div>
 					</div>
@@ -113,7 +109,7 @@
 								<h5>关联链接</h5>
 							</div>
 							<div class="layui-col-md6" style="text-align:right">
-								<button type="button" class="layui-btn layui-btn-sm layui-btn-sm2" id="linkBtn"><i class="layui-icon layui-icon-add-circle"></i>新增链接</button>
+								<button type="button" class="layui-btn layui-btn-sm layui-btn-sm2" id="linkBtn">新增链接</button>
 							</div>
 						</div>
 					</div>
@@ -670,19 +666,20 @@
 		return count;
 	}
 
-	function init(layui) {
-		const layer = layui.layer, edit = layui.gouguEdit, comment = layui.gouguComment, upload = layui.upload, gougu = layui.gougu;
+	const moduleInit = ['tool','gouguEdit','gouguComment','gouguSchedule','employeepicker','editormd'];
+	function gouguInit() {
+		const layer = layui.layer,tool = layui.tool, edit = layui.gouguEdit, comment = layui.gouguComment, upload = layui.upload;
 
 		$('#subMenu').on('click', '[data-event="subpage"]', function () {
 			let page = $(this).data('page');
 			$('#subMenu').find('li').removeClass('active');
 			$(this).addClass('active');
-			gougu.page(page);
+			tool.page(page);
 		})
 
 		$('#subMenu').on('click', '[data-event="open"]', function () {
 			let url = $(this).data('url');
-			gougu.open(url);
+			tool.open(url);
 		})
 
 		$('.hover-edit').hover(function () {
@@ -714,7 +711,7 @@
 			}
 			let postData = { id: id };
 			postData[name] = real_val;
-			gougu.post("/project/index/add", postData, callback);
+			tool.post("/project/index/add", postData, callback);
 		}
 
 		function editShow(id, name, show_txt, real_txt) {
@@ -735,7 +732,7 @@
 			}
 			if (name == "product_id") {
 				loading = true;
-				gougu.get("/api/index/get_product", {}, function (res) {
+				tool.get("/api/index/get_product", {}, function (res) {
 					let data = res.data;
 					loading = false;
 					edit.dropdown(id, name, real_txt, data, editPost, 1);
@@ -759,7 +756,7 @@
 					}
 				}
 				let postData = { "id": project_id };
-				gougu.delete("/project/index/delete", postData, callback);
+				tool.delete("/project/index/delete", postData, callback);
 			});
 		})
 
@@ -779,7 +776,7 @@
 					},2000)	
 				}
 				let postData = { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' };
-				gougu.post("/api/appendix/add", postData, callback);
+				tool.post("/api/appendix/add", postData, callback);
 			}
 			, error: function (index, upload) {
 				layer.msg('上传失败');
@@ -797,7 +794,7 @@
 					},2000)					
 				}
 				let postData = { "id": id };
-				gougu.delete("/api/appendix/delete", postData, callback);
+				tool.delete("/api/appendix/delete", postData, callback);
 			});
 		})
 
@@ -821,7 +818,7 @@
 					},2000)	
 				}
 				let postData = { "id": id };
-				gougu.delete("/api/appendix/delete_link", postData, callback);
+				tool.delete("/api/appendix/delete_link", postData, callback);
 			});
 		})
 
@@ -962,7 +959,7 @@
 				}
 			}
 		}
-		gougu.get('/api/project/get_chart_data', { 'project_id': project_id }, callback);
+		tool.get('/api/project/get_chart_data', { 'project_id': project_id }, callback);
 
 		window.onresize = function () {
 			progressChart.resize();
@@ -974,7 +971,5 @@
 		}
 	}
 </script>
-{include file="../../base/view/common/layui" base='base'
-extend="['gougu','gouguEdit','gouguComment','gouguSchedule','employeepicker']" callback="init" /}
 {/block}
 <!-- /脚本 -->

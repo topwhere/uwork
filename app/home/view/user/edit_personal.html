@@ -79,9 +79,9 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
-		var TAB = parent.layui.tab,
-			form = layui.form,
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form,
 			layer = layui.layer,
 			upload = layui.upload;
 
@@ -115,8 +115,6 @@
 			return false;
 		});
 	}
-
 </script>
-{include file="../../base/view/common/layui" base='base' extend="[]" callback="init" /}
 {/block}
 <!-- /脚本 -->

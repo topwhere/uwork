@@ -25,7 +25,7 @@
 </script>
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add">+ 添加权限组</button>
+    <button class="layui-btn layui-btn-sm" lay-event="add">+ 添加权限组</button>
   </div>
 </script>
 {/block}
@@ -34,9 +34,10 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-	function init(layui) {
+const moduleInit = ['tool'];
+	function gouguInit() {
 		var table = layui.table,
-			gougu = layui.gougu;
+			tool = layui.tool;
 		form = layui.form;
 
 		layui.pageTable = table.render({
@@ -53,7 +54,7 @@
 				, { field: 'status', title: '状态', toolbar: '#status', align: 'center', width: 80 }
 				, {
 					width: 100, title: '操作', align: 'center', templet: function (d) {
-						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
 						return html;
 					}
 				}
@@ -63,7 +64,7 @@
 		//表头工具栏事件
 		table.on('toolbar(test)', function (obj) {
 			if (obj.event === "add") {
-				gougu.open("/admin/role/add");
+				tool.open("/admin/role/add");
 				return;
 			}
 		});
@@ -71,7 +72,7 @@
 		table.on('tool(test)', function (obj) {
 			var data = obj.data;
 			if (obj.event === "edit") {
-				gougu.open("/admin/role/add?id=" + obj.data.id);
+				tool.open("/admin/role/add?id=" + obj.data.id);
 				return;
 			}
 			if (obj.event === 'del') {
@@ -82,7 +83,7 @@
 							obj.del();
 						}
 					}
-					gougu.delete("/admin/role/delete", { id: obj.data.id }, callback);
+					tool.delete("/admin/role/delete", { id: obj.data.id }, callback);
 					layer.close(index);
 				});
 			}
@@ -99,6 +100,5 @@
 	}
 
 </script>
-{include file="../../base/view/common/layui" base="base" extend="['gougu']" callback="init" /}
 {/block}
 <!-- /脚本 -->

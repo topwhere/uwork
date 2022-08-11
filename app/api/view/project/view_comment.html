@@ -11,8 +11,7 @@
 <script>
 function pageInit(){
 	let detail_id = {$id};
-	let comment = layui.gouguComment;	
-	let gougu = layui.gougu;	
+	let comment = layui.gouguComment;
 	//评论
 	comment.load(detail_id,'project');
 	$('#commentInput').on('click',function(){

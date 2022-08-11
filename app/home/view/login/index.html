@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>{:get_system_config('web','admin_title')}</title>
-		<link rel="stylesheet" href="{__LAYUI__}/css/layui.css?v={:get_system_config('web','version')}" media="all">
+		<link rel="stylesheet" href="{__GOUGU__}/layui/css/layui.css?v={:get_system_config('web','version')}" media="all">
 		<style type="text/css">
 			html,body {width: 100%;height: 100%;background: #EAF3FF;}
 			input:-webkit-autofill {
@@ -67,11 +67,10 @@
 				</div>
 			</div>
 			<div class="foot">
-			{:get_system_config('web','copyright')} <a id="beian" href="//www.beian.miit.gov.cn" target="_blank"
-				rel="nofollow" style="margin-left: 12px;color:#458BF3;">{:get_system_config('web','icp')}</a>，Powered by GouguCMS
+			{:get_system_config('web','copyright')}  ，勾股DEV - v{:CMS_VERSION}，Powered by GouguCMS
 			</div>
 		</div>
-		<script src="{__LAYUI__}/layui.js?v={:get_system_config('web','version')}"></script>
+		<script src="{__GOUGU__}/layui/layui.js?v={:get_system_config('web','version')}"></script>
 		<script type="text/javascript">
 			layui.use(['form'], function() {
 				var form = layui.form,

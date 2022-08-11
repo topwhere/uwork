@@ -1,5 +1,18 @@
 layui.define([], function (exports) {
-	var MOD_NAME = 'tool';
+	var MOD_NAME = 'tool',dropdown = layui.dropdown;;
+	const newData = [
+		{ id: 1, title: '新建产品', url: '/product/index/add' },
+		{ id: 2, title: '新建项目', url: '/project/index/add' },
+		{ id: 3, title: '新建任务', url: '/task/index/add' },
+		{ id: 4, title: '新建知识库', url: '/knowledge/index/add' },
+	];
+	dropdown.render({
+		elem: '#add-new'
+		, data: newData
+		, click: function (data, othis) {
+			tool.open(data.url);
+		}
+	});
 	var tool = {
 		loading: false,
 		//右侧iframe的方式打开页面，参考勾股CMS、勾股OA

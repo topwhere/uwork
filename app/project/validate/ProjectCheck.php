@@ -1,7 +1,7 @@
 <?php
 namespace app\project\validate;
 use think\Validate;
-
+use think\facade\Db;
 class ProjectCheck extends Validate
 {
 	// 自定义验证规则

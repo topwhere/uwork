@@ -292,4 +292,156 @@ class Project extends BaseController
 			return to_assign(1, "错误的请求");
 		}
 	}
+	
+	//编辑阶段
+    public function reset_check()
+    {
+        $param = get_params();
+        $id = isset($param['id']) ? $param['id'] : 0;
+		$detail = Db::name('Project')->where(['id' => $param['id']])->find();
+		if (request()->isPost()) {
+			if ($this->uid == $detail['admin_id'] || $this->uid == $detail['director_uid']) {
+				$flowNameData = isset($param['flowName']) ? $param['flowName'] : '';
+				$flowUidsData = isset($param['chargeIds']) ? $param['chargeIds'] : '';
+				$flowIdsData = isset($param['membeIds']) ? $param['membeIds'] : '';
+				$flowDateData = isset($param['cycleDate']) ? $param['cycleDate'] : '';
+				$flow = [];
+				$time_1 = $detail['start_time'];
+				$time_2 = $detail['end_time'];
+				foreach ($flowNameData as $key => $value) {
+					if (!$value) {
+						continue;
+					}				
+					$flowDate = explode('到',$flowDateData[$key]);
+					$start_time = strtotime(urldecode(trim($flowDate[0])));
+					$end_time = strtotime(urldecode(trim($flowDate[1])));
+					if($start_time<$time_1){
+						if($key == 0){
+							return to_assign(1, '第'.($key+1).'阶段的开始时间不能小于计划开始时间');
+						}
+						else{
+							return to_assign(1, '第'.($key+1).'阶段的开始时间不能小于第'.($key).'阶段的结束时间');
+						}
+						break;
+					}
+					if($end_time>$time_2){
+						return to_assign(1, '第'.($key+1).'阶段的结束时间不能大于计划结束时间');
+						break;
+					}
+					else{
+						$time_1 = $end_time;
+					}
+					$item = [];
+					$item['action_id'] = $id;
+					$item['flow_name'] = $value;
+					$item['type'] = 1;
+					$item['flow_uid'] = $flowUidsData[$key];
+					$item['flow_ids'] = $flowIdsData[$key];
+					$item['sort'] = $key;
+					$item['start_time'] = $start_time;
+					$item['end_time'] = $end_time;
+					$item['create_time'] = time();
+					$flow[]=$item;	
+				}
+				//删除原来的阶段步骤
+				Db::name('Step')->where(['action_id'=>$id,'type'=>1,'delete_time'=>0])->update(['delete_time'=>time()]);
+				Db::name('StepRecord')->where(['action_id'=>$id,'type'=>1,'delete_time'=>0])->update(['delete_time'=>time()]);
+				$res = Db::name('Step')->strict(false)->field(true)->insertAll($flow);
+				if ($res) {
+					$checkData=array(
+						'action_id' => $id,
+						'step_id' => 0,
+						'check_uid' => $this->uid,
+						'type' => 1,
+						'check_time' => time(),
+						'status' => 0,
+						'create_time' => time()
+					);
+					$aid = Db::name('StepRecord')->strict(false)->field(true)->insertGetId($checkData);
+					$resa = Db::name('Project')->where('id', $id)->strict(false)->field(true)->update(['step_sort'=>0,'update_time'=>time()]);
+					add_log('reset', $param['id'], $param,[],'项目阶段');
+				}
+				return to_assign();
+			} else {
+				return to_assign(1, '只有创建人或者负责人才有权限编辑');
+			}
+		}
+	}
+	
+	//审核
+    public function step_check()
+    {
+        $param = get_params();
+		$detail = Db::name('Project')->where(['id' => $param['id']])->find();
+		//当前审核节点详情
+		$step = Db::name('Step')->where(['action_id'=>$detail['id'],'type'=>1,'sort'=>$detail['step_sort'],'delete_time'=>0])->find();
+		if ($this->uid != $step['flow_uid']){		
+			return to_assign(1,'您没权限操作');
+		}
+		//审核通过
+		if($param['check'] == 1){
+			$next_step = Db::name('Step')->where(['action_id'=>$detail['id'],'type'=>1,'sort'=>($detail['step_sort']+1),'delete_time'=>0])->find();
+			if($next_step){
+				$param['step_sort'] = $next_step['sort'];
+				$param['status'] = 2;
+			}
+			else{
+				//不存在下一步审核，审核结束
+				$param['status'] = 3;
+				$param['step_sort'] = $detail['step_sort']+1;
+			}		
+			//审核通过数据操作
+			$res = Db::name('Project')->strict(false)->field('step_sort,status')->update($param);
+			if($res!==false){
+				$checkData=array(
+					'action_id' => $detail['id'],
+					'step_id' => $step['id'],
+					'check_uid' => $this->uid,
+					'type' => 1,
+					'check_time' => time(),
+					'status' => $param['check'],
+					'create_time' => time()
+				);
+				$aid = Db::name('StepRecord')->strict(false)->field(true)->insertGetId($checkData);
+				add_log('check', $param['id'], $param,[],'项目阶段');
+				return to_assign();
+			}
+			else{
+				return to_assign(1,'操作失败');
+			}
+		}
+		//拒绝审核
+		else if($param['check'] == 2){
+			//获取上一步的审核信息
+			$prev_step = Db::name('Step')->where(['action_id'=>$detail['id'],'type'=>1,'sort'=>($detail['step_sort']-1),'delete_time'=>0])->find();
+			if($prev_step){
+				//存在上一步审核
+				$param['step_sort'] = $prev_step['sort'];
+			}
+			else{
+				//不存在上一步审核，审核初始化步骤
+				$param['step_sort'] = 0;				
+				$param['status'] = 1;
+			}
+		}
+		$res = Db::name('Project')->strict(false)->field('step_sort,status')->update($param);
+		if($res!==false){
+			$checkData=array(
+				'action_id' => $detail['id'],
+				'step_id' => $step['id'],
+				'check_uid' => $this->uid,
+				'type' => 1,
+				'check_time' => time(),
+				'status' => $param['check'],
+				'content' => $param['content'],
+				'create_time' => time()
+			);	
+			$aid = Db::name('StepRecord')->strict(false)->field(true)->insertGetId($checkData);
+			add_log('refue', $param['id'], $param,[],'项目阶段');
+			return to_assign();
+		}
+		else{
+			return to_assign(1,'操作失败');
+		}				
+    }
 }

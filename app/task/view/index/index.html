@@ -100,7 +100,7 @@
 	function gouguInit() {
 		var table = layui.table, form = layui.form, tool = layui.tool, employeepicker = layui.employeepicker;
 
-		layui.pageTable = table.render({
+		layui.taskTable = table.render({
 			elem: '#test',
 			title: '任务列表',
 			cellMinWidth: 200,
@@ -224,7 +224,7 @@
 				project_id: $('#taskForm').find('[name="project_id"]').val(),
 				keywords: $('#taskForm').find('[name="keywords"]').val()
 			}
-			layui.pageTable.reload({ where: postData });
+			layui.taskTable.reload({ where: postData });
 		}
 	}		
 </script>

@@ -301,7 +301,7 @@ function get_file($id)
  * @param int    $param_id 操作类型
  * @param array  $param 提交的参数
  */
-function add_log($type, $param_id = 0, $param = [], $old = [])
+function add_log($type, $param_id = 0, $param = [], $old = [] ,$subject='')
 {
     $action = '未知操作';
     $type_action = get_config('log.type_action');
@@ -331,7 +331,12 @@ function add_log($type, $param_id = 0, $param = [], $old = [])
         $data['subject'] = $rule_menu['name'];
     } else {
         $data['title'] = '';
-        $data['subject'] = '系统';
+		if($subject!=''){
+			$data['subject'] =$subject;
+		}
+		else{
+			$data['subject'] ='系统';
+		}
     }
     $content = $login_admin['name'] . '在' . date('Y-m-d H:i:s') . $data['action'] . '了' . $data['subject'];
     $data['content'] = $content;

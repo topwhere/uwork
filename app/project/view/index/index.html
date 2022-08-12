@@ -43,7 +43,7 @@
 				}
 				, {
 					field: 'name', title: '项目名称', rowspan: 2, templet: function (d) {
-						var html = '<a class="open-link" href="/project/index/view/id/' + d.id + '">' + d.name + '</a>';
+						var html = '<a class="link-a" data-href="/project/index/view/id/' + d.id + '">' + d.name + '</a>';
 						return html;
 					}
 				}

@@ -115,7 +115,7 @@
 					"list-ul", "list-ol", "hr","link", "reference-link", "image", "code", "code-block", "table","watch", "fullscreen"
 				];
 			},
-			height: window.innerHeight - 120,
+			height: window.innerHeight - 336,
 		});
 
 		//日期范围
@@ -166,6 +166,9 @@
 				layer.msg(e.msg);
 				if (e.code == 0) {
 					tool.close(1000);
+					if(layui.taskTable){
+						layui.taskTable.reload();
+					}					
 				}
 			}
 			tool.post("/task/index/add", data.field, callback);

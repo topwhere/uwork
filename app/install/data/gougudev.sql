@@ -682,6 +682,7 @@ CREATE TABLE `dev_project`  (
   `start_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目开始时间',
   `end_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '项目结束时间',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：状态：0未设置,1未开始,2进行中,3已完成,4已关闭',
+  `step_sort` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '当前审核步骤',
   `content` text NULL COMMENT '项目描述',
   `md_content` text NULL COMMENT 'markdown项目描述',
   `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
@@ -868,3 +869,39 @@ INSERT INTO `dev_log`(`id`, `module`, `action`, `field`, `product_id`, `project_
 INSERT INTO `dev_log`(`id`, `module`, `action`, `field`, `product_id`, `project_id`, `task_id`, `document_id`, `admin_id`, `old_content`, `new_content`, `remark`, `create_time`) VALUES (2, 'project', 'add', 'new', 0, 1001, 0, 0, 1, '', '勾股BLOG', NULL, 1652514531);
 INSERT INTO `dev_log`(`id`, `module`, `action`, `field`, `product_id`, `project_id`, `task_id`, `document_id`, `admin_id`, `old_content`, `new_content`, `remark`, `create_time`) VALUES (3, 'project', 'add', 'new', 0, 1002, 0, 0, 1, '', '勾股OA', NULL, 1652514531);
 INSERT INTO `dev_log`(`id`, `module`, `action`, `field`, `product_id`, `project_id`, `task_id`, `document_id`, `admin_id`, `old_content`, `new_content`, `remark`, `create_time`) VALUES (4, 'project', 'add', 'new', 0, 1003, 0, 0, 1, '', '勾股DEV', NULL, 1652514531);
+
+-- ----------------------------
+-- Table structure for dev_step
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_step`;
+CREATE TABLE `dev_step`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) NOT NULL COMMENT '关联ID',
+  `flow_name` varchar(255) NOT NULL DEFAULT '' COMMENT '阶段名称',
+  `flow_uid` int(11) NOT NULL DEFAULT 0 COMMENT '阶段负责人ID',
+  `flow_ids` varchar(500) NOT NULL DEFAULT '' COMMENT '阶段成员ID (使用逗号隔开) 1,2,3',
+  `sort` tinyint(4) NOT NULL DEFAULT 0 COMMENT '排序ID',
+  `type` tinyint(2) NOT NULL DEFAULT 1 COMMENT '阶段类型:1合同,2项目',
+  `start_time` int(11) NOT NULL DEFAULT 0 COMMENT '开始时间',
+  `end_time` int(11) NOT NULL DEFAULT 0 COMMENT '结束时间',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `delete_time` int(11) NOT NULL DEFAULT 0 COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '阶段步骤表';
+
+-- ----------------------------
+-- Table structure for dev_step_record
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_step_record`;
+CREATE TABLE `dev_step_record`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) NOT NULL DEFAULT 0 COMMENT '关联ID',
+  `step_id` int(11) NOT NULL DEFAULT 0 COMMENT '阶段步骤ID',
+  `check_uid` int(11) NOT NULL DEFAULT 0 COMMENT '审批人ID',
+  `check_time` int(11) NOT NULL COMMENT '审批时间',
+  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1审核通过2审核拒绝3撤销',
+  `type` tinyint(2) NOT NULL DEFAULT 1 COMMENT '阶段类型:1项目',
+  `content` varchar(500) NOT NULL DEFAULT '' COMMENT '审核意见',
+  `delete_time` int(11) NOT NULL DEFAULT 0 COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '阶段步骤记录表';

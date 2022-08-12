@@ -226,6 +226,43 @@ layui.define(['layer','dtree'],function(exports){
 	}
 	layui.link(rootPath+'module/dtree/dtree.css');
 	layui.link(rootPath+'module/dtree/font/dtreefont.css');
-  //输出接口
-  exports('employeepicker', obj);
+	//选择员工单人弹窗	
+	$('body').on('click','.picker-one',function () {
+		let that = $(this);
+		let ids=that.next().val()+'',names = that.val()+'';
+		obj.init({
+			ids:ids,
+			names:names,
+			type:0,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			callback:function(ids,names,dids,departments){
+				that.val(names);
+				that.next().val(ids);
+			}
+		});
+	});
+	
+	//选择员工多人人弹窗		
+	$('body').on('click','.picker-more',function () {
+		let that = $(this);
+		let ids=that.next().val()+'',names = that.val()+'',ids_array=[],names_array=[];
+		if(ids.length>0){
+			ids_array=ids.split(',');
+			names_array=names.split(',');
+		}
+		obj.init({
+			ids:ids_array,
+			names:names_array,
+			type:1,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			callback:function(ids,names,dids,departments){
+				that.val(names.join(','));
+				that.next().val(ids.join(','));
+			}
+		});
+	});
+	//输出接口
+	exports('employeepicker', obj);
 });   

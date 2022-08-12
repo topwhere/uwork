@@ -80,113 +80,109 @@ class Index extends BaseController
     {
         $param = get_params();
         if (request()->isPost()) {
-            //markdown数据处理
-            if (isset($param['table-align'])) {
-                unset($param['table-align']);
-            }
-            if (isset($param['docContent-html-code'])) {
-                $param['content'] = $param['docContent-html-code'];
-                $param['md_content'] = $param['docContent-markdown-doc'];
-                unset($param['docContent-html-code']);
-                unset($param['docContent-markdown-doc']);
-            }
-            if (isset($param['ueditorcontent'])) {
-                $param['content'] = $param['ueditorcontent'];
-                $param['md_content'] = '';
-            }
             if (isset($param['start_time'])) {
                 $param['start_time'] = strtotime(urldecode($param['start_time']));
             }
             if (isset($param['end_time'])) {
                 $param['end_time'] = strtotime(urldecode($param['end_time']));
             }
-            if (!empty($param['id']) && $param['id'] > 0) {
-                $project = (new ProjectList())->detail($param['id']);
-                if ($this->uid == $project['admin_id'] || $this->uid == $project['director_uid']) {
-                    if (isset($param['start_time'])) {
-                        if ($param['start_time'] >= $project['end_time']) {
-                            return to_assign(1, '开始时间不能大于计划结束时间');
-                        }
-                    }
-                    if (isset($param['end_time'])) {
-                        if ($param['end_time'] <= $project['start_time']) {
-                            return to_assign(1, '计划结束时间不能小于开始时间');
-                        }
-                    }
-                    if (isset($param['flow_status'])) {
-                        if ($param['flow_status'] > 2) {
-                            $param['over_time'] = time();
-                        } else {
-                            $param['over_time'] = 0;
-                        }
-                    }
-                    try {
-                        validate(ProjectCheck::class)->scene('edit')->check($param);
-                    } catch (ValidateException $e) {
-                        // 验证失败 输出错误信息
-                        return to_assign(1, $e->getError());
-                    }
-                    add_log('edit', $param['id'], $param, $project);
-                    $param['update_time'] = time();
-                    $res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
-                    if ($res) {
-                        //更新关联该项目的需求、任务的所属产品
-                        if (isset($param['product_id'])) {
-                            Db::name('Task')->where('project_id', $param['id'])->strict(false)->field(true)->update(['product_id' => $param['product_id']]);
-                        }
-                        add_log('edit', $param['id'], $param);
-                    }
-                    return to_assign();
-                } else {
-                    return to_assign(1, '只有创建人或者负责人才有权限编辑');
-                }
-            } else {
-                try {
-                    validate(ProjectCheck::class)->scene('add')->check($param);
-                } catch (ValidateException $e) {
-                    // 验证失败 输出错误信息
-                    return to_assign(1, $e->getError());
-                }
-                $param['create_time'] = time();
-                $param['admin_id'] = $this->uid;
-                $sid = ProjectList::strict(false)->field(true)->insertGetId($param);
-                if ($sid) {
-					$project_users = $this->uid;
-                    if (!empty($param['director_uid'])){
-                        $project_users.=",".$param['director_uid'];
-                    }
-                    if (!empty($param['team_admin_ids'])){
-                        $project_users.=",".$param['team_admin_ids'];
-                    }
-                    $project_array = explode(",",(string)$project_users);
-                    $project_array = array_unique($project_array);
-                    $project_user_array=[];
-                    foreach ($project_array as $k => $v) {
-                        if (is_numeric($v)) {
-                            $project_user_array[]=array(
-                                'uid'=>$v,
-                                'admin_id'=>$this->uid,
-                                'project_id'=>$sid,
-                                'create_time'=>time(),
-                            );
-                        }
-                    }
-                    Db::name('ProjectUser')->strict(false)->field(true)->insertAll($project_user_array);
-                    add_log('add', $sid, $param);
-                    $log_data = array(
-                        'module' => 'project',
-                        'project_id' => $sid,
-                        'new_content' => $param['name'],
-                        'field' => 'new',
-                        'action' => 'add',
-                        'admin_id' => $this->uid,
-                        'old_content' => '',
-                        'create_time' => time(),
-                    );
-                    Db::name('Log')->strict(false)->field(true)->insert($log_data);
-                }
-                return to_assign();
-            }
+			
+			$param['step_sort'] = 0;
+			$flowNameData = isset($param['flowName']) ? $param['flowName'] : '';
+			$flowUidsData = isset($param['chargeIds']) ? $param['chargeIds'] : '';
+			$flowIdsData = isset($param['membeIds']) ? $param['membeIds'] : '';
+			$flowDateData = isset($param['cycleDate']) ? $param['cycleDate'] : '';
+			$flow = [];
+			$time_1 = $param['start_time'];
+			$time_2 = $param['end_time'];
+			foreach ($flowNameData as $key => $value) {
+				if (!$value) {
+					continue;
+				}				
+				$flowDate = explode('到',$flowDateData[$key]);
+				$start_time = strtotime(urldecode(trim($flowDate[0])));
+				$end_time = strtotime(urldecode(trim($flowDate[1])));
+				if($start_time<$time_1){
+					if($key == 0){
+						return to_assign(1, '第'.($key+1).'阶段的开始时间不能小于计划开始时间');
+					}
+					else{
+						return to_assign(1, '第'.($key+1).'阶段的开始时间不能小于第'.($key).'阶段的结束时间');
+					}
+					break;
+				}
+				if($end_time>$time_2){
+					return to_assign(1, '第'.($key+1).'阶段的结束时间不能大于计划结束时间');
+					break;
+				}
+				else{
+					$time_1 = $end_time;
+				}
+				$item = [];
+				$item['flow_name'] = $value;
+				$item['type'] = 1;
+				$item['flow_uid'] = $flowUidsData[$key];
+				$item['flow_ids'] = $flowIdsData[$key];
+				$item['sort'] = $key;
+				$item['start_time'] = $start_time;
+				$item['end_time'] = $end_time;
+				$item['create_time'] = time();
+				$flow[]=$item;	
+			}
+			//var_dump($flow);exit;			
+			
+			try {
+				validate(ProjectCheck::class)->scene('add')->check($param);
+			} catch (ValidateException $e) {
+				// 验证失败 输出错误信息
+				return to_assign(1, $e->getError());
+			}
+			$param['create_time'] = time();
+			$param['admin_id'] = $this->uid;
+			$sid = ProjectList::strict(false)->field(true)->insertGetId($param);
+			if ($sid) {
+				$project_users = $this->uid;
+				if (!empty($param['director_uid'])){
+					$project_users.=",".$param['director_uid'];
+				}
+				if (!empty($param['team_admin_ids'])){
+					$project_users.=",".$param['team_admin_ids'];
+				}
+				$project_array = explode(",",(string)$project_users);
+				$project_array = array_unique($project_array);
+				$project_user_array=[];
+				foreach ($project_array as $k => $v) {
+					if (is_numeric($v)) {
+						$project_user_array[]=array(
+							'uid'=>$v,
+							'admin_id'=>$this->uid,
+							'project_id'=>$sid,
+							'create_time'=>time(),
+						);
+					}
+				}
+				Db::name('ProjectUser')->strict(false)->field(true)->insertAll($project_user_array);
+				
+				//增加阶段
+				foreach ($flow as $key => &$value) {
+					$value['action_id'] = $sid;
+				}
+				Db::name('Step')->strict(false)->field(true)->insertAll($flow);		
+		
+				add_log('add', $sid, $param);
+				$log_data = array(
+					'module' => 'project',
+					'project_id' => $sid,
+					'new_content' => $param['name'],
+					'field' => 'new',
+					'action' => 'add',
+					'admin_id' => $this->uid,
+					'old_content' => '',
+					'create_time' => time(),
+				);
+				Db::name('Log')->strict(false)->field(true)->insert($log_data);
+			}
+			return to_assign();
         } else {
             $id = isset($param['id']) ? $param['id'] : 0;
             if ($id > 0) {
@@ -196,6 +192,9 @@ class Index extends BaseController
                 }
                 View::assign('detail', $detail);
             }
+			$section = ['立项阶段','产品阶段','UI阶段','前端阶段','研发阶段','测试阶段','交付阶段','项目完结'];		
+            View::assign('section', $section);
+			View::assign('user_info', get_login_admin());
             View::assign('id', $id);
             return view();
         }
@@ -206,10 +205,74 @@ class Index extends BaseController
     {
         $param = get_params();
         $id = isset($param['id']) ? $param['id'] : 0;
-        $detail = (new ProjectList())->detail($id);
-        if (empty($detail)) {
-            return to_assign(1, '项目不存在');
-        } else {
+		$detail = (new ProjectList())->detail($id);
+		if (request()->isPost()) {
+			if ($this->uid == $detail['admin_id'] || $this->uid == $detail['director_uid']) {
+				if (isset($param['start_time'])) {
+					$param['start_time'] = strtotime(urldecode($param['start_time']));
+					if ($param['start_time'] >= $detail['end_time']) {
+						return to_assign(1, '开始时间不能大于计划结束时间');
+					}
+				}
+				if (isset($param['end_time'])) {
+					$param['end_time'] = strtotime(urldecode($param['end_time']));
+					if ($param['end_time'] <= $detail['start_time']) {
+						return to_assign(1, '计划结束时间不能小于开始时间');
+					}
+				}
+				try {
+					validate(ProjectCheck::class)->scene('edit')->check($param);
+				} catch (ValidateException $e) {
+					// 验证失败 输出错误信息
+					return to_assign(1, $e->getError());
+				}
+				$param['update_time'] = time();
+				$res = ProjectList::where('id', $param['id'])->strict(false)->field(true)->update($param);
+				if ($res) {
+					if(isset($param['director_uid'])){
+						$project_user=array(
+							'uid'=>$param['director_uid'],
+							'admin_id'=>$this->uid,
+							'project_id'=>$param['id'],
+							'create_time'=>time(),
+							'delete_time'=>0,
+						);
+						$has = Db::name('ProjectUser')->where(array('uid'=>$param['director_uid'],'project_id'=>$param['id']))->find();
+						if(empty($has)){
+							Db::name('ProjectUser')->strict(false)->field(true)->insert($project_user);
+						}
+						else{
+							Db::name('ProjectUser')->where(array('id'=>$has['id']))->strict(false)->field(true)->update($project_user);						
+						}
+						
+					}		
+					
+					add_log('edit', $param['id'], $param, $detail);
+				}
+				return to_assign();
+			} else {
+				return to_assign(1, '只有创建人或者负责人才有权限编辑');
+			}
+		}
+		else{
+			if (empty($detail)) {
+				return to_assign(1, '项目不存在');
+			} else {
+				//项目阶段			
+				$step_array = Db::name('Step')
+					->field('s.*,a.name as check_name')
+					->alias('s')
+					->join('Admin a', 'a.id = s.flow_uid', 'LEFT')
+					->order('s.sort asc')
+					->where(array('s.action_id' => $id, 's.type' => 1, 's.delete_time' => 0))
+					->select()->toArray();
+				foreach ($step_array as $kk => &$vv) {		
+					$vv['start_time'] = date('Y-m-d', $vv['start_time']);
+					$vv['end_time'] = date('Y-m-d', $vv['end_time']);
+					$flow_names = Db::name('Admin')->where([['id','in',$vv['flow_ids']]])->column('name');
+					$vv['flow_names'] = implode(',',$flow_names);	
+				}	
+				
             $file_array = Db::name('FileInterfix')
                 ->field('mf.id,mf.topic_id,mf.admin_id,f.name,f.filesize,f.filepath,a.name as admin_name')
                 ->alias('mf')
@@ -219,10 +282,13 @@ class Index extends BaseController
                 ->where(array('mf.topic_id' => $id, 'mf.module' => 'project'))
                 ->select()->toArray();
             View::assign('file_array', $file_array);
-            View::assign('detail', $detail);
-            View::assign('id', $id);
-            return view();
-        }
+					
+				View::assign('step_array', $step_array);
+				View::assign('detail', $detail);
+				View::assign('id', $id);
+				return view();
+			}
+		}
     }
 
     //查看
@@ -281,11 +347,66 @@ class Index extends BaseController
                 ->order('i.create_time desc')
                 ->where(array('i.topic_id' => $id, 'i.module' => 'project', 'delete_time' => 0))
                 ->select()->toArray();
+				
+			//项目阶段			
+			$step_array = Db::name('Step')
+				->field('s.*,a.name as check_name')
+				->alias('s')
+				->join('Admin a', 'a.id = s.flow_uid', 'LEFT')
+				->order('s.sort asc')
+				->where(array('s.action_id' => $id, 's.type' => 1, 's.delete_time' => 0))
+				->select()->toArray();
+		
+			//阶段操作记录			
+			$step_record = Db::name('StepRecord')
+				->field('s.*,a.name as check_name,p.flow_name')
+				->alias('s')
+				->join('Admin a', 'a.id = s.check_uid', 'LEFT')
+				->join('Step p', 'p.id = s.step_id', 'LEFT')
+				->order('s.check_time asc')
+				->where(array('s.action_id' => $id, 's.type' => 1))
+				->select()->toArray();		
+			foreach ($step_record as $kk => &$vv) {		
+				$vv['check_time_str'] = date('Y-m-d :H:i', $vv['check_time']);
+				$vv['status_str'] = '提交';
+				if($vv['status'] == 0){
+					$vv['status_str'] = '重新设置';
+				}
+				else if($vv['status'] == 1){
+					$vv['status_str'] = '确认完成';
+				}
+				else if($vv['status'] == 2){
+					$vv['status_str'] = '回退';
+				}
+				if($vv['status'] == 3){
+					$vv['status_str'] = '撤销';
+				}
+				if($vv['content'] == ''){
+					$vv['content'] = '无';
+				}
+			}
+			
+			//当前项目阶段
+			$step = Db::name('Step')->where(array('action_id' => $id, 'type' => 1, 'sort' => $detail['step_sort'],'delete_time'=>0))->find();
+			if(!empty($step)){
+				$step['check_name'] = Db::name('Admin')->where(['id' => $step['flow_uid']])->value('name');
+				$flow_names = Db::name('Admin')->where([['id','in',$step['flow_ids']]])->column('name');
+				$step['flow_names'] = implode(',',$flow_names);
+				if ($this->uid == $step['flow_uid']){		
+					$is_check_admin = 1;
+				}
+			}
+				
+            View::assign('step', $step);
+            View::assign('step_array', $step_array);
+			View::assign('step_record', $step_record);	
+				
             View::assign('file_array', $file_array);
             View::assign('link_array', $link_array);
             View::assign('detail', $detail);
             View::assign('role', $role);
             View::assign('id', $id);
+            View::assign('login_user', $this->uid);
             return view();
         }
     }

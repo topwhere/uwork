@@ -83,9 +83,8 @@
 									{volist name="$project.list" id="vo"}
 									<tr>
 										<td align="center">M{$vo.id}</td>
-										<td align="center"><span
-												class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
-										<td><a class="open-link" href="/project/index/view/id/{$vo.id}">{$vo.name}</a>
+										<td align="center"><span class="layui-badge bg-status-{$vo.status}">{$vo.status_name}</span></td>
+										<td><a class="link-a" data-href="/project/index/view/id/{$vo.id}">{$vo.name}</a>
 										</td>
 										<td align="center">{$vo.director_name}</td>
 										<td align="center">{$vo.tasks}</td>
@@ -181,8 +180,7 @@
 									<tr>
 										<td align="center">K{$vo.id}</td>
 										<td align="center">{$vo.cate_name}</td>
-										<td><a class="open-link"
-												href="/knowledge/index/doc_detail/kid/{$vo.id}">{$vo.title}</a></td>
+										<td><a class="link-a" data-href="/knowledge/index/doc_detail/kid/{$vo.id}">{$vo.title}</a></td>
 										<td align="center">{$vo.views}</td>
 										<td align="center">{$vo.admin_name}</td>
 										<td align="center">{$vo.create_time}</td>

@@ -3,11 +3,11 @@
 	{eq name="$id" value="0"}
 	<table class="layui-table">
 		<tr>
-			<td class="layui-td-gray2">部门名称<font>*</font></td>
+			<td class="layui-td-gray-2">部门名称<font>*</font></td>
 			<td>
 				<input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入部门名称" lay-reqText="请输入部门名称" class="layui-input">
 			</td>
-			<td class="layui-td-gray2">上级部门<font>*</font></td>
+			<td class="layui-td-gray-2">上级部门<font>*</font></td>
 			<td>
 				<select name="pid" lay-verify="required" lay-reqText="请选择上级部门">
 					<option value="0">作为顶级部门</option>
@@ -18,7 +18,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">部门联系电话</td>
+			<td class="layui-td-gray-2">部门联系电话</td>
 			<td colspan="3">
 				<input type="text" name="phone" placeholder="请输入部门联系电话，可空" autocomplete="off" class="layui-input">
 			</td>
@@ -27,11 +27,11 @@
 	{else/}
 	<table class="layui-table">
 		<tr>
-			<td class="layui-td-gray2">部门名称<font>*</font></td>
+			<td class="layui-td-gray-2">部门名称<font>*</font></td>
 			<td>
 				<input type="text" name="title" value="{$detail.title}" lay-verify="required" autocomplete="off" placeholder="请输入部门名称" lay-reqText="请输入部门名称" class="layui-input">
 			</td>
-			<td class="layui-td-gray2">上级部门<font>*</font></td>
+			<td class="layui-td-gray-2">上级部门<font>*</font></td>
 			<td>
 				<select name="pid" lay-verify="required" lay-reqText="请选择上级部门">
 					<option value="0">作为顶级部门</option>
@@ -42,7 +42,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">部门负责人</td>
+			<td class="layui-td-gray-2">部门负责人</td>
 			<td>
 				<select name="leader_id">
 					<option value="0">请选择部门负责人</option>
@@ -51,7 +51,7 @@
 					{/volist}
 				</select>
 			</td>
-			<td class="layui-td-gray2">部门联系电话</td>
+			<td class="layui-td-gray-2">部门联系电话</td>
 			<td>
 				<input type="text" name="phone" value="{$detail.phone}" placeholder="请输入部门联系电话，可空" autocomplete="off" class="layui-input">
 			</td>

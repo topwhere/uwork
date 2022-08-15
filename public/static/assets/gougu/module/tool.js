@@ -4,7 +4,7 @@ layui.define([], function (exports) {
 		{ id: 1, title: '新建产品', url: '/product/index/add' },
 		{ id: 2, title: '新建项目', url: '/project/index/add' },
 		{ id: 3, title: '新建任务', url: '/task/index/add' },
-		{ id: 4, title: '新建知识库', url: '/knowledge/index/add' },
+		{ id: 4, title: '新建知识', url: '/knowledge/index/add' },
 	];
 	dropdown.render({
 		elem: '#add-new'

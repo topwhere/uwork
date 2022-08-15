@@ -2,7 +2,7 @@
 	<h3 class="h3-title">邮箱配置</h3>
 	<table class="layui-table">
 		<tr>
-			<td class="layui-td-gray2">SMTP地址<font>*</font>
+			<td class="layui-td-gray-2">SMTP地址<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="smtp" lay-verify="required" autocomplete="off" placeholder="请输入SMTP服务器地址" lay-reqText="请输入SMTP服务器地址" class="layui-input" {notempty name="$config.smtp"} value="{$config.smtp}" {/notempty} style="width:240px;display: inline-block;">
@@ -10,7 +10,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">协议端口号<font>*</font>
+			<td class="layui-td-gray-2">协议端口号<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="smtp_port" lay-verify="required" autocomplete="off" placeholder="请输入端口" lay-reqText="请输入端口" class="layui-input" {notempty name="$config.smtp_port"} value="{$config.smtp_port}" {/notempty} style="width:240px;display: inline-block;">
@@ -18,7 +18,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">邮箱账户<font>*</font>
+			<td class="layui-td-gray-2">邮箱账户<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="smtp_user" autocomplete="off" lay-verify="required" placeholder="请输入邮箱用户名" lay-reqText="请输入邮箱用户名" class="layui-input" {notempty name="$config.smtp_user"} value="{$config.smtp_user}" {/notempty} style="width:240px;display: inline-block;">
@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">邮箱密码<font>*</font>
+			<td class="layui-td-gray-2">邮箱密码<font>*</font>
 			</td>
 			<td>
 				<input type="password" name="smtp_pwd" lay-verify="required" autocomplete="off" placeholder="请输入邮箱密码"
@@ -37,7 +37,7 @@
 		</tr>
 
 		<tr>
-			<td class="layui-td-gray2">发送人<font>*</font>
+			<td class="layui-td-gray-2">发送人<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="from" autocomplete="off" lay-verify="required" placeholder="请输入要显示的发送者" lay-reqText="请输入要显示的发送者"
@@ -46,7 +46,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">显示的邮箱<font>*</font>
+			<td class="layui-td-gray-2">显示的邮箱<font>*</font>
 			</td>
 			<td>
 				<input type="text" name="email" lay-verify="required" autocomplete="off" placeholder="请输入要显示的发送者邮箱" lay-reqText="请输入要显示的发送者邮箱"
@@ -55,7 +55,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">邮件内容</td>
+			<td class="layui-td-gray-2">邮件内容</td>
 			<td>
 				<textarea class="layui-textarea" name="template">{notempty name="$config.template"}{$config.template}{/notempty}</textarea>
 			</td>

@@ -2,22 +2,22 @@
 	<h3 class="h3-title">Token配置</h3>
 	<table class="layui-table">
 		<tr>
-			<td class="layui-td-gray2">Token签发组织</td>
+			<td class="layui-td-gray-2">Token签发组织</td>
 			<td>
 				<input type="text" name="iss" autocomplete="off" placeholder="请输入签发组织" lay-reqText="请输入签发组织" class="layui-input"{notempty name="$config.iss"} value="{$config.iss}" {/notempty}>
 			</td>
-			<td class="layui-td-gray2">Token签发作者
+			<td class="layui-td-gray-2">Token签发作者
 			</td>
 			<td>
 				<input type="text" name="aud" autocomplete="off" placeholder="请输入签发作者" lay-reqText="请输入签发作者" class="layui-input" {notempty name="$config.aud"} value="{$config.aud}" {/notempty}>
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray2">Token Secrect</td>
+			<td class="layui-td-gray-2">Token Secrect</td>
 			<td>
 				<input type="text" name="secrect" autocomplete="off" placeholder="请输入secrect" lay-reqText="请输入secrect" class="layui-input"{notempty name="$config.secrect"} value="{$config.secrect}" {/notempty}>
 			</td>
-			<td class="layui-td-gray2">Token过期时间
+			<td class="layui-td-gray-2">Token过期时间
 			</td>
 			<td>
 				<input type="text" name="exptime" autocomplete="off" placeholder="请输入过期时间" lay-reqText="请输入过期时间" class="layui-input" {notempty name="$config.exptime"} value="{$config.exptime}" {/notempty}>

@@ -23,7 +23,7 @@ class Conf extends BaseController
             $param = get_params();
             $where = array();
             $where[] = ['status', '>=', 0];
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $content = Db::name('Config')
                 ->where($where)
                 ->paginate($rows, false, ['query' => $param]);

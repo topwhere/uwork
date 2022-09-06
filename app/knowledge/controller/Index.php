@@ -36,7 +36,7 @@ class Index extends BaseController
 				$where[] = ['a.admin_id', '=', $this->uid];
 			}
             $where[] = ['a.delete_time', '=', 0];
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $content = KnowledgeList::where($where)
                 ->field('a.*,c.id as cate_id,a.id as id,c.title as cate_title,a.title as title,u.name as user')
                 ->alias('a')
@@ -71,7 +71,7 @@ class Index extends BaseController
             }
             $where[] = ['a.delete_time', '=', 0];
             $where[] = ['a.is_share', '=', 1];
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $content = KnowledgeList::where($where)
                 ->field('a.*,c.id as cate_id,a.id as id,c.title as cate_title,a.title as title,u.name as user')
                 ->alias('a')

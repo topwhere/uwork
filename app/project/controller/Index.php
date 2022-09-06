@@ -23,7 +23,7 @@ class Index extends BaseController
         if (request()->isAjax()) {
             $param = get_params();
             $project_ids = Db::name('ProjectUser')->where(['uid' => $this->uid, 'delete_time' => 0])->column('project_id');
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $list = ProjectList::withoutField('content,md_content')
                 ->where([['delete_time', '=', 0], ['id', 'in', $project_ids]])
                 ->order('id desc')

@@ -26,7 +26,7 @@ class Role extends BaseController
             if (!empty($param['keywords'])) {
                 $where[] = ['id|title|desc', 'like', '%' . $param['keywords'] . '%'];
             }
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $group = AdminGroup::where($where)
                 ->order('create_time asc')
                 ->paginate($rows, false, ['query' => $param]);

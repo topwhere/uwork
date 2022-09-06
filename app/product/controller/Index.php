@@ -36,7 +36,7 @@ class Index extends BaseController
                 ['is_open', '=', 2],
             ];
 
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $list = ProductList::withoutField('content,md_content')
                 ->where(function ($query) use ($map1, $map2, $map3, $map4) {
                     $query->where($map1)->whereor($map2)->whereor($map3)->whereor($map4);

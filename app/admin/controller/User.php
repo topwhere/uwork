@@ -39,7 +39,7 @@ class User extends BaseController
                 $department_array = get_department_son($param['did']);
                 $where[] = ['did', 'in', $department_array];
             }
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $admin = AdminList::where($where)
                 ->order('id desc')
                 ->paginate($rows, false, ['query' => $param])

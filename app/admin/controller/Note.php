@@ -27,7 +27,7 @@ class Note extends BaseController
                 $where[] = ['a.title|a.content', 'like', '%' . $param['keywords'] . '%'];
             }
             $where[] = ['a.delete_time', '=', 0];
-            $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $note = NoteList::where($where)
                 ->field('a.*,c.title as cate_title')
                 ->alias('a')

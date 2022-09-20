@@ -316,10 +316,11 @@ class Index extends BaseController
 			//任务
 			$task_cate = Db::name('TaskCate')->where(['status' => 1])->select()->toArray();
 			foreach ($task_cate as $k => $v) {
-				$task_map[] = ['type', '=', $v['id']];
-				$task_cate[$k]['count'] = Db::name('Task')->where($task_map)->count();
-				$task_map[] = ['flow_status', '>', 2];
-				$task_cate[$k]['unfinish'] = Db::name('Task')->where($task_map)->count();
+				$task_map_item = $task_map;
+				$task_map_item[] = ['type', '=', $v['id']];
+				$task_cate[$k]['count'] = Db::name('Task')->where($task_map_item)->count();
+				$task_map_item[] = ['flow_status', '>', 2];
+				$task_cate[$k]['unfinish'] = Db::name('Task')->where($task_map_item)->count();
 			}
 			$detail['task_cate'] = $task_cate;
             //判断是否是创建者或者负责人

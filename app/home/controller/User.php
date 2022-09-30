@@ -42,12 +42,15 @@ class User extends BaseController
             $uid = $this->uid;
             Db::name('Admin')->where(['id' => $uid])->strict(false)->field(true)->update($param);
             $session_admin = get_config('app.session_admin');
-            Session::set($session_admin, Db::name('admin')->find($uid));
+            Session::set($session_admin, Db::name('Admin')->where(['id' => $uid])->find());
             return to_assign();
         }
 		else{
+			$admin = Db::name('Admin')->where('id',$this->uid)->find();
+			$admin['department'] = Db::name('Department')->where('id',$admin['did'])->value('title');
+			$admin['position'] = Db::name('Position')->where('id',$admin['position_id'])->value('title');
 			return view('', [
-				'admin' => get_admin($this->uid),
+				'admin' => $admin,
 			]);
 		}
     }

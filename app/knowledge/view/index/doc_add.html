@@ -82,6 +82,7 @@ function gouguInit() {
 	if($('#docContent').length>0){
 		var edit = editor.render('docContent', {
 			markdown: $('#mdContent').val(),
+			imageUploadURL: "/api/index/md_upload",
 			height:window.innerHeight-240
 		});
 	}

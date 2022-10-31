@@ -44,7 +44,7 @@ class Index extends BaseController
                 ->limit(5)
                 ->select()->toArray();
             foreach ($note_list as $key => $val) {
-                $note_list[$key]['create_time'] = date('Y-m-d :H:i', $val['create_time']);
+                $note_list[$key]['create_time'] = date('Y-m-d H:i', $val['create_time']);
             }
 
             //项目相关

@@ -91,10 +91,9 @@ class Note extends BaseController
                 $sid = NoteList::strict(false)->field(true)->insertGetId($param);
                 if ($sid) {
                     add_log('add', $sid, $param);
-                    $users = Db::name('Admin')->field('id as from_uid')->where(['status' => 1])->column('id');
-                    sendMessage($users, 1, ['title' => $param['title'], 'action_id' => $sid]);
+                    $users = Db::name('Admin')->where(['status' => 1])->column('id');					
+                    sendMessage($users, 1, ['title' => $param['title'], 'from_uid' => $this->uid,'action_id' => $sid]);
                 }
-
                 return to_assign();
             }
         } else {

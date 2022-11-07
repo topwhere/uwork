@@ -168,13 +168,13 @@ INSERT INTO `dev_admin_rule` VALUES (73, 70, 'schedule/index/view', '查看', '�
 
 INSERT INTO `dev_admin_rule` VALUES (74, 6, 'knowledge/index/index', '共享知识', '知识库', '', 1, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (75, 6, 'knowledge/index/list', '个人知识', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (76, 74, 'knowledge/index/add', '新建/编辑', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (77, 74, 'knowledge/index/delete', '删除', '知识库', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (78, 74, 'knowledge/index/edit', '编辑', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (76, 74, 'knowledge/index/add', '新建/编辑知识库', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (77, 74, 'knowledge/index/delete', '删除知识库', '知识库', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (78, 74, 'knowledge/index/edit', '编辑知识库', '知识库', '', 2, 0, 1, 0, 0);
 INSERT INTO `dev_admin_rule` VALUES (79, 74, 'knowledge/index/view', '知识库详情', '知识库', '', 1, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (80, 79, 'knowledge/index/doc_add', '新建/编辑', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (81, 79, 'knowledge/index/doc_detail', '详情', '知识库文档', '', 2, 0, 1, 0, 0);
-INSERT INTO `dev_admin_rule` VALUES (82, 79, 'knowledge/index/doc_delete', '删除', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (80, 74, 'knowledge/index/doc_add', '新建/编辑知识库文档', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (81, 74, 'knowledge/index/doc_detail', '知识库文档详情', '知识库文档', '', 2, 0, 1, 0, 0);
+INSERT INTO `dev_admin_rule` VALUES (82, 74, 'knowledge/index/doc_delete', '删除知识库文档', '知识库文档', '', 2, 0, 1, 0, 0);
 
 
 -- ----------------------------

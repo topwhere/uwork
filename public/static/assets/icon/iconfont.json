@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11833364",
+      "name": "导出",
+      "font_class": "daochu",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "11833498",
+      "name": "导入",
+      "font_class": "daoru",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "1504340",
+      "name": "上传",
+      "font_class": "shangchuan",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "1504355",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "1110447",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "11349237",
+      "name": "QQ",
+      "font_class": "QQ",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "26672775",
+      "name": "名称=锁定, 线面=off",
+      "font_class": "suozhu",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "26672776",
+      "name": "名称=开锁, 线面=off",
+      "font_class": "jiesuo",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
       "icon_id": "15014204",
       "name": "权限",
       "font_class": "quanxian",
@@ -713,13 +769,6 @@
       "unicode_decimal": 59299
     },
     {
-      "icon_id": "15562260",
-      "name": "信息流",
-      "font_class": "xinxiliu",
-      "unicode": "e7a4",
-      "unicode_decimal": 59300
-    },
-    {
       "icon_id": "15562261",
       "name": "销售设置",
       "font_class": "xiaoshoushezhi",
@@ -942,13 +991,6 @@
       "font_class": "mobanguanli",
       "unicode": "e7cf",
       "unicode_decimal": 59343
-    },
-    {
-      "icon_id": "18493288",
-      "name": "学历认证",
-      "font_class": "xuelirenzheng",
-      "unicode": "e7d1",
-      "unicode_decimal": 59345
     },
     {
       "icon_id": "18493306",
@@ -1436,7 +1478,7 @@
     {
       "icon_id": "8471198",
       "name": "学生缴费",
-      "font_class": "xueshengjiaofei",
+      "font_class": "jiaofei",
       "unicode": "e6bc",
       "unicode_decimal": 59068
     },

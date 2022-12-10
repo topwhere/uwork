@@ -25,6 +25,8 @@
 
 勾股DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
 
+沟通咨询请加微信号：hdm588
+
 PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 
 **登录账号及密码：**

@@ -59,6 +59,7 @@ abstract class BaseController
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
         $this->uid = 0;
+        $this->did = 0;
         $this->name = '';
         // 控制器初始化
         $this->initialize();
@@ -88,6 +89,7 @@ abstract class BaseController
             } else {
 				$loginInfo = Session::get($session_admin);
                 $this->uid = $loginInfo['id'];
+                $this->did = $loginInfo['did'];
 
 				$params = [
 					'uid' => $this->uid,

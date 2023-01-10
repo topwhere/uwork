@@ -49,6 +49,7 @@
 .layui-letter-span.on{color:#FF6347; font-weight:800;}
 .layui-letter-span:hover{color:#4285f4;}
 .layui-tags-all{float: right; font-weight: 200; background-color:#4285f4; color:#fff; border-radius: 3px; padding: 2px 6px; cursor: pointer; display: none;}
+.layui-layer-setwin .layui-layer-close2{z-index:999999}
 
 .layui-data-none{padding:12px 0; color:#969696; text-align:center; font-size:12px;}
 .gougu-data-none{background:url(../images/data-none.png) no-repeat center center; background-size:auto 80%;}

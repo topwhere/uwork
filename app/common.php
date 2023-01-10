@@ -223,6 +223,41 @@ function get_department_leader($uid = 0, $pid = 0)
     return $leader;
 }
 
+//读取是否是某员工的上级领导
+function get_user_role($leader_id=0,$uid = 0)
+{
+	$did = get_admin($uid)['did'];
+	//获取子部门
+	$department = get_department();
+	$department_list = get_data_node($department, $did);
+	$department_array = array_column($department_list, 'id');
+	//包括自己部门在内
+	$department_array[] = $did;
+	//判断是否是部门负责人
+	$is_leader = Db::name('Department')->where([['id','in',$did],['leader_id','=',$leader_id]])->count();
+	return $is_leader;
+}
+
+//读取根据是否是某部门的领导,并返回部门和子部门id
+function get_leader_dids($uid = 0)
+{
+	$did = get_admin($uid)['did'];
+	//判断是否是部门负责人
+	$is_leader = Db::name('Department')->where(['id'=>$did,'leader_id'=>$uid])->count();
+	if($is_leader > 0 || $uid == 1){
+		//获取子部门
+		$department = get_department();
+		$department_list = get_data_node($department, $did);
+		$department_array = array_column($department_list, 'id');
+		//包括自己部门在内
+		$department_array[] = $did;
+		return $department_array;
+	}
+	else{
+		return $did;
+	}
+}
+
 //读取职位
 function get_position()
 {

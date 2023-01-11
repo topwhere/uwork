@@ -35,7 +35,10 @@ const moduleInit = ['tool','editormd'];
 		layui.pageTable = table.render({
 			elem: '#test',
 			title: '公告列表',
-			url: "/admin/note/index", //数据接口		
+			url: "/admin/note/index", //数据接口	
+			page: true, //开启分页
+			limit: 20,
+			height: 'full-104',			
 			cols: [
 				[
 					{

@@ -307,7 +307,7 @@
 		})
 		$('#linkList').on('click', '.link-edit', function () {
 			let id = $(this).data('id');
-			let url = $(this).data('url');
+			let url = $(this).data('href');
 			let desc = $(this).data('desc');
 			comment.addLink(id, detail_id, 'task', url, desc);
 		})

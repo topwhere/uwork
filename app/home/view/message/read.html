@@ -93,16 +93,22 @@
 		{/notempty}
 	</table>
 	{if condition="($detail.template == 0) AND ($detail.pid != 0)"}
-	<div class="layui-form-item" style=" padding-top:10px;">
-		<a class="layui-btn" href="/home/message/reply?id={$detail.id}&type=1">回复</a>
+	<div class="layui-form-item pt-2" style=" padding-top:10px;">
+		<span class="layui-btn reply-btn" data-id="{$detail.id}">回复</span>
 	</div>
 	{/if}
 </form>
 
 <script>
 	function openInit() {
+		let tool = layui.tool;
 		if(layui.pageTable){
 			layui.pageTable.reload();
-		}		
+		}	
+		$('.reply-btn').on('click',function(){
+			let id=$(this).data('id');
+			tool.load('/home/message/reply?id='+id+'&type=1');
+			return;
+		})
 	}		
 </script>

@@ -814,7 +814,7 @@ CREATE TABLE `dev_link_interfix`  (
 -- Records of dev_link_interfix
 -- ----------------------------
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (1, 'product', 1000, '勾股CMS体验站', 'https://www.gougucms.com/', 1, 1652456761, 0, 0);
-INSERT INTO `dev`.`dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (2, 'product', 1001, '勾股博客体验站', 'https://blog.gougucms.com/', 1, 1652456799, 0, 0);
+INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (2, 'product', 1001, '勾股博客体验站', 'https://blog.gougucms.com/', 1, 1652456799, 0, 0);
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (3, 'product', 1002, '勾股OA体验站', 'https://oa.gougucms.com/', 1, 1652456989, 0, 0);
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (4, 'product', 1002, '勾股OA开源地址', 'https://gitee.com/gouguopen/office', 1, 1652457015, 0, 0);
 INSERT INTO `dev_link_interfix`(`id`, `module`, `topic_id`, `desc`, `url`, `admin_id`, `create_time`, `update_time`, `delete_time`) VALUES (5, 'product', 1001, '勾股博客开源地址', 'https://gitee.com/gouguopen/blog', 1, 1652457056, 0, 0);

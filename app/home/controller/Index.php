@@ -151,8 +151,8 @@ class Index extends BaseController
             }
 
             //工时相关
-            $work_count = Db::name('Schedule')->where(['delete_time' => 0])->count();
-            $work_hours = Db::name('Schedule')->where(['delete_time' => 0])->sum('labor_time');
+            $work_count = Db::name('Schedule')->where(['delete_time' => 0,'admin_id'=>$this->uid])->count();
+            $work_hours = Db::name('Schedule')->where(['delete_time' => 0,'admin_id'=>$this->uid])->sum('labor_time');
             $work = [
                 'count' => $work_count,
                 'hours' => $work_hours,

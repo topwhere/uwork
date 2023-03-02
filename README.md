@@ -55,12 +55,12 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 服务器最低配置：
 ~~~
     1核CPU (建议2核+)
-    1G内存 (建议4G+)
+    2G内存 (建议4G+)
     1M带宽 (建议3M+)
 ~~~
 服务器运行环境要求：
 ~~~
-    PHP >= 7.1  
+    PHP >= 7.3  
     Mysql >= 5.5.0 (需支持innodb引擎)  
     Apache 或 Nginx  
     PDO PHP Extension  
@@ -75,7 +75,7 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 
 推荐使用命令行安装，因为采用命令行安装的方式可以和勾股DEV随时保持更新同步。使用命令行安装请提前准备好Git、Composer。
 
-Linux下，勾股DEV的安装请使用以下命令进行安装。  
+勾股DEV的安装步骤，以下加粗的内容需要特别留意：  
 
 第一步：克隆勾股DEV到你本地  
     git clone https://gitee.com/gougucms/dev.git
@@ -87,31 +87,20 @@ Linux下，勾股DEV的安装请使用以下命令进行安装。
     
 composer install  
     
-第四步：添加虚拟主机并绑定到项目的public目录  
-    
-第五步：访问 http://www.yoursite.com/install/index 进行安装
+第四步：添加虚拟主机并绑定到项目的public目录 ，实际部署中，确保绑定域名访问到的是public目录。**（这一步很重要，很多人出错）**
 
-⚠️⚠️ **注意：安装过程中，请先手动创建空的数据库，然后填写刚创建的数据库名称和用户名也可完成安装。** ⚠️⚠️
+第五步：伪静态配置 **（这一步也很重要，很多人出错）**，使用的是ThinkPHP的伪静态规则，具体看下面的伪静态配置内容。  
 
-🔺🔺 **提醒：安装过程中，如果进度条卡住，一般都是数据库写入权限或者安装环境配置问题，请注意检查。遇到问题请到QQ群：24641076 反馈** 🔺🔺
-
-✅✅ **PS：如需要重新安装，请删除目录里面 config/install.lock 的文件，即可重新安装。** ✅✅
-
-**三、伪静态配置**
-
-**Nginx**
-修改nginx.conf 配置文件 加入下面的语句。
-~~~
+Nginx 修改nginx.conf 配置文件 加入下面的语句。
+```
     location / {
         if (!-e $request_filename){
         rewrite  ^(.*)$  /index.php?s=$1  last;   break;
         }
     }
-~~~
-
-**Apache**
-把下面的内容保存为.htaccess文件放到应用入 public 文件的同级目录下。
-~~~
+```
+Apache 把下面的内容保存为.htaccess文件放到应用入 public 文件的同级目录下。
+```
     <IfModule mod_rewrite.c>
     Options +FollowSymlinks -Multiviews
     RewriteEngine On
@@ -119,22 +108,49 @@ composer install
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
     </IfModule>
-~~~
+```
 
+第六步：访问 http://www.yoursite.com/install/index 进行安装
+
+⚠️⚠️ **注意：安装过程中，请先手动创建空的数据库，然后填写刚创建的数据库名称和用户名也可完成安装。** ⚠️⚠️
+
+🔺🔺 **提醒：安装过程中，如果进度条卡住，一般都是数据库写入权限或者安装环境配置问题，请注意检查。遇到问题请到QQ群：24641076 反馈** 🔺🔺
+
+✅✅ **PS：如需要重新安装，请删除目录里面 config/install.lock 的文件，即可重新安装。** ✅✅
 
 ### ❓ 常见问题
 
 1.  安装失败，可能存在php配置文件禁止了putenv 和 proc_open函数。解决方法，查找php.ini文件位置，打开php.ini，搜索 disable_functions 项，看是否禁用了putenv 和 proc_open函数。如果在禁用列表里，移除putenv proc_open然后退出，重启php即可。
 
-2.  如果安装后打开页面提示404错误，请检查服务器伪静态配置，如果是宝塔面板，网站伪静态请配置使用thinkphp规则。
+2.  如果安装后打开页面提示 `404`错误，请检查服务器伪静态配置，如果是宝塔面板，网站伪静态请配置使用thinkphp规则。
 
-3.  如果提示当前权限不足，无法写入配置文件config/database.php，请检查database.php是否可读，还有可能是当前安装程序无法访问父目录，请检查PHP的open_basedir配置。
+3.  如果提示当前权限不足，无法写入配置文件`config/database.php`，请检查`config`目录是否可写，还有可能是当前安装程序无法访问父目录，请检查PHP的`open_basedir`配置。
 
-4.  如果composer install失败，请尝试在命令行进行切换配置到国内源，命令如下composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/。
+4.  如果`composer install`失败，请尝试在命令行进行切换配置到国内源，命令如下:
 
-5.  访问 http://www.yoursite.com/install/index ，请注意查看伪静态请配置是否设置了thinkphp规则。
+    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
-6.  如果遇到无法解决的问题请到QQ群：24641076 反馈交流。
+5.  访问 http://www.你的域名.com/install/index 前，请注意查看伪静态请配置是否设置了`thinkphp`伪静态规则。
+
+6.  出现访问报错一般是服务器环境配置问题
+
+    比如：伪静态配置，网站的访问入口是否绑定`public`目录，放配置文件的目录是否有可写权限，放缓存的目录是否有可写权限，数据库连接确认无误等。
+
+    开启`debug`的方式请查看链接：https://blog.gougucms.com/home/book/detail/bid/3/id/77.html
+
+    开启`debug`后，看具体的报错信息，然后沿着这些思路去一个个排查基本解决90%的问题。
+
+7.  如果是composer的安装，composer install报错，这不是勾股系列系统的问题，可以百度得到具体解决方案的。
+
+8.  安装过程中，如果 **进度条卡住(99%)**，一般都是数据库写入权限或者安装环境配置`config`目录无法写入问题，请注意检查权限。
+
+9.  如果安装成功后，无法显示图形验证码的，请看是否已安装（开启）了PHP的`GD`库。
+
+10.  如果安装成功后，无法上传文件的，请看是否已安装（开启）了PHP的`fileinfo`扩展。
+
+11.  遇到解决不了的问题请到QQ群反馈：24641076（群一满），46924914（群二名额不多） 。
+
+12. **最后，如果实在安装不成功，确实需要提供安装服务的，请搜索微信号：hdm588，或者QQ号：327725426，添加好友，注意备注[安装勾股系统]。开源不易，该服务需友情赞赏💰99元。**
 
 ### 🖼️ 截图预览
 |页面截图      |    部分截图|

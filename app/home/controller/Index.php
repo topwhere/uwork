@@ -82,10 +82,13 @@ class Index extends BaseController
             $task_map3 = [
                 ['', 'exp', Db::raw("FIND_IN_SET('{$this->uid}',assist_admin_ids)")],
             ];
+			
+			$taskOr =[$task_map1,$task_map2,$task_map3];
             $task_list = Db::name('Task')
-                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-                })
+                ->where(function ($query) use ($taskOr) {
+				if (!empty($taskOr))
+					$query->whereOr($taskOr);
+				})
                 ->where([['delete_time', '=', 0]])
                 ->order('flow_status asc')
                 ->order('id desc')
@@ -98,25 +101,42 @@ class Index extends BaseController
             }
 
             $task_count = Db::name('Task')
-                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-                })
+                ->where(function ($query) use ($taskOr) {
+				if (!empty($taskOr))
+					$query->whereOr($taskOr);
+				})
                 ->where([['delete_time', '=', 0]])->count();
 
             $task_count_ok = Db::name('Task')
-                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-                })
+                ->where(function ($query) use ($taskOr) {
+				if (!empty($taskOr))
+					$query->whereOr($taskOr);
+				})
                 ->where([['delete_time', '=', 0], ['flow_status', '>', 2]])->count();
 
-            $task_delay = Db::name('Task')
-                ->where(function ($query) use ($task_map1, $task_map2, $task_map3) {
-                    $query->where($task_map1)->whereor($task_map2)->whereor($task_map3);
-                })
-                ->where(function ($query) {
-                    $query->where([['flow_status', '<', 3], ['end_time', '<', time()]])->whereor([['flow_status', '=', 3], ['end_time', '<', 'over_time']]);
-                })
-                ->where([['delete_time', '=', 0]])->count();
+			$delay_map1 = [];
+			$delay_map2 = [];
+			$delay_map1[] = ['flow_status', '<', 3];
+			$delay_map1[] = ['end_time', '<', time()];
+			$delay_map1[] = ['delete_time', '=', 0];
+			
+			$delay_map2[] = ['flow_status', '=', 3];
+			$delay_map2[] = ['delete_time', '=', 0];
+			
+            $task_delay_1 = Db::name('Task')
+                ->where(function ($query) use ($taskOr) {
+				if (!empty($taskOr))
+					$query->whereOr($taskOr);
+				})
+				->where($delay_map1)->count();
+            $task_delay_2 = Db::name('Task')
+                ->where(function ($query) use ($taskOr) {
+				if (!empty($taskOr))
+					$query->whereOr($taskOr);
+				})
+				->whereColumn('end_time','<','over_time')
+				->where($delay_map2)->count();
+			$task_delay = $task_delay_1+$task_delay_2;
             $task = [
                 'list' => $task_list,
                 'count' => $task_count,

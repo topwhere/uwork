@@ -123,7 +123,7 @@ class Document extends BaseController
                     'module' => $detail['module'],
                     'field' => 'document',
                     'action' => 'delete',
-                    'document_id' => $param['id'],
+                    'document_id' => $id,
                     'admin_id' => $this->uid,
                     'remark' => $detail['title'],
                     'new_content' => '',

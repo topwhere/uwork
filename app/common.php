@@ -618,7 +618,7 @@ function format_bytes($size, $delimiter = '')
  * @param $length 截取长度
  * @return
  */
-function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
+function msubstr($str, $start = 0, $length=1, $charset = "utf-8", $suffix = true)
 {
     if (function_exists("mb_substr")) {
         $slice = mb_substr($str, $start, $length, $charset);

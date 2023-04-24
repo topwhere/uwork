@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/home/user/setting">信息设置</a>
   <a><cite>数据还原</cite></a>
 </span>
@@ -16,7 +16,7 @@
 				<li><a href="/admin/database/database">数据备份</a></li>
 				<li class="layui-this"><a href="/admin/database/backuplist">数据还原</a></li>
 			</ul>
-		</div> 
+		</div>
 		<table cellspacing="0" cellpadding="0" border="0" class="layui-table">
 			<tr style="background-color: #f5f5f5; text-align: center;">
 				<th style=" text-align: center; font-weight: 800;"><span>文件名称</span></th>
@@ -25,7 +25,7 @@
 				<th style=" text-align: center; font-weight: 800;"><span>文件总大小</span></th>
 				<th style=" text-align: center; font-weight: 800;"><span>分卷总数</span></th>
 				<th style=" text-align: center; font-weight: 800; width:200px"><span>操作</span></th>
-			</tr>			
+			</tr>
 			{empty name="list"}
 			<tr>
 				<td colspan="6" align="center">暂无备份数据</td>
@@ -55,7 +55,7 @@
 					{:date("Ymd",$vo.timespan)}{$vo.data.compress}{:date("His",$vo.timespan)}{$vo.data.compress}{$i+1}.sql
 				</td>
 				<td align="center">
-					<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?time={$vo.data.time}&part={$i+1}'>下载备份(分卷{$i+1})</a>				
+					<a class="layui-btn layui-btn-xs" href='/admin/database/downfile?time={$vo.data.time}&part={$i+1}'>下载备份(分卷{$i+1})</a>
 				</td>
 			</tr>
 			{/for}
@@ -85,7 +85,7 @@ const moduleInit = ['tool'];
 						success: function (res) {
 							importData(res);
 						}
-					})					 
+					})
 				}else {
 					layer.msg(data.msg);
 					window.onbeforeunload = function(){ return null; }
@@ -93,7 +93,7 @@ const moduleInit = ['tool'];
 			} else {
 				layer.msg(data.msg);
 			}
-		}	
+		}
 		//监听行工具事件
 		$('[lay-event="import"]').on('click',function(){
 			var time=$(this).parent().data('time');
@@ -101,7 +101,7 @@ const moduleInit = ['tool'];
 					icon: 3,
 					title: '提示'
 				}, function (index) {
-				    layer.msg("数据还原中...",{time: 200000});				
+				    layer.msg("数据还原中...",{time: 200000});
 					$.ajax({
 						url: "/admin/database/import?time="+time,
 						type:'get',
@@ -137,7 +137,7 @@ const moduleInit = ['tool'];
 				});
 			return false;
 		})
-		
+
 		$('[lay-event="reset"]').on('click',function(){
 			var time=$(this).parent().data('time');
 			layer.confirm('确认要清除该备份吗?', {

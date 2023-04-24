@@ -18,7 +18,7 @@
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/knowledge/index/index">知识库</a>
   <a><cite>知识详情</cite></a>
 </span>
@@ -39,7 +39,7 @@
 			<ul id="treeDemo" class="ztree"></ul>
 		</div>
 	</div>
-	<div class="content-text">		
+	<div class="content-text">
 		<div class="pb-4"><h2 id="infoTilte">{$info.title}</h2></div>
 		<div class="editormd-preview2">
 			<div class="markdown-body" id="infoContent">
@@ -69,7 +69,7 @@ const moduleInit = ['tool'];
 function gouguInit() {
 	var layer = layui.layer;
 	var tool = layui.tool;
-	
+
 	var viewer = new Viewer(document.getElementById('infoContent'));
 	var $codepre = $("code[class]");
 	if($codepre.length>0){
@@ -78,7 +78,7 @@ function gouguInit() {
 			item.addClass("line-numbers");
 		}
 	}
-	
+
 	var setting = {
 		data: {
 			simpleData: {
@@ -102,7 +102,7 @@ function gouguInit() {
 			window.open(treeNode.link);
 		}
 	};
-	
+
 	let treeback = function(e){
 		if (e.code == 0) {
 			zNodes = e.data;
@@ -124,7 +124,7 @@ function gouguInit() {
 			if (e.code == 0) {
 				history.pushState({},e.data.title,window.location.protocol+'//'+window.location.host+'/knowledge/index/doc_detail/kid/'+kid+'/id/'+id+'.html');
 				$('#infoTilte').html(e.data.title);
-				$('#infoContent').html(e.data.content);				
+				$('#infoContent').html(e.data.content);
 				document.body.scrollTop=document.documentElement.scrollTop=0
 				var $codepre = $('#infoContent').find("code[class]");
 				if($codepre.length>0){

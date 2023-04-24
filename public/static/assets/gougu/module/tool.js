@@ -56,7 +56,7 @@ layui.define([], function (exports) {
 					}
 			})
 		},
-		//右侧ajax请求的方式打开页面参考勾股DEV
+		//右侧ajax请求的方式打开页面参考Uwork-DEV
 		open: function (url, width) {
 			let that = this;
 			if (that.loading == true) {
@@ -83,10 +83,10 @@ layui.define([], function (exports) {
 					$('#expressLayer').animate({ 'right': 0 }, 200, 'linear', function () {
 						if (typeof (openInit) == "function") {
 							openInit();
-						}						
-					});					
+						}
+					});
 					that.loading = false;
-					
+
 					//关闭
 					$('body').on('click','.express-close', function () {
 						$('#expressMask').fadeOut(100);
@@ -103,8 +103,8 @@ layui.define([], function (exports) {
 					$(window).resize(function () {
 						width = window.innerWidth > 1280 ? '1200' : '996';
 						$('#expressLayer').width(width);
-					})					
-					
+					})
+
 				}
 				, error: function (xhr, textstatus, thrown) {
 					console.log('错误');
@@ -233,7 +233,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用tool模块');
-			}		
+			}
 		},
 		tabAdd:function(url,title){
 			if(parent.layui.admin){
@@ -241,7 +241,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用admin模块');
-			}			
+			}
 		},
 		tabClose:function(){
 			if(parent.layui.admin){
@@ -273,7 +273,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用admin模块');
-			}			
+			}
 		}
 	};
 	$('body').on('click', '.tab-a', function () {
@@ -306,4 +306,4 @@ layui.define([], function (exports) {
 		return false;
 	});
 	exports(MOD_NAME, tool);
-});  
+});

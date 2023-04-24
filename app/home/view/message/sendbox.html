@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/home/index">工作台</a>
   <a><cite>发件箱</cite></a>
 </span>
@@ -16,7 +16,7 @@
 				<input type="text" name="keywords" placeholder="关键字" class="layui-input" autocomplete="off"/>
 			</div>
 			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
-		</form> 
+		</form>
 		<table class="layui-hide" id="sendbox" lay-filter="sendbox"></table>
 	</div>
 </div>
@@ -56,7 +56,7 @@
 			page: true ,//开启分页
 			limit: 20,
 			cellMinWidth: 200, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-			height: 'full-112',	
+			height: 'full-112',
 			cols: [[ //表头
 			  {type:'checkbox',fixed:'left'},
 			  {field: 'type_title', title: '接收人类型',width:100,align:'center'},
@@ -70,14 +70,14 @@
 			]]
 		});
 
-		  
+
 		//搜索提交
 		form.on('submit(webform)', function(data){
 			let f=data.field;
 			layui.pageTable.reload({where:{keywords:f.keywords},page:{curr:1}});
 			return false;
 		});
-		
+
 		//行工具事件
 		table.on('tool(sendbox)', function(obj){
 			var data = obj.data;
@@ -102,11 +102,11 @@
 				return;
 			}
 		});
-		  
+
 		//表头工具栏事件
 		table.on('toolbar(sendbox)', function(obj){
 			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
-			var data = checkStatus.data; 
+			var data = checkStatus.data;
 			if (obj.event === 'add') {
 				tool.open("/home/message/add");
 				return;
@@ -122,7 +122,7 @@
 			if (obj.event === 'del') {
 				msg = '确定把选中的信息要放入垃圾箱吗?';
 				type = 2;
-			}			
+			}
 			layer.confirm(msg, {
 				icon: 3,
 				title: '提示'
@@ -142,7 +142,7 @@
 			});
 		});
 	}
-		
+
 </script>
 {/block}
 <!-- /脚本 -->

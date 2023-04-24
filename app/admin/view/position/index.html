@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
 	<a href="/home/user/setting">信息设置</a>
 	<a><cite>岗位职称</cite></a>
 </span>
@@ -38,7 +38,7 @@ const moduleInit = ['tool'];
 		layui.pageTable = table.render({
 			elem: '#test',
 			title: '岗位列表',
-			url: "/admin/position/index", //数据接口				
+			url: "/admin/position/index", //数据接口
 			page: false, //开启分页
 			cols: [
 				[

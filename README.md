@@ -1,4 +1,4 @@
-## 📐 勾股DEV3.0
+## 📐 Uwork-DEV3.0
 ![输入图片说明](https://dev.gougucms.com/storage/202204/banner.jpg)
 
 ### ✅ 相关链接
@@ -10,20 +10,20 @@
 1. [开源项目系列：勾股OA —— OA协同办公系统框架](https://gitee.com/gougucms/office)
 2. [开源项目系列：勾股CMS —— CMS内容管理系统框架](https://gitee.com/gougucms/gougucms)
 3. [开源项目系列：勾股BLOG —— 个人&工作室博客系统](https://gitee.com/gougucms/blog)
-4. [开源项目系列：勾股DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
+4. [开源项目系列：Uwork-DEV —— 项目研发管理系统](https://gitee.com/gougucms/dev)
 5. [开源项目系列：勾股Admin —— 基于Layui的Web UI解决方案](https://gitee.com/gouguopen/guoguadmin)
 
 ### 📋 系统介绍
-勾股DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
+Uwork-DEV是一款专为IT研发团队打造的项目管理与团队协作的系统工具，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。
 
-勾股DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。
+Uwork-DEV的产品理念：通过“项目（Project）”的形式把成员、需求、任务、缺陷(BUG)、文档、互动讨论以及各种形式的资源组织在一起，团队成员参与更新任务、文档等内容来推动项目的进度，同时系统利用时间线索和各种动态的报表的形式来自动给成员汇报项目进度。
 
 ![输入图片说明](https://dev.gougucms.com/storage/202204/flow.png)
 
 
 ### ✳️ 演示地址
 
-勾股DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
+Uwork-DEV演示地址：[https://dev.gougucms.com](https://dev.gougucms.com)
 
 沟通咨询请加微信号：hdm588
 
@@ -73,11 +73,11 @@ PS：为了给后面的人提供良好的演示体验，体验以查看为主。
 
 **命令行安装（推荐）**
 
-推荐使用命令行安装，因为采用命令行安装的方式可以和勾股DEV随时保持更新同步。使用命令行安装请提前准备好Git、Composer。
+推荐使用命令行安装，因为采用命令行安装的方式可以和Uwork-DEV随时保持更新同步。使用命令行安装请提前准备好Git、Composer。
 
-勾股DEV的安装步骤，以下加粗的内容需要特别留意：  
+Uwork-DEV的安装步骤，以下加粗的内容需要特别留意：  
 
-第一步：克隆勾股DEV到你本地  
+第一步：克隆Uwork-DEV到你本地  
     git clone https://gitee.com/gougucms/dev.git
 
 第二步：进入目录  

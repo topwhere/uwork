@@ -29,7 +29,7 @@
 			.login .top .bg1 {display: inline-block;width: 72px;height: 72px;background: #fff;opacity: .1;border-radius: 0 72px 0 0;position: absolute;left: 0;top: 42px;}
 			.login .top .bg2 {display: inline-block;width: 92px;height: 92px;background: #fff;opacity: .1;border-radius: 50%;position: absolute;right: -16px;top: -16px;}
 			.login .bottom {background-color: #fff;padding:26px 24px;border-radius: 0 0 12px 12px;}
-			
+
 			.layui-input,.layui-textarea {height: 44px;border: 1px solid #ddd;}
 			.captcha_img img{width:142px; height:44px; cursor:pointer;}
 			.layui-btn {height: 45px;font-size: 16px;margin-top: 6px;background-color: #FF6347!important}
@@ -61,13 +61,13 @@
 								<input type="hidden" value="{:make_token()}"/>
 							</div>
 						</div>
-						
+
 						<button id="login-submit" class="layui-btn layui-btn-fluid layui-bg-cyan" lay-submit lay-filter="login-submit">登入系统</button>
 					</form>
 				</div>
 			</div>
 			<div class="foot">
-			{:get_system_config('web','copyright')}  ，勾股DEV - v{:CMS_VERSION}，Powered by GouguCMS
+			{:get_system_config('web','copyright')}  ，Uwork-DEV - v{:CMS_VERSION}，Powered by GouguCMS
 			</div>
 		</div>
 		<script src="{__GOUGU__}/layui/layui.js?v={:get_system_config('web','version')}"></script>

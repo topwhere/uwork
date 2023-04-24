@@ -14,7 +14,7 @@
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/knowledge/index/index">知识库</a>
   <a><cite>编辑知识</cite></a>
 </span>
@@ -39,7 +39,7 @@
 						{volist name=":set_recursion(knowledge_doc($detail.knowledge_id))" id="v"}
 						<option value="{$v.id}" {eq name="$v.id" value="$detail.pid"} selected{/eq}>{$v.title}</option>
 						{/volist}
-					</select>				
+					</select>
 					</td>
 					<td class="layui-td-gray">排序<span style="color: red">*</span></td>
 					<td style="width:80px; text-align:center"><input type="text" name="sort" value="0" value="{$detail.sort}" placeholder="请输入排序，数字" autocomplete="off" class="layui-input"></td>
@@ -86,7 +86,7 @@ function gouguInit() {
 			height:window.innerHeight-240
 		});
 	}
-	
+
 	var treeRender = function(res){
 		//仅节点左侧图标控制收缩
 		tree.render({
@@ -103,36 +103,36 @@ function gouguInit() {
 			operate: function(obj){
 				let type = obj.type; //得到操作类型：add、edit、del
 				let data = obj.data; //得到当前节点的数据
-				let elem = obj.elem; //得到当前节点元素					
+				let elem = obj.elem; //得到当前节点元素
 				if(type === 'add'){ //增加节点
 				  add(obj.data.id);
 				} else if(type === 'update'){ //修改节点
 				 // console.log(elem.find('.layui-tree-txt').html()); //得到修改后的内容
-				} else if(type === 'del'){ //删除节点				
+				} else if(type === 'del'){ //删除节点
 					let deletecallback = function (e) {
 						layer.msg(e.msg);
-						setTimeout(function(){							
+						setTimeout(function(){
 							$('#tree').find('.layui-tree-txt').eq(0).click();
-						},1000)	
+						},1000)
 					}
 					tool.delete("/knowledge/index/doc_delete",{ id: obj.data.id },deletecallback);
 				};
 			}
-		});	
+		});
 		setTimeout(function(){
 			$('[data-id="'+doc_id+'"]').find('.layui-tree-txt').eq(0).addClass('on');
-		},100)	
+		},100)
 	}
-	tool.get("/api/index/get_doc_list",{kid:knowledge_id,tree:1},treeRender);	
-	
+	tool.get("/api/index/get_doc_list",{kid:knowledge_id,tree:1},treeRender);
+
     //监听提交
     form.on('submit(webform)', function (data) {
 		let callback = function(e){
 			layer.msg(e.msg);
 			if(e.code == 0){
-				setTimeout(function(){							
+				setTimeout(function(){
 					window.location.href='/knowledge/index/?kid='+knowledge_id;
-				},1000)						  
+				},1000)
 			}
 		}
 		tool.post('/knowledge/index/doc_add',data.field,callback);
@@ -143,7 +143,7 @@ function gouguInit() {
 		window.location.href='/knowledge/index/?kid='+knowledge_id;
 		return false;
     });
-	
+
 	//添加
 	var selectTable=null;
 	function add(pid) {
@@ -161,7 +161,7 @@ function gouguInit() {
 						{field: 'title', title: '节点类型'}
 					]],
 					data: type
-				  });			
+				  });
 			},
 			btn:['确定'],
 			btnAlign:'c',
@@ -179,12 +179,12 @@ function gouguInit() {
 							let callback = function(e){
 								layer.msg(e.msg);
 								if(e.code == 0){
-									setTimeout(function(){							
+									setTimeout(function(){
 										window.location.href='/knowledge/index/doc_add/id/'+e.data;
-									},1000)						  
+									},1000)
 								}
 							}
-							tool.post('/knowledge/index/doc_add',postData,callback);									
+							tool.post('/knowledge/index/doc_add',postData,callback);
 						})
 					}else if(data[0].id==3){
 						var content='<div style="padding:0 15px;"><table class="layui-table">\
@@ -219,14 +219,14 @@ function gouguInit() {
 								let callback = function(e){
 									layer.msg(e.msg);
 									if(e.code == 0){
-										setTimeout(function(){							
+										setTimeout(function(){
 											window.location.href='/knowledge/index/doc_add/id/'+e.data;
-										},1000)						  
+										},1000)
 									}
 								}
-								tool.post('/knowledge/index/doc_add',postData,callback);			
+								tool.post('/knowledge/index/doc_add',postData,callback);
 							}
-						})	
+						})
 					}
 				}
 				else{
@@ -234,7 +234,7 @@ function gouguInit() {
 					return false;
 				}
 			}
-		})	
+		})
 	}
 }
 </script>

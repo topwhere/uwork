@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
 	<a href="/home/user/setting">信息设置</a>
 	<a><cite>企业公告</cite></a>
 </span>
@@ -35,10 +35,10 @@ const moduleInit = ['tool','editormd'];
 		layui.pageTable = table.render({
 			elem: '#test',
 			title: '公告列表',
-			url: "/admin/note/index", //数据接口	
+			url: "/admin/note/index", //数据接口
 			page: true, //开启分页
 			limit: 20,
-			height: 'full-104',			
+			height: 'full-104',
 			cols: [
 				[
 					{

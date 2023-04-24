@@ -19,7 +19,7 @@ class Index
     {
         // 检测是否安装过
         if (is_installed()) {
-            echo '你已经安装过勾股DEV系统！如需重新安装，请删除“config/install.lock”文件';
+            echo '你已经安装过Uwork-DEV系统！如需重新安装，请删除“config/install.lock”文件';
             die();
         }
     }
@@ -183,7 +183,7 @@ return [
         if (false == file_put_contents(CMS_ROOT . "config/database.php", $db_str)) {
             return to_assign(1, '创建数据库配置文件失败，请检查目录权限');
         }
-        if (false == file_put_contents(CMS_ROOT . "config/install.lock", '勾股DEV安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
+        if (false == file_put_contents(CMS_ROOT . "config/install.lock", 'Uwork-DEV安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
             return to_assign(1, '创建安装鉴定文件失败，请检查目录权限');
         }
         return to_assign();

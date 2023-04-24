@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/home/index">工作台</a>
   <a><cite>收件箱</cite></a>
 </span>
@@ -30,7 +30,7 @@
 				</select>
 			</div>
 			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
-		</form> 
+		</form>
 		<table class="layui-hide" id="inbox" lay-filter="inbox"></table>
 	</div>
 </div>
@@ -70,7 +70,7 @@
 			page: true ,//开启分页
 			limit: 20,
 			cellMinWidth: 200, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-			height: 'full-112',	
+			height: 'full-112',
 			cols: [[ //表头
 			  {type:'checkbox',fixed:'left'},
 			  {field: 'msg_type', title: '类型',width:90,align:'center',templet:function(d){
@@ -92,9 +92,9 @@
 						}},
 			  {field: 'files', title: '附件(个)',align:'center', width:80},
 			  {field: 'right', title: '操作',fixed:'right', toolbar: '#barDemo', width:136, align:'center'}
-			]]			
-		});		
-				 
+			]]
+		});
+
 		//监听搜索提交
 		form.on('submit(webform)', function(data){
 			let f=data.field;
@@ -133,7 +133,7 @@
 		//表头工具栏事件
 		table.on('toolbar(inbox)', function(obj){
 			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
-			var data = checkStatus.data; 
+			var data = checkStatus.data;
 			if (obj.event === 'add') {
 				tool.open("/home/message/add");
 				return;
@@ -156,7 +156,7 @@
 					type = 2;
 				break;
 			};
-			
+
 			layer.confirm(msg, {
 				icon: 3,
 				title: '提示'
@@ -175,7 +175,7 @@
 				layer.close(index);
 			});
 		});
-	}		
+	}
 </script>
 {/block}
 <!-- /脚本 -->

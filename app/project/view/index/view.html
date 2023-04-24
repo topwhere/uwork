@@ -33,7 +33,7 @@
 {/block}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-	<a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+	<a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
 	<a href="/project/index/index">项目中心</a>
 	<a><cite>项目详情</cite></a>
 </span>
@@ -98,7 +98,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="layui-col-xs12">
 				<div class="layui-card">
 					<div class="layui-card-header" style="height:45px;">
@@ -153,7 +153,7 @@
 						<p><strong>阶段流转记录</strong></p>
 						{notempty name="$step_record"}
 							<ul class="layui-timeline pt-2">
-							{volist name="$step_record" id="vo"}		
+							{volist name="$step_record" id="vo"}
 								<li class="layui-timeline-item delete-{$vo.delete_time}">
 									<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
 									{if ($vo.status == 0)}
@@ -165,7 +165,7 @@
 									{else /}
 									<p style="padding-left:24px">{$vo.check_time_str}<span class="black mx-1">{$vo.check_name}</span><span class="mr-1 layui-color-{$vo.status}">{$vo.status_str}</span>了该阶段流程。操作意见：<span class="red">{$vo.content}</span></p>
 									{/if}
-									
+
 								</li>
 							{/volist}
 							</ul>
@@ -175,8 +175,8 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
+
 			<div class="layui-col-xs12">
 				<div class="layui-card">
 					<div class="layui-card-header" style="height:45px;">
@@ -853,7 +853,7 @@
 				edit.textarea(id, name, real_txt, editPost);
 			}
 		}
-		
+
 
 		$('#delProject').on('click', function () {
 			layer.confirm('确定要删除该项目吗？请慎重', { icon: 3, title: '提示' }, function (index) {
@@ -870,7 +870,7 @@
 				tool.delete("/project/index/delete", postData, callback);
 			});
 		})
-		
+
 		$('body').on('click','[data-event="step"]',function(){
 			let check = $(this).data('check');
 			let callback = function (e) {
@@ -923,7 +923,7 @@
 					layer.msg('上传成功');
 					setTimeout(function(){
 						location.reload();
-					},2000)	
+					},2000)
 				}
 				let postData = { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' };
 				tool.post("/api/appendix/add", postData, callback);
@@ -941,7 +941,7 @@
 					layer.msg(e.msg);
 					setTimeout(function(){
 						location.reload();
-					},2000)					
+					},2000)
 				}
 				let postData = { "id": id };
 				tool.delete("/api/appendix/delete", postData, callback);
@@ -965,7 +965,7 @@
 					layer.msg(e.msg);
 					setTimeout(function(){
 						location.reload();
-					},2000)	
+					},2000)
 				}
 				let postData = { "id": id };
 				tool.delete("/api/appendix/delete_link", postData, callback);

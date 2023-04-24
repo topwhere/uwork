@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/home/user/setting">信息设置</a>
   <a><cite>知识类型</cite></a>
 </span>
@@ -16,7 +16,7 @@
 		</div>
 		<div>
 		  <table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
-		</div> 
+		</div>
 	</div>
 </div>
 <script type="text/html" id="switchStatus">
@@ -59,13 +59,13 @@ const moduleInit = ['tool','treeGrid'];
 				,page:false
 				//,skin:'line'
 			});
-			
+
 			//表头工具栏事件
 			$('.add-menu').on('click', function(){
 				tool.open('/admin/kcate/add','900px');
 				return;
 			});
-			
+
 			//操作按钮
 			treeGrid.on('tool(treeTable)', function (obj) {
 				if (obj.event === 'add') {

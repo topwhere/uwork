@@ -9,6 +9,6 @@
 return [
     //开启session中间件
     //'think\middleware\SessionInit',
-    //验证勾股DEV是否完成安装
+    //验证Uwork-DEV是否完成安装
     \app\home\middleware\Install::class,
 ];

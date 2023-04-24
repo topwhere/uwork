@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a href="/home/user/setting">信息设置</a>
   <a><cite>系统配置</cite></a>
 </span>
@@ -36,7 +36,7 @@ const moduleInit = ['tool'];
 			elem: '#test',
 			title: '配置列表',
 			url: "/admin/conf/index",
-			page: true, //开启分页				
+			page: true, //开启分页
 			limit: 20,
 			cols: [
 				[{
@@ -68,7 +68,7 @@ const moduleInit = ['tool'];
 				}]
 			]
 		});
-		
+
 		//表头工具栏事件
 		$('.add-conf').on('click', function(){
 			tool.open('/admin/conf/add');
@@ -78,7 +78,7 @@ const moduleInit = ['tool'];
 			var data = obj.data;
 			if(obj.event === 'add'){
 				tool.open('/admin/conf/add?id='+data.id);
-				
+
 			}
 			if(obj.event === 'edit'){
 				tool.open('/admin/conf/edit?id='+data.id);
@@ -87,7 +87,7 @@ const moduleInit = ['tool'];
 				layer.confirm('确定要删除吗?', {
 					icon: 3,
 					title: '提示'
-				}, function (index) {				
+				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
 						if (e.code == 0) {

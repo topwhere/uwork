@@ -1,7 +1,7 @@
 {extend name="../../base/view/common/base" /}
 {block name="breadcrumb"}
 <span class="layui-breadcrumb">
-  <a href="https://www.gougucms.com/" target="_blank">勾股DEV</a>
+  <a href="https://www.gougucms.com/" target="_blank">Uwork-DEV</a>
   <a><cite>知识库</cite></a>
 </span>
 {/block}
@@ -55,7 +55,7 @@
 			form = layui.form,
 			element = layui.element,
 			laypage = layui.laypage;
-			
+
 		element.on('tab(docDemoTabBrief)', function(data){
 			getData.share=data.index;
 			getKnowledge();
@@ -66,7 +66,7 @@
 		}
 		if(eid == 0 && kid > 0){
 			tool.open('/knowledge/index/view/id/'+kid+'.html');
-		}		
+		}
 		getKnowledge = function(){
 			tool.get("/knowledge/index/index",getData,function(res){
 				if(res.code == 0){
@@ -124,7 +124,7 @@
 							,limit:9
 							,count: 50 //数据总数，从服务端得到
 							,jump: function(obj, first){
-								console.log(obj.curr); //得到当前页		
+								console.log(obj.curr); //得到当前页
 								getData.page=obj.curr;
 								getKnowledge();
 								//首次不执行
@@ -134,7 +134,7 @@
 							}
 						});
 					}
-				}		
+				}
 			});
 		}
 		getKnowledge();
@@ -142,7 +142,7 @@
 		$('.add-new').on('click',function(){
 			tool.open('/knowledge/index/add');
 		});
-		
+
 		$('#knowledgeContent').on('click','.action-del',function(){
 			let admin_id = $(this).data('admin');
 			if(admin_id != GOUGU_DEV.uid){
@@ -160,8 +160,8 @@
 				tool.delete("/knowledge/index/delete", postData, callback);
 			});
 		});
-		
-		
+
+
 		$('#knowledgeContent').on('click','.action-edit',function(){
 			let admin_id = $(this).data('admin');
 			if(admin_id != GOUGU_DEV.uid){
@@ -171,7 +171,7 @@
 			let id=$(this).data('id');
 			tool.open('/knowledge/index/view/id/'+id+'.html');
 		});
-		
+
 		//监听搜索提交
 		form.on('submit(webform)', function(data) {
 			getData.page=1;
